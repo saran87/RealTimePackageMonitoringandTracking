@@ -52,6 +52,7 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
         lblPort = new javax.swing.JLabel();
         txtPortNumber = new javax.swing.JTextField();
         btnForwardData = new javax.swing.JButton();
+        btnClearLog = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Real Time Package Tracking");
@@ -118,6 +119,13 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
             }
         });
 
+        btnClearLog.setText("Clear Log");
+        btnClearLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearLogActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,7 +165,9 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
                                     .addComponent(btnForwardData, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                                     .addComponent(jbtnConnect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(64, 64, 64)
-                                .addComponent(btnRefreshPorts)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnRefreshPorts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnClearLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -173,7 +183,7 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
                     .addComponent(btnRefreshPorts)
                     .addComponent(jblConnectedStatus))
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -184,7 +194,8 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPort)
                             .addComponent(txtPortNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnForwardData))))
+                            .addComponent(btnForwardData)
+                            .addComponent(btnClearLog))))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -257,6 +268,12 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnForwardDataActionPerformed
 
+    private void btnClearLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearLogActionPerformed
+        // TODO add your handling code here:
+         txtLog.setText("");
+
+    }//GEN-LAST:event_btnClearLogActionPerformed
+
     //to show message in modal dialog
     public void showModalMessage(String message){
         
@@ -304,6 +321,7 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClearLog;
     private javax.swing.JButton btnForwardData;
     private javax.swing.JButton btnRefreshPorts;
     private javax.swing.JLabel jLabel1;

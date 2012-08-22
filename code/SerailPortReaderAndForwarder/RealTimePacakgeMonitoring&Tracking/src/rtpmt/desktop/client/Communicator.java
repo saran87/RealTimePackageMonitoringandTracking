@@ -52,6 +52,8 @@ public class Communicator implements SerialPortEventListener
     //this string is written to the GUI
     String logText = "";
 
+    Packetizer packetReader;
+    
     public Communicator(RealTimePackageTracking window)
     {
         this.window = window;
@@ -138,6 +140,7 @@ public class Communicator implements SerialPortEventListener
             input = serialPort.getInputStream();
             output = serialPort.getOutputStream();
             
+            packetReader = new Packetizer(input);
             //writeData(0, 0);            
             successful = true;
             return successful;
@@ -231,12 +234,11 @@ public class Communicator implements SerialPortEventListener
             {
                 String dummydata = "#:367:N:43.1049:W:77.6233:ZBBBB00000849";
                
-                Packetizer packet  = new Packetizer(input);
-                packet.readPacket();
-                logText =  packet.dumpPacket();
+                packetReader.readPacket();
+                //logText =  packetReader.dumpPacket();
                 
-                String temperature = packet.getTemperature();
-                String data = dummydata + temperature;
+                logText = packetReader.getTemperature();
+               // String data = dummydata + temperature;
                 
                // tCPClient.sendData(data);
                 

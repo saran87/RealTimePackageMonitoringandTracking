@@ -6,6 +6,8 @@ package rtpmt.motes.packet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
@@ -33,13 +35,15 @@ public class Packetizer {
 
   private InputStream input = null;
   
-  private int[] receiveBuffer;
+  
+  private Queue<Packet> packetQueue;
   
   /**
    * Constructor initializes the input stream with input stream of serial port
    */
   public Packetizer(InputStream input){
-      this.input = input;
+      this.input  = input;
+      packetQueue = new LinkedBlockingQueue<Packet>();
   }
   
   /**
@@ -49,16 +53,56 @@ public class Packetizer {
   {
     //get available number of bytes in the input stream
     int available = input.available();
-    //Intialized received buffer to the available byte length in the input stream
-    receiveBuffer = new int[available];
-    //read from the input stream
+    
     int count = 0;
-    while(input.available()>0){
-         int b = input.read();
-         if(b != SYNC_BYTE && b!=ESCAPE_BYTE && count>2 ){
-             receiveBuffer[count] = b;
-         }
-         count++;
+    Packet packet = new Packet();
+    boolean inSync = false;
+    
+    if(input.available()>18){
+         
+        int b = input.read();
+         
+         if(b == SYNC_BYTE ){
+             if(!inSync){
+                 inSync = true;
+             }
+             else{
+                 System.out.println("bad packet");
+                 return;
+             }
+        }
+        
+        b = input.read();
+        packet.ProtocolType =  Integer.toHexString(b);
+       
+        b = input.read();
+        packet.ProtocolType =  Integer.toHexString(b);
+        
+        packet.DestinationAddress =   Integer.toHexString(input.read()) + Integer.toHexString(input.read());
+        
+        packet.SourceAddress = Integer.toHexString(input.read()) + Integer.toHexString( input.read());
+       
+        
+        b = input.read();
+        packet.PayloadLength = Integer.toHexString(b);
+        
+        b = input.read();
+        packet.GroupId =  Integer.toHexString(b);
+        
+        b = input.read();
+        packet.HandleId = Integer.toHexString(b);
+        
+        int payLoadLength = Integer.parseInt(packet.PayloadLength, Packet.MOTE_DATA_TYPE);
+        
+        for(int i = 0 ; i<payLoadLength/2; i++ ){
+            String data =  Integer.toHexString(input.read()) + Integer.toHexString( input.read());
+            packet.addDataToPacket(data);
+        }
+        
+        String CRC =  Integer.toHexString(input.read()) + Integer.toHexString( input.read());
+        b = input.read();
+        
+        packetQueue.add(packet);
     }          
   }
   
@@ -69,13 +113,18 @@ public class Packetizer {
   public String dumpPacket()
   {
       StringBuilder dump = new StringBuilder();
-      
-      for(int i=0; i<receiveBuffer.length;i++)
-      {
-            dump.append(Integer.toHexString(receiveBuffer[i]));
-            dump.append(" ");
-      }  
-      
+      if(!packetQueue.isEmpty()){
+        Packet packet = packetQueue.peek();
+
+        for(int i=0; i<packet.getDataLength();i++)
+        {
+                dump.append(packet.getData(i));
+                dump.append(" ");
+        }  
+      }
+      else{
+          dump.append("No Packet available");
+      }
       return dump.toString();
   }
   
@@ -85,13 +134,21 @@ public class Packetizer {
   
   public String getTemperature()
   {
-       int IntegerhexValue_int = Integer.getInteger("17", 16);
+       /*int IntegerhexValue_int = Integer.getInteger("17", 16);
        int DecimalhexValue_int = Integer.getInteger("45", 16);
        String temp  = "1716";
        String temperature = Integer.toString(IntegerhexValue_int) + Integer.toString(DecimalhexValue_int);
        double temperature_double =  Double.parseDouble(temperature);
-       double Fah_double = temperature_double * 9 / 5 + 32; 
-      
-      return temp;
-  }
+       double Fah_double = temperature_double * 9 / 5 + 32; */
+        String temperature = "";
+        if(!packetQueue.isEmpty()){
+
+            Packet packet = packetQueue.remove();
+            temperature   = packet.getTemperature() + " F";
+        }
+        else{
+            temperature = "Bad packet";
+        }
+            return temperature;
+        }
 }
