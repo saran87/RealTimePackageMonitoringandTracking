@@ -13,10 +13,12 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
+import rtpmt.motes.packet.Dump;
+import rtpmt.motes.packet.PacketSource;
 import rtpmt.motes.packet.Packetizer;
 import rtpt.network.tcp.TCPClient;
 
-public class Communicator implements SerialPortEventListener
+public class Communicator implements SerialPortEventListener, Runnable
 {
     //passed from main GUI
     RealTimePackageTracking window = null;
@@ -52,12 +54,22 @@ public class Communicator implements SerialPortEventListener
     //this string is written to the GUI
     String logText = "";
 
+    //packet reader to read the data from the motes
     Packetizer packetReader;
+    
+    //background thread for sending data to the server.
+    private Thread bgCommunicator;
+    
+    //to indicate whether to send data to server or not
+    private boolean ServerAvailable;
     
     public Communicator(RealTimePackageTracking window)
     {
         this.window = window;
+        bgCommunicator = new Thread(this);
+        ServerAvailable = false;
     }
+    
 
     //search for all the serial ports
     //pre: none
@@ -93,7 +105,7 @@ public class Communicator implements SerialPortEventListener
         try
         {
             //the method below returns an object of type CommPort
-            commPort = selectedPortIdentifier.open("RFD", TIMEOUT);
+            commPort = selectedPortIdentifier.open("RFID", TIMEOUT);
             //the CommPort object can be casted to a SerialPort object
             serialPort = (SerialPort)commPort;
             //setting serial port parameters 
@@ -139,8 +151,7 @@ public class Communicator implements SerialPortEventListener
             //initialize the input and output stream
             input = serialPort.getInputStream();
             output = serialPort.getOutputStream();
-            
-            packetReader = new Packetizer(input);
+           
             //writeData(0, 0);            
             successful = true;
             return successful;
@@ -152,7 +163,30 @@ public class Communicator implements SerialPortEventListener
             return successful;
         }
     }
-
+    /**
+    *  Initialize the packet reader from the motes
+    *  pre: initialize the input stream and output stream
+    *  post: packetReader is initialized and ready to read
+    */
+    public boolean initPacketReader(){
+        
+        //return value for whather opening the streams is successful or not
+        boolean successful = false;
+        
+        try {
+            packetReader = new Packetizer("COM3", input);
+            packetReader.open(null); 
+            successful = true;
+        }
+        catch(IOException ex){
+            logText = "I/O Streams failed to open. (" + ex.toString() + ")";
+            window.txtLog.setForeground(Color.red);
+            window.txtLog.append(logText + "\n");
+            successful = false;
+        }
+        
+        return successful;
+    }
     //starts the event listener that knows whenever data is available to be read
     //pre: an open serial port
     //post: an event listener for the serial port that knows when data is recieved
@@ -162,7 +196,11 @@ public class Communicator implements SerialPortEventListener
         {
             serialPort.addEventListener(this);
             serialPort.notifyOnDataAvailable(true);
-           
+            
+            if (!bgCommunicator.isAlive()) {
+                 bgCommunicator.start();
+            }
+            
         }
         catch (TooManyListenersException e)
         {
@@ -234,10 +272,10 @@ public class Communicator implements SerialPortEventListener
             {
                 String dummydata = "#:367:N:43.1049:W:77.6233:ZBBBB00000849";
                
-                packetReader.readPacket();
+              
                 //logText =  packetReader.dumpPacket();
                 
-                logText = packetReader.getTemperature();
+                //logText = packetReader.getTemperature();
                // String data = dummydata + temperature;
                 
                // tCPClient.sendData(data);
@@ -287,10 +325,33 @@ public class Communicator implements SerialPortEventListener
        try{
             tCPClient = new TCPClient();
             tCPClient.connect(ipAddress, portNumber);
+            ServerAvailable =true;
        }catch(Exception ex){
            window.showModalMessage(ex.getMessage());
-       }        
+       }   
+     
     }
-    
+   
+   //thread to get the mote packet from the queue and send it to the server
+    public void run() {
+       try {
+        for (;;) {
+                byte[] packet = packetReader.readPacket();
+                Dump.printPacket(System.out, packet);
+                System.out.println();
+                System.out.flush();
+                
+                if(ServerAvailable){
+                    tCPClient.sendData(packet.toString());
+                }
+	  }
+       }
+       catch(IOException ex){
+             logText = "Too many listeners. (" + ex.toString() + ")";
+            window.txtLog.setForeground(Color.red);
+            window.txtLog.append(logText + "\n");
+       }
+    }
+
 }
 
