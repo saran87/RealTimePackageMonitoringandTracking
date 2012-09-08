@@ -197,7 +197,11 @@ public class Packetizer extends AbstractSource implements Runnable {
           + Integer.toHexString(packetType));
     }
   }
-
+  /**
+   * gets the Non Acknowledgment packet from the queue and return it
+   * @return array of bytes
+   * @throws IOException 
+   */
   protected byte[] readSourcePacket() throws IOException {
     // Packetizer packet format is identical to PacketSource's
     for (;;) {
@@ -207,7 +211,25 @@ public class Packetizer extends AbstractSource implements Runnable {
       }
     }
   }
-
+  
+   protected Packet getPacket() throws IOException {
+    // Packetizer packet format is identical to PacketSource's
+    for (;;) {
+      byte[] rawpacket = readProtocolPacket(P_PACKET_NO_ACK, 0);
+     
+      if (rawpacket.length >= 1) {
+           Packet packet = new Packet();
+           
+           return packet;
+      }
+    }
+  }
+  /**
+   * writes the source packet to the mote
+   * @param packet
+   * @return
+   * @throws IOException 
+   */
   // Write an ack-ed packet
   protected boolean writeSourcePacket(byte[] packet) throws IOException {
     for (int retries = 0; retries < 25; retries++) {
