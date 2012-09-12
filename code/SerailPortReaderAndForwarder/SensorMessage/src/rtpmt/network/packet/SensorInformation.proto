@@ -1,0 +1,39 @@
+/**
+ * Sensor Information 
+ *  Contains the information from a sensor
+ */
+package rtpmt.network.packet;
+
+option java_package = "rtpmt.network.packet";
+option java_outer_classname = "SensorMessage";
+
+message SensorInformation {
+
+	required string deviceId = 1;
+	required string timeStamp = 2;  
+
+	message LocationInformation {
+		required float latitude = 1;
+		required float longitude = 2;
+	}
+	
+	required LocationInformation location = 3;
+	
+	enum SensorType {
+		TEMPERATURE = 0;
+		VIBRATION = 1;
+		HUMIDITY = 2;
+	}
+  
+	message Sensor {
+		required string sensorId = 1;		
+		required SensorType sensorType = 2 [default = TEMPERATURE];
+		required string sensorValue = 3;
+		required string sensorUnit = 4 ;
+	}
+
+	repeated Sensor sensors = 4;
+}
+
+
+

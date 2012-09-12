@@ -16,7 +16,7 @@ import java.util.TooManyListenersException;
 import rtpmt.motes.packet.Dump;
 import rtpmt.motes.packet.PacketSource;
 import rtpmt.motes.packet.Packetizer;
-import rtpt.network.tcp.TCPClient;
+import rtpmt.network.tcp.TCPClient;
 
 public class Communicator implements SerialPortEventListener, Runnable
 {
