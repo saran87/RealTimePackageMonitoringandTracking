@@ -44,6 +44,8 @@
 package rtpmt.motes.packet;
 
 import java.io.*;
+import rtpmt.network.packet.SensorMessage;
+import rtpmt.network.packet.SensorMessage.SensorInformation;
 
 
 /**
@@ -91,7 +93,7 @@ abstract public class AbstractSource implements PacketSource
 	    throw new IOException("closed");
     }
 
-    public byte[] readPacket() throws IOException {
+    public byte[] readRawPacket() throws IOException {
 	failIfClosed();
 
 	try {
@@ -102,7 +104,11 @@ abstract public class AbstractSource implements PacketSource
 	    throw e;
 	}
     }
-
+    public SensorInformation readPacket() throws IOException {
+	failIfClosed();
+	
+        return readFormattedPacket();
+    }
     synchronized public boolean writePacket(byte[] packet) throws IOException {
 	failIfClosed();
 
@@ -123,6 +129,7 @@ abstract public class AbstractSource implements PacketSource
     abstract protected void openSource() throws IOException;
     abstract protected void closeSource() throws IOException;
     abstract protected byte[] readSourcePacket() throws IOException;
+    abstract protected SensorInformation readFormattedPacket() throws IOException;
     protected boolean writeSourcePacket(byte[] packet) throws IOException {
 	// Default writer swallows packets
 	return true;

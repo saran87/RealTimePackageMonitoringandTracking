@@ -35,12 +35,15 @@ implementation{
 	components new TimerMilliC() as SampleTimer;
 	App.SampleTimer -> SampleTimer;
 	
-	//Wire Sensor Volatage 
+	//Wire Sensor Volatage component
 	components new Msp430InternalVoltageC() as SensorVref;
 	App.VRef -> SensorVref;
 	
-	//Wire Temperature and humidity sensor
-	components new SensirionSht11C() as Sensirion;
-	App.Temperature -> Sensirion.Temperature; //Temperature
-	App.Humidity    -> Sensirion.Humidity;    //Humidity
+	//Create a component for EM1000 driver 
+	components new MTS_EM1000C() as EM1000;
+	//Temperature and humidity sensor wiring
+	App.Temperature -> EM1000.Sensirion_Temperature; //Temperature
+	App.Humidity    -> EM1000.Sensirion_Humidity;    //Humidity
+	App.AccX  		-> EM1000.ADXL321_ACC_Axis_X;	 // Accelerometer X axis
+	App.AccY  		-> EM1000.ADXL321_ACC_Axis_Y;	// Accelerometer Y axis
 }

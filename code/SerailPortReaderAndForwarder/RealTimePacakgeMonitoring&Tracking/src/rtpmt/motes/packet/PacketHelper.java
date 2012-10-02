@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Saravana kumar
  */
-public class Packet extends Header {
+public class PacketHelper extends Header {
     
     private ArrayList<String> PayLoad;
      
@@ -19,7 +19,7 @@ public class Packet extends Header {
     final static int TEMPERATURE_INDEX = 1;
     
     
-    public Packet(){
+    public PacketHelper(){
         PayLoad = new ArrayList<String>();
     }
     

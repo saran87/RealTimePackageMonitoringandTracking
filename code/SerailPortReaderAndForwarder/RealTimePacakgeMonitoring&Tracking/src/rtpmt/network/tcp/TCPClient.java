@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import rtpmt.network.packet.SensorMessage;
 /**
  *
  * @author kumar
@@ -45,6 +46,21 @@ public class TCPClient {
         try
         {
             outPutStream.writeBytes(data);
+            return true;
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
+     public boolean sendData(SensorMessage.SensorInformation data)
+    {
+        try
+        {
+            data.writeTo(outPutStream);
+           
             return true;
         }
         catch(IOException ex)

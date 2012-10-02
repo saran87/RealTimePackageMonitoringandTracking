@@ -28,6 +28,8 @@ module EM1000P @safe(){
 		interface Read<uint16_t> as VRef;
 		interface Read<uint16_t> as Temperature;
 		interface Read<uint16_t> as Humidity;
+		interface Read<uint16_t> as AccX;
+		interface Read<uint16_t> as AccY;
 	}
 }
 
@@ -57,6 +59,8 @@ implementation{
 		call VRef.read();//read Voltage value;
 		call Temperature.read();//read Temperature value
 		call Humidity.read();//read Humidity value
+		call AccX.read();//read accelerometer x value
+		call AccY.read();//read accelerometer y value
 	}
 	
 /******* Sensor Events *****************************/
@@ -70,6 +74,7 @@ implementation{
 			call RadioControl.start();
 		}
 	}
+	
 	//Temperature
 	event void Temperature.readDone(error_t result, uint16_t value){
 		//put the data in the packet
@@ -80,6 +85,7 @@ implementation{
 			call RadioControl.start();
 		}
 	}
+	
 	//Humidity
 	event void Humidity.readDone(error_t result, uint16_t value){
 		//put the data in the packet
@@ -90,6 +96,27 @@ implementation{
 			call RadioControl.start();
 		}
 	}
+	
+	//Accelerometer
+	event void AccX.readDone(error_t result, uint16_t value) {
+    		//put the data in the packet
+		dataPacket.Acc_X = value;
+		//check if all the sensor reading is done
+		if( ++num_sensors == MAX_SENSORS ){
+			//call the radio control to send data
+			call RadioControl.start();
+		}
+	}
+
+	event void AccY.readDone(error_t result, uint16_t value) {
+    		//put the data in the packet
+		dataPacket.Acc_Y = value;
+		//check if all the sensor reading is done
+		if( ++num_sensors == MAX_SENSORS ){
+			//call the radio control to send data
+			call RadioControl.start();
+		}
+	}    
 
 /********* Radio Control implementation ***********************/
 
@@ -122,6 +149,8 @@ implementation{
 		aux->VRef        = dataPacket.VRef;
 		aux->Temperature = dataPacket.Temperature;
 		aux->Humidity    = dataPacket.Humidity;
+		aux->Acc_X       = dataPacket.Acc_X;
+		aux->Acc_Y       = dataPacket.Acc_Y;
 		
 		if( call PacketSender.send(AM_BROADCAST_ADDR, &auxmsg, sizeof(RTPMT_Packet)) != SUCCESS ){
 		
@@ -141,6 +170,4 @@ implementation{
 		}
 
 	}
-
-
 }

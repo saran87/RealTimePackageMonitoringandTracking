@@ -329,14 +329,13 @@ public class Communicator implements SerialPortEventListener, Runnable
        }catch(Exception ex){
            window.showModalMessage(ex.getMessage());
        }   
-     
     }
    
    //thread to get the mote packet from the queue and send it to the server
     public void run() {
        try {
         for (;;) {
-                byte[] packet = packetReader.readPacket();
+                byte[] packet = packetReader.readRawPacket();
                 Dump.printPacket(System.out, packet);
                 System.out.println();
                 System.out.flush();
@@ -347,7 +346,7 @@ public class Communicator implements SerialPortEventListener, Runnable
 	  }
        }
        catch(IOException ex){
-             logText = "Too many listeners. (" + ex.toString() + ")";
+            logText = "Too many listeners. (" + ex.toString() + ")";
             window.txtLog.setForeground(Color.red);
             window.txtLog.append(logText + "\n");
        }

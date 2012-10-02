@@ -59,8 +59,9 @@
  */
 package rtpmt.motes.packet;
 
-import java.io.*;
-
+import java.io.IOException;
+import rtpmt.network.packet.SensorMessage;
+import rtpmt.network.packet.SensorMessage.SensorInformation;
 
 public interface PacketSource
 {
@@ -88,7 +89,14 @@ public interface PacketSource
      *   Closing a closed source does not cause this exception
      */
     public void close() throws IOException;
-
+    /**
+     * Read a raw packet
+     * @return The packet read (newly allocated). The format is described
+     *   above
+     * @exception IOException If the source detected a problem. The source
+     *   is automatically closed.
+     */
+    public byte[] readRawPacket() throws IOException;
     /**
      * Read a packet
      * @return The packet read (newly allocated). The format is described
@@ -96,7 +104,7 @@ public interface PacketSource
      * @exception IOException If the source detected a problem. The source
      *   is automatically closed.
      */
-    public byte[] readPacket() throws IOException;
+    public SensorInformation readPacket() throws IOException;
 
     /**
      * Write a packet

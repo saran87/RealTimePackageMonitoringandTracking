@@ -41,10 +41,17 @@
  */
 package rtpmt.motes.packet;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rtpmt.network.packet.SensorMessage;
+import rtpmt.network.packet.SensorMessage.SensorInformation;
 
 /**
  * The Packetizer class implements the new mote-PC protocol, using a ByteSource
@@ -212,13 +219,62 @@ public class Packetizer extends AbstractSource implements Runnable {
     }
   }
   
-   protected Packet getPacket() throws IOException {
+   /**
+   * gets the Non Acknowledgment packet from the queue and return it
+   * @return array of bytes
+   * @throws IOException 
+   */
+  protected SensorInformation readFormattedPacket() throws IOException {
+    // Packetizer packet format is identical to PacketSource's
+    for (;;) {
+      byte[] packet = readProtocolPacket(P_PACKET_NO_ACK, 0);
+      if (packet.length >= 1) {
+          
+          SensorInformation.Builder message = SensorInformation.newBuilder();
+          PacketHelper packetHelper = new PacketHelper();
+          
+          packetHelper.DestinationAddress =   Integer.toHexString(packet[0]) + Integer.toHexString(packet[1]);
+        
+          packetHelper.SourceAddress = Integer.toHexString(packet[2]) + Integer.toHexString( packet[3]);
+          
+          packetHelper.PayloadLength = Integer.toHexString(packet[4]);
+        
+          packetHelper.GroupId =  Integer.toHexString(packet[5]);
+
+          packetHelper.HandleId = Integer.toHexString(packet[6]);
+          
+          int payLoadLength = Integer.parseInt(packetHelper.PayloadLength, PacketHelper.MOTE_DATA_TYPE);
+          
+          int limit = 7 + payLoadLength/2;
+          for(int i = 0 ; i < limit; i++ ){
+                String data =  Integer.toHexString(packet[i]) + Integer.toHexString(packet[++i]);
+                packetHelper.addDataToPacket(data);
+          }
+          message.setDeviceId("1");
+          
+          DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+          Date date = new Date();
+          message.setTimeStamp(dateFormat.format(date));
+          
+          SensorInformation.Sensor.Builder sensor = SensorInformation.Sensor.newBuilder();
+          sensor.setSensorId("1");
+          sensor.setSensorUnit("F");
+          sensor.setSensorType(SensorInformation.SensorType.TEMPERATURE);
+          sensor.setSensorValue(packetHelper.getTemperature());
+          message.addSensors(sensor);
+          
+          return message.build();
+      }
+    }
+  }
+  
+   protected PacketHelper getPacket() throws IOException {
     // Packetizer packet format is identical to PacketSource's
     for (;;) {
       byte[] rawpacket = readProtocolPacket(P_PACKET_NO_ACK, 0);
      
       if (rawpacket.length >= 1) {
-           Packet packet = new Packet();
+           PacketHelper packet = new PacketHelper();
            
            return packet;
       }
@@ -298,7 +354,7 @@ public class Packetizer extends AbstractSource implements Runnable {
       }
 
       if (count >= MTU) {
-        // Packet too long, give up and try to resync
+        // PacketHelper too long, give up and try to resync
         message(name + ": packet too long");
         inSync = false;
         continue;
@@ -424,4 +480,6 @@ public class Packetizer extends AbstractSource implements Runnable {
     }
     //io(realPacket);
   }
+  
+  
 }
