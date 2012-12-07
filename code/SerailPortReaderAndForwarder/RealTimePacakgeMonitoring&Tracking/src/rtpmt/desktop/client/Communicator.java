@@ -13,9 +13,8 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
-import rtpmt.motes.packet.Dump;
-import rtpmt.motes.packet.PacketSource;
 import rtpmt.motes.packet.Packetizer;
+import rtpmt.network.packet.SensorMessage.SensorInformation;
 import rtpmt.network.tcp.TCPClient;
 
 public class Communicator implements SerialPortEventListener, Runnable
@@ -174,7 +173,7 @@ public class Communicator implements SerialPortEventListener, Runnable
         boolean successful = false;
         
         try {
-            packetReader = new Packetizer("COM3", input);
+            packetReader = new Packetizer("Packet Reader", input);
             packetReader.open(null); 
             successful = true;
         }
@@ -264,6 +263,7 @@ public class Communicator implements SerialPortEventListener, Runnable
     //what happens when data is received
     //pre: serial event is triggered
     //post: processing on the data it reads
+    @Override
     public void serialEvent(SerialPortEvent evt) {
         
         if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
@@ -280,7 +280,7 @@ public class Communicator implements SerialPortEventListener, Runnable
                 
                // tCPClient.sendData(data);
                 
-                window.txtLog.append(logText);
+                window.txtLog.append("Data:" + logText);
                 logText = "";
                 window.txtLog.append("\n");
             }
@@ -332,16 +332,23 @@ public class Communicator implements SerialPortEventListener, Runnable
     }
    
    //thread to get the mote packet from the queue and send it to the server
+    @Override
     public void run() {
        try {
         for (;;) {
-                byte[] packet = packetReader.readRawPacket();
-                Dump.printPacket(System.out, packet);
+                //byte[] packet = packetReader.readRawPacket();
+                //Dump.printPacket(System.out, packet);
+                SensorInformation sensorInfo = packetReader.readPacket();
+                for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
+                    String message = sensor.getSensorType().name() +" : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
+                    window.txtLog.append(message + "\n");
+                }
+               
                 System.out.println();
                 System.out.flush();
                 
                 if(ServerAvailable){
-                    tCPClient.sendData(packet.toString());
+                    tCPClient.sendData(sensorInfo);
                 }
 	  }
        }

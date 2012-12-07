@@ -11,7 +11,7 @@ import java.net.Socket;
  * @author Saravanakumar
  */
 public class Server {
-    // TODO code application logic here
+  
     private static int port=3000, maxConnections=10;
     
     // Listen for incoming connections and handle them
@@ -32,7 +32,7 @@ public class Server {
             }
         catch (IOException ioe) {
             System.out.println("IOException on socket listen: " + ioe);
-            ioe.printStackTrace();
+            ioe.printStackTrace();   
         }
     }
 }

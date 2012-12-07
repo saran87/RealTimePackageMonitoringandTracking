@@ -4,7 +4,11 @@
  */
 package rtpmt.desktop.client;
 
+import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import rtpmt.location.tracker.LocationTracker;
 
 
 /**
@@ -239,7 +243,18 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
 
     private void jbtnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnConnectActionPerformed
         //connect to the com port and make connection
-         
+       
+        /*for(;;){
+           
+          
+            try {
+                Thread.sleep(1000);
+                 System.out.println(LocationTracker.getLocation().toString());
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RealTimePackageTracking.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }*/
+        
         if(!communicator.getConnected())
         {
             communicator.connect();
@@ -250,6 +265,15 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
                     if(communicator.initPacketReader())
                     {
                         communicator.initListener();
+                        //start location tracker
+                        if(LocationTracker.startTracking()){
+                            
+                            txtLog.append("Started Location tracking\n");
+                        }
+                        else{
+                            txtLog.setForeground(Color.red);
+                            txtLog.append("Location tracking not available\n");
+                        }
                         jbtnConnect.setText("Disconnect");
                     }
                 }
@@ -288,7 +312,7 @@ public class RealTimePackageTracking extends javax.swing.JFrame {
         {
             if(communicator != null){
                 String ipAddress = txtIPAddress.getText();
-                int portNumber = Integer.parseInt(txtPortNumber.getSelectedText());
+                int portNumber = Integer.parseInt(txtPortNumber.getText());
                 communicator.initalizeTCPClient(ipAddress,portNumber);
             }
         }

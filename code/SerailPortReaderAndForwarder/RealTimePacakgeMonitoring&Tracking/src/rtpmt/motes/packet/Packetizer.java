@@ -47,10 +47,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rtpmt.network.packet.SensorMessage;
+import rtpmt.location.tracker.Location;
+import rtpmt.location.tracker.LocationTracker;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 
 /**
@@ -209,6 +209,7 @@ public class Packetizer extends AbstractSource implements Runnable {
    * @return array of bytes
    * @throws IOException 
    */
+    @Override
   protected byte[] readSourcePacket() throws IOException {
     // Packetizer packet format is identical to PacketSource's
     for (;;) {
@@ -224,32 +225,17 @@ public class Packetizer extends AbstractSource implements Runnable {
    * @return array of bytes
    * @throws IOException 
    */
+    @Override
   protected SensorInformation readFormattedPacket() throws IOException {
     // Packetizer packet format is identical to PacketSource's
     for (;;) {
       byte[] packet = readProtocolPacket(P_PACKET_NO_ACK, 0);
       if (packet.length >= 1) {
           
+          PacketHelper packetHelper = new PacketHelper(packet);
+          
           SensorInformation.Builder message = SensorInformation.newBuilder();
-          PacketHelper packetHelper = new PacketHelper();
-          
-          packetHelper.DestinationAddress =   Integer.toHexString(packet[0]) + Integer.toHexString(packet[1]);
-        
-          packetHelper.SourceAddress = Integer.toHexString(packet[2]) + Integer.toHexString( packet[3]);
-          
-          packetHelper.PayloadLength = Integer.toHexString(packet[4]);
-        
-          packetHelper.GroupId =  Integer.toHexString(packet[5]);
-
-          packetHelper.HandleId = Integer.toHexString(packet[6]);
-          
-          int payLoadLength = Integer.parseInt(packetHelper.PayloadLength, PacketHelper.MOTE_DATA_TYPE);
-          
-          int limit = 7 + payLoadLength/2;
-          for(int i = 0 ; i < limit; i++ ){
-                String data =  Integer.toHexString(packet[i]) + Integer.toHexString(packet[++i]);
-                packetHelper.addDataToPacket(data);
-          }
+      
           message.setDeviceId("1");
           
           DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -263,6 +249,24 @@ public class Packetizer extends AbstractSource implements Runnable {
           sensor.setSensorValue(packetHelper.getTemperature());
           message.addSensors(sensor);
           
+          sensor = SensorInformation.Sensor.newBuilder();
+          sensor.setSensorId("2");
+          sensor.setSensorUnit("gValue");
+          sensor.setSensorType(SensorInformation.SensorType.VIBRATION);
+          sensor.setSensorValue(packetHelper.yGValue());
+          message.addSensors(sensor);
+          SensorInformation.LocationInformation.Builder location = SensorInformation.LocationInformation.newBuilder();
+          Location loc = LocationTracker.getLocation();
+          if(loc !=null ){
+            location.setLatitude((float)loc.getLatitude());
+            location.setLongitude((float)loc.getLongitude());
+            message.setLocation(location);
+          }
+          else{
+            location.setLatitude((float)0.00);
+            location.setLongitude((float)0.00);
+            message.setLocation(location);
+          }
           return message.build();
       }
     }
@@ -287,6 +291,7 @@ public class Packetizer extends AbstractSource implements Runnable {
    * @throws IOException 
    */
   // Write an ack-ed packet
+    @Override
   protected boolean writeSourcePacket(byte[] packet) throws IOException {
     for (int retries = 0; retries < 25; retries++) {
       writeFramedPacket(P_PACKET_ACK, ++seqNo, packet, packet.length);

@@ -43,8 +43,7 @@
 
 package rtpmt.motes.packet;
 
-import java.io.*;
-import rtpmt.network.packet.SensorMessage;
+import java.io.IOException;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 
 

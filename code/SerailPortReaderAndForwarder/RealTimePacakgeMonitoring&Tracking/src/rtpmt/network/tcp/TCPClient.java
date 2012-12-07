@@ -59,7 +59,8 @@ public class TCPClient {
     {
         try
         {
-            data.writeTo(outPutStream);
+            data.writeDelimitedTo(outPutStream);
+           // data.writeTo(outPutStream);
            
             return true;
         }
@@ -80,7 +81,7 @@ public class TCPClient {
                 dataArray.append(inputStream.readLine());
         }
         catch(IOException ex){
-            return dataArray.toString();
+            return ex.getMessage();
         }
         
         return dataArray.toString();

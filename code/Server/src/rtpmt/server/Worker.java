@@ -4,11 +4,15 @@
  */
 package rtpmt.server;
 
-import java.io.*;
-import java.net.*;
-import java.security.*;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import rtpmt.database.access.DataAccess;
+import rtpmt.network.packet.SensorMessage;
 /**
  *
  * @author Saravanakumar
@@ -17,7 +21,7 @@ public class Worker implements Runnable {
 
     private Socket server;
     private String line;
-
+    private DataAccess dataAccess;
     Worker(Socket server) {
         this.server=server;
     }
@@ -27,33 +31,35 @@ public class Worker implements Runnable {
         try {
             // Get input from the client
             DataInputStream in = new DataInputStream (server.getInputStream());
-            BufferedReader receiveRead = new BufferedReader(new InputStreamReader(in));
-
-            List<String> Values = new ArrayList<String>();
-            
-            while((line = receiveRead.readLine()) != null && !line.equals("quit")) {
           
-                boolean  b = line.startsWith("Connection");
-
-                if(b==true){
-                    System.out.println(line);
-                    continue;
+           dataAccess = new DataAccess();
+            
+            for(;;){
+               if(in.available()>0){
+                 
+                SensorMessage.SensorInformation message = SensorMessage.SensorInformation.parseDelimitedFrom(in);
+                //end message indentifier
+                  if("-1".equals(message.getDeviceId())) {
+                        break;
+                   } 
+                   dataAccess.InsertPackageData(message);
+                   System.out.println(message.getSensorsCount());
+                  
                 }
-                
-                String splitValues[] = line.split(",");
-                
-                for(int i=0;i<splitValues.length;i++){
-                    Values.add(splitValues[i]); 
-                }
-   
-                System.out.println(Values);
-                Values.clear();
-            }     
+               else{
+                   //sleep for 1000 miliseconds if no data in input stream
+                   Thread.sleep(1000);
+               }
+            }
             server.close();
         } 
         catch (IOException ioe) {
             System.out.println("IOException on socket listen: " + ioe);
             ioe.printStackTrace();
+        }
+         catch (InterruptedException ie) {
+            System.out.println("IOException on socket listen: " + ie);
+            ie.printStackTrace();
         }
     }
 }
