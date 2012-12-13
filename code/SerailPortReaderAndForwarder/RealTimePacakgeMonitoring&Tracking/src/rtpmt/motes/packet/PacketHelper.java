@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Saravana kumar
  */
-public class PacketHelper extends Header {
+public final class PacketHelper extends Header {
     
     private ArrayList<String> PayLoad;
      
@@ -45,6 +45,7 @@ public class PacketHelper extends Header {
           
         int payLoadLength = Integer.parseInt(this.PayloadLength, MOTE_DATA_TYPE);
           
+        //7 byets are already used ,so add 7 plus the payload length
         int limit = 7 + payLoadLength;
         
         for(int i = 8 ; i < limit; i++ ){
@@ -124,13 +125,13 @@ public class PacketHelper extends Header {
             String hexString = PayLoad.get(X_INDEX);
             
             int rawValue = Integer.parseInt(hexString,MOTE_DATA_TYPE);
-            
+           
             //RawVoltage Calculation
-            double rawVolatage =  rawValue/(4096 * 2.5);
+            double rawVolatage =  (rawValue/4096.0 ) * 2.5;
             
             //Acceleration value calculation
-            Double acceleration = (rawVolatage - 1.5)/0.56;
-            
+            Double acceleration = (rawVolatage - 1.5)/0.057;
+           
             gvalue =  acceleration.toString();
         }
         else{
@@ -154,10 +155,10 @@ public class PacketHelper extends Header {
             int rawValue = Integer.parseInt(hexString,MOTE_DATA_TYPE);
             
             //RawVoltage Calculation
-            double rawVolatage =  rawValue/(4096 * 2.5);
+            double rawVolatage =  (rawValue/4096.0) * 2.5;
             
             //Acceleration value calculation
-            Double acceleration = (rawVolatage - 1.5)/0.56;
+            Double acceleration = (rawVolatage - 1.5)/0.057;
             
             gvalue =  acceleration.toString();
         }

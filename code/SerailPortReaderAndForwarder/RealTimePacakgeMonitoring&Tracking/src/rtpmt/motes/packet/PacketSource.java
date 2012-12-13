@@ -60,7 +60,6 @@
 package rtpmt.motes.packet;
 
 import java.io.IOException;
-import rtpmt.network.packet.SensorMessage;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 
 public interface PacketSource

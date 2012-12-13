@@ -4,8 +4,10 @@
 package rtpmt.database.access;
 
 
-import com.mongodb.*;
-import com.mysql.jdbc.DatabaseMetaData;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.Mongo;
+import com.mongodb.WriteResult;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.Iterator;

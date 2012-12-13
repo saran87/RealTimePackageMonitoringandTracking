@@ -21,17 +21,17 @@ public final class SensorMessage {
     
     // required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;
     boolean hasLocation();
-        rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getLocation();
-        rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder getLocationOrBuilder();
+    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getLocation();
+    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder getLocationOrBuilder();
     
     // repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;
     java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> 
         getSensorsList();
-        rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getSensors(int index);
+    rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getSensors(int index);
     int getSensorsCount();
     java.util.List<? extends rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> 
         getSensorsOrBuilderList();
-        rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder getSensorsOrBuilder(
+    rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder getSensorsOrBuilder(
         int index);
   }
   public static final class SensorInformation extends
@@ -107,7 +107,7 @@ public final class SensorMessage {
       }
       public static final com.google.protobuf.Descriptors.EnumDescriptor
           getDescriptor() {
-        return  rtpmt.network.packet.SensorMessage.SensorInformation.getDescriptor().getEnumTypes().get(0);
+        return rtpmt.network.packet.SensorMessage.SensorInformation.getDescriptor().getEnumTypes().get(0);
       }
       
       private static final SensorType[] VALUES = {
@@ -137,13 +137,13 @@ public final class SensorMessage {
     public interface LocationInformationOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
       
-      // required float latitude = 1;
+      // required double latitude = 1;
       boolean hasLatitude();
-      float getLatitude();
+      double getLatitude();
       
-      // required float longitude = 2;
+      // required double longitude = 2;
       boolean hasLongitude();
-      float getLongitude();
+      double getLongitude();
     }
     public static final class LocationInformation extends
         com.google.protobuf.GeneratedMessage
@@ -165,38 +165,38 @@ public final class SensorMessage {
       
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return  rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return  rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable;
       }
       
       private int bitField0_;
-      // required float latitude = 1;
+      // required double latitude = 1;
       public static final int LATITUDE_FIELD_NUMBER = 1;
-      private float latitude_;
+      private double latitude_;
       public boolean hasLatitude() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public float getLatitude() {
+      public double getLatitude() {
         return latitude_;
       }
       
-      // required float longitude = 2;
+      // required double longitude = 2;
       public static final int LONGITUDE_FIELD_NUMBER = 2;
-      private float longitude_;
+      private double longitude_;
       public boolean hasLongitude() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public float getLongitude() {
+      public double getLongitude() {
         return longitude_;
       }
       
       private void initFields() {
-        latitude_ = 0F;
-        longitude_ = 0F;
+        latitude_ = 0D;
+        longitude_ = 0D;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -219,10 +219,10 @@ public final class SensorMessage {
                           throws java.io.IOException {
         getSerializedSize();
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeFloat(1, latitude_);
+          output.writeDouble(1, latitude_);
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeFloat(2, longitude_);
+          output.writeDouble(2, longitude_);
         }
         getUnknownFields().writeTo(output);
       }
@@ -235,11 +235,11 @@ public final class SensorMessage {
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeFloatSize(1, latitude_);
+            .computeDoubleSize(1, latitude_);
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeFloatSize(2, longitude_);
+            .computeDoubleSize(2, longitude_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -338,12 +338,12 @@ public final class SensorMessage {
          implements rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return    rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor;
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor;
         }
         
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return    rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable;
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable;
         }
         
         // Construct using rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.newBuilder()
@@ -365,9 +365,9 @@ public final class SensorMessage {
         
         public Builder clear() {
           super.clear();
-          latitude_ = 0F;
+          latitude_ = 0D;
           bitField0_ = (bitField0_ & ~0x00000001);
-          longitude_ = 0F;
+          longitude_ = 0D;
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
@@ -378,15 +378,15 @@ public final class SensorMessage {
         
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDescriptor();
+          return rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDescriptor();
         }
         
-        public  rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getDefaultInstanceForType() {
-          return    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance();
+        public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getDefaultInstanceForType() {
+          return rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance();
         }
         
-        public  rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation build() {
-                    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = buildPartial();
+        public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation build() {
+          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
@@ -395,7 +395,7 @@ public final class SensorMessage {
         
         private rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation buildParsed()
             throws com.google.protobuf.InvalidProtocolBufferException {
-                    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = buildPartial();
+          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(
               result).asInvalidProtocolBufferException();
@@ -403,8 +403,8 @@ public final class SensorMessage {
           return result;
         }
         
-        public  rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation buildPartial() {
-                    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = new rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation(this);
+        public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation buildPartial() {
+          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = new rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation(this);
           int from_bitField0_ = bitField0_;
           int to_bitField0_ = 0;
           if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -476,14 +476,14 @@ public final class SensorMessage {
                 }
                 break;
               }
-              case 13: {
+              case 9: {
                 bitField0_ |= 0x00000001;
-                latitude_ = input.readFloat();
+                latitude_ = input.readDouble();
                 break;
               }
-              case 21: {
+              case 17: {
                 bitField0_ |= 0x00000002;
-                longitude_ = input.readFloat();
+                longitude_ = input.readDouble();
                 break;
               }
             }
@@ -492,15 +492,15 @@ public final class SensorMessage {
         
         private int bitField0_;
         
-        // required float latitude = 1;
-        private float latitude_ ;
+        // required double latitude = 1;
+        private double latitude_ ;
         public boolean hasLatitude() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        public float getLatitude() {
+        public double getLatitude() {
           return latitude_;
         }
-        public Builder setLatitude(float value) {
+        public Builder setLatitude(double value) {
           bitField0_ |= 0x00000001;
           latitude_ = value;
           onChanged();
@@ -508,20 +508,20 @@ public final class SensorMessage {
         }
         public Builder clearLatitude() {
           bitField0_ = (bitField0_ & ~0x00000001);
-          latitude_ = 0F;
+          latitude_ = 0D;
           onChanged();
           return this;
         }
         
-        // required float longitude = 2;
-        private float longitude_ ;
+        // required double longitude = 2;
+        private double longitude_ ;
         public boolean hasLongitude() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
-        public float getLongitude() {
+        public double getLongitude() {
           return longitude_;
         }
-        public Builder setLongitude(float value) {
+        public Builder setLongitude(double value) {
           bitField0_ |= 0x00000002;
           longitude_ = value;
           onChanged();
@@ -529,7 +529,7 @@ public final class SensorMessage {
         }
         public Builder clearLongitude() {
           bitField0_ = (bitField0_ & ~0x00000002);
-          longitude_ = 0F;
+          longitude_ = 0D;
           onChanged();
           return this;
         }
@@ -554,7 +554,7 @@ public final class SensorMessage {
       
       // required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];
       boolean hasSensorType();
-            rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType();
+      rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType();
       
       // required string sensorValue = 3;
       boolean hasSensorValue();
@@ -584,12 +584,12 @@ public final class SensorMessage {
       
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return  rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return  rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable;
       }
       
       private int bitField0_;
@@ -867,12 +867,12 @@ public final class SensorMessage {
          implements rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return    rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
         }
         
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return    rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable;
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable;
         }
         
         // Construct using rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.newBuilder()
@@ -911,15 +911,15 @@ public final class SensorMessage {
         
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return    rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDescriptor();
+          return rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDescriptor();
         }
         
-        public  rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getDefaultInstanceForType() {
-          return    rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance();
+        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getDefaultInstanceForType() {
+          return rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance();
         }
         
-        public  rtpmt.network.packet.SensorMessage.SensorInformation.Sensor build() {
-                    rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = buildPartial();
+        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor build() {
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
@@ -928,7 +928,7 @@ public final class SensorMessage {
         
         private rtpmt.network.packet.SensorMessage.SensorInformation.Sensor buildParsed()
             throws com.google.protobuf.InvalidProtocolBufferException {
-                    rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = buildPartial();
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(
               result).asInvalidProtocolBufferException();
@@ -936,8 +936,8 @@ public final class SensorMessage {
           return result;
         }
         
-        public  rtpmt.network.packet.SensorMessage.SensorInformation.Sensor buildPartial() {
-                    rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = new rtpmt.network.packet.SensorMessage.SensorInformation.Sensor(this);
+        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor buildPartial() {
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = new rtpmt.network.packet.SensorMessage.SensorInformation.Sensor(this);
           int from_bitField0_ = bitField0_;
           int to_bitField0_ = 0;
           if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1038,7 +1038,7 @@ public final class SensorMessage {
               }
               case 16: {
                 int rawValue = input.readEnum();
-                            rtpmt.network.packet.SensorMessage.SensorInformation.SensorType value = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.valueOf(rawValue);
+                rtpmt.network.packet.SensorMessage.SensorInformation.SensorType value = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.valueOf(rawValue);
                 if (value == null) {
                   unknownFields.mergeVarintField(2, rawValue);
                 } else {
@@ -1104,7 +1104,7 @@ public final class SensorMessage {
         public boolean hasSensorType() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
-        public  rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType() {
+        public rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType() {
           return sensorType_;
         }
         public Builder setSensorType(rtpmt.network.packet.SensorMessage.SensorInformation.SensorType value) {
@@ -1479,12 +1479,12 @@ public final class SensorMessage {
        implements rtpmt.network.packet.SensorMessage.SensorInformationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return  rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_descriptor;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return  rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_fieldAccessorTable;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_fieldAccessorTable;
       }
       
       // Construct using rtpmt.network.packet.SensorMessage.SensorInformation.newBuilder()
@@ -1533,15 +1533,15 @@ public final class SensorMessage {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return  rtpmt.network.packet.SensorMessage.SensorInformation.getDescriptor();
+        return rtpmt.network.packet.SensorMessage.SensorInformation.getDescriptor();
       }
       
       public rtpmt.network.packet.SensorMessage.SensorInformation getDefaultInstanceForType() {
-        return  rtpmt.network.packet.SensorMessage.SensorInformation.getDefaultInstance();
+        return rtpmt.network.packet.SensorMessage.SensorInformation.getDefaultInstance();
       }
       
       public rtpmt.network.packet.SensorMessage.SensorInformation build() {
-                rtpmt.network.packet.SensorMessage.SensorInformation result = buildPartial();
+        rtpmt.network.packet.SensorMessage.SensorInformation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1550,7 +1550,7 @@ public final class SensorMessage {
       
       private rtpmt.network.packet.SensorMessage.SensorInformation buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-                rtpmt.network.packet.SensorMessage.SensorInformation result = buildPartial();
+        rtpmt.network.packet.SensorMessage.SensorInformation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -1559,7 +1559,7 @@ public final class SensorMessage {
       }
       
       public rtpmt.network.packet.SensorMessage.SensorInformation buildPartial() {
-                rtpmt.network.packet.SensorMessage.SensorInformation result = new rtpmt.network.packet.SensorMessage.SensorInformation(this);
+        rtpmt.network.packet.SensorMessage.SensorInformation result = new rtpmt.network.packet.SensorMessage.SensorInformation(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1702,7 +1702,7 @@ public final class SensorMessage {
               break;
             }
             case 26: {
-                        rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder subBuilder = rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.newBuilder();
+              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder subBuilder = rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.newBuilder();
               if (hasLocation()) {
                 subBuilder.mergeFrom(getLocation());
               }
@@ -1711,7 +1711,7 @@ public final class SensorMessage {
               break;
             }
             case 34: {
-                        rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder subBuilder = rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.newBuilder();
+              rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder subBuilder = rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addSensors(subBuilder.buildPartial());
               break;
@@ -1797,7 +1797,7 @@ public final class SensorMessage {
       // required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;
       private rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation location_ = rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-            rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder> locationBuilder_;
+          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder> locationBuilder_;
       public boolean hasLocation() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
@@ -1822,7 +1822,7 @@ public final class SensorMessage {
         return this;
       }
       public Builder setLocation(
-            rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder builderForValue) {
+          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder builderForValue) {
         if (locationBuilder_ == null) {
           location_ = builderForValue.build();
           onChanged();
@@ -1837,7 +1837,7 @@ public final class SensorMessage {
           if (((bitField0_ & 0x00000004) == 0x00000004) &&
               location_ != rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance()) {
             location_ =
-                        rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.newBuilder(location_).mergeFrom(value).buildPartial();
+              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.newBuilder(location_).mergeFrom(value).buildPartial();
           } else {
             location_ = value;
           }
@@ -1871,11 +1871,11 @@ public final class SensorMessage {
         }
       }
       private com.google.protobuf.SingleFieldBuilder<
-            rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder> 
+          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder> 
           getLocationFieldBuilder() {
         if (locationBuilder_ == null) {
           locationBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-                    rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder>(
+              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder>(
                   location_,
                   getParentForChildren(),
                   isClean());
@@ -1895,7 +1895,7 @@ public final class SensorMessage {
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-            rtpmt.network.packet.SensorMessage.SensorInformation.Sensor, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> sensorsBuilder_;
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> sensorsBuilder_;
       
       public java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> getSensorsList() {
         if (sensorsBuilder_ == null) {
@@ -1971,7 +1971,7 @@ public final class SensorMessage {
         return this;
       }
       public Builder addSensors(
-            rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder builderForValue) {
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder builderForValue) {
         if (sensorsBuilder_ == null) {
           ensureSensorsIsMutable();
           sensors_.add(builderForValue.build());
@@ -2044,7 +2044,7 @@ public final class SensorMessage {
       }
       public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder addSensorsBuilder() {
         return getSensorsFieldBuilder().addBuilder(
-                rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance());
+            rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance());
       }
       public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder addSensorsBuilder(
           int index) {
@@ -2056,11 +2056,11 @@ public final class SensorMessage {
         return getSensorsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-            rtpmt.network.packet.SensorMessage.SensorInformation.Sensor, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> 
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> 
           getSensorsFieldBuilder() {
         if (sensorsBuilder_ == null) {
           sensorsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-                    rtpmt.network.packet.SensorMessage.SensorInformation.Sensor, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder>(
+              rtpmt.network.packet.SensorMessage.SensorInformation.Sensor, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder>(
                   sensors_,
                   ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
@@ -2105,14 +2105,14 @@ public final class SensorMessage {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\027SensorINformation.proto\022\024rtpmt.network" +
+      "\n\027SensorInformation.proto\022\024rtpmt.network" +
       ".packet\"\333\003\n\021SensorInformation\022\020\n\010deviceI" +
       "d\030\001 \002(\t\022\021\n\ttimeStamp\030\002 \002(\t\022M\n\010location\030\003" +
       " \002(\0132;.rtpmt.network.packet.SensorInform" +
       "ation.LocationInformation\022?\n\007sensors\030\004 \003" +
       "(\0132..rtpmt.network.packet.SensorInformat" +
       "ion.Sensor\032:\n\023LocationInformation\022\020\n\010lat" +
-      "itude\030\001 \002(\002\022\021\n\tlongitude\030\002 \002(\002\032\230\001\n\006Senso" +
+      "itude\030\001 \002(\001\022\021\n\tlongitude\030\002 \002(\001\032\230\001\n\006Senso" +
       "r\022\020\n\010sensorId\030\001 \002(\t\022S\n\nsensorType\030\002 \002(\0162" +
       "2.rtpmt.network.packet.SensorInformation",
       ".SensorType:\013TEMPERATURE\022\023\n\013sensorValue\030" +
@@ -2132,24 +2132,24 @@ public final class SensorMessage {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_SensorInformation_descriptor,
               new java.lang.String[] { "DeviceId", "TimeStamp", "Location", "Sensors", },
-                rtpmt.network.packet.SensorMessage.SensorInformation.class,
-                rtpmt.network.packet.SensorMessage.SensorInformation.Builder.class);
+              rtpmt.network.packet.SensorMessage.SensorInformation.class,
+              rtpmt.network.packet.SensorMessage.SensorInformation.Builder.class);
           internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor =
             internal_static_rtpmt_network_packet_SensorInformation_descriptor.getNestedTypes().get(0);
           internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor,
               new java.lang.String[] { "Latitude", "Longitude", },
-                rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.class,
-                rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder.class);
+              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.class,
+              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder.class);
           internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor =
             internal_static_rtpmt_network_packet_SensorInformation_descriptor.getNestedTypes().get(1);
           internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor,
               new java.lang.String[] { "SensorId", "SensorType", "SensorValue", "SensorUnit", },
-                rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.class,
-                rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder.class);
+              rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.class,
+              rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder.class);
           return null;
         }
       };

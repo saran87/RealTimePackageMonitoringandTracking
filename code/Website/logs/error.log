@@ -1,0 +1,1807 @@
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1350974686
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:33]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1350976701
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=asd3e2wdwsd
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:33]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, asd3e2wdwsd) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Request Method: GET
+Access Time: 1350983288
+Request :name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :Login
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(Login, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(Login) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:117]
+#2  Controller->RenderFrontPage() called at [C:\xampp\htdocs\connect4\controller\common\controller.php:47]
+#3  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#4  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1350983746
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:33]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/
+Request Method: GET
+Access Time: 1351030457
+Request :
+Error Type :Login
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(Login, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(Login) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:117]
+#2  Controller->RenderFrontPage() called at [C:\xampp\htdocs\connect4\controller\common\controller.php:47]
+#3  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#4  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351030473
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:33]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/
+Request Method: GET
+Access Time: 1351033746
+Request :
+Error Type :Login
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(Login, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(Login) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:117]
+#2  Controller->RenderFrontPage() called at [C:\xampp\htdocs\connect4\controller\common\controller.php:47]
+#3  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#4  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?
+Request Method: GET
+Access Time: 1351041242
+Request :
+Error Type :Login
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(Login, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(Login) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:117]
+#2  Controller->RenderFrontPage() called at [C:\xampp\htdocs\connect4\controller\common\controller.php:47]
+#3  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#4  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351041252
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/
+Request Method: GET
+Access Time: 1351050366
+Request :
+Error Type :Login
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(Login, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(Login) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:117]
+#2  Controller->RenderFrontPage() called at [C:\xampp\htdocs\connect4\controller\common\controller.php:47]
+#3  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#4  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351050384
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351050625
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351050626
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351050628
+Request :s=login&action=register&name=Saravana+Kumar&email=saran87%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'saran87@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'saran87@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, saran87@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351050632
+Request :s=login&action=register&name=Saravana+Kumar&email=sxm5154%40rit.edu&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'sxm5154@rit.edu' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'sxm5154@rit.edu' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'sxm5154@rit.edu' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, sxm5154@rit.edu, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351052777
+Request :s=login&action=register&name=Saravana+Kumar&email=sxm5154%40rit.edu&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'sxm5154@rit.edu' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'sxm5154@rit.edu' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'sxm5154@rit.edu' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, sxm5154@rit.edu, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351052861
+Request :s=login&action=register&name=Saravana+Kumar&email=sxm5154%40rit.edu&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'sxm5154@rit.edu' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'sxm5154@rit.edu' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'sxm5154@rit.edu' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, sxm5154@rit.edu, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351052877
+Request :s=login&action=register&name=Saravana+Kumar&email=karthik.sambandam%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'karthik.sambandam@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'karthik.sambandam@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'karthik.sambandam@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, karthik.sambandam@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351054473
+Request :s=login&action=register&name=Saravana+Kumar&email=karthik.sambandam%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'karthik.sambandam@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'karthik.sambandam@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'karthik.sambandam@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, karthik.sambandam@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, )
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, ) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=login&action=register
+Request Method: POST
+Access Time: 1351054592
+Request :s=login&action=register&name=Saravana+Kumar&email=karthik.sambandam%40gmail.com&password=Sar123mur
+Error Type :DB Error
+Message :Duplicate entry 'karthik.sambandam@gmail.com' for key 'email'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry 'karthik.sambandam@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry 'karthik.sambandam@gmail.com' for key 'email') called at [C:\xampp\htdocs\connect4\dataAccess\users.php:49]
+#2  Users->createNewUser(Saravana Kumar, karthik.sambandam@gmail.com, Sar123mur) called at [C:\xampp\htdocs\connect4\controller\Login\login.php:72]
+#3  Login->createNewAccount() called at [C:\xampp\htdocs\connect4\controller\Login\login.php:46]
+#4  Login->register(::1, 79da8930dd92d35625027-5d1230xaea7c514535ee72a09a94fd57ee30xaea23d0g1e0)
+#5  call_user_func(Array ([0] => Login Object ([] => Game Arcade,[viewVars] => Array ([title] => Game Arcade)),[1] => register), ::1, 79da8930dd92d35625027-5d1230xaea7c514535ee72a09a94fd57ee30xaea23d0g1e0) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:69]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:20]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=log
+Request Method: GET
+Access Time: 1351219733
+Request :s=log
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getuserlist
+Request Method: GET
+Access Time: 1351219997
+Request :s=chat&action=getuserlist
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList
+Request Method: GET
+Access Time: 1351220003
+Request :s=chat&action=getUserList
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList
+Request Method: GET
+Access Time: 1351220018
+Request :s=chat&action=getUserList
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList
+Request Method: GET
+Access Time: 1351220062
+Request :s=chat&action=getUserList
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList
+Request Method: GET
+Access Time: 1351220151
+Request :s=chat&action=getUserList
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351291811624
+Request Method: GET
+Access Time: 1351291811
+Request :s=chat&action=getUserList&_=1351291811624
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351291815835
+Request Method: GET
+Access Time: 1351291815
+Request :s=chat&action=getUserList&_=1351291815835
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351292269072
+Request Method: GET
+Access Time: 1351292269
+Request :s=chat&action=getUserList&_=1351292269072
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351293144812
+Request Method: GET
+Access Time: 1351293144
+Request :s=chat&action=getUserList&_=1351293144812
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351293144812
+Request Method: GET
+Access Time: 1351293181
+Request :s=chat&action=getUserList&_=1351293144812
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getuserlist&_=1351293144812
+Request Method: GET
+Access Time: 1351293206
+Request :s=chat&action=getuserlist&_=1351293144812
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351293299164
+Request Method: GET
+Access Time: 1351293299
+Request :s=chat&action=getUserList&_=1351293299164
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351293326521
+Request Method: GET
+Access Time: 1351293326
+Request :s=chat&action=getUserList&_=1351293326521
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList
+Request Method: GET
+Access Time: 1351293353
+Request :s=chat&action=getUserList
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList
+Request Method: GET
+Access Time: 1351293459
+Request :s=chat&action=getUserList
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getUserList&_=1351293474801
+Request Method: GET
+Access Time: 1351293474
+Request :s=chat&action=getUserList&_=1351293474801
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:94]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat
+Request Method: GET
+Access Time: 1351296661
+Request :s=chat&action=initChat
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:100]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partner=72
+Request Method: GET
+Access Time: 1351297635
+Request :s=chat&action=initChat&type=json&partner=72
+Error Type :DB Error
+Message :Duplicate entry '71_chat_72' for key 'chat_id'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry '71_chat_72' for key 'chat_id') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry '71_chat_72' for key 'chat_id') called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:61]
+#2  ChatDataAccess->createChatRoom(71_chat_72) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:19]
+#3  ChatDataAccess->intializeChat(71, 72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:76]
+#4  Chat->initChat(::1, d8be5790e2e972d460b28-6b05f0xaea13a4a52b2a1f11e05e55ce7fb90xaea23d33cc6)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, d8be5790e2e972d460b28-6b05f0xaea13a4a52b2a1f11e05e55ce7fb90xaea23d33cc6) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partner=72
+Request Method: GET
+Access Time: 1351297642
+Request :s=chat&action=initChat&type=json&partner=72
+Error Type :DB Error
+Message :Duplicate entry '71_chat_72' for key 'chat_id'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Duplicate entry '71_chat_72' for key 'chat_id') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Duplicate entry '71_chat_72' for key 'chat_id') called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:61]
+#2  ChatDataAccess->createChatRoom(71_chat_72) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:19]
+#3  ChatDataAccess->intializeChat(71, 72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:76]
+#4  Chat->initChat(::1, d8be5790e2e972d460b28-6b05f0xaea13a4a52b2a1f11e05e55ce7fb90xaea23d33cc6)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, d8be5790e2e972d460b28-6b05f0xaea13a4a52b2a1f11e05e55ce7fb90xaea23d33cc6) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=sendMessage
+Request Method: GET
+Access Time: 1351358187
+Request :s=chat&action=sendMessage
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=sendMessage&type=json&chatid=1&message=asdas
+Request Method: GET
+Access Time: 1351380927
+Request :s=chat&action=sendMessage&type=json&chatid=1&message=asdas
+Error Type :DB Error
+Message :Unknown column 'name' in 'field list'#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Unknown column 'name' in 'field list') called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Unknown column 'name' in 'field list') called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:186]
+#2  ChatDataAccess->addMessage(1, 71, asdas) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:105]
+#3  Chat->sendMessage(::1, 5d80508aa90daed221028-6b05f0xaea13a4903a38270ad2e4bf8a81f90xaea23d400h5)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => sendMessage), ::1, 5d80508aa90daed221028-6b05f0xaea13a4903a38270ad2e4bf8a81f90xaea23d400h5) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat
+Request Method: POST
+Access Time: 1351409038
+Request :s=chat&action=initChat&message=asdsa
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat
+Request Method: POST
+Access Time: 1351409127
+Request :s=chat&action=initChat&message=asdsaasdas
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat
+Request Method: GET
+Access Time: 1351409161
+Request :s=chat&action=initChat
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=sendMessage
+Request Method: GET
+Access Time: 1351409269
+Request :s=chat&action=sendMessage
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=sendmessage
+Request Method: GET
+Access Time: 1351409270
+Request :s=chat&action=sendmessage
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages
+Request Method: GET
+Access Time: 1351844674
+Request :s=chat&action=getMessages
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=72
+Request Method: GET
+Access Time: 1351848343
+Request :s=chat&action=initChat&type=json&partnerId=72
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=72
+Request Method: GET
+Access Time: 1351848343
+Request :s=chat&action=initChat&type=json&partnerId=72
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 72) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848376
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848376
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=72
+Request Method: GET
+Access Time: 1351848384
+Request :s=chat&action=initChat&type=json&partnerId=72
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=72
+Request Method: GET
+Access Time: 1351848384
+Request :s=chat&action=initChat&type=json&partnerId=72
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 72) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=73
+Request Method: GET
+Access Time: 1351848389
+Request :s=chat&action=initChat&type=json&partnerId=73
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 73) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=73
+Request Method: GET
+Access Time: 1351848389
+Request :s=chat&action=initChat&type=json&partnerId=73
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 73) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 73) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848395
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848395
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=73
+Request Method: GET
+Access Time: 1351848400
+Request :s=chat&action=initChat&type=json&partnerId=73
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 73) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=73
+Request Method: GET
+Access Time: 1351848400
+Request :s=chat&action=initChat&type=json&partnerId=73
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 73) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 73) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=73
+Request Method: GET
+Access Time: 1351848594
+Request :s=chat&action=initChat&type=json&partnerId=73
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 73) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=73
+Request Method: GET
+Access Time: 1351848594
+Request :s=chat&action=initChat&type=json&partnerId=73
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 73) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 73) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848607
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:33]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848607
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:109]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:35]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, afe480791968e7b264228-6b05f0xaea13a467ef4c59fe23c4f95cec190xaea23d87bg1) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848945
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:113]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:37]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848945
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:113]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:39]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848948
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:113]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:37]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848948
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:113]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:39]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848962
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:113]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:37]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351848962
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:113]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:39]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849296
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:38]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849296
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:40]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849298
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:38]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849298
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:40]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849300
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:38]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849300
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:40]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849318
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 71) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:38]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=initChat&type=json&partnerId=74
+Request Method: GET
+Access Time: 1351849318
+Request :s=chat&action=initChat&type=json&partnerId=74
+Error Type :DB Error
+Message :Column 'room_id' cannot be null#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Column 'room_id' cannot be null) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:114]
+#2  ChatDataAccess->addParticipant(, 74) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:40]
+#3  ChatDataAccess->intializeChat(71, 74) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:75]
+#4  Chat->initChat(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#5  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => initChat), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#6  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#7  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: GET
+Access Time: 1351851116
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :Wrong number of parameters for query#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:253]
+#2  ChatDataAccess->getMessages(71) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: GET
+Access Time: 1351851118
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :Wrong number of parameters for query#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:253]
+#2  ChatDataAccess->getMessages(71) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: GET
+Access Time: 1351851286
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:253]
+#2  ChatDataAccess->getMessages(72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, 08eba91fc215bd9ab5f28-6ec480xaea13a4a5009e742b296389d6e8890xaea23d88bbe)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, 08eba91fc215bd9ab5f28-6ec480xaea13a4a5009e742b296389d6e8890xaea23d88bbe) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: GET
+Access Time: 1351851288
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:253]
+#2  ChatDataAccess->getMessages(72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, 08eba91fc215bd9ab5f28-6ec480xaea13a4a5009e742b296389d6e8890xaea23d88bbe)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, 08eba91fc215bd9ab5f28-6ec480xaea13a4a5009e742b296389d6e8890xaea23d88bbe) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: GET
+Access Time: 1351851292
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`timestamp` > ?
+					AND  `chat_id`
+					IN (
+
+					SELECT DISTINCT chat_id
+				' at line 3) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:253]
+#2  ChatDataAccess->getMessages(71) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, 22f003134d6fa11b40128-6b05f0xaea13a4d3716b5e57cc616f2cbdb90xaea23d885af) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: POST
+Access Time: 1351864173
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :Wrong number of parameters for query#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:241]
+#2  ChatDataAccess->getMessages(72) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, f4b68bf1aef10b3f0f828-6ec480xaea13a4cdc95f11104ce5eb3024090xaea23d8ad03)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, f4b68bf1aef10b3f0f828-6ec480xaea13a4cdc95f11104ce5eb3024090xaea23d8ad03) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: POST
+Access Time: 1351864174
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :Wrong number of parameters for query#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:241]
+#2  ChatDataAccess->getMessages(71) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: POST
+Access Time: 1351864184
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :Wrong number of parameters for query#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:241]
+#2  ChatDataAccess->getMessages(71) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: POST
+Access Time: 1351864187
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :Wrong number of parameters for query#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:241]
+#2  ChatDataAccess->getMessages(71) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /connect4/index.php?s=chat&action=getMessages&type=json
+Request Method: POST
+Access Time: 1351864194
+Request :s=chat&action=getMessages&type=json
+Error Type :DB Error
+Message :Wrong number of parameters for query#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(DB Error, Wrong number of parameters for query) called at [C:\xampp\htdocs\connect4\dataAccess\chatDataAccess.php:241]
+#2  ChatDataAccess->getMessages(71) called at [C:\xampp\htdocs\connect4\controller\chat\chat.php:138]
+#3  Chat->getMessages(::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c)
+#4  call_user_func(Array ([0] => Chat Object ([] => Game Arcade,[viewVars] => Array ()),[1] => getMessages), ::1, b65da1d4b192bd6fbe528-6b05f0xaea13a4133247512638060d57fd790xaea23d8a65c) called at [C:\xampp\htdocs\connect4\controller\common\controller.php:73]
+#5  Controller->RenderPage() called at [C:\xampp\htdocs\connect4\controller\main.php:21]
+#6  Intialize() called at [C:\xampp\htdocs\connect4\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=chat&action=getMessages&type=json
+Request Method: POST
+Access Time: 1352192387
+Request :s=chat&action=getMessages&type=json
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=chat&action=getUserList&_=1352192387398
+Request Method: GET
+Access Time: 1352192387
+Request :s=chat&action=getUserList&_=1352192387398
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=chat&action=getUserList&_=1352192548512
+Request Method: GET
+Access Time: 1352192548
+Request :s=chat&action=getUserList&_=1352192548512
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=chat&action=getMessages&type=json
+Request Method: POST
+Access Time: 1352192588
+Request :s=chat&action=getMessages&type=json
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=chat&action=getUserList&_=1352192588166
+Request Method: GET
+Access Time: 1352192588
+Request :s=chat&action=getUserList&_=1352192588166
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=package
+Request Method: GET
+Access Time: 1352258002
+Request :s=package
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=package&type=json
+Request Method: GET
+Access Time: 1352258028
+Request :s=package&type=json
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================
+
+==========================================================================================================
+From : ::1
+Requested URL: /rfid/index.php?s=package&type=json
+Request Method: GET
+Access Time: 1352258035
+Request :s=package&type=json
+Error Type :404
+Message :#-1  ErrorHandler::GetCallTrace() called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:30]
+#0  ErrorHandler::GetRequestDetail(404, ) called at [C:\xampp\htdocs\RFID\controller\common\ErrorHandler.php:21]
+#1  ErrorHandler::HandleError(404) called at [C:\xampp\htdocs\RFID\controller\common\controller.php:101]
+#2  Controller->RenderPage() called at [C:\xampp\htdocs\RFID\controller\main.php:21]
+#3  Intialize() called at [C:\xampp\htdocs\RFID\index.php:13]
+
+
+==========================================================================================================

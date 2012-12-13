@@ -94,7 +94,7 @@ public class LocationTracker implements SerialPortEventListener, Runnable{
                 if(streamReader.ready()){
                     String line = streamReader.readLine();
                     while(line != null){
-
+                       System.out.println("tracking");
                         //System.out.println(str);
 
                         if(line.contains("GPGGA")){

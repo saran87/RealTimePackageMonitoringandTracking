@@ -156,6 +156,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     //io.open();
   }
 
+    @Override
   protected void closeSource() {
         try {
             io.close();
@@ -253,18 +254,18 @@ public class Packetizer extends AbstractSource implements Runnable {
           sensor.setSensorId("2");
           sensor.setSensorUnit("gValue");
           sensor.setSensorType(SensorInformation.SensorType.VIBRATION);
-          sensor.setSensorValue(packetHelper.yGValue());
+          sensor.setSensorValue(packetHelper.xGValue());
           message.addSensors(sensor);
           SensorInformation.LocationInformation.Builder location = SensorInformation.LocationInformation.newBuilder();
           Location loc = LocationTracker.getLocation();
           if(loc !=null ){
-            location.setLatitude((float)loc.getLatitude());
-            location.setLongitude((float)loc.getLongitude());
+            location.setLatitude(loc.getLatitude());
+            location.setLongitude(loc.getLongitude());
             message.setLocation(location);
           }
           else{
-            location.setLatitude((float)0.00);
-            location.setLongitude((float)0.00);
+            location.setLatitude(0.00);
+            location.setLongitude(0.00);
             message.setLocation(location);
           }
           return message.build();
