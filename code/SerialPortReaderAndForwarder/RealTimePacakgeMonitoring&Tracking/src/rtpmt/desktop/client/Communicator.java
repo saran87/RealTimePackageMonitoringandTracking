@@ -5,7 +5,6 @@
 package rtpmt.desktop.client;
 
 
-import gnu.io.*;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +12,7 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
+import gnu.io.*;
 import rtpmt.motes.packet.Packetizer;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 import rtpmt.network.tcp.TCPClient;

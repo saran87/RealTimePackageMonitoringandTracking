@@ -4,7 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Real Time Package Tracking"/>
-    <Property name="name" type="java.lang.String" value="RealTImePackageTracking"/>
+    <Property name="name" type="java.lang.String" value="RealTImePackageTracking" noResource="true"/>
   </Properties>
   <AccessibilityProperties>
     <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>

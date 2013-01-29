@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package rtpmt.location.tracker;
-
 import gnu.io.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
