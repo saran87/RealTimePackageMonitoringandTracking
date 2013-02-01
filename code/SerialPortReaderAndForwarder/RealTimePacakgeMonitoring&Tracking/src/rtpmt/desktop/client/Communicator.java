@@ -336,8 +336,8 @@ public class Communicator implements SerialPortEventListener, Runnable
     public void run() {
        try {
         for (;;) {
-                //byte[] packet = packetReader.readRawPacket();
-                //Dump.printPacket(System.out, packet);
+                   //byte[] packet = packetReader.readRawPacket();
+                   
                 SensorInformation sensorInfo = packetReader.readPacket();
                 for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
                     String message = sensor.getSensorType().name() +" : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();

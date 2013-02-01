@@ -231,6 +231,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     // Packetizer packet format is identical to PacketSource's
     for (;;) {
       byte[] packet = readProtocolPacket(P_PACKET_NO_ACK, 0);
+      Dump.printPacket(System.out, packet);
       if (packet.length >= 1) {
           
           PacketHelper packetHelper = new PacketHelper(packet);
@@ -264,8 +265,8 @@ public class Packetizer extends AbstractSource implements Runnable {
             message.setLocation(location);
           }
           else{
-            location.setLatitude(0.00);
-            location.setLongitude(0.00);
+            location.setLatitude(43.084603);
+            location.setLongitude(-77.680312);
             message.setLocation(location);
           }
           return message.build();
