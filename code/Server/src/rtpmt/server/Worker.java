@@ -4,13 +4,9 @@
  */
 package rtpmt.server;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import rtpmt.database.access.DataAccess;
 import rtpmt.network.packet.SensorMessage;
 /**
