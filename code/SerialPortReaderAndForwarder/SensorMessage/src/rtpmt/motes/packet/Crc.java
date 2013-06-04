@@ -46,10 +46,12 @@ public class Crc {
       crc = crc ^ (int)b << 8;
 
       for (int i = 0; i < 8; i++) {
-	if ((crc & 0x8000) == 0x8000)
-	  crc = crc << 1 ^ 0x1021;
-	else
-	  crc = crc << 1;
+	if ((crc & 0x8000) == 0x8000) {
+              crc = crc << 1 ^ 0x1021;
+          }
+	else {
+              crc = crc << 1;
+          }
       }
 
       return crc & 0xffff;
@@ -79,10 +81,11 @@ public class Crc {
     public static void main(String[] args) {
 	byte[] ia = new byte[args.length];
 
-	for (int i = 0; i < args.length; i++)
-	    try {
-		ia[i] = Integer.decode(args[i]).byteValue();
-	    } catch (NumberFormatException e) { }
+	for (int i = 0; i < args.length; i++) {
+            try {
+                ia[i] = Integer.decode(args[i]).byteValue();
+            } catch (NumberFormatException e) { }
+        }
 	System.out.println(Integer.toHexString(calc(ia, ia.length)));
     }
 }

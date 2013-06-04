@@ -16,19 +16,19 @@ import rtpmt.network.packet.SensorMessage;
 public class Worker implements Runnable {
 
     private Socket server;
-    private String line;
     private DataAccess dataAccess;
     Worker(Socket server) {
         this.server=server;
     }
 
+    @Override
     public void run () {
 
         try {
             // Get input from the client
             DataInputStream in = new DataInputStream (server.getInputStream());
           
-           dataAccess = new DataAccess();
+            dataAccess = new DataAccess();
             
             for(;;){
                if(in.available()>0){

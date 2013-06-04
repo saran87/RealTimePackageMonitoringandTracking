@@ -11,25 +11,18 @@ package rtpmt.motes.packet;
 public class Header {
     
     //Handle Id to identify the message type
-    protected String ProtocolType;
+    protected int ProtocolType;
     
-    //This byte indicates it is an AM message
-    protected String MessageType;
-    
-    //These two hexa bytes are the Destination address (FF FF indicates broadcast)
-    protected String DestinationAddress;
-    
-    //Source address, this indicates address of last mote before sink node.
-    //As this is a one hop application, it is also the Origin of the message
-    protected String SourceAddress;
+    //This 2 byte indicates the Node Id
+    protected int NodeId;
     
     //Payload Length
-    protected String PayloadLength;
+    protected int PayloadLength;
      
-    //Group Id
-    protected String GroupId;
+    //service
+    protected int Service;
       
-    //Handle Id to identify the message type
-    protected String HandleId;
+    //service Id
+    protected int ServiceId;
     
 }

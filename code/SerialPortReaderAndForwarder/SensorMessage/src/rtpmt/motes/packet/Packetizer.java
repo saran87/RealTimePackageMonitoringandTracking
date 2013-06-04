@@ -43,10 +43,15 @@ package rtpmt.motes.packet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rtpmt.location.tracker.Location;
@@ -97,15 +102,23 @@ public class Packetizer extends AbstractSource implements Runnable {
    * - Packets that are greater than a (private) MTU are silently
    *   dropped.
    */
-  final static boolean DEBUG = false;
-
+  final static boolean DEBUG = true;
+  
+  final static int[] FRAME_SYNC = {170, 255, 85};
+  
   final static int SYNC_BYTE = 126;
 
   final static int ESCAPE_BYTE = 125;
   
   final static int P_ACK = 67;
 
-  final static int P_PACKET_ACK = 68;
+  final static int P_REGISTRATION = 153;
+  
+  final static int P_SERVICE_REQUEST = 255;
+  
+  final static int P_SERVICE_REPORT_RATE = 254;
+  
+  final static int P_UPDATE = 1;
 
   final static int P_PACKET_NO_ACK = 69;
 
@@ -115,7 +128,8 @@ public class Packetizer extends AbstractSource implements Runnable {
 
   final static int ACK_TIMEOUT = 1000; // in milliseconds
 
-  private InputStream io;
+  private InputStream input;
+  private OutputStream output;
 
   private boolean inSync;
 
@@ -130,19 +144,23 @@ public class Packetizer extends AbstractSource implements Runnable {
   private Thread reader;
 
   private LinkedList[] received;
+  
+  private HashMap<Integer,Integer> sensorList;
 
   /**
    * Packetizers are built using the makeXXX methods in BuildSource
    */
- public Packetizer(String name, InputStream io) {
+ public Packetizer(String name, InputStream io,OutputStream ou) {
     super(name);
-    this.io = io;
+    this.input = io;
+    output = ou;
     inSync = false;
     seqNo = 13;
     reader = new Thread(this);
     received = new LinkedList[256];
     received[P_ACK] = new LinkedList();
     received[P_PACKET_NO_ACK] = new LinkedList();
+    sensorList = new HashMap<Integer, Integer>();
   }
 
   synchronized public void open(Messenger messages) throws IOException {
@@ -159,7 +177,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     @Override
   protected void closeSource() {
         try {
-            io.close();
+            input.close();
         } catch (IOException ex) {
             Logger.getLogger(Packetizer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -197,10 +215,11 @@ public class Packetizer extends AbstractSource implements Runnable {
         inPackets.notify();
       }
     } else if (packetType != P_UNKNOWN) {
+        /*
       try {
-        writeFramedPacket(P_UNKNOWN, packetType, ackPacket, 0);
+       writeFramedPacket(P_UNKNOWN, packetType,1, ackPacket);
       } catch (IOException e) {
-      }
+      }*/
       message(name + ": ignoring unknown packet type 0x"
           + Integer.toHexString(packetType));
     }
@@ -227,9 +246,10 @@ public class Packetizer extends AbstractSource implements Runnable {
    * @throws IOException 
    */
     @Override
-  protected SensorInformation readFormattedPacket() throws IOException {
+    protected SensorInformation readFormattedPacket() throws IOException {
     // Packetizer packet format is identical to PacketSource's
     for (;;) {
+    
       byte[] packet = readProtocolPacket(P_PACKET_NO_ACK, 0);
       Dump.printPacket(System.out, packet);
       if (packet.length >= 1) {
@@ -248,14 +268,15 @@ public class Packetizer extends AbstractSource implements Runnable {
           sensor.setSensorId("1");
           sensor.setSensorUnit("F");
           sensor.setSensorType(SensorInformation.SensorType.TEMPERATURE);
-          sensor.setSensorValue(packetHelper.getTemperature());
+          sensor.setSensorValue(String.valueOf(packetHelper.getValue()));
+          //sensor.setSensorValue("80");
           message.addSensors(sensor);
           
           sensor = SensorInformation.Sensor.newBuilder();
           sensor.setSensorId("2");
           sensor.setSensorUnit("gValue");
           sensor.setSensorType(SensorInformation.SensorType.VIBRATION);
-          sensor.setSensorValue(packetHelper.xGValue());
+          sensor.setSensorValue("45g");
           message.addSensors(sensor);
           SensorInformation.LocationInformation.Builder location = SensorInformation.LocationInformation.newBuilder();
           Location loc = LocationTracker.getLocation();
@@ -296,7 +317,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     @Override
   protected boolean writeSourcePacket(byte[] packet) throws IOException {
     for (int retries = 0; retries < 25; retries++) {
-      writeFramedPacket(P_PACKET_ACK, ++seqNo, packet, packet.length);
+      writeFramedPacket(P_SERVICE_REQUEST,1, packet);
 
       long deadline = System.currentTimeMillis() + ACK_TIMEOUT;
 
@@ -318,104 +339,149 @@ public class Packetizer extends AbstractSource implements Runnable {
     return false;
   }
 
-  static private byte ackPacket[] = new byte[0];
+  static private byte dummyPacket[] = new byte[0];
 
-  public void run() {
-    try {
-      for (;;) {
+  public void run() 
+  {
+    try 
+    {
+      for (;;) 
+      {
         byte[] packet = readFramedPacket();
         int packetType = packet[0] & 0xff;
-        int pdataOffset = 1;
-
-        if (packetType == P_PACKET_ACK) {
-          // send ack
-          writeFramedPacket(P_ACK, packet[1], ackPacket, 0);
+        int pdataOffset = 0;
+        if (packetType == P_REGISTRATION) 
+        {
+          int nodeId = (packet[1] & 0xff)
+                       | (packet[2] & 0xff) << 8;
+          sendServiceRequest(nodeId);
           // And merge with un-acked packets
           packetType = P_PACKET_NO_ACK;
-          pdataOffset = 2;
+        }
+        else if(packetType == P_UPDATE){
+             packetType = P_PACKET_NO_ACK;
+             int nodeId = (packet[1] & 0xff)
+                       | (packet[2] & 0xff) << 8;
+            //sendThresholdRequest(nodeId);
         }
         int dataLength = packet.length - pdataOffset;
         byte[] dataPacket = new byte[dataLength];
         System.arraycopy(packet, pdataOffset, dataPacket, 0, dataLength);
         pushProtocolPacket(packetType, dataPacket);
       }
-    } catch (IOException e) {
+    } catch (IOException e) 
+    {
     }
   }
 
+  /*
+   * TINY OS Packet reader
+   */
   // Read system-level packet. If inSync is false, we currently don't
   // have sync
+ 
   private byte[] readFramedPacket() throws IOException {
+    
     int count = 0;
-    boolean escaped = false;
-
-    for (;;) {
-      if (!inSync) {
+    boolean isLength = false;
+    int payLoad = 0;
+    inSync = false;
+    int[] syncFrame = new int[FRAME_SYNC.length];
+    
+    for (;;) 
+    {
+       /*
+       System.out.print(input.read());
+       count++;
+       if( count >22){
+           return new byte[0];
+       }
+        */
+      if (!inSync) 
+      {
         message(name + ": resynchronising");
         // re-synchronise
-        while (io.read() != SYNC_BYTE)
-          ;
-        inSync = true;
+        int b  = input.read();
+        syncFrame[count++] = (byte)b & 0xff;
+        
+        while (count < FRAME_SYNC.length)
+        {
+             b =  input.read();
+             syncFrame[count++] = b & 0xff;    
+        }
+       
+        if(DEBUG){
+            for ( int i = 0; i < count ;i++ ){
+                    System.out.print(syncFrame[i]);
+            }
+            System.out.println();
+        }
+        
+        if(Utils.compare(syncFrame,FRAME_SYNC))
+        {
+          inSync = true;
+        }
         count = 0;
-        escaped = false;
       }
-
-      if (count >= MTU) {
-        // PacketHelper too long, give up and try to resync
-        message(name + ": packet too long");
-        inSync = false;
-        continue;
-      }
-
-      byte b =  (byte)io.read();
-      if (escaped) {
-        if (b == SYNC_BYTE) {
-          // sync byte following escape is an error, resync
-          message(name + ": unexpected sync byte");
+     
+      else{
+        byte b;
+        if (count >= MTU) 
+        {
+          // PacketHelper too long, give up and try to resync
+          message(name + ": packet too long");
           inSync = false;
           continue;
         }
-        b ^= 0x20;
-        escaped = false;
-      } else if (b == ESCAPE_BYTE) {
-        escaped = true;
-        continue;
-      } else if (b == SYNC_BYTE) {
-        if (count < 4) {
-          // too-small frames are ignored
-          count = 0;
-          continue;
+        if(!isLength)
+        {
+          byte command =  (byte)input.read();
+          receiveBuffer[count++] = command;
+          receiveBuffer[count++] = (byte)input.read();
+          receiveBuffer[count++] = (byte)input.read();
+          int length = input.read();
+          b = (byte)length;
+          payLoad = count + length;
+          
+          isLength = true;
         }
-        byte[] packet = new byte[count - 2];
-        System.arraycopy(receiveBuffer, 0, packet, 0, count - 2);
-
-        int readCrc = (receiveBuffer[count - 2] & 0xff)
-            | (receiveBuffer[count - 1] & 0xff) << 8;
-        int computedCrc = Crc.calc(packet, packet.length);
-
-        if (DEBUG) {
-          System.err.println("received: ");
-          Dump.printPacket(System.err, packet);
-          System.err.println(" rcrc: " + Integer.toHexString(readCrc)
-              + " ccrc: " + Integer.toHexString(computedCrc));
+        else if (count <= payLoad){
+            b = (byte) input.read();
         }
+        else{
+          byte[] packet = new byte[count - 2];
+          System.arraycopy(receiveBuffer, 0, packet, 0, count - 2);
 
-        if (readCrc == computedCrc) {
-          return packet;
-        } else {
-          message(name + ": bad packet");
-          /*
-           * We don't lose sync here. If we did, garbage on the line at startup
-           * will cause loss of the first packet.
-           */
-          count = 0;
-          continue;
+          int readCrc = (receiveBuffer[count - 1] & 0xff)
+              | (receiveBuffer[count - 2] & 0xff) << 8;
+          int computedCrc = Crc.calc(packet, packet.length);
+
+          if (DEBUG) {
+            System.err.println("received: ");
+            Dump.printPacket(System.err, packet);
+            System.err.println(" rcrc: " + Integer.toHexString(readCrc)
+                + " ccrc: " + Integer.toHexString(computedCrc));
+          }
+
+          if (readCrc == computedCrc) {
+            return packet;
+          } else {
+            message(name + ": bad packet");
+            /*
+             * We don't lose sync here. If we did, garbage on the line at startup
+             * will cause loss of the first packet.
+            */
+            count = 0;
+            inSync = false;
+            continue;
+          }
         }
-      }
-
-      receiveBuffer[count++] = b;
+        receiveBuffer[count++] = b;
+    } 
     }
   }
+  
+ 
 
   // Class to build a framed, escaped and crced packet byte stream
   static class Escaper {
@@ -430,62 +496,98 @@ public class Packetizer extends AbstractSource implements Runnable {
       escaped = new byte[2 * length];
       escapePtr = 0;
       crc = 0;
-      escaped[escapePtr++] = SYNC_BYTE;
-    }
-
-    static private boolean needsEscape(int b) {
-      return b == SYNC_BYTE || b == ESCAPE_BYTE;
+      while (escapePtr < FRAME_SYNC.length)
+      {
+        escaped[escapePtr] = (byte) FRAME_SYNC[escapePtr];
+        escapePtr++;
+      }
     }
 
     void nextByte(int b) {
       b = b & 0xff;
       crc = Crc.calcByte(crc, b);
-      if (needsEscape(b)) {
-        escaped[escapePtr++] = ESCAPE_BYTE;
-        escaped[escapePtr++] = (byte) (b ^ 0x20);
-      } else {
-        escaped[escapePtr++] = (byte) b;
-      }
+    
+      escaped[escapePtr++] = (byte) b;
     }
 
     void terminate() {
-      escaped[escapePtr++] = SYNC_BYTE;
+      crc = crc & 0xff ;
+      escaped[escapePtr++] = (byte)crc;
+      escaped[escapePtr++] = (byte)(crc >> 8);
     }
   }
 
+  private synchronized void sendServiceRequest(int nodeId) throws IOException{
+      // send ack
+       writeFramedPacket(P_SERVICE_REQUEST,nodeId,dummyPacket);
+  }
+  
+  private synchronized void sendThresholdRequest(int nodeId) throws IOException{
+      
+      dummyPacket = new byte[4];
+      dummyPacket[0] = 0 &0xff;//service
+      dummyPacket[1] = 1 &0xff; //service Id
+      dummyPacket[2] = 1 &0xff;
+      dummyPacket[3] = 1 >> 8;
+      
+       writeFramedPacket(P_SERVICE_REPORT_RATE,nodeId,dummyPacket);
+  }
+  
   // Write a packet of type 'packetType', first byte 'firstByte'
   // and bytes 2..'count'+1 in 'packet'
-  private synchronized void writeFramedPacket(int packetType, int firstByte,
-      byte[] packet, int count) throws IOException {
-    if (DEBUG) {
+  private synchronized void writeFramedPacket(int packetType, int nodeId,
+      byte[] packet) throws IOException {
+   
+      if (DEBUG) {
       System.err.println("sending: ");
       Dump.printByte(System.err, packetType);
-      Dump.printByte(System.err, firstByte);
+      Dump.printByte(System.err, packet.length);
       Dump.printPacket(System.err, packet);
       System.err.println();
     }
+  
+     /*
+    byte[] realPacket = new byte[8];
+    count = 0;
+    realPacket[count++] = (byte)(170 & 0xff);
+    realPacket[count++] = (byte)(255 & 0xff);
+    realPacket[count++] = (byte)(85 & 0xff);
+    realPacket[count++] = (byte)(255 & 0xff);
+    realPacket[count++] = (byte)(33 & 0xff);
+    realPacket[count++] = (byte)(232 & 0xff);
+    realPacket[count++] = (byte)(18 & 0xff);
+    realPacket[count++] = (byte)(52 & 0xff);
+   */
 
-    Escaper buffer = new Escaper(count + 6);
+    Escaper buffer = new Escaper(packet.length + 7);
 
     buffer.nextByte(packetType);
-    buffer.nextByte(firstByte);
-    for (int i = 0; i < count; i++) {
+    
+    //Node Id is 16 bit
+    buffer.nextByte(nodeId &0xff);
+    buffer.nextByte(nodeId >> 8);
+    
+    //+2 for crc
+    int length = packet.length + 2; 
+    //length 
+    buffer.nextByte(length &0xff);
+    
+    
+    for (int i = 0; i < length-1; i++) {
       buffer.nextByte(packet[i]);
+      System.out.println(i);
     }
-
-    int crc = buffer.crc;
-    buffer.nextByte(crc & 0xff);
-    buffer.nextByte(crc >> 8);
 
     buffer.terminate();
 
     byte[] realPacket = new byte[buffer.escapePtr];
     System.arraycopy(buffer.escaped, 0, realPacket, 0, buffer.escapePtr);
 
-    if (DEBUG) {
+    if (true) {
       Dump.dump("encoded", realPacket);
     }
-    //io(realPacket);
+     output.flush();
+     output.write(realPacket);
   }
   
   

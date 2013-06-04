@@ -26,7 +26,7 @@ public class Test {
                 int byt = -1;
                 boolean inSync =  false;
                 
-                System.out.println(Integer.parseInt("001"));
+                //System.out.println(Integer.parseInt("001"));
                 char[] frame = new char[4];
                 int count = 0;
                 Integer length = -1;

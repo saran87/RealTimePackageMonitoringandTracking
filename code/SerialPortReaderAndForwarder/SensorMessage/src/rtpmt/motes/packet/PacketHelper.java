@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public final class PacketHelper extends Header {
     
-    private ArrayList<String> PayLoad;
+    private ArrayList<Byte> PayLoad;
      
     final static int MOTE_DATA_TYPE = 16;
      
@@ -23,7 +23,7 @@ public final class PacketHelper extends Header {
     final static int Y_INDEX = 3;
     
     public PacketHelper(){
-        PayLoad = new ArrayList<String>();
+        PayLoad = new ArrayList<Byte>();
     }
     
     /**
@@ -31,26 +31,22 @@ public final class PacketHelper extends Header {
      */
     public PacketHelper(byte[] byteArray){
          
-        PayLoad = new ArrayList<String>();
+        PayLoad = new ArrayList<Byte>();
 
-        this.DestinationAddress = Integer.toHexString(byteArray[1] & 0xff) + Integer.toHexString(byteArray[2] & 0xff);
+        this.ProtocolType = byteArray[0];
         
-        this.SourceAddress = Integer.toHexString(byteArray[3] & 0xff) + Integer.toHexString( byteArray[4] & 0xff);
-          
-        this.PayloadLength = Integer.toHexString(byteArray[5] & 0xff);
+        this.NodeId = (byteArray[1] & 0xff)
+                       | (byteArray[2] & 0xff) << 8;          
+        this.PayloadLength = byteArray[3];
         
-        this.GroupId =  Integer.toHexString(byteArray[6] & 0xff);
+        this.Service =  byteArray[4];
 
-        this.HandleId = Integer.toHexString(byteArray[7] & 0xff);
+        this.ServiceId = byteArray[5];
           
-        int payLoadLength = Integer.parseInt(this.PayloadLength, MOTE_DATA_TYPE);
-          
-        //7 byets are already used ,so add 7 plus the payload length
-        int limit = 7 + payLoadLength;
+ 
         
-        for(int i = 8 ; i < limit; i++ ){
-            String data =  Integer.toHexString(byteArray[i] & 0xff) + Integer.toHexString(byteArray[++i] & 0xff);
-            this.addDataToPacket(data);
+        for(int i = 6 ; i < byteArray.length; i++ ){
+            this.addDataToPacket(byteArray[i]);
         }
         
     }
@@ -59,7 +55,7 @@ public final class PacketHelper extends Header {
      * @return temperature in Fahrenheit
      */
    
-    public void addDataToPacket(String value){
+    public void addDataToPacket(Byte value){
         
         PayLoad.add(value);
         
@@ -80,9 +76,28 @@ public final class PacketHelper extends Header {
      * get the temperature from the packet received from the motes
      * @return temperature in Fahrenheit
      */
-    public String getData(int index){
+    public Byte getData(int index){
         
         return PayLoad.get(index);
+        
+    }
+    
+    
+    /**
+     * get the value from the packet received from the sensor
+     * will return only if it is  update packet otherwise -1
+     * @return 
+     */
+    public double getValue(){
+  
+        
+        int value = (PayLoad.get(1) & 0xff)
+                       | (PayLoad.get(0) & 0xff) << 8;
+        
+        double temperature = (value * 0.1125 ) + 32;
+         
+   
+        return temperature;
         
     }
     
@@ -90,82 +105,14 @@ public final class PacketHelper extends Header {
      * get the temperature from the packet received from the motes
      * @return temperature in Fahrenheit
      */
+    public int getTimeStamp(){
+        
+        int value = (PayLoad.get(2) & 0xff)
+                       | (PayLoad.get(3) & 0xff) << 8;   
+        return value;
    
-    public String getTemperature(){
-        
-        String temperature = null;
-        
-        if(PayLoad.size() >  TEMPERATURE_INDEX){
-            
-            String hexString = PayLoad.get(TEMPERATURE_INDEX);
-            
-            int rawValue = Integer.parseInt(hexString,MOTE_DATA_TYPE);
-            
-            //Fahrenheit temperature calculation
-            double fTemperature = CalculationConstants.D1_3V_F  + (CalculationConstants.D2_14BIT_F * rawValue);
-            
-            temperature = Double.toString(fTemperature);
-        }
-        else{
-            temperature = "Temperature not received";  
-        }
-        
-        return temperature;        
     }
-    /**
-     * get the x g value from the packet received from the motes
-     * @return x g value
-     */
-    public String xGValue(){
-        
-        String gvalue = null;
-        
-        if(PayLoad.size() >  X_INDEX){
-            
-            String hexString = PayLoad.get(X_INDEX);
-            
-            int rawValue = Integer.parseInt(hexString,MOTE_DATA_TYPE);
-           
-            //RawVoltage Calculation
-            double rawVolatage =  (rawValue/4096.0 ) * 2.5;
-            
-            //Acceleration value calculation
-            Double acceleration = (rawVolatage - 1.5)/0.057;
-           
-            gvalue =  acceleration.toString();
-        }
-        else{
-            gvalue = "vibration not received";  
-        }
-        
-        return gvalue;      
-    }
-     /**
-     * get the y g value from the packet received from the motes
-     * @return y g value
-     */
-    public String yGValue(){
-        
-        String gvalue = null;
-        
-        if(PayLoad.size() >=  Y_INDEX){
-            
-            String hexString = PayLoad.get(Y_INDEX);
-            
-            int rawValue = Integer.parseInt(hexString,MOTE_DATA_TYPE);
-            
-            //RawVoltage Calculation
-            double rawVolatage =  (rawValue/4096.0) * 2.5;
-            
-            //Acceleration value calculation
-            Double acceleration = (rawVolatage - 1.5)/0.057;
-            
-            gvalue =  acceleration.toString();
-        }
-        else{
-            gvalue = "vibration not received";  
-        }
-        
-        return gvalue;        
-    }
+    
+    
+    
 }

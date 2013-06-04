@@ -5,6 +5,7 @@
 package rtpmt.desktop.client;
 
 
+import gnu.io.*;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +13,6 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
-import gnu.io.*;
 import rtpmt.motes.packet.Packetizer;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 import rtpmt.network.tcp.TCPClient;
@@ -109,8 +109,8 @@ public class Communicator implements SerialPortEventListener, Runnable
             serialPort = (SerialPort)commPort;
             //setting serial port parameters 
             //this setting is based on telosb mote specification
-            //baud rate is important here i.e(115200)
-            serialPort.setSerialPortParams(115200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
+            //baud rate is important here i.e(9600)
+            serialPort.setSerialPortParams(9600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
             //for controlling GUI elements
             setConnected(true);
 
@@ -173,7 +173,7 @@ public class Communicator implements SerialPortEventListener, Runnable
         boolean successful = false;
         
         try {
-            packetReader = new Packetizer("Packet Reader", input);
+            packetReader = new Packetizer("Packet Reader", input,output);
             packetReader.open(null); 
             successful = true;
         }
@@ -271,8 +271,10 @@ public class Communicator implements SerialPortEventListener, Runnable
             try
             {
                 String dummydata = "#:367:N:43.1049:W:77.6233:ZBBBB00000849";
-               
-              
+                byte[] data = new byte[input.available()];
+                       
+                //input.read(data);
+                //System.out.println(data);
                 //logText =  packetReader.dumpPacket();
                 
                 //logText = packetReader.getTemperature();
@@ -340,8 +342,9 @@ public class Communicator implements SerialPortEventListener, Runnable
                    
                 SensorInformation sensorInfo = packetReader.readPacket();
                 for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
-                    String message = sensor.getSensorType().name() +" : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
-                    window.txtLog.append(message + "\n");
+                    String message = sensor.getSensorType().name() +" : " + sensor.getSensorValue() + " " + sensor.getSensorUnit() + "   " + sensorInfo.getTimeStamp();
+                    if(sensor.getSensorType().name().equalsIgnoreCase( "TEMPERATURE"))
+                        window.txtLog.append(message + "\n");
                 }
                
                 System.out.println();
