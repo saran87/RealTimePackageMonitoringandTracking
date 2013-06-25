@@ -124,7 +124,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 
   final static int P_UNKNOWN = 255;
   
-  final static int MTU = 256;
+  final static int MTU = 600;
 
   final static int ACK_TIMEOUT = 1000; // in milliseconds
 
@@ -349,7 +349,7 @@ public class Packetizer extends AbstractSource implements Runnable {
       {
         byte[] packet = readFramedPacket();
         int packetType = packet[0] & 0xff;
-        int pdataOffset = 0;
+        //int pdataOffset = 0;
         if (packetType == P_REGISTRATION) 
         {
           int nodeId = (packet[1] & 0xff)
@@ -364,10 +364,10 @@ public class Packetizer extends AbstractSource implements Runnable {
                        | (packet[2] & 0xff) << 8;
             //sendThresholdRequest(nodeId);
         }
-        int dataLength = packet.length - pdataOffset;
+        /*int dataLength = packet.length - pdataOffset;
         byte[] dataPacket = new byte[dataLength];
-        System.arraycopy(packet, pdataOffset, dataPacket, 0, dataLength);
-        pushProtocolPacket(packetType, dataPacket);
+        System.arraycopy(packet, pdataOffset, dataPacket, 0, dataLength);*/
+        pushProtocolPacket(packetType, packet);
       }
     } catch (IOException e) 
     {
@@ -386,40 +386,39 @@ public class Packetizer extends AbstractSource implements Runnable {
     boolean isLength = false;
     int payLoad = 0;
     inSync = false;
-    int[] syncFrame = new int[FRAME_SYNC.length];
+    byte[] syncFrame = new byte[FRAME_SYNC.length];
     
     for (;;) 
     {
-       /*
-       System.out.print(input.read());
-       count++;
-       if( count >22){
-           return new byte[0];
-       }
-        */
+      
+      // System.out.print(input.read());
+
+      
       if (!inSync) 
       {
         message(name + ": resynchronising");
-        // re-synchronise
-        int b  = input.read();
-        syncFrame[count++] = (byte)b & 0xff;
-        
+        // re-synchronise 
+        int b  = input.read() & 0xff;
+        while (b != 170){
+            b  = input.read() & 0xff;
+        }
+        System.out.println("count:"+ count + "InSync:" + inSync);
+        syncFrame[count++] = (byte)(b & 0xff);
+       
         while (count < FRAME_SYNC.length)
         {
              b =  input.read();
-             syncFrame[count++] = b & 0xff;    
+             syncFrame[count++] = (byte)(b & 0xff);    
         }
        
         if(DEBUG){
-            for ( int i = 0; i < count ;i++ ){
-                    System.out.print(syncFrame[i]);
-            }
-            System.out.println();
+            Dump.printPacket(System.out, syncFrame);
         }
         
         if(Utils.compare(syncFrame,FRAME_SYNC))
         {
           inSync = true;
+          System.out.println("IN SYNC");
         }
         count = 0;
       }
@@ -439,14 +438,18 @@ public class Packetizer extends AbstractSource implements Runnable {
           receiveBuffer[count++] = command;
           receiveBuffer[count++] = (byte)input.read();
           receiveBuffer[count++] = (byte)input.read();
-          int length = input.read();
-          b = (byte)length;
+  
+          receiveBuffer[count++] = (byte)input.read();
+          receiveBuffer[count++] = (byte)input.read();
+          
+          int length = (receiveBuffer[count-1] & 0xff) | (receiveBuffer[count-2] & 0xff) << 8;
           payLoad = count + length;
           
           isLength = true;
+          continue;
         }
-        else if (count <= payLoad){
-            b = (byte) input.read();
+        else if (count < payLoad){
+            b = (byte) (input.read() & 0xff);
         }
         else{
           byte[] packet = new byte[count - 2];
@@ -477,7 +480,7 @@ public class Packetizer extends AbstractSource implements Runnable {
           }
         }
         receiveBuffer[count++] = b;
-    } 
+    }
     }
   }
   
@@ -522,15 +525,15 @@ public class Packetizer extends AbstractSource implements Runnable {
        writeFramedPacket(P_SERVICE_REQUEST,nodeId,dummyPacket);
   }
   
-  private synchronized void sendThresholdRequest(int nodeId) throws IOException{
+  private synchronized void sendReportRate(int nodeId) throws IOException{
       
       dummyPacket = new byte[4];
-      dummyPacket[0] = 0 &0xff;//service
+      dummyPacket[0] = (0 &0xff);//service
       dummyPacket[1] = 1 &0xff; //service Id
       dummyPacket[2] = 1 &0xff;
       dummyPacket[3] = 1 >> 8;
       
-       writeFramedPacket(P_SERVICE_REPORT_RATE,nodeId,dummyPacket);
+      writeFramedPacket(P_SERVICE_REPORT_RATE,nodeId,dummyPacket);
   }
   
   // Write a packet of type 'packetType', first byte 'firstByte'
@@ -570,10 +573,10 @@ public class Packetizer extends AbstractSource implements Runnable {
     //+2 for crc
     int length = packet.length + 2; 
     //length 
-    buffer.nextByte(length &0xff);
+    buffer.nextByte(length & 0xff);
+    buffer.nextByte(length >> 8);
     
-    
-    for (int i = 0; i < length-1; i++) {
+    for (int i = 0; i < length-2; i++) {
       buffer.nextByte(packet[i]);
       System.out.println(i);
     }

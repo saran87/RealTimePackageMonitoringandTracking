@@ -110,8 +110,8 @@ public class Communicator implements SerialPortEventListener, Runnable
             //setting serial port parameters 
             //this setting is based on telosb mote specification
             //baud rate is important here i.e(9600)
-            serialPort.setSerialPortParams(9600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
-            //for controlling GUI elements
+             //for controlling GUI elements
+            serialPort.setSerialPortParams(230400,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
             setConnected(true);
 
             //logging
@@ -341,6 +341,7 @@ public class Communicator implements SerialPortEventListener, Runnable
                    //byte[] packet = packetReader.readRawPacket();
                    
                 SensorInformation sensorInfo = packetReader.readPacket();
+                
                 for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
                     String message = sensor.getSensorType().name() +" : " + sensor.getSensorValue() + " " + sensor.getSensorUnit() + "   " + sensorInfo.getTimeStamp();
                     if(sensor.getSensorType().name().equalsIgnoreCase( "TEMPERATURE"))
