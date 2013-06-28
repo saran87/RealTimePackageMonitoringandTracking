@@ -23,6 +23,7 @@ message SensorInformation {
 		TEMPERATURE = 0;
 		VIBRATION = 1;
 		HUMIDITY = 2;
+                SHOCK = 3;
 	}
   
 	message Sensor {

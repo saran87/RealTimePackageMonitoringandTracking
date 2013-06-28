@@ -344,7 +344,7 @@ public class Communicator implements SerialPortEventListener, Runnable
                 
                 for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
                     String message = sensor.getSensorType().name() +" : " + sensor.getSensorValue() + " " + sensor.getSensorUnit() + "   " + sensorInfo.getTimeStamp();
-                    if(sensor.getSensorType().name().equalsIgnoreCase( "TEMPERATURE"))
+                    //if(sensor.getSensorType().name().equalsIgnoreCase( "TEMPERATURE"))
                         window.txtLog.append(message + "\n");
                 }
                

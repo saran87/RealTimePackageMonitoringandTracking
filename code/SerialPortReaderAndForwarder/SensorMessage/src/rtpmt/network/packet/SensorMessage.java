@@ -10,81 +10,253 @@ public final class SensorMessage {
   }
   public interface SensorInformationOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // required string deviceId = 1;
+    /**
+     * <code>required string deviceId = 1;</code>
+     */
     boolean hasDeviceId();
-    String getDeviceId();
-    
+    /**
+     * <code>required string deviceId = 1;</code>
+     */
+    java.lang.String getDeviceId();
+    /**
+     * <code>required string deviceId = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getDeviceIdBytes();
+
     // required string timeStamp = 2;
+    /**
+     * <code>required string timeStamp = 2;</code>
+     */
     boolean hasTimeStamp();
-    String getTimeStamp();
-    
+    /**
+     * <code>required string timeStamp = 2;</code>
+     */
+    java.lang.String getTimeStamp();
+    /**
+     * <code>required string timeStamp = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getTimeStampBytes();
+
     // required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;
+    /**
+     * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+     */
     boolean hasLocation();
+    /**
+     * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+     */
     rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getLocation();
+    /**
+     * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+     */
     rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder getLocationOrBuilder();
-    
+
     // repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> 
         getSensorsList();
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getSensors(int index);
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     int getSensorsCount();
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     java.util.List<? extends rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> 
         getSensorsOrBuilderList();
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder getSensorsOrBuilder(
         int index);
   }
+  /**
+   * Protobuf type {@code rtpmt.network.packet.SensorInformation}
+   */
   public static final class SensorInformation extends
       com.google.protobuf.GeneratedMessage
       implements SensorInformationOrBuilder {
     // Use SensorInformation.newBuilder() to construct.
-    private SensorInformation(Builder builder) {
+    private SensorInformation(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private SensorInformation(boolean noInit) {}
-    
+    private SensorInformation(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final SensorInformation defaultInstance;
     public static SensorInformation getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public SensorInformation getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SensorInformation(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              deviceId_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              timeStamp_ = input.readBytes();
+              break;
+            }
+            case 26: {
+              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                subBuilder = location_.toBuilder();
+              }
+              location_ = input.readMessage(rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(location_);
+                location_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000004;
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                sensors_ = new java.util.ArrayList<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              sensors_.add(input.readMessage(rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          sensors_ = java.util.Collections.unmodifiableList(sensors_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_fieldAccessorTable;
+      return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              rtpmt.network.packet.SensorMessage.SensorInformation.class, rtpmt.network.packet.SensorMessage.SensorInformation.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<SensorInformation> PARSER =
+        new com.google.protobuf.AbstractParser<SensorInformation>() {
+      public SensorInformation parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SensorInformation(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SensorInformation> getParserForType() {
+      return PARSER;
+    }
+
+    /**
+     * Protobuf enum {@code rtpmt.network.packet.SensorInformation.SensorType}
+     */
     public enum SensorType
         implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>TEMPERATURE = 0;</code>
+       */
       TEMPERATURE(0, 0),
+      /**
+       * <code>VIBRATION = 1;</code>
+       */
       VIBRATION(1, 1),
+      /**
+       * <code>HUMIDITY = 2;</code>
+       */
       HUMIDITY(2, 2),
+      /**
+       * <code>SHOCK = 3;</code>
+       */
+      SHOCK(3, 3),
       ;
-      
+
+      /**
+       * <code>TEMPERATURE = 0;</code>
+       */
       public static final int TEMPERATURE_VALUE = 0;
+      /**
+       * <code>VIBRATION = 1;</code>
+       */
       public static final int VIBRATION_VALUE = 1;
+      /**
+       * <code>HUMIDITY = 2;</code>
+       */
       public static final int HUMIDITY_VALUE = 2;
-      
-      
+      /**
+       * <code>SHOCK = 3;</code>
+       */
+      public static final int SHOCK_VALUE = 3;
+
+
       public final int getNumber() { return value; }
-      
+
       public static SensorType valueOf(int value) {
         switch (value) {
           case 0: return TEMPERATURE;
           case 1: return VIBRATION;
           case 2: return HUMIDITY;
+          case 3: return SHOCK;
           default: return null;
         }
       }
-      
+
       public static com.google.protobuf.Internal.EnumLiteMap<SensorType>
           internalGetValueMap() {
         return internalValueMap;
@@ -96,7 +268,7 @@ public final class SensorMessage {
                 return SensorType.valueOf(number);
               }
             };
-      
+
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
           getValueDescriptor() {
         return getDescriptor().getValues().get(index);
@@ -109,11 +281,9 @@ public final class SensorMessage {
           getDescriptor() {
         return rtpmt.network.packet.SensorMessage.SensorInformation.getDescriptor().getEnumTypes().get(0);
       }
-      
-      private static final SensorType[] VALUES = {
-        TEMPERATURE, VIBRATION, HUMIDITY, 
-      };
-      
+
+      private static final SensorType[] VALUES = values();
+
       public static SensorType valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
@@ -122,78 +292,174 @@ public final class SensorMessage {
         }
         return VALUES[desc.getIndex()];
       }
-      
+
       private final int index;
       private final int value;
-      
+
       private SensorType(int index, int value) {
         this.index = index;
         this.value = value;
       }
-      
+
       // @@protoc_insertion_point(enum_scope:rtpmt.network.packet.SensorInformation.SensorType)
     }
-    
+
     public interface LocationInformationOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
-      
+
       // required double latitude = 1;
+      /**
+       * <code>required double latitude = 1;</code>
+       */
       boolean hasLatitude();
+      /**
+       * <code>required double latitude = 1;</code>
+       */
       double getLatitude();
-      
+
       // required double longitude = 2;
+      /**
+       * <code>required double longitude = 2;</code>
+       */
       boolean hasLongitude();
+      /**
+       * <code>required double longitude = 2;</code>
+       */
       double getLongitude();
     }
+    /**
+     * Protobuf type {@code rtpmt.network.packet.SensorInformation.LocationInformation}
+     */
     public static final class LocationInformation extends
         com.google.protobuf.GeneratedMessage
         implements LocationInformationOrBuilder {
       // Use LocationInformation.newBuilder() to construct.
-      private LocationInformation(Builder builder) {
+      private LocationInformation(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
+        this.unknownFields = builder.getUnknownFields();
       }
-      private LocationInformation(boolean noInit) {}
-      
+      private LocationInformation(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
       private static final LocationInformation defaultInstance;
       public static LocationInformation getDefaultInstance() {
         return defaultInstance;
       }
-      
+
       public LocationInformation getDefaultInstanceForType() {
         return defaultInstance;
       }
-      
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
+      }
+      private LocationInformation(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 9: {
+                bitField0_ |= 0x00000001;
+                latitude_ = input.readDouble();
+                break;
+              }
+              case 17: {
+                bitField0_ |= 0x00000002;
+                longitude_ = input.readDouble();
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.class, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder.class);
       }
-      
+
+      public static com.google.protobuf.Parser<LocationInformation> PARSER =
+          new com.google.protobuf.AbstractParser<LocationInformation>() {
+        public LocationInformation parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new LocationInformation(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<LocationInformation> getParserForType() {
+        return PARSER;
+      }
+
       private int bitField0_;
       // required double latitude = 1;
       public static final int LATITUDE_FIELD_NUMBER = 1;
       private double latitude_;
+      /**
+       * <code>required double latitude = 1;</code>
+       */
       public boolean hasLatitude() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
+      /**
+       * <code>required double latitude = 1;</code>
+       */
       public double getLatitude() {
         return latitude_;
       }
-      
+
       // required double longitude = 2;
       public static final int LONGITUDE_FIELD_NUMBER = 2;
       private double longitude_;
+      /**
+       * <code>required double longitude = 2;</code>
+       */
       public boolean hasLongitude() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
+      /**
+       * <code>required double longitude = 2;</code>
+       */
       public double getLongitude() {
         return longitude_;
       }
-      
+
       private void initFields() {
         latitude_ = 0D;
         longitude_ = 0D;
@@ -202,7 +468,7 @@ public final class SensorMessage {
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized != -1) return isInitialized == 1;
-        
+
         if (!hasLatitude()) {
           memoizedIsInitialized = 0;
           return false;
@@ -214,7 +480,7 @@ public final class SensorMessage {
         memoizedIsInitialized = 1;
         return true;
       }
-      
+
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
         getSerializedSize();
@@ -226,12 +492,12 @@ public final class SensorMessage {
         }
         getUnknownFields().writeTo(output);
       }
-      
+
       private int memoizedSerializedSize = -1;
       public int getSerializedSize() {
         int size = memoizedSerializedSize;
         if (size != -1) return size;
-      
+
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
@@ -245,94 +511,83 @@ public final class SensorMessage {
         memoizedSerializedSize = size;
         return size;
       }
-      
+
       private static final long serialVersionUID = 0L;
       @java.lang.Override
       protected java.lang.Object writeReplace()
           throws java.io.ObjectStreamException {
         return super.writeReplace();
       }
-      
+
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
+        return PARSER.parseFrom(data);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(data, extensionRegistry);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
+        return PARSER.parseFrom(data);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(data, extensionRegistry);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(java.io.InputStream input)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
+        return PARSER.parseFrom(input);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(input, extensionRegistry);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
+        return PARSER.parseDelimitedFrom(input);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
+        return PARSER.parseFrom(input);
       }
       public static rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
+        return PARSER.parseFrom(input, extensionRegistry);
       }
-      
+
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder(rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
-      
+
       @java.lang.Override
       protected Builder newBuilderForType(
           com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
       }
+      /**
+       * Protobuf type {@code rtpmt.network.packet.SensorInformation.LocationInformation}
+       */
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder>
          implements rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder {
@@ -340,18 +595,21 @@ public final class SensorMessage {
             getDescriptor() {
           return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor;
         }
-        
+
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable;
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.class, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder.class);
         }
-        
+
         // Construct using rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
-        
-        private Builder(BuilderParent parent) {
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
           super(parent);
           maybeForceBuilderInitialization();
         }
@@ -362,7 +620,7 @@ public final class SensorMessage {
         private static Builder create() {
           return new Builder();
         }
-        
+
         public Builder clear() {
           super.clear();
           latitude_ = 0D;
@@ -371,20 +629,20 @@ public final class SensorMessage {
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
-        
+
         public Builder clone() {
           return create().mergeFrom(buildPartial());
         }
-        
+
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDescriptor();
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor;
         }
-        
+
         public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getDefaultInstanceForType() {
           return rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance();
         }
-        
+
         public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation build() {
           rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = buildPartial();
           if (!result.isInitialized()) {
@@ -392,17 +650,7 @@ public final class SensorMessage {
           }
           return result;
         }
-        
-        private rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation buildParsed()
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(
-              result).asInvalidProtocolBufferException();
-          }
-          return result;
-        }
-        
+
         public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation buildPartial() {
           rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation result = new rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation(this);
           int from_bitField0_ = bitField0_;
@@ -419,7 +667,7 @@ public final class SensorMessage {
           onBuilt();
           return result;
         }
-        
+
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation) {
             return mergeFrom((rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation)other);
@@ -428,7 +676,7 @@ public final class SensorMessage {
             return this;
           }
         }
-        
+
         public Builder mergeFrom(rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation other) {
           if (other == rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance()) return this;
           if (other.hasLatitude()) {
@@ -440,7 +688,7 @@ public final class SensorMessage {
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
         }
-        
+
         public final boolean isInitialized() {
           if (!hasLatitude()) {
             
@@ -452,582 +700,209 @@ public final class SensorMessage {
           }
           return true;
         }
-        
+
         public Builder mergeFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder(
-              this.getUnknownFields());
-          while (true) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              default: {
-                if (!parseUnknownField(input, unknownFields,
-                                       extensionRegistry, tag)) {
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
-                }
-                break;
-              }
-              case 9: {
-                bitField0_ |= 0x00000001;
-                latitude_ = input.readDouble();
-                break;
-              }
-              case 17: {
-                bitField0_ |= 0x00000002;
-                longitude_ = input.readDouble();
-                break;
-              }
+          rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
             }
           }
+          return this;
         }
-        
         private int bitField0_;
-        
+
         // required double latitude = 1;
         private double latitude_ ;
+        /**
+         * <code>required double latitude = 1;</code>
+         */
         public boolean hasLatitude() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
+        /**
+         * <code>required double latitude = 1;</code>
+         */
         public double getLatitude() {
           return latitude_;
         }
+        /**
+         * <code>required double latitude = 1;</code>
+         */
         public Builder setLatitude(double value) {
           bitField0_ |= 0x00000001;
           latitude_ = value;
           onChanged();
           return this;
         }
+        /**
+         * <code>required double latitude = 1;</code>
+         */
         public Builder clearLatitude() {
           bitField0_ = (bitField0_ & ~0x00000001);
           latitude_ = 0D;
           onChanged();
           return this;
         }
-        
+
         // required double longitude = 2;
         private double longitude_ ;
+        /**
+         * <code>required double longitude = 2;</code>
+         */
         public boolean hasLongitude() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
+        /**
+         * <code>required double longitude = 2;</code>
+         */
         public double getLongitude() {
           return longitude_;
         }
+        /**
+         * <code>required double longitude = 2;</code>
+         */
         public Builder setLongitude(double value) {
           bitField0_ |= 0x00000002;
           longitude_ = value;
           onChanged();
           return this;
         }
+        /**
+         * <code>required double longitude = 2;</code>
+         */
         public Builder clearLongitude() {
           bitField0_ = (bitField0_ & ~0x00000002);
           longitude_ = 0D;
           onChanged();
           return this;
         }
-        
+
         // @@protoc_insertion_point(builder_scope:rtpmt.network.packet.SensorInformation.LocationInformation)
       }
-      
+
       static {
         defaultInstance = new LocationInformation(true);
         defaultInstance.initFields();
       }
-      
+
       // @@protoc_insertion_point(class_scope:rtpmt.network.packet.SensorInformation.LocationInformation)
     }
-    
+
     public interface SensorOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
-      
+
       // required string sensorId = 1;
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
       boolean hasSensorId();
-      String getSensorId();
-      
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
+      java.lang.String getSensorId();
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
+      com.google.protobuf.ByteString
+          getSensorIdBytes();
+
       // required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+       */
       boolean hasSensorType();
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+       */
       rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType();
-      
+
       // required string sensorValue = 3;
+      /**
+       * <code>required string sensorValue = 3;</code>
+       */
       boolean hasSensorValue();
-      String getSensorValue();
-      
+      /**
+       * <code>required string sensorValue = 3;</code>
+       */
+      java.lang.String getSensorValue();
+      /**
+       * <code>required string sensorValue = 3;</code>
+       */
+      com.google.protobuf.ByteString
+          getSensorValueBytes();
+
       // required string sensorUnit = 4;
+      /**
+       * <code>required string sensorUnit = 4;</code>
+       */
       boolean hasSensorUnit();
-      String getSensorUnit();
+      /**
+       * <code>required string sensorUnit = 4;</code>
+       */
+      java.lang.String getSensorUnit();
+      /**
+       * <code>required string sensorUnit = 4;</code>
+       */
+      com.google.protobuf.ByteString
+          getSensorUnitBytes();
     }
+    /**
+     * Protobuf type {@code rtpmt.network.packet.SensorInformation.Sensor}
+     */
     public static final class Sensor extends
         com.google.protobuf.GeneratedMessage
         implements SensorOrBuilder {
       // Use Sensor.newBuilder() to construct.
-      private Sensor(Builder builder) {
+      private Sensor(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
+        this.unknownFields = builder.getUnknownFields();
       }
-      private Sensor(boolean noInit) {}
-      
+      private Sensor(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
       private static final Sensor defaultInstance;
       public static Sensor getDefaultInstance() {
         return defaultInstance;
       }
-      
+
       public Sensor getDefaultInstanceForType() {
         return defaultInstance;
       }
-      
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable;
-      }
-      
-      private int bitField0_;
-      // required string sensorId = 1;
-      public static final int SENSORID_FIELD_NUMBER = 1;
-      private java.lang.Object sensorId_;
-      public boolean hasSensorId() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public String getSensorId() {
-        java.lang.Object ref = sensorId_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            sensorId_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getSensorIdBytes() {
-        java.lang.Object ref = sensorId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          sensorId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      // required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];
-      public static final int SENSORTYPE_FIELD_NUMBER = 2;
-      private rtpmt.network.packet.SensorMessage.SensorInformation.SensorType sensorType_;
-      public boolean hasSensorType() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType() {
-        return sensorType_;
-      }
-      
-      // required string sensorValue = 3;
-      public static final int SENSORVALUE_FIELD_NUMBER = 3;
-      private java.lang.Object sensorValue_;
-      public boolean hasSensorValue() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      public String getSensorValue() {
-        java.lang.Object ref = sensorValue_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            sensorValue_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getSensorValueBytes() {
-        java.lang.Object ref = sensorValue_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          sensorValue_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      // required string sensorUnit = 4;
-      public static final int SENSORUNIT_FIELD_NUMBER = 4;
-      private java.lang.Object sensorUnit_;
-      public boolean hasSensorUnit() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      public String getSensorUnit() {
-        java.lang.Object ref = sensorUnit_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            sensorUnit_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getSensorUnitBytes() {
-        java.lang.Object ref = sensorUnit_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          sensorUnit_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      private void initFields() {
-        sensorId_ = "";
-        sensorType_ = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.TEMPERATURE;
-        sensorValue_ = "";
-        sensorUnit_ = "";
-      }
-      private byte memoizedIsInitialized = -1;
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized != -1) return isInitialized == 1;
-        
-        if (!hasSensorId()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-        if (!hasSensorType()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-        if (!hasSensorValue()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-        if (!hasSensorUnit()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-        memoizedIsInitialized = 1;
-        return true;
-      }
-      
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        getSerializedSize();
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeBytes(1, getSensorIdBytes());
-        }
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeEnum(2, sensorType_.getNumber());
-        }
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          output.writeBytes(3, getSensorValueBytes());
-        }
-        if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          output.writeBytes(4, getSensorUnitBytes());
-        }
-        getUnknownFields().writeTo(output);
-      }
-      
-      private int memoizedSerializedSize = -1;
-      public int getSerializedSize() {
-        int size = memoizedSerializedSize;
-        if (size != -1) return size;
-      
-        size = 0;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(1, getSensorIdBytes());
-        }
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(2, sensorType_.getNumber());
-        }
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(3, getSensorValueBytes());
-        }
-        if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(4, getSensorUnitBytes());
-        }
-        size += getUnknownFields().getSerializedSize();
-        memoizedSerializedSize = size;
-        return size;
-      }
-      
-      private static final long serialVersionUID = 0L;
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
       @java.lang.Override
-      protected java.lang.Object writeReplace()
-          throws java.io.ObjectStreamException {
-        return super.writeReplace();
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
       }
-      
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
+      private Sensor(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      
-      public static Builder newBuilder() { return Builder.create(); }
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(rtpmt.network.packet.SensorMessage.SensorInformation.Sensor prototype) {
-        return newBuilder().mergeFrom(prototype);
-      }
-      public Builder toBuilder() { return newBuilder(this); }
-      
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
-        }
-        
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable;
-        }
-        
-        // Construct using rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-        
-        private Builder(BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          }
-        }
-        private static Builder create() {
-          return new Builder();
-        }
-        
-        public Builder clear() {
-          super.clear();
-          sensorId_ = "";
-          bitField0_ = (bitField0_ & ~0x00000001);
-          sensorType_ = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.TEMPERATURE;
-          bitField0_ = (bitField0_ & ~0x00000002);
-          sensorValue_ = "";
-          bitField0_ = (bitField0_ & ~0x00000004);
-          sensorUnit_ = "";
-          bitField0_ = (bitField0_ & ~0x00000008);
-          return this;
-        }
-        
-        public Builder clone() {
-          return create().mergeFrom(buildPartial());
-        }
-        
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDescriptor();
-        }
-        
-        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getDefaultInstanceForType() {
-          return rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance();
-        }
-        
-        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor build() {
-          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-        
-        private rtpmt.network.packet.SensorMessage.SensorInformation.Sensor buildParsed()
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(
-              result).asInvalidProtocolBufferException();
-          }
-          return result;
-        }
-        
-        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor buildPartial() {
-          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = new rtpmt.network.packet.SensorMessage.SensorInformation.Sensor(this);
-          int from_bitField0_ = bitField0_;
-          int to_bitField0_ = 0;
-          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-            to_bitField0_ |= 0x00000001;
-          }
-          result.sensorId_ = sensorId_;
-          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-            to_bitField0_ |= 0x00000002;
-          }
-          result.sensorType_ = sensorType_;
-          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-            to_bitField0_ |= 0x00000004;
-          }
-          result.sensorValue_ = sensorValue_;
-          if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-            to_bitField0_ |= 0x00000008;
-          }
-          result.sensorUnit_ = sensorUnit_;
-          result.bitField0_ = to_bitField0_;
-          onBuilt();
-          return result;
-        }
-        
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof rtpmt.network.packet.SensorMessage.SensorInformation.Sensor) {
-            return mergeFrom((rtpmt.network.packet.SensorMessage.SensorInformation.Sensor)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-        
-        public Builder mergeFrom(rtpmt.network.packet.SensorMessage.SensorInformation.Sensor other) {
-          if (other == rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance()) return this;
-          if (other.hasSensorId()) {
-            setSensorId(other.getSensorId());
-          }
-          if (other.hasSensorType()) {
-            setSensorType(other.getSensorType());
-          }
-          if (other.hasSensorValue()) {
-            setSensorValue(other.getSensorValue());
-          }
-          if (other.hasSensorUnit()) {
-            setSensorUnit(other.getSensorUnit());
-          }
-          this.mergeUnknownFields(other.getUnknownFields());
-          return this;
-        }
-        
-        public final boolean isInitialized() {
-          if (!hasSensorId()) {
-            
-            return false;
-          }
-          if (!hasSensorType()) {
-            
-            return false;
-          }
-          if (!hasSensorValue()) {
-            
-            return false;
-          }
-          if (!hasSensorUnit()) {
-            
-            return false;
-          }
-          return true;
-        }
-        
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder(
-              this.getUnknownFields());
-          while (true) {
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
             int tag = input.readTag();
             switch (tag) {
               case 0:
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
+                done = true;
+                break;
               default: {
                 if (!parseUnknownField(input, unknownFields,
                                        extensionRegistry, tag)) {
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
+                  done = true;
                 }
                 break;
               }
@@ -1059,26 +934,548 @@ public final class SensorMessage {
               }
             }
           }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
         }
-        
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.class, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder.class);
+      }
+
+      public static com.google.protobuf.Parser<Sensor> PARSER =
+          new com.google.protobuf.AbstractParser<Sensor>() {
+        public Sensor parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Sensor(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Sensor> getParserForType() {
+        return PARSER;
+      }
+
+      private int bitField0_;
+      // required string sensorId = 1;
+      public static final int SENSORID_FIELD_NUMBER = 1;
+      private java.lang.Object sensorId_;
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
+      public boolean hasSensorId() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
+      public java.lang.String getSensorId() {
+        java.lang.Object ref = sensorId_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            sensorId_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSensorIdBytes() {
+        java.lang.Object ref = sensorId_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sensorId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      // required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];
+      public static final int SENSORTYPE_FIELD_NUMBER = 2;
+      private rtpmt.network.packet.SensorMessage.SensorInformation.SensorType sensorType_;
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+       */
+      public boolean hasSensorType() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+       */
+      public rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType() {
+        return sensorType_;
+      }
+
+      // required string sensorValue = 3;
+      public static final int SENSORVALUE_FIELD_NUMBER = 3;
+      private java.lang.Object sensorValue_;
+      /**
+       * <code>required string sensorValue = 3;</code>
+       */
+      public boolean hasSensorValue() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required string sensorValue = 3;</code>
+       */
+      public java.lang.String getSensorValue() {
+        java.lang.Object ref = sensorValue_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            sensorValue_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>required string sensorValue = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSensorValueBytes() {
+        java.lang.Object ref = sensorValue_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sensorValue_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      // required string sensorUnit = 4;
+      public static final int SENSORUNIT_FIELD_NUMBER = 4;
+      private java.lang.Object sensorUnit_;
+      /**
+       * <code>required string sensorUnit = 4;</code>
+       */
+      public boolean hasSensorUnit() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required string sensorUnit = 4;</code>
+       */
+      public java.lang.String getSensorUnit() {
+        java.lang.Object ref = sensorUnit_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            sensorUnit_ = s;
+          }
+          return s;
+        }
+      }
+      /**
+       * <code>required string sensorUnit = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSensorUnitBytes() {
+        java.lang.Object ref = sensorUnit_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sensorUnit_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      private void initFields() {
+        sensorId_ = "";
+        sensorType_ = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.TEMPERATURE;
+        sensorValue_ = "";
+        sensorUnit_ = "";
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
+
+        if (!hasSensorId()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        if (!hasSensorType()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        if (!hasSensorValue()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        if (!hasSensorUnit()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeBytes(1, getSensorIdBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeEnum(2, sensorType_.getNumber());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          output.writeBytes(3, getSensorValueBytes());
+        }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          output.writeBytes(4, getSensorUnitBytes());
+        }
+        getUnknownFields().writeTo(output);
+      }
+
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(1, getSensorIdBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(2, sensorType_.getNumber());
+        }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(3, getSensorValueBytes());
+        }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(4, getSensorUnitBytes());
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(rtpmt.network.packet.SensorMessage.SensorInformation.Sensor prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code rtpmt.network.packet.SensorInformation.Sensor}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.class, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder.class);
+        }
+
+        // Construct using rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+
+        public Builder clear() {
+          super.clear();
+          sensorId_ = "";
+          bitField0_ = (bitField0_ & ~0x00000001);
+          sensorType_ = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.TEMPERATURE;
+          bitField0_ = (bitField0_ & ~0x00000002);
+          sensorValue_ = "";
+          bitField0_ = (bitField0_ & ~0x00000004);
+          sensorUnit_ = "";
+          bitField0_ = (bitField0_ & ~0x00000008);
+          return this;
+        }
+
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor;
+        }
+
+        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getDefaultInstanceForType() {
+          return rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance();
+        }
+
+        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor build() {
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor buildPartial() {
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor result = new rtpmt.network.packet.SensorMessage.SensorInformation.Sensor(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.sensorId_ = sensorId_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.sensorType_ = sensorType_;
+          if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+            to_bitField0_ |= 0x00000004;
+          }
+          result.sensorValue_ = sensorValue_;
+          if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+            to_bitField0_ |= 0x00000008;
+          }
+          result.sensorUnit_ = sensorUnit_;
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof rtpmt.network.packet.SensorMessage.SensorInformation.Sensor) {
+            return mergeFrom((rtpmt.network.packet.SensorMessage.SensorInformation.Sensor)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(rtpmt.network.packet.SensorMessage.SensorInformation.Sensor other) {
+          if (other == rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance()) return this;
+          if (other.hasSensorId()) {
+            bitField0_ |= 0x00000001;
+            sensorId_ = other.sensorId_;
+            onChanged();
+          }
+          if (other.hasSensorType()) {
+            setSensorType(other.getSensorType());
+          }
+          if (other.hasSensorValue()) {
+            bitField0_ |= 0x00000004;
+            sensorValue_ = other.sensorValue_;
+            onChanged();
+          }
+          if (other.hasSensorUnit()) {
+            bitField0_ |= 0x00000008;
+            sensorUnit_ = other.sensorUnit_;
+            onChanged();
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          if (!hasSensorId()) {
+            
+            return false;
+          }
+          if (!hasSensorType()) {
+            
+            return false;
+          }
+          if (!hasSensorValue()) {
+            
+            return false;
+          }
+          if (!hasSensorUnit()) {
+            
+            return false;
+          }
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          rtpmt.network.packet.SensorMessage.SensorInformation.Sensor parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (rtpmt.network.packet.SensorMessage.SensorInformation.Sensor) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
         private int bitField0_;
-        
+
         // required string sensorId = 1;
         private java.lang.Object sensorId_ = "";
+        /**
+         * <code>required string sensorId = 1;</code>
+         */
         public boolean hasSensorId() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
-        public String getSensorId() {
+        /**
+         * <code>required string sensorId = 1;</code>
+         */
+        public java.lang.String getSensorId() {
           java.lang.Object ref = sensorId_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
             sensorId_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-        public Builder setSensorId(String value) {
+        /**
+         * <code>required string sensorId = 1;</code>
+         */
+        public com.google.protobuf.ByteString
+            getSensorIdBytes() {
+          java.lang.Object ref = sensorId_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            sensorId_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>required string sensorId = 1;</code>
+         */
+        public Builder setSensorId(
+            java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
@@ -1087,26 +1484,46 @@ public final class SensorMessage {
           onChanged();
           return this;
         }
+        /**
+         * <code>required string sensorId = 1;</code>
+         */
         public Builder clearSensorId() {
           bitField0_ = (bitField0_ & ~0x00000001);
           sensorId_ = getDefaultInstance().getSensorId();
           onChanged();
           return this;
         }
-        void setSensorId(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000001;
+        /**
+         * <code>required string sensorId = 1;</code>
+         */
+        public Builder setSensorIdBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
           sensorId_ = value;
           onChanged();
+          return this;
         }
-        
+
         // required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];
         private rtpmt.network.packet.SensorMessage.SensorInformation.SensorType sensorType_ = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.TEMPERATURE;
+        /**
+         * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+         */
         public boolean hasSensorType() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
+        /**
+         * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+         */
         public rtpmt.network.packet.SensorMessage.SensorInformation.SensorType getSensorType() {
           return sensorType_;
         }
+        /**
+         * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+         */
         public Builder setSensorType(rtpmt.network.packet.SensorMessage.SensorInformation.SensorType value) {
           if (value == null) {
             throw new NullPointerException();
@@ -1116,29 +1533,59 @@ public final class SensorMessage {
           onChanged();
           return this;
         }
+        /**
+         * <code>required .rtpmt.network.packet.SensorInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+         */
         public Builder clearSensorType() {
           bitField0_ = (bitField0_ & ~0x00000002);
           sensorType_ = rtpmt.network.packet.SensorMessage.SensorInformation.SensorType.TEMPERATURE;
           onChanged();
           return this;
         }
-        
+
         // required string sensorValue = 3;
         private java.lang.Object sensorValue_ = "";
+        /**
+         * <code>required string sensorValue = 3;</code>
+         */
         public boolean hasSensorValue() {
           return ((bitField0_ & 0x00000004) == 0x00000004);
         }
-        public String getSensorValue() {
+        /**
+         * <code>required string sensorValue = 3;</code>
+         */
+        public java.lang.String getSensorValue() {
           java.lang.Object ref = sensorValue_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
             sensorValue_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-        public Builder setSensorValue(String value) {
+        /**
+         * <code>required string sensorValue = 3;</code>
+         */
+        public com.google.protobuf.ByteString
+            getSensorValueBytes() {
+          java.lang.Object ref = sensorValue_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            sensorValue_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>required string sensorValue = 3;</code>
+         */
+        public Builder setSensorValue(
+            java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
@@ -1147,34 +1594,72 @@ public final class SensorMessage {
           onChanged();
           return this;
         }
+        /**
+         * <code>required string sensorValue = 3;</code>
+         */
         public Builder clearSensorValue() {
           bitField0_ = (bitField0_ & ~0x00000004);
           sensorValue_ = getDefaultInstance().getSensorValue();
           onChanged();
           return this;
         }
-        void setSensorValue(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000004;
+        /**
+         * <code>required string sensorValue = 3;</code>
+         */
+        public Builder setSensorValueBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
           sensorValue_ = value;
           onChanged();
+          return this;
         }
-        
+
         // required string sensorUnit = 4;
         private java.lang.Object sensorUnit_ = "";
+        /**
+         * <code>required string sensorUnit = 4;</code>
+         */
         public boolean hasSensorUnit() {
           return ((bitField0_ & 0x00000008) == 0x00000008);
         }
-        public String getSensorUnit() {
+        /**
+         * <code>required string sensorUnit = 4;</code>
+         */
+        public java.lang.String getSensorUnit() {
           java.lang.Object ref = sensorUnit_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          if (!(ref instanceof java.lang.String)) {
+            java.lang.String s = ((com.google.protobuf.ByteString) ref)
+                .toStringUtf8();
             sensorUnit_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-        public Builder setSensorUnit(String value) {
+        /**
+         * <code>required string sensorUnit = 4;</code>
+         */
+        public com.google.protobuf.ByteString
+            getSensorUnitBytes() {
+          java.lang.Object ref = sensorUnit_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            sensorUnit_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>required string sensorUnit = 4;</code>
+         */
+        public Builder setSensorUnit(
+            java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
@@ -1183,128 +1668,185 @@ public final class SensorMessage {
           onChanged();
           return this;
         }
+        /**
+         * <code>required string sensorUnit = 4;</code>
+         */
         public Builder clearSensorUnit() {
           bitField0_ = (bitField0_ & ~0x00000008);
           sensorUnit_ = getDefaultInstance().getSensorUnit();
           onChanged();
           return this;
         }
-        void setSensorUnit(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000008;
+        /**
+         * <code>required string sensorUnit = 4;</code>
+         */
+        public Builder setSensorUnitBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
           sensorUnit_ = value;
           onChanged();
+          return this;
         }
-        
+
         // @@protoc_insertion_point(builder_scope:rtpmt.network.packet.SensorInformation.Sensor)
       }
-      
+
       static {
         defaultInstance = new Sensor(true);
         defaultInstance.initFields();
       }
-      
+
       // @@protoc_insertion_point(class_scope:rtpmt.network.packet.SensorInformation.Sensor)
     }
-    
+
     private int bitField0_;
     // required string deviceId = 1;
     public static final int DEVICEID_FIELD_NUMBER = 1;
     private java.lang.Object deviceId_;
+    /**
+     * <code>required string deviceId = 1;</code>
+     */
     public boolean hasDeviceId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public String getDeviceId() {
+    /**
+     * <code>required string deviceId = 1;</code>
+     */
+    public java.lang.String getDeviceId() {
       java.lang.Object ref = deviceId_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           deviceId_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getDeviceIdBytes() {
+    /**
+     * <code>required string deviceId = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDeviceIdBytes() {
       java.lang.Object ref = deviceId_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         deviceId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
+
     // required string timeStamp = 2;
     public static final int TIMESTAMP_FIELD_NUMBER = 2;
     private java.lang.Object timeStamp_;
+    /**
+     * <code>required string timeStamp = 2;</code>
+     */
     public boolean hasTimeStamp() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public String getTimeStamp() {
+    /**
+     * <code>required string timeStamp = 2;</code>
+     */
+    public java.lang.String getTimeStamp() {
       java.lang.Object ref = timeStamp_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           timeStamp_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getTimeStampBytes() {
+    /**
+     * <code>required string timeStamp = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTimeStampBytes() {
       java.lang.Object ref = timeStamp_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         timeStamp_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
+
     // required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;
     public static final int LOCATION_FIELD_NUMBER = 3;
     private rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation location_;
+    /**
+     * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+     */
     public boolean hasLocation() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
+    /**
+     * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+     */
     public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getLocation() {
       return location_;
     }
+    /**
+     * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+     */
     public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder getLocationOrBuilder() {
       return location_;
     }
-    
+
     // repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;
     public static final int SENSORS_FIELD_NUMBER = 4;
     private java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> sensors_;
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     public java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> getSensorsList() {
       return sensors_;
     }
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     public java.util.List<? extends rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> 
         getSensorsOrBuilderList() {
       return sensors_;
     }
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     public int getSensorsCount() {
       return sensors_.size();
     }
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getSensors(int index) {
       return sensors_.get(index);
     }
+    /**
+     * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+     */
     public rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder getSensorsOrBuilder(
         int index) {
       return sensors_.get(index);
     }
-    
+
     private void initFields() {
       deviceId_ = "";
       timeStamp_ = "";
@@ -1315,7 +1857,7 @@ public final class SensorMessage {
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       if (!hasDeviceId()) {
         memoizedIsInitialized = 0;
         return false;
@@ -1341,7 +1883,7 @@ public final class SensorMessage {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -1359,12 +1901,12 @@ public final class SensorMessage {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -1386,94 +1928,83 @@ public final class SensorMessage {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static rtpmt.network.packet.SensorMessage.SensorInformation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(rtpmt.network.packet.SensorMessage.SensorInformation prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code rtpmt.network.packet.SensorInformation}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements rtpmt.network.packet.SensorMessage.SensorInformationOrBuilder {
@@ -1481,18 +2012,21 @@ public final class SensorMessage {
           getDescriptor() {
         return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_fieldAccessorTable;
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                rtpmt.network.packet.SensorMessage.SensorInformation.class, rtpmt.network.packet.SensorMessage.SensorInformation.Builder.class);
       }
-      
+
       // Construct using rtpmt.network.packet.SensorMessage.SensorInformation.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1505,7 +2039,7 @@ public final class SensorMessage {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         deviceId_ = "";
@@ -1526,20 +2060,20 @@ public final class SensorMessage {
         }
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return rtpmt.network.packet.SensorMessage.SensorInformation.getDescriptor();
+        return rtpmt.network.packet.SensorMessage.internal_static_rtpmt_network_packet_SensorInformation_descriptor;
       }
-      
+
       public rtpmt.network.packet.SensorMessage.SensorInformation getDefaultInstanceForType() {
         return rtpmt.network.packet.SensorMessage.SensorInformation.getDefaultInstance();
       }
-      
+
       public rtpmt.network.packet.SensorMessage.SensorInformation build() {
         rtpmt.network.packet.SensorMessage.SensorInformation result = buildPartial();
         if (!result.isInitialized()) {
@@ -1547,17 +2081,7 @@ public final class SensorMessage {
         }
         return result;
       }
-      
-      private rtpmt.network.packet.SensorMessage.SensorInformation buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        rtpmt.network.packet.SensorMessage.SensorInformation result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public rtpmt.network.packet.SensorMessage.SensorInformation buildPartial() {
         rtpmt.network.packet.SensorMessage.SensorInformation result = new rtpmt.network.packet.SensorMessage.SensorInformation(this);
         int from_bitField0_ = bitField0_;
@@ -1591,7 +2115,7 @@ public final class SensorMessage {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof rtpmt.network.packet.SensorMessage.SensorInformation) {
           return mergeFrom((rtpmt.network.packet.SensorMessage.SensorInformation)other);
@@ -1600,14 +2124,18 @@ public final class SensorMessage {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(rtpmt.network.packet.SensorMessage.SensorInformation other) {
         if (other == rtpmt.network.packet.SensorMessage.SensorInformation.getDefaultInstance()) return this;
         if (other.hasDeviceId()) {
-          setDeviceId(other.getDeviceId());
+          bitField0_ |= 0x00000001;
+          deviceId_ = other.deviceId_;
+          onChanged();
         }
         if (other.hasTimeStamp()) {
-          setTimeStamp(other.getTimeStamp());
+          bitField0_ |= 0x00000002;
+          timeStamp_ = other.timeStamp_;
+          onChanged();
         }
         if (other.hasLocation()) {
           mergeLocation(other.getLocation());
@@ -1641,7 +2169,7 @@ public final class SensorMessage {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasDeviceId()) {
           
@@ -1667,77 +2195,69 @@ public final class SensorMessage {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              deviceId_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              timeStamp_ = input.readBytes();
-              break;
-            }
-            case 26: {
-              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder subBuilder = rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.newBuilder();
-              if (hasLocation()) {
-                subBuilder.mergeFrom(getLocation());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setLocation(subBuilder.buildPartial());
-              break;
-            }
-            case 34: {
-              rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder subBuilder = rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addSensors(subBuilder.buildPartial());
-              break;
-            }
+        rtpmt.network.packet.SensorMessage.SensorInformation parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (rtpmt.network.packet.SensorMessage.SensorInformation) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // required string deviceId = 1;
       private java.lang.Object deviceId_ = "";
+      /**
+       * <code>required string deviceId = 1;</code>
+       */
       public boolean hasDeviceId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getDeviceId() {
+      /**
+       * <code>required string deviceId = 1;</code>
+       */
+      public java.lang.String getDeviceId() {
         java.lang.Object ref = deviceId_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           deviceId_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setDeviceId(String value) {
+      /**
+       * <code>required string deviceId = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDeviceIdBytes() {
+        java.lang.Object ref = deviceId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          deviceId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string deviceId = 1;</code>
+       */
+      public Builder setDeviceId(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1746,34 +2266,72 @@ public final class SensorMessage {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string deviceId = 1;</code>
+       */
       public Builder clearDeviceId() {
         bitField0_ = (bitField0_ & ~0x00000001);
         deviceId_ = getDefaultInstance().getDeviceId();
         onChanged();
         return this;
       }
-      void setDeviceId(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
+      /**
+       * <code>required string deviceId = 1;</code>
+       */
+      public Builder setDeviceIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         deviceId_ = value;
         onChanged();
+        return this;
       }
-      
+
       // required string timeStamp = 2;
       private java.lang.Object timeStamp_ = "";
+      /**
+       * <code>required string timeStamp = 2;</code>
+       */
       public boolean hasTimeStamp() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public String getTimeStamp() {
+      /**
+       * <code>required string timeStamp = 2;</code>
+       */
+      public java.lang.String getTimeStamp() {
         java.lang.Object ref = timeStamp_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           timeStamp_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setTimeStamp(String value) {
+      /**
+       * <code>required string timeStamp = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTimeStampBytes() {
+        java.lang.Object ref = timeStamp_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          timeStamp_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string timeStamp = 2;</code>
+       */
+      public Builder setTimeStamp(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1782,25 +2340,42 @@ public final class SensorMessage {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string timeStamp = 2;</code>
+       */
       public Builder clearTimeStamp() {
         bitField0_ = (bitField0_ & ~0x00000002);
         timeStamp_ = getDefaultInstance().getTimeStamp();
         onChanged();
         return this;
       }
-      void setTimeStamp(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
+      /**
+       * <code>required string timeStamp = 2;</code>
+       */
+      public Builder setTimeStampBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         timeStamp_ = value;
         onChanged();
+        return this;
       }
-      
+
       // required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;
       private rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation location_ = rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder> locationBuilder_;
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public boolean hasLocation() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation getLocation() {
         if (locationBuilder_ == null) {
           return location_;
@@ -1808,6 +2383,9 @@ public final class SensorMessage {
           return locationBuilder_.getMessage();
         }
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public Builder setLocation(rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation value) {
         if (locationBuilder_ == null) {
           if (value == null) {
@@ -1821,6 +2399,9 @@ public final class SensorMessage {
         bitField0_ |= 0x00000004;
         return this;
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public Builder setLocation(
           rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder builderForValue) {
         if (locationBuilder_ == null) {
@@ -1832,6 +2413,9 @@ public final class SensorMessage {
         bitField0_ |= 0x00000004;
         return this;
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public Builder mergeLocation(rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation value) {
         if (locationBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004) &&
@@ -1848,6 +2432,9 @@ public final class SensorMessage {
         bitField0_ |= 0x00000004;
         return this;
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public Builder clearLocation() {
         if (locationBuilder_ == null) {
           location_ = rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.getDefaultInstance();
@@ -1858,11 +2445,17 @@ public final class SensorMessage {
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder getLocationBuilder() {
         bitField0_ |= 0x00000004;
         onChanged();
         return getLocationFieldBuilder().getBuilder();
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder getLocationOrBuilder() {
         if (locationBuilder_ != null) {
           return locationBuilder_.getMessageOrBuilder();
@@ -1870,6 +2463,9 @@ public final class SensorMessage {
           return location_;
         }
       }
+      /**
+       * <code>required .rtpmt.network.packet.SensorInformation.LocationInformation location = 3;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
           rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformationOrBuilder> 
           getLocationFieldBuilder() {
@@ -1883,7 +2479,7 @@ public final class SensorMessage {
         }
         return locationBuilder_;
       }
-      
+
       // repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;
       private java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> sensors_ =
         java.util.Collections.emptyList();
@@ -1893,10 +2489,13 @@ public final class SensorMessage {
           bitField0_ |= 0x00000008;
          }
       }
-      
+
       private com.google.protobuf.RepeatedFieldBuilder<
           rtpmt.network.packet.SensorMessage.SensorInformation.Sensor, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder, rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> sensorsBuilder_;
-      
+
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> getSensorsList() {
         if (sensorsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(sensors_);
@@ -1904,6 +2503,9 @@ public final class SensorMessage {
           return sensorsBuilder_.getMessageList();
         }
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public int getSensorsCount() {
         if (sensorsBuilder_ == null) {
           return sensors_.size();
@@ -1911,6 +2513,9 @@ public final class SensorMessage {
           return sensorsBuilder_.getCount();
         }
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor getSensors(int index) {
         if (sensorsBuilder_ == null) {
           return sensors_.get(index);
@@ -1918,6 +2523,9 @@ public final class SensorMessage {
           return sensorsBuilder_.getMessage(index);
         }
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder setSensors(
           int index, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor value) {
         if (sensorsBuilder_ == null) {
@@ -1932,6 +2540,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder setSensors(
           int index, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder builderForValue) {
         if (sensorsBuilder_ == null) {
@@ -1943,6 +2554,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder addSensors(rtpmt.network.packet.SensorMessage.SensorInformation.Sensor value) {
         if (sensorsBuilder_ == null) {
           if (value == null) {
@@ -1956,6 +2570,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder addSensors(
           int index, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor value) {
         if (sensorsBuilder_ == null) {
@@ -1970,6 +2587,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder addSensors(
           rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder builderForValue) {
         if (sensorsBuilder_ == null) {
@@ -1981,6 +2601,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder addSensors(
           int index, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder builderForValue) {
         if (sensorsBuilder_ == null) {
@@ -1992,6 +2615,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder addAllSensors(
           java.lang.Iterable<? extends rtpmt.network.packet.SensorMessage.SensorInformation.Sensor> values) {
         if (sensorsBuilder_ == null) {
@@ -2003,6 +2629,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder clearSensors() {
         if (sensorsBuilder_ == null) {
           sensors_ = java.util.Collections.emptyList();
@@ -2013,6 +2642,9 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public Builder removeSensors(int index) {
         if (sensorsBuilder_ == null) {
           ensureSensorsIsMutable();
@@ -2023,10 +2655,16 @@ public final class SensorMessage {
         }
         return this;
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder getSensorsBuilder(
           int index) {
         return getSensorsFieldBuilder().getBuilder(index);
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder getSensorsOrBuilder(
           int index) {
         if (sensorsBuilder_ == null) {
@@ -2034,6 +2672,9 @@ public final class SensorMessage {
           return sensorsBuilder_.getMessageOrBuilder(index);
         }
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public java.util.List<? extends rtpmt.network.packet.SensorMessage.SensorInformation.SensorOrBuilder> 
            getSensorsOrBuilderList() {
         if (sensorsBuilder_ != null) {
@@ -2042,15 +2683,24 @@ public final class SensorMessage {
           return java.util.Collections.unmodifiableList(sensors_);
         }
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder addSensorsBuilder() {
         return getSensorsFieldBuilder().addBuilder(
             rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance());
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder addSensorsBuilder(
           int index) {
         return getSensorsFieldBuilder().addBuilder(
             index, rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.getDefaultInstance());
       }
+      /**
+       * <code>repeated .rtpmt.network.packet.SensorInformation.Sensor sensors = 4;</code>
+       */
       public java.util.List<rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder> 
            getSensorsBuilderList() {
         return getSensorsFieldBuilder().getBuilderList();
@@ -2069,18 +2719,18 @@ public final class SensorMessage {
         }
         return sensorsBuilder_;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:rtpmt.network.packet.SensorInformation)
     }
-    
+
     static {
       defaultInstance = new SensorInformation(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:rtpmt.network.packet.SensorInformation)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_rtpmt_network_packet_SensorInformation_descriptor;
   private static
@@ -2096,7 +2746,7 @@ public final class SensorMessage {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable;
-  
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -2106,7 +2756,7 @@ public final class SensorMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\027SensorInformation.proto\022\024rtpmt.network" +
-      ".packet\"\333\003\n\021SensorInformation\022\020\n\010deviceI" +
+      ".packet\"\346\003\n\021SensorInformation\022\020\n\010deviceI" +
       "d\030\001 \002(\t\022\021\n\ttimeStamp\030\002 \002(\t\022M\n\010location\030\003" +
       " \002(\0132;.rtpmt.network.packet.SensorInform" +
       "ation.LocationInformation\022?\n\007sensors\030\004 \003" +
@@ -2116,10 +2766,10 @@ public final class SensorMessage {
       "r\022\020\n\010sensorId\030\001 \002(\t\022S\n\nsensorType\030\002 \002(\0162" +
       "2.rtpmt.network.packet.SensorInformation",
       ".SensorType:\013TEMPERATURE\022\023\n\013sensorValue\030" +
-      "\003 \002(\t\022\022\n\nsensorUnit\030\004 \002(\t\":\n\nSensorType\022" +
+      "\003 \002(\t\022\022\n\nsensorUnit\030\004 \002(\t\"E\n\nSensorType\022" +
       "\017\n\013TEMPERATURE\020\000\022\r\n\tVIBRATION\020\001\022\014\n\010HUMID" +
-      "ITY\020\002B%\n\024rtpmt.network.packetB\rSensorMes" +
-      "sage"
+      "ITY\020\002\022\t\n\005SHOCK\020\003B%\n\024rtpmt.network.packet" +
+      "B\rSensorMessage"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2131,25 +2781,19 @@ public final class SensorMessage {
           internal_static_rtpmt_network_packet_SensorInformation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_SensorInformation_descriptor,
-              new java.lang.String[] { "DeviceId", "TimeStamp", "Location", "Sensors", },
-              rtpmt.network.packet.SensorMessage.SensorInformation.class,
-              rtpmt.network.packet.SensorMessage.SensorInformation.Builder.class);
+              new java.lang.String[] { "DeviceId", "TimeStamp", "Location", "Sensors", });
           internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor =
             internal_static_rtpmt_network_packet_SensorInformation_descriptor.getNestedTypes().get(0);
           internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_SensorInformation_LocationInformation_descriptor,
-              new java.lang.String[] { "Latitude", "Longitude", },
-              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.class,
-              rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation.Builder.class);
+              new java.lang.String[] { "Latitude", "Longitude", });
           internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor =
             internal_static_rtpmt_network_packet_SensorInformation_descriptor.getNestedTypes().get(1);
           internal_static_rtpmt_network_packet_SensorInformation_Sensor_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_SensorInformation_Sensor_descriptor,
-              new java.lang.String[] { "SensorId", "SensorType", "SensorValue", "SensorUnit", },
-              rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.class,
-              rtpmt.network.packet.SensorMessage.SensorInformation.Sensor.Builder.class);
+              new java.lang.String[] { "SensorId", "SensorType", "SensorValue", "SensorUnit", });
           return null;
         }
       };
@@ -2158,6 +2802,6 @@ public final class SensorMessage {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }

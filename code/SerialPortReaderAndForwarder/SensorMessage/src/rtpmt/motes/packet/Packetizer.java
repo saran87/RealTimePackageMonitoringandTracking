@@ -255,7 +255,7 @@ public class Packetizer extends AbstractSource implements Runnable {
       if (packet.length >= 1) {
           
           PacketHelper packetHelper = new PacketHelper(packet);
-          
+          if(packetHelper.isHumidty() || packetHelper.isTemperature()){
           SensorInformation.Builder message = SensorInformation.newBuilder();
       
           message.setDeviceId("1");
@@ -265,19 +265,44 @@ public class Packetizer extends AbstractSource implements Runnable {
           message.setTimeStamp(dateFormat.format(date));
           
           SensorInformation.Sensor.Builder sensor = SensorInformation.Sensor.newBuilder();
-          sensor.setSensorId("1");
-          sensor.setSensorUnit("F");
-          sensor.setSensorType(SensorInformation.SensorType.TEMPERATURE);
-          sensor.setSensorValue(String.valueOf(packetHelper.getValue()));
-          //sensor.setSensorValue("80");
-          message.addSensors(sensor);
           
-          sensor = SensorInformation.Sensor.newBuilder();
-          sensor.setSensorId("2");
-          sensor.setSensorUnit("gValue");
-          sensor.setSensorType(SensorInformation.SensorType.VIBRATION);
-          sensor.setSensorValue("45g");
-          message.addSensors(sensor);
+          if(packetHelper.isTemperature()){
+            sensor.setSensorId("1");
+            sensor.setSensorUnit("F");
+            sensor.setSensorType(SensorInformation.SensorType.TEMPERATURE);
+            sensor.setSensorValue(String.valueOf(packetHelper.getValue()));
+            //sensor.setSensorValue("80");
+            message.addSensors(sensor);
+          }
+          
+          else if(packetHelper.isHumidty()){
+            sensor = SensorInformation.Sensor.newBuilder();
+            sensor.setSensorId("2");
+            sensor.setSensorUnit("%RH");
+            sensor.setSensorType(SensorInformation.SensorType.HUMIDITY);
+            System.out.println(packetHelper.getHumidity());
+            sensor.setSensorValue(String.valueOf((packetHelper.getHumidity())));
+            message.addSensors(sensor);
+          }
+          else if (packetHelper.isVibration()){
+               sensor = SensorInformation.Sensor.newBuilder();
+            sensor.setSensorId("3");
+            sensor.setSensorUnit("g");
+            sensor.setSensorType(SensorInformation.SensorType.VIBRATION);
+            System.out.println(packetHelper.getVibration());
+            sensor.setSensorValue(String.valueOf((packetHelper.getVibration())));
+            message.addSensors(sensor);
+          }
+          else if (packetHelper.isShock()){
+            sensor = SensorInformation.Sensor.newBuilder();
+            sensor.setSensorId("4");
+            sensor.setSensorUnit("g");
+            sensor.setSensorType(SensorInformation.SensorType.SHOCK);
+            System.out.println(packetHelper.getVibration());
+            sensor.setSensorValue(String.valueOf((packetHelper.getVibration())));
+            message.addSensors(sensor);
+          }
+          
           SensorInformation.LocationInformation.Builder location = SensorInformation.LocationInformation.newBuilder();
           Location loc = LocationTracker.getLocation();
           if(loc !=null ){
@@ -291,6 +316,7 @@ public class Packetizer extends AbstractSource implements Runnable {
             message.setLocation(location);
           }
           return message.build();
+      }
       }
     }
   }
@@ -403,12 +429,20 @@ public class Packetizer extends AbstractSource implements Runnable {
             b  = input.read() & 0xff;
         }
         System.out.println("count:"+ count + "InSync:" + inSync);
+        if (count >= MTU) 
+        {
+          // PacketHelper too long, give up and try to resync
+          message(name + ": packet too long");
+          inSync = false;
+          count = 0;
+          continue;
+        }
         syncFrame[count++] = (byte)(b & 0xff);
        
         while (count < FRAME_SYNC.length)
         {
              b =  input.read();
-             syncFrame[count++] = (byte)(b & 0xff);    
+             syncFrame[count++] = (byte)(b & 0xff); 
         }
        
         if(DEBUG){
@@ -430,6 +464,7 @@ public class Packetizer extends AbstractSource implements Runnable {
           // PacketHelper too long, give up and try to resync
           message(name + ": packet too long");
           inSync = false;
+          count = 0;
           continue;
         }
         if(!isLength)
