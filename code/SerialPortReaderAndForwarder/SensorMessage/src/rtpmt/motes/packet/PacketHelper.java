@@ -135,12 +135,31 @@ public final class PacketHelper extends Header {
     public String getVibration(){
   
         StringBuilder vibration = new StringBuilder();
-        
+         float g; 
         for(int i = 0; i< PayLoad.size(); i++){
-            vibration.append(PayLoad.get(i)&0xff).append("-");
+            g = (float)((int) PayLoad.get(i) * 15.6);
+            vibration.append(String.valueOf(g)).append("-");
         }
-        vibration.deleteCharAt(PayLoad.size()-1);
+        vibration.deleteCharAt(vibration.length()-1);
         return vibration.toString();
+        
+    }
+    
+    public String getShock(){
+  
+        StringBuilder shock = new StringBuilder();
+        float g; 
+        int i = 0;
+        for(i=2; i < 70; i++){
+            g = (float)((int) PayLoad.get(i) * 15.6);
+            shock.append(String.valueOf(g)).append("-");
+        }
+        for(; i< PayLoad.size(); i++){
+            g = (float) (((int)PayLoad.get(i) -128) * 0.64);
+            shock.append(String.valueOf(g)).append("-");
+        }
+        shock.deleteCharAt(shock.length()-1);
+        return shock.toString();
         
     }
     /**
