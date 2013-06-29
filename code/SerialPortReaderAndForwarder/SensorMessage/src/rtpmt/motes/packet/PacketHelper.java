@@ -5,6 +5,7 @@
 package rtpmt.motes.packet;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public final class PacketHelper extends Header {
     
     public PacketHelper(){
         PayLoad = new ArrayList<Byte>();
-        date =  new Date();
+        date = new Date();
     }
     
     /**
@@ -58,10 +59,7 @@ public final class PacketHelper extends Header {
         }
         
         ByteBuffer bb = ByteBuffer.wrap(byteArray, i, 4);
-        
-        long timeStamp = bb.getInt();
-        System.out.println(timeStamp);
-        
+        long timeStamp = (bb.getInt() * (long)1000);
         date = new Date(timeStamp);
     }
      /**
@@ -197,6 +195,64 @@ public final class PacketHelper extends Header {
         else{
             return false;
         }
+        
+    }
+     
+     public boolean isX(){
+        
+        boolean isTrue = false;
+        
+        if(this.Service == 3 || this.Service == 2){
+            if( this.ServiceId == 1){
+                isTrue = true;
+            }else{
+                isTrue = false;
+            }
+        }
+        else{
+            isTrue = false;
+        }
+        
+        return isTrue;
+    }
+     
+      public boolean isY(){
+        
+        
+        boolean isTrue = false;
+        
+        if(this.Service == 3 || this.Service == 2){
+            if( this.ServiceId == 2){
+                isTrue = true;
+            }else{
+                isTrue = false;
+            }
+        }
+        else{
+            isTrue = false;
+        }
+        
+        return isTrue;
+        
+    }
+      
+     public boolean isZ(){
+        
+        
+        boolean isTrue = false;
+        
+        if(this.Service == 3 || this.Service == 2){
+            if( this.ServiceId == 3){
+                isTrue = true;
+            }else{
+                isTrue = false;
+            }
+        }
+        else{
+            isTrue = false;
+        }
+        
+        return isTrue;
         
     }
     

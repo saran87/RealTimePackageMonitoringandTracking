@@ -214,17 +214,33 @@ public final class SensorMessage {
        */
       TEMPERATURE(0, 0),
       /**
-       * <code>VIBRATION = 1;</code>
+       * <code>HUMIDITY = 1;</code>
        */
-      VIBRATION(1, 1),
+      HUMIDITY(1, 1),
       /**
-       * <code>HUMIDITY = 2;</code>
+       * <code>VIBRATIONX = 2;</code>
        */
-      HUMIDITY(2, 2),
+      VIBRATIONX(2, 2),
       /**
-       * <code>SHOCK = 3;</code>
+       * <code>VIBRATIONY = 3;</code>
        */
-      SHOCK(3, 3),
+      VIBRATIONY(3, 3),
+      /**
+       * <code>VIBRATIONZ = 4;</code>
+       */
+      VIBRATIONZ(4, 4),
+      /**
+       * <code>SHOCKX = 5;</code>
+       */
+      SHOCKX(5, 5),
+      /**
+       * <code>SHOCKY = 6;</code>
+       */
+      SHOCKY(6, 6),
+      /**
+       * <code>SHOCKZ = 7;</code>
+       */
+      SHOCKZ(7, 7),
       ;
 
       /**
@@ -232,17 +248,33 @@ public final class SensorMessage {
        */
       public static final int TEMPERATURE_VALUE = 0;
       /**
-       * <code>VIBRATION = 1;</code>
+       * <code>HUMIDITY = 1;</code>
        */
-      public static final int VIBRATION_VALUE = 1;
+      public static final int HUMIDITY_VALUE = 1;
       /**
-       * <code>HUMIDITY = 2;</code>
+       * <code>VIBRATIONX = 2;</code>
        */
-      public static final int HUMIDITY_VALUE = 2;
+      public static final int VIBRATIONX_VALUE = 2;
       /**
-       * <code>SHOCK = 3;</code>
+       * <code>VIBRATIONY = 3;</code>
        */
-      public static final int SHOCK_VALUE = 3;
+      public static final int VIBRATIONY_VALUE = 3;
+      /**
+       * <code>VIBRATIONZ = 4;</code>
+       */
+      public static final int VIBRATIONZ_VALUE = 4;
+      /**
+       * <code>SHOCKX = 5;</code>
+       */
+      public static final int SHOCKX_VALUE = 5;
+      /**
+       * <code>SHOCKY = 6;</code>
+       */
+      public static final int SHOCKY_VALUE = 6;
+      /**
+       * <code>SHOCKZ = 7;</code>
+       */
+      public static final int SHOCKZ_VALUE = 7;
 
 
       public final int getNumber() { return value; }
@@ -250,9 +282,13 @@ public final class SensorMessage {
       public static SensorType valueOf(int value) {
         switch (value) {
           case 0: return TEMPERATURE;
-          case 1: return VIBRATION;
-          case 2: return HUMIDITY;
-          case 3: return SHOCK;
+          case 1: return HUMIDITY;
+          case 2: return VIBRATIONX;
+          case 3: return VIBRATIONY;
+          case 4: return VIBRATIONZ;
+          case 5: return SHOCKX;
+          case 6: return SHOCKY;
+          case 7: return SHOCKZ;
           default: return null;
         }
       }
@@ -2756,7 +2792,7 @@ public final class SensorMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\027SensorInformation.proto\022\024rtpmt.network" +
-      ".packet\"\346\003\n\021SensorInformation\022\020\n\010deviceI" +
+      ".packet\"\240\004\n\021SensorInformation\022\020\n\010deviceI" +
       "d\030\001 \002(\t\022\021\n\ttimeStamp\030\002 \002(\t\022M\n\010location\030\003" +
       " \002(\0132;.rtpmt.network.packet.SensorInform" +
       "ation.LocationInformation\022?\n\007sensors\030\004 \003" +
@@ -2766,10 +2802,11 @@ public final class SensorMessage {
       "r\022\020\n\010sensorId\030\001 \002(\t\022S\n\nsensorType\030\002 \002(\0162" +
       "2.rtpmt.network.packet.SensorInformation",
       ".SensorType:\013TEMPERATURE\022\023\n\013sensorValue\030" +
-      "\003 \002(\t\022\022\n\nsensorUnit\030\004 \002(\t\"E\n\nSensorType\022" +
-      "\017\n\013TEMPERATURE\020\000\022\r\n\tVIBRATION\020\001\022\014\n\010HUMID" +
-      "ITY\020\002\022\t\n\005SHOCK\020\003B%\n\024rtpmt.network.packet" +
-      "B\rSensorMessage"
+      "\003 \002(\t\022\022\n\nsensorUnit\030\004 \002(\t\"\177\n\nSensorType\022" +
+      "\017\n\013TEMPERATURE\020\000\022\014\n\010HUMIDITY\020\001\022\016\n\nVIBRAT" +
+      "IONX\020\002\022\016\n\nVIBRATIONY\020\003\022\016\n\nVIBRATIONZ\020\004\022\n" +
+      "\n\006SHOCKX\020\005\022\n\n\006SHOCKY\020\006\022\n\n\006SHOCKZ\020\007B%\n\024rt" +
+      "pmt.network.packetB\rSensorMessage"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

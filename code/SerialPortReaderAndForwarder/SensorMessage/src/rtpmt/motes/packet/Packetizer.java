@@ -124,7 +124,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 
   final static int P_UNKNOWN = 255;
   
-  final static int MTU = 600;
+  final static int MTU = 1000;
 
   final static int ACK_TIMEOUT = 1000; // in milliseconds
 
@@ -255,14 +255,13 @@ public class Packetizer extends AbstractSource implements Runnable {
       if (packet.length >= 1) {
           
           PacketHelper packetHelper = new PacketHelper(packet);
-          if(packetHelper.isHumidty() || packetHelper.isTemperature()){
           SensorInformation.Builder message = SensorInformation.newBuilder();
       
           message.setDeviceId("1");
           
           DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
           Date date = new Date();
-          message.setTimeStamp(dateFormat.format(date));
+          message.setTimeStamp(packetHelper.getTimeStamp());
           
           SensorInformation.Sensor.Builder sensor = SensorInformation.Sensor.newBuilder();
           
@@ -288,7 +287,15 @@ public class Packetizer extends AbstractSource implements Runnable {
                sensor = SensorInformation.Sensor.newBuilder();
             sensor.setSensorId("3");
             sensor.setSensorUnit("g");
-            sensor.setSensorType(SensorInformation.SensorType.VIBRATION);
+            if(packetHelper.isX()){
+                sensor.setSensorType(SensorInformation.SensorType.VIBRATIONX);
+            }
+            else if(packetHelper.isY()){
+                sensor.setSensorType(SensorInformation.SensorType.VIBRATIONY);
+            }
+            else if(packetHelper.isZ()){
+                sensor.setSensorType(SensorInformation.SensorType.VIBRATIONZ);
+            }
             System.out.println(packetHelper.getVibration());
             sensor.setSensorValue(String.valueOf((packetHelper.getVibration())));
             message.addSensors(sensor);
@@ -297,7 +304,15 @@ public class Packetizer extends AbstractSource implements Runnable {
             sensor = SensorInformation.Sensor.newBuilder();
             sensor.setSensorId("4");
             sensor.setSensorUnit("g");
-            sensor.setSensorType(SensorInformation.SensorType.SHOCK);
+            if(packetHelper.isX()){
+                sensor.setSensorType(SensorInformation.SensorType.SHOCKX);
+            }
+            else if(packetHelper.isY()){
+                sensor.setSensorType(SensorInformation.SensorType.SHOCKY);
+            }
+            else if(packetHelper.isZ()){
+                sensor.setSensorType(SensorInformation.SensorType.SHOCKZ);
+            }
             System.out.println(packetHelper.getVibration());
             sensor.setSensorValue(String.valueOf((packetHelper.getVibration())));
             message.addSensors(sensor);
@@ -316,7 +331,6 @@ public class Packetizer extends AbstractSource implements Runnable {
             message.setLocation(location);
           }
           return message.build();
-      }
       }
     }
   }
@@ -416,10 +430,6 @@ public class Packetizer extends AbstractSource implements Runnable {
     
     for (;;) 
     {
-      
-      // System.out.print(input.read());
-
-      
       if (!inSync) 
       {
         message(name + ": resynchronising");
@@ -621,7 +631,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     byte[] realPacket = new byte[buffer.escapePtr];
     System.arraycopy(buffer.escaped, 0, realPacket, 0, buffer.escapePtr);
 
-    if (true) {
+    if (DEBUG) {
       Dump.dump("encoded", realPacket);
     }
      output.flush();

@@ -21,9 +21,13 @@ message SensorInformation {
 	
 	enum SensorType {
 		TEMPERATURE = 0;
-		VIBRATION = 1;
-		HUMIDITY = 2;
-                SHOCK = 3;
+                HUMIDITY = 1;
+		VIBRATIONX = 2;
+                VIBRATIONY = 3;
+                VIBRATIONZ = 4;
+                SHOCKX = 5;
+                SHOCKY = 6;
+		SHOCKZ = 7;
 	}
   
 	message Sensor {

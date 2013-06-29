@@ -271,7 +271,7 @@ public class Communicator implements SerialPortEventListener, Runnable
             try
             {
                 String dummydata = "#:367:N:43.1049:W:77.6233:ZBBBB00000849";
-                byte[] data = new byte[input.available()];
+                //byte[] data = new byte[input.available()];
                        
                 //input.read(data);
                 //System.out.println(data);
@@ -282,9 +282,9 @@ public class Communicator implements SerialPortEventListener, Runnable
                 
                // tCPClient.sendData(data);
                 
-                window.txtLog.append("Data:" + logText);
-                logText = "";
-                window.txtLog.append("\n");
+               // window.txtLog.append("Data:" + logText);
+                //logText = "";
+                //window.txtLog.append("\n");
             }
             catch (Exception e)
             {
