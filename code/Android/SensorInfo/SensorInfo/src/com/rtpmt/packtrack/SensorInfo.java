@@ -1,5 +1,6 @@
 package com.rtpmt.packtrack;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,27 +15,43 @@ import java.util.Set;
 public class SensorInfo{
 
 	Long MacID;
-	int tempThreshold;
-	int tempFreq;
+	int ShortID;
+	int SerialID;
+	int PackageID;
+	int TruckID;
+	ArrayList<ServiceInfo> services;
+	
+	
+	
+	// add the Service List here
+	
+	//int tempThreshold;
+	//int tempFreq;
 	//int humidityThreshold;
 	//int humidityFreq;
 	//int vibrationThreshold;
 	//int vibrationFreq;
 	
 	
-	public SensorInfo(Long _MacID,int _tempThreshold,int _tempFreq){
+	public SensorInfo(Long _MacID, int _shortID, int _serialID, int _packageID, int _truckID){
 		
 		MacID = _MacID; 
-		tempThreshold =_tempThreshold;
-		tempFreq = _tempFreq;
-		
-		
+		ShortID = _shortID;
+		SerialID = _serialID;
+		PackageID = _packageID;
+		TruckID = _truckID;
+			
 	}
 
 	
-  public SensorInfo  getSensorInfo(){
+    public SensorInfo  getSensorInfo(){
 		
 		return(this);
 		
+	}
+    
+    public void addService(ServiceInfo _ServiceInfo){
+    	if(services == null)  new ArrayList<ServiceInfo>() ;
+    	services.add(_ServiceInfo);
 	}
 }

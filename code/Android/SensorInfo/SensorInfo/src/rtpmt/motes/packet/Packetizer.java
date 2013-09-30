@@ -444,9 +444,9 @@ public class Packetizer extends AbstractSource implements Runnable {
 					//Threshold threshold = new Threshold():
 					//int tempThreshold = threshold.temperatureThresholdValue;
 					//create a hash map with short id as key and NewSensorList object as value
-					SensorInfo sensorInfo = new SensorInfo(macId, 1, 2);
-					StartActivity.sensorMap.put(shortId, sensorInfo);
-					StartActivity.sensorList.put(macId,shortId);
+					//SensorInfo sensorInfo = new SensorInfo(macId, 1, 2);
+					//StartActivity.sensorMap.put(shortId, sensorInfo);
+					//StartActivity.sensorList.put(macId,shortId);
 					Log.i("Packetizer","Registered Short:"+nodeId+" MAC:"+macId);
 					
 					//TODO Send nodeid, 64bit id to server
