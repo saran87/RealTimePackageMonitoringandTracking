@@ -1,0 +1,4 @@
+QuickServerFTPEg
+..\..\dist\QuickServer.jar
+org.quickserver.net.server.QuickServer
+-load ..\conf\FtpServer_service.xml

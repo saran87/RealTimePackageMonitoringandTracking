@@ -135,10 +135,13 @@ public final class PacketHelper extends Header {
     public String getVibration(){
   
         StringBuilder vibration = new StringBuilder();
-         float g; 
+        double g; 
         for(int i = 0; i< PayLoad.size(); i++){
-            g = (float)((int) PayLoad.get(i) * 15.6);
-            vibration.append(String.valueOf(g)).append("-");
+           // g = (float)((int) PayLoad.get(i) * 15.6);
+       
+            short value =  PayLoad.get(i);
+            g = (value * 15.6)/1000;
+            vibration.append(String.valueOf(g)).append("|");
         }
         vibration.deleteCharAt(vibration.length()-1);
         return vibration.toString();
@@ -148,15 +151,19 @@ public final class PacketHelper extends Header {
     public String getShock(){
   
         StringBuilder shock = new StringBuilder();
-        float g; 
+        double g; 
         int i = 0;
-        for(i=2; i < 70; i++){
-            g = (float)((int) PayLoad.get(i) * 15.6);
-            shock.append(String.valueOf(g)).append("-");
+        for(i=2; i < 72; i++){
+            short value  = PayLoad.get(i);
+            g = (value * 15.6)/1000;
+            shock.append(String.valueOf(g)).append("|");
         }
         for(; i< PayLoad.size(); i++){
-            g = (float) (((int)PayLoad.get(i) -128) * 0.64);
-            shock.append(String.valueOf(g)).append("-");
+           //Unsigned integer value, note the 0xffff not 0xff
+            short value = (short) (PayLoad.get(i) & 0xFF); 
+           
+            g = (value - 128)/0.64;
+            shock.append(String.valueOf(g)).append("|");
         }
         shock.deleteCharAt(shock.length()-1);
         return shock.toString();

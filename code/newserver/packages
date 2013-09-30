@@ -1,0 +1,13 @@
+org.quickserver.net.server
+org.quickserver.net.server.impl
+org.quickserver.net.qsadmin
+org.quickserver.net
+org.quickserver.sql
+org.quickserver.util.pool
+org.quickserver.util.pool.thread
+org.quickserver.util.logging
+org.quickserver.util.xmlreader
+org.quickserver.net.qsadmin.gui
+org.quickserver.security
+org.quickserver.swing
+org.quickserver.util.io

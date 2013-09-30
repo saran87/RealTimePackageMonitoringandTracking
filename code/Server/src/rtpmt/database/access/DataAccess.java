@@ -51,6 +51,7 @@ public class DataAccess  {
      private Package getPackage(SensorInformation message){
         
         Package packag = new Package();
+        packag.put("_id", new Date().getTime());
         packag.put("packageId", message.getDeviceId());
         //to-do
         packag.put("truckId", message.getDeviceId());

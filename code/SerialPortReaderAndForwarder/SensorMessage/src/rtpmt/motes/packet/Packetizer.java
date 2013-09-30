@@ -116,6 +116,8 @@ public class Packetizer extends AbstractSource implements Runnable {
   
   final static int P_SERVICE_REQUEST = 255;
   
+  final static int P_SERVICE_RESPONSE = 0;
+  
   final static int P_SERVICE_REPORT_RATE = 254;
   
   final static int P_UPDATE = 1;
@@ -288,15 +290,18 @@ public class Packetizer extends AbstractSource implements Runnable {
             sensor.setSensorId("3");
             sensor.setSensorUnit("g");
             if(packetHelper.isX()){
+                System.out.println("X=");
                 sensor.setSensorType(SensorInformation.SensorType.VIBRATIONX);
             }
             else if(packetHelper.isY()){
+                System.out.println("Y=");
                 sensor.setSensorType(SensorInformation.SensorType.VIBRATIONY);
             }
             else if(packetHelper.isZ()){
+                System.out.println("Z=");
                 sensor.setSensorType(SensorInformation.SensorType.VIBRATIONZ);
             }
-            System.out.println(packetHelper.getVibration());
+            System.out.print(packetHelper.getVibration());
             sensor.setSensorValue(String.valueOf((packetHelper.getVibration())));
             message.addSensors(sensor);
           }
@@ -313,8 +318,8 @@ public class Packetizer extends AbstractSource implements Runnable {
             else if(packetHelper.isZ()){
                 sensor.setSensorType(SensorInformation.SensorType.SHOCKZ);
             }
-            System.out.println(packetHelper.getVibration());
-            sensor.setSensorValue(String.valueOf((packetHelper.getVibration())));
+            System.out.println(packetHelper.getShock());
+            sensor.setSensorValue(String.valueOf((packetHelper.getShock())));
             message.addSensors(sensor);
           }
           
@@ -388,30 +393,54 @@ public class Packetizer extends AbstractSource implements Runnable {
       for (;;) 
       {
         byte[] packet = readFramedPacket();
-        int packetType = packet[0] & 0xff;
-        //int pdataOffset = 0;
-        if (packetType == P_REGISTRATION) 
+				int packetType = packet[0] & 0xff;
+				int nodeId = (packet[1] & 0xff) | (packet[2] & 0xff) << 8; 
+				
+				//int pdataOffset = 0;
+				if (packetType == P_REGISTRATION) {
+					//count++;
+					//TODO Store nodeid, 64bit id (MAC) in hashtable
+					
+					//Storing nodeid and 64bit id in hashtable
+					Long macId = (long) (packet[5] & 0xff) | (packet[6] & 0xff) << 8 | 
+							(packet[7] & 0xff) << 16 | (packet[8] & 0xff) << 24;
+					Integer shortId = nodeId;
+					//StartActivity.sensorList.put(macId,shortId);
+					//Log.i("Packetizer","Registered Short:"+shortId+" MAC:"+macId);
+					
+					//TODO Send nodeid, 64bit id to server
+					
+					//sendTimeSync(nodeId); // Sending the current Time
+					//System.out.println("Time sync sent to "+count);
+					sendServiceRequest(nodeId); // Sending the Service Request
+					System.out.println("Service Request sent!");
+					//sendReportRate(nodeId);
+					
+					// And merge with un-acked packets
+					packetType = P_PACKET_NO_ACK;
+				} 
+				else if(packetType == P_SERVICE_RESPONSE)
+				{
+					//Log.i("Packetizer", "Service Response Received");
+					//System.out.println("Sending Threshold for node: "+count);
+					sendReportRate(nodeId);
+					//sendThresholdRequest(nodeId);
+					System.out.println("Threshold Sent");
+					
+				}
+				else if (packetType == P_UPDATE) {
+					packetType = P_PACKET_NO_ACK;	
+                                        pushProtocolPacket(packetType, packet);
+				
+				}
+				/*int dataLength = packet.length - pdataOffset;
+				byte[] dataPacket = new byte[dataLength];
+				System.arraycopy(packet, pdataOffset, dataPacket, 0, dataLength); 
+				pushProtocolPacket(packetType, dataPacket);*/
+            }
+        } catch (IOException e) 
         {
-          int nodeId = (packet[1] & 0xff)
-                       | (packet[2] & 0xff) << 8;
-          sendServiceRequest(nodeId);
-          // And merge with un-acked packets
-          packetType = P_PACKET_NO_ACK;
         }
-        else if(packetType == P_UPDATE){
-             packetType = P_PACKET_NO_ACK;
-             int nodeId = (packet[1] & 0xff)
-                       | (packet[2] & 0xff) << 8;
-            //sendThresholdRequest(nodeId);
-        }
-        /*int dataLength = packet.length - pdataOffset;
-        byte[] dataPacket = new byte[dataLength];
-        System.arraycopy(packet, pdataOffset, dataPacket, 0, dataLength);*/
-        pushProtocolPacket(packetType, packet);
-      }
-    } catch (IOException e) 
-    {
-    }
   }
 
   /*
@@ -434,9 +463,13 @@ public class Packetizer extends AbstractSource implements Runnable {
       {
         message(name + ": resynchronising");
         // re-synchronise 
+ 
         int b  = input.read() & 0xff;
+ 
         while (b != 170){
+           
             b  = input.read() & 0xff;
+            
         }
         System.out.println("count:"+ count + "InSync:" + inSync);
         if (count >= MTU) 
@@ -495,6 +528,7 @@ public class Packetizer extends AbstractSource implements Runnable {
         }
         else if (count < payLoad){
             b = (byte) (input.read() & 0xff);
+            System.out.print(b);
         }
         else{
           byte[] packet = new byte[count - 2];
@@ -511,18 +545,18 @@ public class Packetizer extends AbstractSource implements Runnable {
                 + " ccrc: " + Integer.toHexString(computedCrc));
           }
 
-          if (readCrc == computedCrc) {
+          //if (readCrc != computedCrc) {
             return packet;
-          } else {
+         /* } else {
             message(name + ": bad packet");
             /*
              * We don't lose sync here. If we did, garbage on the line at startup
              * will cause loss of the first packet.
-            */
+            *
             count = 0;
             inSync = false;
             continue;
-          }
+          }*/
         }
         receiveBuffer[count++] = b;
     }
@@ -636,6 +670,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     }
      output.flush();
      output.write(realPacket);
+     System.out.println("Data written: ");
   }
   
   

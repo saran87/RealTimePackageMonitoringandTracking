@@ -1,0 +1,14 @@
+-d docs
+     -use 
+     -splitindex
+     -windowtitle 'QuickServer v1.4.7 API Specification'
+     -doctitle 'QuickServer v1.4.7 API Specification'
+     -header '<b>QuickServer</b><br><font size="-1">v1.4.7</font>'
+     -bottom 'Copyright &copy; 2003-2006 QuickServer.org
+     -exclude java:javax
+     -sourcepath .\src\main\
+     -author 
+     -group "Core Packages" "org.quickserver.net.server:org.quickserver.net:org.quickserver.util.xmlreader"
+     -group "Support Packages" "org.quickserver.net.server.impl:org.quickserver.security:org.quickserver.net.qsadmin:org.quickserver.util.pool:org.quickserver.util.pool.thread:org.quickserver.sql:org.quickserver.util.io"
+     -group "Util Packages" "org.quickserver.net.qsadmin.gui:org.quickserver.util.logging:org.quickserver.swing"
+     -overview src\main\overview.html
