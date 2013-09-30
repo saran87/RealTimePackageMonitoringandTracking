@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="30dp" >
+
+    <TextView
+        android:id="@+id/temperatureText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temperature"
+        android:textSize="48sp" />
+
+    <SeekBar
+        android:id="@+id/temperatureInterval"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:progress="5" />
+
+    
+    <TextView
+        android:id="@+id/vibrationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vibration" 
+        android:textSize="48sp"/>
+
+    <SeekBar
+        android:id="@+id/vibrationInterval"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content" 
+        android:paddingLeft="20dp" 
+        android:progress="20"/>
+
+    <TextView
+        android:id="@+id/humidityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Humidity" 
+        android:textSize="48sp" />
+
+    <SeekBar
+        android:id="@+id/humidityInterval"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content" 
+        android:paddingLeft="20dp" 
+        android:progress="5" />
+
+    <Button
+        android:id="@+id/Submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Time Period" />
+
+</LinearLayout>
