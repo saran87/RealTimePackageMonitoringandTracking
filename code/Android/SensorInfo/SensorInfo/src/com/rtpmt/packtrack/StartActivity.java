@@ -83,12 +83,13 @@ public class StartActivity extends Activity {
 	public boolean bReadThreadGoing = false;
 	public readThread read_thread;
 	public static Packetizer sensorPacketizer;
+	public static ArrayList<PackageInfo> packageList = new ArrayList<PackageInfo>();
 	boolean uart_configured = false;
 	
 	TCPClient tCPClient;
 	LocationInformation location;
-	public static SensorList<Long,Integer> sensorList = new SensorList<Long,Integer>();
-	public static Map sensorMap = new HashMap();
+	//public static SensorList<Long,Integer> sensorList = new SensorList<Long,Integer>();
+	//public static Map sensorMap = new HashMap();
 	
 	//private String host = "saranlap.student.rit.edu";
 	//private String host = "apurv.student.rit.edu";

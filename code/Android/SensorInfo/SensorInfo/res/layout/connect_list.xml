@@ -1,24 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableLayout1"
+  android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TableRow
+    android:id="@+id/tableRow1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="30dp" >
+    android:layout_height="wrap_content"
+    android:padding="5dip" >
+
     
-    <TextView
-        android:id="@+id/sensorText"
+   <TextView
+        android:id="@+id/sensorInfo1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sensors Connected: "
-        android:textSize="48sp" />
+        android:scrollbars="vertical"
+        android:layout_marginLeft="30dp"
+        android:textSize="35dp"
+        android:layout_marginRight="50dp" 
+        android:text=" SensorID" />
+   
     
-<TextView
-        android:id="@+id/sensorInfo"
+   <TextView
+        android:id="@+id/sensorInfo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_marginRight="50dp" 
+        android:textSize="35dp"
+        android:text=" Package ID" />
+   
+   <TextView
+        android:id="@+id/sensorInfo3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_marginRight="50dp" 
+        android:textSize="35dp"
+        android:text=" Status" />
+   
+    
+  <Button
+             android:id="@+id/AddSensorBtn"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:minWidth="100dp"
+             android:text="Add Sensor" />
+   
+  </TableRow>
+     
+    <TableRow
+         android:id="@+id/tableRow1"
+         android:layout_width="match_parent"
+         android:scrollbars="vertical"
+         android:gravity="center"
+         android:layout_height="94dp" >
+    
+        <TextView
+        android:id="@+id/sensorIDText"
+        android:textSize="15dp"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.0"
+   
         android:scrollbars="vertical"
-        android:text=" " />
+        android:text="" />
+        
+        <TextView
+        android:id="@+id/packageIDText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="0.0"
+        android:scrollbars="vertical"
+        android:text="" />
+        
+        <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.0"
+        android:textSize="15dp"
+        android:gravity="center_horizontal"
+        android:scrollbars="vertical"
+        android:text="" />
+    
 
- 
-</LinearLayout>
+   </TableRow>
+   
+    <View
+        android:layout_height="2dip"
+        android:background="#C0C0C0" 
+        android:layout_marginTop="120dp"/>
+   
+   <TableRow
+       android:id="@+id/tableRow2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="15dp"
+       android:visibility="gone">
+
+       <TextView
+           android:id="@+id/textView1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:layout_span="1"
+           android:layout_marginLeft="30dp"
+           android:text="Enter SensorID"
+            android:textSize="25dp" />
+
+
+       <EditText
+           android:id="@+id/SensorIDEditText"
+          android:layout_span="1"
+           android:layout_height="wrap_content"
+           android:layout_marginRight="30dp"
+           android:layout_weight="1">
+       </EditText>
+       
+        <TextView
+           android:id="@+id/textView2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text="Enter PackageID"
+           android:layout_span="1"
+            android:textSize="25dp"/>
+
+
+       <EditText
+           android:id="@+id/PackageIDEditText"
+           android:layout_width="40dp"
+           android:layout_height="wrap_content"
+           android:layout_span="1"
+           android:layout_weight="1">
+       </EditText>
+
+          
+
+   </TableRow>
+   
+
+
+    <TableRow
+       android:id="@+id/tableRow3"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" 
+       android:visibility="gone">
+       
+          <TextView
+           android:id="@+id/textView3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:layout_marginLeft="30dp"
+           android:text="Enter TruckID"
+           android:layout_span="1"
+            android:textSize="25dp"/>
+
+
+       <EditText
+           android:id="@+id/TruckIDEditText"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_span="1"
+           android:layout_weight="1">
+       </EditText>
+            
+       <TextView
+           android:id="@+id/textView384"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:text=""
+           android:layout_span="1"
+            android:textSize="35dp"/>
+   <Button
+           android:id="@+id/AddBtn"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:layout_column="1"
+           android:text="Add" />
+      </TableRow>
+   
+</TableLayout>

@@ -7,68 +7,42 @@ import java.util.Set;
 
 
 
-public class SensorList<M,S>
+public final class SensorList
 {
-	//HashMap<M,S> macIds;
-	HashMap<S, SensorInfo> SensorMap;
+	private static HashMap sensorList;
+	//HashMap<Integer, SensorInfo> SensorMap;
 	
-	public SensorList()
+	static
 	{
-		//macIds = new HashMap<M,S>(); 
-		SensorMap = new HashMap<S,SensorInfo>();
-	}
-
-	public void clear() {	 
-		//macIds.clear();
-		SensorMap.clear();		
-	}
-
-	public boolean containsKey(S shortId) {
+		sensorList = new HashMap<Integer,SensorInfo>(); 
 		
-		 if(SensorMap.containsKey(shortId))
+	}
+
+	
+	
+	public static void add(Integer _shortID, SensorInfo _sensorInfo){
+		if(!(sensorList.containsKey(_shortID)))
+			sensorList.put( _shortID,_sensorInfo);
+		
+	}
+
+	public static HashMap<Integer,SensorInfo> getSensorList(){
+		return sensorList;
+	}
+	
+	public static void updateSensorInfo(Integer _shortID, SensorInfo _sensorInfo){
+		if((sensorList.containsKey(_shortID)))
+			sensorList.put( _shortID,_sensorInfo);
+		else
+			sensorList.put( null,_sensorInfo);
+	}
+    
+	public static  boolean  containsKey(int _shortID){
+		if((sensorList.containsKey(_shortID)))
 			return true;
 		else
 			return false;
-	}
-	
-	
-	
-
-	public boolean containsValue(Object SensorInfo) {
-		 if(SensorMap.containsKey(SensorInfo))
-			return true;
-		else
-			return false;
-	}
-
-	public SensorInfo get(S key) {
-		if(SensorMap.containsKey(key))
-			return SensorMap.get(key);
-		else
-			return null;
-	}
-
-	
-	public Set<S> ShortIdSet() {
-		return SensorMap.keySet();
-	}
-	
-
-
-	public S put( S shortId, SensorInfo sensorInfo){
 		
-		SensorMap.put(shortId, sensorInfo);
-		return shortId;
-	}
-
-	public S removeShortID(S shortId) {
-		
-		SensorMap.remove(shortId);
-		return shortId;
-	}
-
-	public int size() {
-		return SensorMap.size();
 	}
 
 }

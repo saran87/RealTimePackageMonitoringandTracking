@@ -1,4 +1,4 @@
-	package com.rtpmt.packtrack;
+package com.rtpmt.packtrack;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -55,7 +55,6 @@ public class SensorDisplay extends Activity {
 	TextView readText;
 
 	ArrayAdapter<CharSequence> portAdapter; 
-
 	Button configButton;
 	Button openButton;
 	Button readEnButton;
@@ -78,7 +77,7 @@ public class SensorDisplay extends Activity {
 	byte[] readData;
 	String readDataToText;
 	public boolean bReadThreadGoing = false;
-	public readThread read_thread;
+    public readThread read_thread;
 	public Packetizer sensorPacketizer;
 	boolean uart_configured = false;
 	

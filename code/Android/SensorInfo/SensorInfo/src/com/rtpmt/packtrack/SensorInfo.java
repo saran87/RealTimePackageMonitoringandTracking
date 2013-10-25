@@ -17,41 +17,51 @@ public class SensorInfo{
 	Long MacID;
 	int ShortID;
 	int SerialID;
-	int PackageID;
+	private int PackageID;
 	int TruckID;
 	ArrayList<ServiceInfo> services;
 	
 	
 	
 	// add the Service List here
-	
-	//int tempThreshold;
-	//int tempFreq;
-	//int humidityThreshold;
-	//int humidityFreq;
-	//int vibrationThreshold;
-	//int vibrationFreq;
-	
-	
-	public SensorInfo(Long _MacID, int _shortID, int _serialID, int _packageID, int _truckID){
+
+	public SensorInfo(Long _MacID, int _shortID){
 		
 		MacID = _MacID; 
 		ShortID = _shortID;
-		SerialID = _serialID;
-		PackageID = _packageID;
-		TruckID = _truckID;
+		
+		
 			
 	}
 
 	
-    public SensorInfo  getSensorInfo(){
+    public SensorInfo  getSensorInfo(int _shortID){
 		
 		return(this);
 		
 	}
     
+    public SensorInfo  setSensorInfo(int _sensorID, int _truckID, int _packageID){
+    	
+    	setPackageID(_packageID);
+		TruckID = _truckID;
+		SerialID = _sensorID;
+ 		return(this);
+ 		
+ 	}
+    
     public void addService(ServiceInfo _ServiceInfo){
     	if(services == null)  new ArrayList<ServiceInfo>() ;
     	services.add(_ServiceInfo);
+	}
+
+
+	public int getPackageID() {
+		return PackageID;
+	}
+
+
+	public void setPackageID(int packageID) {
+		PackageID = packageID;
 	}
 }
