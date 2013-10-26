@@ -1,0 +1,11 @@
+<p>Map Section</p>
+<div ng-controller="mapController">
+
+	<ul>
+      <li ng-repeat="ob in myData">
+        Latitude: {{ob.location.latitude}} Longitude: {{ob.location.longitude}} <br />
+        TruckId: {{ob.truckId}} PackageId: {{ob.packageId}}
+      </li>
+    </ul>
+	
+</div>
