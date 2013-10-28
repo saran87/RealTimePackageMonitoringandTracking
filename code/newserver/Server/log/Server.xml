@@ -1,0 +1,1562 @@
+<?xml version="1.0" encoding="MacRoman" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740090</millis>
+  <sequence>0</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>INFO</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setConsoleLoggingLevel</method>
+  <thread>10</thread>
+  <message>QuickServer: Removing console handler.. </message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740102</millis>
+  <sequence>1</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setConsoleLoggingLevel</method>
+  <thread>10</thread>
+  <message>Set to OFF</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740103</millis>
+  <sequence>2</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setName</method>
+  <thread>10</thread>
+  <message>Set to : RTPMT Server v 1.0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740103</millis>
+  <sequence>3</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setPort</method>
+  <thread>10</thread>
+  <message>Set to 3,000</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740103</millis>
+  <sequence>4</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientEventHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740103</millis>
+  <sequence>5</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientCommandHandler</method>
+  <thread>10</thread>
+  <message>Set to rtpmt.Server.ClientMessageHandler</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740104</millis>
+  <sequence>6</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setAuthenticator</method>
+  <thread>10</thread>
+  <message>Set to rtpmt.Server.ServerQuickAuthenticator</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740104</millis>
+  <sequence>7</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientObjectHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740104</millis>
+  <sequence>8</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientBinaryHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740104</millis>
+  <sequence>9</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientWriteHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740104</millis>
+  <sequence>10</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientData</method>
+  <thread>10</thread>
+  <message>Set to rtpmt.Server.ServerPoolableData</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740104</millis>
+  <sequence>11</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientExtendedEventHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740105</millis>
+  <sequence>12</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setServerBanner</method>
+  <thread>10</thread>
+  <message>Set to : null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740105</millis>
+  <sequence>13</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setTimeout</method>
+  <thread>10</thread>
+  <message>Set to 4</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740105</millis>
+  <sequence>14</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxAuthTry</method>
+  <thread>10</thread>
+  <message>Set to 5</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740105</millis>
+  <sequence>15</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxAuthTryMsg</method>
+  <thread>10</thread>
+  <message>Set to -ERR Max Auth Try Reached</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740106</millis>
+  <sequence>16</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setTimeoutMsg</method>
+  <thread>10</thread>
+  <message>Set to -ERR Timeout</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740106</millis>
+  <sequence>17</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxConnection</method>
+  <thread>10</thread>
+  <message>Set to -1</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740106</millis>
+  <sequence>18</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxConnectionMsg</method>
+  <thread>10</thread>
+  <message>Set to Server Busy\nMax Connection Reached</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740107</millis>
+  <sequence>19</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setBindAddr</method>
+  <thread>10</thread>
+  <message>Set to 127.0.0.1</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740107</millis>
+  <sequence>20</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientEventHandler</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.CommandHandler</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740107</millis>
+  <sequence>21</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientCommandHandler</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.CommandHandler</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740108</millis>
+  <sequence>22</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientAuthenticationHandler</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.Authenticator</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740108</millis>
+  <sequence>23</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientData</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.Data</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740108</millis>
+  <sequence>24</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setPort</method>
+  <thread>10</thread>
+  <message>Set to 9,877</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740109</millis>
+  <sequence>25</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setName</method>
+  <thread>10</thread>
+  <message>Set to : QSAdminServer v 2.0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740109</millis>
+  <sequence>26</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxConnection</method>
+  <thread>10</thread>
+  <message>Set to 1</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740109</millis>
+  <sequence>27</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setBindAddr</method>
+  <thread>10</thread>
+  <message>Set to 127.0.0.1</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740109</millis>
+  <sequence>28</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setConsoleLoggingLevel</method>
+  <thread>10</thread>
+  <message>Set to OFF</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740110</millis>
+  <sequence>29</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientEventHandler</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.CommandHandler</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740110</millis>
+  <sequence>30</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientCommandHandler</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.CommandHandler</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740110</millis>
+  <sequence>31</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setName</method>
+  <thread>10</thread>
+  <message>Set to : RTMPT Server Admin v 1.0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740110</millis>
+  <sequence>32</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setPort</method>
+  <thread>10</thread>
+  <message>Set to 3,002</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740111</millis>
+  <sequence>33</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setAuthenticator</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.Authenticator</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740111</millis>
+  <sequence>34</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientObjectHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740111</millis>
+  <sequence>35</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientBinaryHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740111</millis>
+  <sequence>36</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientWriteHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740112</millis>
+  <sequence>37</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientData</method>
+  <thread>10</thread>
+  <message>Set to org.quickserver.net.qsadmin.Data</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740112</millis>
+  <sequence>38</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setClientExtendedEventHandler</method>
+  <thread>10</thread>
+  <message>Set to null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740112</millis>
+  <sequence>39</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setServerBanner</method>
+  <thread>10</thread>
+  <message>Set to : null</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740112</millis>
+  <sequence>40</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setTimeout</method>
+  <thread>10</thread>
+  <message>Set to 60,000</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740113</millis>
+  <sequence>41</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxAuthTry</method>
+  <thread>10</thread>
+  <message>Set to 5</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740113</millis>
+  <sequence>42</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxAuthTryMsg</method>
+  <thread>10</thread>
+  <message>Set to -ERR Max Auth Try Reached</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740113</millis>
+  <sequence>43</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setTimeoutMsg</method>
+  <thread>10</thread>
+  <message>Set to -ERR Timeout</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740113</millis>
+  <sequence>44</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxConnection</method>
+  <thread>10</thread>
+  <message>Set to 1</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740114</millis>
+  <sequence>45</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setMaxConnectionMsg</method>
+  <thread>10</thread>
+  <message>Set to -ERR Server Busy. Max Connection Reached</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740114</millis>
+  <sequence>46</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>setBindAddr</method>
+  <thread>10</thread>
+  <message>Set to 127.0.0.1</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740117</millis>
+  <sequence>47</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>initServer</method>
+  <thread>10</thread>
+  <message>
+---- System Info Start ---
+QuickServer v2.0.0 RC1 is being used.
+Java VM v1.6.0_51 is being used.
+Operating System: Mac OS X 10.8.4
+Current working directory: /Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/Server
+Class/s loaded from: file:/Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/Server/lib/QuickServer.jar
+Total memory currently available: 81.06 MB
+Memory currently in use: 6.45 MB
+Maximum memory available: 123.94 MB
+---- System Info End ---</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740117</millis>
+  <sequence>48</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: echoserver.QSAdminCommandPlugin, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740118</millis>
+  <sequence>49</sequence>
+  <logger>org.quickserver.net.qsadmin.QSAdminServer</logger>
+  <level>WARNING</level>
+  <class>org.quickserver.net.qsadmin.QSAdminServer</class>
+  <method>prepareCommandPlugin</method>
+  <thread>10</thread>
+  <message>Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740118</millis>
+  <sequence>50</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>startServer</method>
+  <thread>10</thread>
+  <message>Starting RTMPT Server Admin v 1.0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740118</millis>
+  <sequence>51</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>startServer</method>
+  <thread>10</thread>
+  <message>Default Server Banner Generated</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740119</millis>
+  <sequence>52</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.net.server.impl.OptimisticClientIdentifier, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740121</millis>
+  <sequence>53</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.net.server.impl.BasicPoolManager, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740123</millis>
+  <sequence>54</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.util.pool.MakeQSObjectPool, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740125</millis>
+  <sequence>55</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>processServerHooks</method>
+  <thread>10</thread>
+  <message>Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740126</millis>
+  <sequence>56</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>loadBusinessLogic</method>
+  <thread>10</thread>
+  <message>Loading ClientCommandHandler class..</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740126</millis>
+  <sequence>57</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.net.qsadmin.CommandHandler, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740132</millis>
+  <sequence>58</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>loadBusinessLogic</method>
+  <thread>10</thread>
+  <message>Loading ClientEventHandler class..</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740132</millis>
+  <sequence>59</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>loadBusinessLogic</method>
+  <thread>10</thread>
+  <message>Loading ClientAuthenticationHandler class..</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740133</millis>
+  <sequence>60</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.net.qsadmin.Authenticator, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740134</millis>
+  <sequence>61</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>loadBusinessLogic</method>
+  <thread>10</thread>
+  <message>Loading ClientData class..</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740135</millis>
+  <sequence>62</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.net.qsadmin.Data, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740137</millis>
+  <sequence>63</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>initAllPools</method>
+  <thread>11</thread>
+  <message>Creating pools</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740138</millis>
+  <sequence>64</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINER</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeClientPool</method>
+  <thread>11</thread>
+  <message>Creating ClientThread pool</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740153</millis>
+  <sequence>65</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINER</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeClientHandlerPool</method>
+  <thread>11</thread>
+  <message>Creating ClientHandler pool</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740160</millis>
+  <sequence>66</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:1&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740160</millis>
+  <sequence>67</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:1&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740160</millis>
+  <sequence>68</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:2&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740160</millis>
+  <sequence>69</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:2&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740161</millis>
+  <sequence>70</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:3&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740161</millis>
+  <sequence>71</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:3&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740161</millis>
+  <sequence>72</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:4&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740161</millis>
+  <sequence>73</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:4&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740161</millis>
+  <sequence>74</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:5&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740162</millis>
+  <sequence>75</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:5&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740162</millis>
+  <sequence>76</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:6&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740162</millis>
+  <sequence>77</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:6&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740162</millis>
+  <sequence>78</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:7&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740162</millis>
+  <sequence>79</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:7&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740163</millis>
+  <sequence>80</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:8&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740163</millis>
+  <sequence>81</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:8&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740163</millis>
+  <sequence>82</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:9&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740163</millis>
+  <sequence>83</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:9&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740163</millis>
+  <sequence>84</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:10&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740164</millis>
+  <sequence>85</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:10&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740164</millis>
+  <sequence>86</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:11&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740164</millis>
+  <sequence>87</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:11&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740164</millis>
+  <sequence>88</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:12&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740164</millis>
+  <sequence>89</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:12&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740164</millis>
+  <sequence>90</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:13&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740165</millis>
+  <sequence>91</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:13&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740165</millis>
+  <sequence>92</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:14&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740165</millis>
+  <sequence>93</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:14&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740165</millis>
+  <sequence>94</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:15&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740165</millis>
+  <sequence>95</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:15&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740165</millis>
+  <sequence>96</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:16&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740165</millis>
+  <sequence>97</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:16&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740166</millis>
+  <sequence>98</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:17&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740166</millis>
+  <sequence>99</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:17&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740166</millis>
+  <sequence>100</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:18&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740166</millis>
+  <sequence>101</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:18&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740166</millis>
+  <sequence>102</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:19&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740166</millis>
+  <sequence>103</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:19&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740166</millis>
+  <sequence>104</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:20&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740167</millis>
+  <sequence>105</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:20&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740167</millis>
+  <sequence>106</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:21&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740167</millis>
+  <sequence>107</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:21&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740167</millis>
+  <sequence>108</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:22&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740167</millis>
+  <sequence>109</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:22&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740167</millis>
+  <sequence>110</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:23&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740168</millis>
+  <sequence>111</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:23&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740168</millis>
+  <sequence>112</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:24&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740168</millis>
+  <sequence>113</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:24&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740168</millis>
+  <sequence>114</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Starting clean - &lt;ClientHandler-Pool#1-ID:25&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740168</millis>
+  <sequence>115</sequence>
+  <logger>org.quickserver.net.server.impl.BlockingClientHandler</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.impl.BlockingClientHandler</class>
+  <method>clean</method>
+  <thread>11</thread>
+  <message>Finished clean - &lt;ClientHandler-Pool#1-ID:25&gt;</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740169</millis>
+  <sequence>116</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>initAllPools</method>
+  <thread>11</thread>
+  <message>Created pools</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740169</millis>
+  <sequence>117</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeServerSocket</method>
+  <thread>11</thread>
+  <message>Binding RTMPT Server Admin v 1.0 to IP: /127.0.0.1</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740171</millis>
+  <sequence>118</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeServerSocket</method>
+  <thread>11</thread>
+  <message>NetworkInterface: name:lo0 (lo0)</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740171</millis>
+  <sequence>119</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeServerSocket</method>
+  <thread>11</thread>
+  <message>Making a normal ServerSocket for RTMPT Server Admin v 1.0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740175</millis>
+  <sequence>120</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeServerSocket</method>
+  <thread>11</thread>
+  <message>getPerformancePreferencesConnectionTime : 0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740175</millis>
+  <sequence>121</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeServerSocket</method>
+  <thread>11</thread>
+  <message>getPerformancePreferencesLatency : 0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740175</millis>
+  <sequence>122</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeServerSocket</method>
+  <thread>11</thread>
+  <message>getPerformancePreferencesBandwidth : 0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740175</millis>
+  <sequence>123</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>makeServerSocket</method>
+  <thread>11</thread>
+  <message>Server Mode RTMPT Server Admin v 1.0 - Blocking</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740175</millis>
+  <sequence>124</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>startServer</method>
+  <thread>10</thread>
+  <message>Started RTMPT Server Admin v 1.0, Date: 9/30/13 7:12 PM</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740176</millis>
+  <sequence>127</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>startServer</method>
+  <thread>10</thread>
+  <message>Starting RTPMT Server v 1.0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740175</millis>
+  <sequence>126</sequence>
+  <logger>org.quickserver.net.server.GhostSocketReaper</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.GhostSocketReaper</class>
+  <method>run</method>
+  <thread>12</thread>
+  <message>Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740175</millis>
+  <sequence>125</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>processServerHooks</method>
+  <thread>11</thread>
+  <message>Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740176</millis>
+  <sequence>128</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>startServer</method>
+  <thread>10</thread>
+  <message>Default Server Banner Generated</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740176</millis>
+  <sequence>129</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.net.server.impl.OptimisticClientIdentifier, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740176</millis>
+  <sequence>130</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.net.server.impl.BasicPoolManager, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740176</millis>
+  <sequence>131</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: org.quickserver.util.pool.MakeQSObjectPool, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740177</millis>
+  <sequence>132</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>processServerHooks</method>
+  <thread>10</thread>
+  <message>Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740177</millis>
+  <sequence>133</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>loadBusinessLogic</method>
+  <thread>10</thread>
+  <message>Loading ClientCommandHandler class..</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740177</millis>
+  <sequence>134</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>FINEST</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>getClass</method>
+  <thread>10</thread>
+  <message>Class: rtpmt.Server.ClientMessageHandler, reload: true</message>
+</record>
+<record>
+  <date>2013-09-30T19:12:20</date>
+  <millis>1380582740177</millis>
+  <sequence>135</sequence>
+  <logger>org.quickserver.net.server.QuickServer</logger>
+  <level>SEVERE</level>
+  <class>org.quickserver.net.server.QuickServer</class>
+  <method>startServer</method>
+  <thread>10</thread>
+  <message>Could not load class/s: java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler</message>
+  <exception>
+    <message>java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler</message>
+    <frame>
+      <class>java.net.URLClassLoader$1</class>
+      <method>run</method>
+      <line>202</line>
+    </frame>
+    <frame>
+      <class>java.security.AccessController</class>
+      <method>doPrivileged</method>
+    </frame>
+    <frame>
+      <class>java.net.URLClassLoader</class>
+      <method>findClass</method>
+      <line>190</line>
+    </frame>
+    <frame>
+      <class>java.lang.ClassLoader</class>
+      <method>loadClass</method>
+      <line>306</line>
+    </frame>
+    <frame>
+      <class>sun.misc.Launcher$AppClassLoader</class>
+      <method>loadClass</method>
+      <line>301</line>
+    </frame>
+    <frame>
+      <class>java.lang.ClassLoader</class>
+      <method>loadClass</method>
+      <line>247</line>
+    </frame>
+    <frame>
+      <class>org.quickserver.net.server.QuickServer</class>
+      <method>getClass</method>
+      <line>2181</line>
+    </frame>
+    <frame>
+      <class>org.quickserver.net.server.QuickServer</class>
+      <method>loadBusinessLogic</method>
+      <line>3148</line>
+    </frame>
+    <frame>
+      <class>org.quickserver.net.server.QuickServer</class>
+      <method>startServer</method>
+      <line>432</line>
+    </frame>
+    <frame>
+      <class>rtpmt.server.Server</class>
+      <method>main</method>
+      <line>60</line>
+    </frame>
+  </exception>
+</record>
+</log>

@@ -163,3 +163,7 @@ pip-log.txt
 .DS_Store
 /code/Server/nbproject/private/
 /code/SerialPortReaderAndForwarder/Test/nbproject/private/
+/code/SensorConfiguration/nbproject/private/
+/code/SensorMessage/nbproject/private/
+/code/SerialPortReaderAndForwarder/SensorDataReader/nbproject/private/
+/code/MainSever/nbproject/private/

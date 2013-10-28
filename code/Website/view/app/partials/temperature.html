@@ -1,118 +1,162 @@
-<p>Temperature</p>
-
-
 <div class="col-md-12 sections" id="temperatureSection" ng-controller="temperatureController">
 
-              <div id="temperatureGraph">
+  <div class="widget">
 
-                <div class="widget">
-                <!-- Widget head -->
-                <div class="widget-head">
-                  <div class="pull-left">Temperature Graph</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>              
+    <div class="widget-head">
+      <div class="pull-left">Real Time Chart</div>
+      <div class="widget-icons pull-right">
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+        <a href="#" class="wclose">
+          <i class="icon-remove"></i>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
 
-                <!-- Widget content -->
-                <div class="widget-content">
-                  <div class="padd">
+    <div class="widget-content">
+      <div class="padd">
 
-                    <!-- Curve chart (Blue color). jQuery Flot plugin used. -->
-                    <div style="height:500px; width:500px;">
-                      <div id="tGraph" class="chart" chart="temperature" ng-model='data' style="width:400px;height:200px"></div>     
-                    <hr />
-                    <!-- Hover location -->
-                    <div id="hoverdata">Mouse hovers at
-                    (<span id="x">0</span>, <span id="y">0</span>). <span id="clickdata"></span></div>
+        <div id="live-chart" temp-graph></div>
+        <hr />Time Inverval:
+        <input id="updateInterval" type="text" class="span3" value="">
 
-                    <a modaldir="" data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Launch demo modal</a>
+      </div>
+    </div>
+  </div>
 
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Modal title</h4>
-                          </div>
-                          <div class="modal-body">
-                            ...
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                          </div>
-                        </div><!-- /.modal-content -->
-                      </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->        
 
-                    <!-- Skil this line. <div class="uni"><input id="enableTooltip" type="checkbox">Enable tooltip</div> -->
 
+  <div class="widget" id="temperatureTable">
+
+    <div class="widget-head">
+      <div class="pull-left">Temperature Table
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+      </div>
+      <div class="widget-icons pull-right">
+
+        <span class="btn btn-info" onclick="launchTempGraph()">
+          <i class="icon-bar-chart"></i>Show Graph</span>
+
+
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Temperature</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr ng-repeat="tdata in temperatureData">
+            <td>{{tdata.timestamp | date: 'medium'}}</td>
+            <td>{{tdata.location.latitude}}, {{tdata.location.longitude}}</td>
+            <td>{{tdata.temperature.value}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="widget-foot">
+
+
+        <ul class="pagination pull-right">
+          <li><a href="#">Prev</a>
+          </li>
+          <li><a href="#">1</a>
+          </li>
+          <li><a href="#">2</a>
+          </li>
+          <li><a href="#">3</a>
+          </li>
+          <li><a href="#">4</a>
+          </li>
+          <li><a href="#">Next</a>
+          </li>
+        </ul>
+
+        <div class="clearfix"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="temperatureGraph">
+
+    <div class="widget">
+      <!-- Widget head -->
+      <div class="widget-head">
+        <div class="pull-left">Temperature Graph</div>
+        <div class="widget-icons pull-right">
+          <a href="#" class="wminimize">
+            <i class="icon-chevron-up"></i>
+          </a>
+
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <!-- Widget content -->
+      <div class="widget-content">
+        <div class="padd">
+
+          <!-- Curve chart (Blue color). jQuery Flot plugin used. -->
+          <div style="height:500px; width:500px;">
+            <div id="tGraph" class="chart" chart="temperature" ng-model='data' style="width:400px;height:200px"></div>
+            <hr />
+            <!-- Hover location -->
+            <div id="hoverdata">Mouse hovers at (
+              <span id="x">0</span>,
+              <span id="y">0</span>).
+              <span id="clickdata"></span>
+            </div>
+
+            <a modaldir="" data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Launch demo modal</a>
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                  </div>
+                  <div class="modal-body">
+                    ...
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                   </div>
                 </div>
-                <!-- Widget ends -->
-
+                <!-- /.modal-content -->
               </div>
-                
-              </div>
+              <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
 
+            <!-- Skil this line. <div class="uni"><input id="enableTooltip" type="checkbox">Enable tooltip</div> -->
 
-              <div class="widget" id="temperatureTable">
+          </div>
+        </div>
+        <!-- Widget ends -->
 
-                <div class="widget-head">
-                  <div class="pull-left">Temperature Table <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> </div>
-                  <div class="widget-icons pull-right">                    
-                  
-                    <span class="btn btn-info" onclick="launchTempGraph()"><i class="icon-bar-chart"></i> Show Graph</span>
-                
-                    
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>
+      </div>
 
-                  <div class="widget-content">
+    </div>
 
-                    <table class="table table-striped table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th>Time</th>
-                           <th>Location</th>
-                          <th>Temperature</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-
-                      	<tr ng-repeat="tdata in temperatureData">
-            							<td>{{tdata.timestamp | date: 'medium'}}</td>
-            							<td>{{tdata.location.latitude}}, {{tdata.location.longitude}}</td>
-            							<td>{{tdata.temperature.value}}</td>
-            						</tr>
-
-                      </tbody>
-                    </table>                    
-
-                    <div class="widget-foot">
-
-                      
-                        <ul class="pagination pull-right">
-                          <li><a href="#">Prev</a></li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">Next</a></li>
-                        </ul>
-
-                      <div class="clearfix"></div> 
-
-                    </div>
-                  </div>
-
-              </div>             
-              
-            </div> <!--/end temperatureSection-->
+  </div>
+  <!--/end temperatureSection-->
 
 
 

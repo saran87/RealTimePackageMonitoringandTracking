@@ -1,4 +1,4 @@
-var dataPath='../../../RealTimePackageMonitoringandTracking/rfid/index.php?s=package&type=json&';
+//var dataPath='../../../RealTimePackageMonitoringandTracking/rfid/index.php?s=package&type=json&';
 
 angular.module('myServices')
 	.factory('temperatureService',['$http', function($http){
@@ -8,7 +8,7 @@ angular.module('myServices')
 
 		var _getTemperatureData = function(){
 		
-
+			var dataPath = "/data/data.json";	
 			$http.get(dataPath)
 				.success(function(data){					
 					var d;
