@@ -6,7 +6,7 @@ angular.module('myServices')
 		var _humidityData = [];
 		
 		var _getHumidityData = function(){
-			var dataPath = "/data/data.json";	
+			var dataPath = "data/data.json";	
 			$http.get(dataPath)
 				.success(function(data){
 

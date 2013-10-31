@@ -2,7 +2,7 @@
  * Utils class 
  * contains utility method used by the motes.packet package
  */
-package rtpmt.motes.packet;
+package rtpmt.sensor.util;
 
 /**
  *

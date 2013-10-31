@@ -2,13 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sensorconfiguration;
+package rtpmt.sensor.reader;
 
 /**
  *
  * @author Kumar
  */
-public class SensorConfiguration {
-
-   
+public class SensorReader {
+    
+    
+    
+    
+    
 }

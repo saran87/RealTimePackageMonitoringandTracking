@@ -8,7 +8,7 @@ angular.module('myServices')
 
 		var _getTemperatureData = function(){
 		
-			var dataPath = "/data/data.json";	
+			var dataPath = "data/data.json";	
 			$http.get(dataPath)
 				.success(function(data){					
 					var d;
