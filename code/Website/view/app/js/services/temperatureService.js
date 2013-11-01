@@ -9,7 +9,11 @@ angular.module('myServices')
 
 		var _getTemperatureData = function(plus,limit){
 		
+<<<<<<< HEAD
 			var dataPath="data/tempdata.json";
+=======
+			var dataPath = "data/data.json";	
+>>>>>>> fb25a946287a920e13da76e420460eaf4e06e9c4
 			$http.get(dataPath)
 				.success(function(data){
 					max = data.length;

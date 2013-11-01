@@ -60,6 +60,8 @@
 package rtpmt.motes.packet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 
 public interface PacketSource
@@ -89,14 +91,6 @@ public interface PacketSource
      */
     public void close() throws IOException;
     /**
-     * Read a raw packet
-     * @return The packet read (newly allocated). The format is described
-     *   above
-     * @exception IOException If the source detected a problem. The source
-     *   is automatically closed.
-     */
-    public byte[] readRawPacket() throws IOException;
-    /**
      * Read a packet
      * @return The packet read (newly allocated). The format is described
      *   above
@@ -111,5 +105,13 @@ public interface PacketSource
      * @return Some packet sources will return false if the packet
      *   could not be written.
      */
-    public boolean writePacket(byte[] packet) throws IOException;
+    public HashMap<Integer,Long> getSensorList() throws IOException;
+    
+    /**
+     * Write a packet
+     * @param packet The packet to write. The format is described above.
+     * @return Some packet sources will return false if the packet
+     *   could not be written.
+     */
+    public void configure(ArrayList<Integer> timeInterval, ArrayList<Double> threshold) throws IOException;
 }

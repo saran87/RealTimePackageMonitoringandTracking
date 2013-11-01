@@ -4,8 +4,8 @@
  */
 package sensorconfiguration.swing.ui;
 
-import javax.swing.JWindow;
-
+import java.awt.Color;
+import java.util.ArrayList;
 /**
  *
  * @author Kumar
@@ -19,6 +19,7 @@ public class MainUI extends javax.swing.JFrame {
      */
     
     UIEventHanler eventHandler;
+   
     
     /**
      * Creates new form MainUI
@@ -26,7 +27,13 @@ public class MainUI extends javax.swing.JFrame {
     public MainUI() {
         initComponents();
         eventHandler = new UIEventHanler(this);
+        eventHandler.initSerialPort();
     }
+    
+        
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,33 +57,43 @@ public class MainUI extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         temPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        vibThreshold = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        vibTime = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        vibTimeThreshold = new javax.swing.JSpinner();
+        jLabel32 = new javax.swing.JLabel();
         humidtyPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
+        humThreshold = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
+        humTime = new javax.swing.JSpinner();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        humTimeThreshold = new javax.swing.JSpinner();
+        jLabel34 = new javax.swing.JLabel();
         temPanel1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jSpinner5 = new javax.swing.JSpinner();
+        tempThreshold = new javax.swing.JSpinner();
         jLabel13 = new javax.swing.JLabel();
-        jSpinner6 = new javax.swing.JSpinner();
+        tempTime = new javax.swing.JSpinner();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        tempTimeThreshold = new javax.swing.JSpinner();
+        jLabel30 = new javax.swing.JLabel();
         temPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jSpinner7 = new javax.swing.JSpinner();
-        jLabel17 = new javax.swing.JLabel();
-        jSpinner8 = new javax.swing.JSpinner();
-        jLabel18 = new javax.swing.JLabel();
+        shockThreshold = new javax.swing.JSpinner();
         jLabel19 = new javax.swing.JLabel();
         jbConfigure = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        jlblSensorStatus = new javax.swing.JLabel();
+        jbtnConnect = new javax.swing.JButton();
+        validationLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jButton2 = new javax.swing.JButton();
@@ -93,6 +110,8 @@ public class MainUI extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtLog = new javax.swing.JTextArea();
 
         org.jdesktop.layout.GroupLayout jFrame1Layout = new org.jdesktop.layout.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -117,6 +136,8 @@ public class MainUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.setBackground(new java.awt.Color(0, 153, 51));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -145,62 +166,92 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel4.setText("Threshold");
 
+        vibThreshold.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 20.0d, 0.5d));
+
         jLabel5.setText("Time Interval");
+
+        vibTime.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3600, 1));
 
         jLabel6.setText("sec");
 
         jLabel7.setText("g value");
+
+        jLabel31.setText("After Threshold Time Interval");
+
+        vibTimeThreshold.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3600, 1));
+
+        jLabel32.setText("sec");
 
         org.jdesktop.layout.GroupLayout temPanelLayout = new org.jdesktop.layout.GroupLayout(temPanel);
         temPanel.setLayout(temPanelLayout);
         temPanelLayout.setHorizontalGroup(
             temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(temPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jSpinner1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel4))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanelLayout.createSequentialGroup()
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jLabel5)
-                        .add(59, 59, 59))
                     .add(temPanelLayout.createSequentialGroup()
+                        .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(vibThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel4))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSpinner2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(18, 18, 18)
-                        .add(jLabel6)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .add(31, 31, 31)
+                        .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel5)
+                            .add(temPanelLayout.createSequentialGroup()
+                                .add(vibTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel6))))
+                    .add(jLabel31)
+                    .add(temPanelLayout.createSequentialGroup()
+                        .add(vibTimeThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jLabel32)))
+                .addContainerGap())
         );
         temPanelLayout.setVerticalGroup(
             temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanelLayout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE)
+                .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel4)
+                    .add(jLabel5))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanelLayout.createSequentialGroup()
-                        .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jLabel4)
-                            .add(jLabel5))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jLabel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jSpinner1)
-                            .add(jSpinner2))))
-                .add(83, 83, 83))
+                        .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(jLabel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(vibThreshold, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .add(vibTime))
+                .add(18, 18, 18)
+                .add(jLabel31)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(vibTimeThreshold, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .add(jLabel32, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(15, 15, 15))
         );
 
         humidtyPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Humidty"));
 
         jLabel8.setText("Threshold");
 
+        humThreshold.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(1.0d)));
+
         jLabel9.setText("Time Interval");
+
+        humTime.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3600, 1));
 
         jLabel10.setText("sec");
 
         jLabel11.setText("%");
+
+        jLabel33.setText("After Threshold Time Interval");
+
+        humTimeThreshold.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3600, 1));
+
+        jLabel34.setText("sec");
 
         org.jdesktop.layout.GroupLayout humidtyPanelLayout = new org.jdesktop.layout.GroupLayout(humidtyPanel);
         humidtyPanel.setLayout(humidtyPanelLayout);
@@ -208,22 +259,29 @@ public class MainUI extends javax.swing.JFrame {
             humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(humidtyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jSpinner3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel8))
                 .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(humidtyPanelLayout.createSequentialGroup()
+                        .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(humThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel8))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel11, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jSpinner4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(12, 12, 12)
-                        .add(jLabel10)
-                        .addContainerGap())
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, humidtyPanelLayout.createSequentialGroup()
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jLabel9)
-                        .add(16, 16, 16))))
+                        .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel9)
+                            .add(humidtyPanelLayout.createSequentialGroup()
+                                .add(humTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel10)))
+                        .add(12, 12, 12))
+                    .add(humidtyPanelLayout.createSequentialGroup()
+                        .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(humidtyPanelLayout.createSequentialGroup()
+                                .add(humTimeThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jLabel34))
+                            .add(jLabel33))
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         humidtyPanelLayout.setVerticalGroup(
             humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -238,9 +296,15 @@ public class MainUI extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(jLabel11, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jSpinner3)
-                            .add(jSpinner4))))
-                .add(83, 83, 83))
+                            .add(humThreshold)
+                            .add(humTime))))
+                .add(18, 18, 18)
+                .add(jLabel33)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jLabel34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(humTimeThreshold))
+                .add(15, 15, 15))
         );
 
         temPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Temperature"));
@@ -248,11 +312,22 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel12.setText("Threshold");
 
+        tempThreshold.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(1.0d)));
+
         jLabel13.setText("Time Interval");
+
+        tempTime.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3600, 1));
+        tempTime.setValue(1);
 
         jLabel14.setText("sec");
 
         jLabel15.setText("farenheit");
+
+        jLabel29.setText("After Threshold Time Interval");
+
+        tempTimeThreshold.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3600, 1));
+
+        jLabel30.setText("sec");
 
         org.jdesktop.layout.GroupLayout temPanel1Layout = new org.jdesktop.layout.GroupLayout(temPanel1);
         temPanel1.setLayout(temPanel1Layout);
@@ -260,27 +335,38 @@ public class MainUI extends javax.swing.JFrame {
             temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(temPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jSpinner5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel12))
                 .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jLabel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jSpinner6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel14)
-                        .addContainerGap())
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jLabel13)
-                        .add(31, 31, 31))))
+                        .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(tempThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel12))
+                        .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(temPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jLabel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(tempTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel14)
+                                .addContainerGap())
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jLabel13)
+                                .add(31, 31, 31))))
+                    .add(temPanel1Layout.createSequentialGroup()
+                        .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel29)
+                            .add(temPanel1Layout.createSequentialGroup()
+                                .add(tempTimeThreshold)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel30)
+                                .add(75, 75, 75)))
+                        .add(127, 127, 127))))
         );
         temPanel1Layout.setVerticalGroup(
             temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanel1Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel12)
                     .add(jLabel13))
@@ -288,10 +374,16 @@ public class MainUI extends javax.swing.JFrame {
                 .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                         .add(jLabel15, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jSpinner5)
-                        .add(jSpinner6))
+                        .add(tempThreshold)
+                        .add(tempTime))
                     .add(jLabel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(83, 83, 83))
+                .add(18, 18, 18)
+                .add(jLabel29)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabel30, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(tempTimeThreshold))
+                .add(15, 15, 15))
         );
 
         temPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Shock"));
@@ -299,9 +391,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel16.setText("Threshold");
 
-        jLabel17.setText("Time Interval");
-
-        jLabel18.setText("sec");
+        shockThreshold.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 200.0d, 0.5d));
 
         jLabel19.setText("g value");
 
@@ -312,34 +402,21 @@ public class MainUI extends javax.swing.JFrame {
             .add(temPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jSpinner7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(shockThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel16))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(temPanel2Layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(jLabel17))
-                    .add(temPanel2Layout.createSequentialGroup()
-                        .add(jLabel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jSpinner8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel18))
+                .add(jLabel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         temPanel2Layout.setVerticalGroup(
             temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanel2Layout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel16)
-                    .add(jLabel17))
+                .add(jLabel16)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                        .add(jLabel19, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jSpinner7)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jSpinner8))
-                    .add(jLabel18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jLabel19, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(shockThreshold))
                 .add(83, 83, 83))
         );
 
@@ -350,10 +427,51 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel28.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel28.setText("Sensor Status :");
+
+        jlblSensorStatus.setForeground(new java.awt.Color(255, 0, 0));
+        jlblSensorStatus.setText("Not Connected");
+
+        jbtnConnect.setText("Reconnect");
+        jbtnConnect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchForPorts(evt);
+            }
+        });
+
+        validationLabel.setBackground(java.awt.Color.red);
+        validationLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        validationLabel.setForeground(new java.awt.Color(204, 0, 51));
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jbConfigure, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 435, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(172, 172, 172))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(32, 32, 32)
+                        .add(jLabel28)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jlblSensorStatus)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jbtnConnect)
+                        .add(31, 31, 31))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .add(24, 24, 24)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(temPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(temPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(98, 98, 98)))
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(humidtyPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(temPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(60, 60, 60))
             .add(jPanel1Layout.createSequentialGroup()
                 .add(32, 32, 32)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -370,25 +488,14 @@ public class MainUI extends javax.swing.JFrame {
                             .add(jLabel1)
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                             .add(jScrollPane1)))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(temPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(temPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .add(59, 59, 59)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(humidtyPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(temPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .add(9, 9, 9)))
-                .add(52, 52, 52))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jbConfigure, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 435, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(172, 172, 172))
+                    .add(validationLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 715, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(16, 16, 16)
+                .add(validationLabel)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel2)
                     .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -401,16 +508,25 @@ public class MainUI extends javax.swing.JFrame {
                         .add(10, 10, 10)
                         .add(jLabel1)))
                 .add(18, 18, 18)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(humidtyPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(humidtyPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 96, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 118, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(temPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 97, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(temPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 97, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(30, 30, 30)
-                .add(jbConfigure, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(33, 33, 33))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(29, 29, 29)
+                        .add(temPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(18, 18, 18))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(55, 55, 55)
+                        .add(temPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 97, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel28)
+                    .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jbtnConnect))
+                .add(8, 8, 8)
+                .add(jbConfigure, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         humidtyPanel.getAccessibleContext().setAccessibleName("Humidity");
@@ -431,11 +547,11 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel20.setText("Package ID");
+        jLabel20.setText("Package ID:");
 
-        jLabel21.setText("Truck ID");
+        jLabel21.setText("Truck ID:");
 
-        jLabel22.setText("Comments");
+        jLabel22.setText("Comments:");
 
         jLabel23.setText("xxxxxx");
 
@@ -460,19 +576,18 @@ public class MainUI extends javax.swing.JFrame {
             .add(jPanel2Layout.createSequentialGroup()
                 .add(92, 92, 92)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabel22)
+                    .add(jLabel21))
+                .add(18, 18, 18)
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel2Layout.createSequentialGroup()
-                        .add(jLabel22)
-                        .add(18, 18, 18)
-                        .add(jLabel24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 540, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel2Layout.createSequentialGroup()
-                        .add(jLabel21)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 195, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(67, 67, 67)
+                        .add(41, 41, 41)
                         .add(jLabel20)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jLabel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 98, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .add(jLabel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 98, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jLabel24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 540, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -532,7 +647,7 @@ public class MainUI extends javax.swing.JFrame {
                 .add(jLabel26, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 189, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 100, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 150, Short.MAX_VALUE)
                 .add(jButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 345, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -546,22 +661,28 @@ public class MainUI extends javax.swing.JFrame {
                         .add(jLabel27)))
                 .add(4, 4, 4)
                 .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Local Data", jPanel3);
+
+        txtLog.setColumns(20);
+        txtLog.setRows(5);
+        jScrollPane4.setViewportView(txtLog);
+
+        jTabbedPane1.addTab("Logs", jScrollPane4);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 793, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jTabbedPane1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(jTabbedPane1)
-                .addContainerGap())
+            .add(jTabbedPane1)
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("settings");
@@ -582,16 +703,19 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jbConfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfigureActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:     
         
-        if(true){
-            
-        }else{
-            
-           
-            
-        }
-        
+       ArrayList<Integer> timeInterval =  new ArrayList<Integer>();
+       ArrayList<Double> threshold =  new ArrayList<Double>();
+       timeInterval.add((Integer)tempTime.getValue());
+       timeInterval.add((Integer)humTime.getValue());
+       timeInterval.add((Integer)vibTime.getValue());
+       
+       threshold.add((Double)tempThreshold.getValue());
+       threshold.add((Double)humThreshold.getValue());
+       threshold.add((Double)vibThreshold.getValue());
+       threshold.add((Double)shockThreshold.getValue());
+       eventHandler.configureSensor(timeInterval,threshold);  
     }//GEN-LAST:event_jbConfigureActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -601,6 +725,11 @@ public class MainUI extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void searchForPorts(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchForPorts
+        // TODO add your handling code here:
+        eventHandler.initSerialPort();
+    }//GEN-LAST:event_searchForPorts
 
     /**
      * @param args the command line arguments
@@ -637,6 +766,9 @@ public class MainUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSpinner humThreshold;
+    private javax.swing.JSpinner humTime;
+    private javax.swing.JSpinner humTimeThreshold;
     private javax.swing.JPanel humidtyPanel;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -651,8 +783,6 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -663,7 +793,14 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -676,22 +813,38 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
-    private javax.swing.JSpinner jSpinner5;
-    private javax.swing.JSpinner jSpinner6;
-    private javax.swing.JSpinner jSpinner7;
-    private javax.swing.JSpinner jSpinner8;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton jbConfigure;
+    private javax.swing.JButton jbtnConnect;
+    private javax.swing.JLabel jlblSensorStatus;
+    private javax.swing.JSpinner shockThreshold;
     private javax.swing.JPanel temPanel;
     private javax.swing.JPanel temPanel1;
     private javax.swing.JPanel temPanel2;
+    private javax.swing.JSpinner tempThreshold;
+    private javax.swing.JSpinner tempTime;
+    private javax.swing.JSpinner tempTimeThreshold;
+    public javax.swing.JTextArea txtLog;
+    private javax.swing.JLabel validationLabel;
+    private javax.swing.JSpinner vibThreshold;
+    private javax.swing.JSpinner vibTime;
+    private javax.swing.JSpinner vibTimeThreshold;
     // End of variables declaration//GEN-END:variables
+
+    public void setConnected(boolean isSensorConnected) {
+        
+      if(isSensorConnected){
+        jlblSensorStatus.setText("Connected");
+        jlblSensorStatus.setForeground(Color.GREEN);
+      }else{
+        jlblSensorStatus.setText("Not Connected");
+        jlblSensorStatus.setForeground(Color.RED);
+      }
+    }
+
 }

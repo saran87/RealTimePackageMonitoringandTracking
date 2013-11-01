@@ -43,6 +43,7 @@
 
 package rtpmt.motes.packet;
 
+import rtpmt.sensor.util.Packet;
 import java.io.IOException;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 
@@ -60,26 +61,31 @@ abstract public class AbstractSource implements PacketSource
     protected Messenger messages;
 
     protected void message(String s) {
-	if (messages != null)
-	    messages.message(s);
+	if (messages != null) {
+            messages.message(s);
+        }
     }
 
     protected AbstractSource(String name) {
 	this.name = name;
     }
 
+    @Override
     public String getName() {
 	return name;
     }
 
+    @Override
     synchronized public void open(Messenger messages) throws IOException {
-	if (opened)
-	    throw new IOException("already open");
+	if (opened) {
+            throw new IOException("already open");
+        }
 	this.messages = messages;
 	openSource();
 	opened = true;
     }
 
+    @Override
     synchronized public void close() throws IOException {
 	if (opened) {
 	    opened = false;
@@ -88,10 +94,12 @@ abstract public class AbstractSource implements PacketSource
     }
 
     protected void failIfClosed() throws IOException {
-	if (!opened)
-	    throw new IOException("closed");
+	if (!opened) {
+            throw new IOException("closed");
+        }
     }
-
+    /*
+    @Override
     public byte[] readRawPacket() throws IOException {
 	failIfClosed();
 
@@ -102,35 +110,20 @@ abstract public class AbstractSource implements PacketSource
 	    close();
 	    throw e;
 	}
-    }
+    }*/
+    @Override
     public SensorInformation readPacket() throws IOException {
 	failIfClosed();
 	
         return readFormattedPacket();
     }
-    synchronized public boolean writePacket(byte[] packet) throws IOException {
-	failIfClosed();
-
-	try {
-	    return writeSourcePacket(check(packet));
-	}
-	catch (IOException e) {
-	    close();
-	    throw e;
-	}
-    }
-
     protected byte[] check(byte[] packet) throws IOException {
 	return packet;
     }
-
+    
     // Implementation interfaces
     abstract protected void openSource() throws IOException;
     abstract protected void closeSource() throws IOException;
-    abstract protected byte[] readSourcePacket() throws IOException;
+    abstract protected Packet readSourcePacket() throws IOException;
     abstract protected SensorInformation readFormattedPacket() throws IOException;
-    protected boolean writeSourcePacket(byte[] packet) throws IOException {
-	// Default writer swallows packets
-	return true;
-    }
 }

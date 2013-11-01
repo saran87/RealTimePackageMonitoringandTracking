@@ -51,10 +51,11 @@
 
 package rtpmt.motes.packet;
 
+import rtpmt.sensor.util.Packet;
 import java.io.*;
 
 /**
- * Dump class (print tinyos messages).<p>
+ * Dump class (print messages).<p>
  *
  * Print packets in hex
  *
@@ -64,18 +65,28 @@ import java.io.*;
 public class Dump {
     public static void printByte(PrintStream p, int b) {
 	String bs = Integer.toHexString(b & 0xff).toUpperCase();
-	if (b >=0 && b < 16)
-	    p.print("0");
+	if (b >=0 && b < 16) {
+            p.print("0");
+        }
 	p.print(bs + " ");
     }
 
     public static void printPacket(PrintStream p, byte[] packet, int from, int count) {
-	for (int i = from; i < count; i++)
-	    printByte(p, packet[i]);
+	for (int i = from; i < count; i++) {
+            printByte(p, packet[i]);
+        }
     }
 
     public static void printPacket(PrintStream p, byte[] packet) {
-	printPacket(p, packet, 0, packet.length);
+	for (int i = 0; i < packet.length; i++) {
+            printByte(p, packet[i]);
+        }
+    }
+
+    public static void printPacket(PrintStream p, Byte[] packet) {
+        for (int i = 0; i < packet.length; i++) {
+            printByte(p, packet[i]);
+        }
     }
 
     public static void dump(PrintStream to, String prefix, byte[] data) {
@@ -87,5 +98,22 @@ public class Dump {
 
     public static void dump(String prefix, byte[] packet) {
 	dump(System.err, prefix, packet);
+    }
+    
+    public static void dump(Packet packet){
+        
+        if(packet != null){
+            System.out.println();
+            System.out.println("NodeID :" + packet.NodeId);
+            System.out.println("Service :" + packet.Service);
+            System.out.println("ServiceId :" + packet.ServiceId);
+            System.out.println("data :");
+            printPacket(System.err,packet.getData());
+            System.out.println("TimeStamp :" + packet.getTimeStamp());
+            System.out.println();
+        }else{
+            System.out.println(packet);
+        }
+        
     }
 }

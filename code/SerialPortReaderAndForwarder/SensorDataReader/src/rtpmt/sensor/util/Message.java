@@ -2,13 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package sensorconfiguration;
+package rtpmt.sensor.util;
 
 /**
  *
  * @author Kumar
  */
-public class SensorConfiguration {
-
-   
+public enum Message {
+    TEMPERATURE,
+    HUMIDITY,
+    VIBRATION,
+    SHOCK
 }
