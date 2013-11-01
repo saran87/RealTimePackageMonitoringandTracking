@@ -1,33 +1,4 @@
 <div class="col-md-12 sections" id="temperatureSection" ng-controller="temperatureController">
-
-  <div class="widget">
-
-    <div class="widget-head">
-      <div class="pull-left">Real Time Chart</div>
-      <div class="widget-icons pull-right">
-        <a href="#" class="wminimize">
-          <i class="icon-chevron-up"></i>
-        </a>
-        <a href="#" class="wclose">
-          <i class="icon-remove"></i>
-        </a>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-
-    <div class="widget-content">
-      <div class="padd">
-
-        <div id="live-chart" temp-graph></div>
-        <hr />Time Inverval:
-        <input id="updateInterval" type="text" class="span3" value="">
-
-      </div>
-    </div>
-  </div>
-
-
-
   <div class="widget" id="temperatureTable">
 
     <div class="widget-head">
@@ -38,9 +9,8 @@
       </div>
       <div class="widget-icons pull-right">
 
-        <span class="btn btn-info" onclick="launchTempGraph()">
-          <i class="icon-bar-chart"></i>Show Graph</span>
-
+        <button modaldir="" data-toggle="modal" data-target="#myModal" class="btn btn-info">
+          <i class="icon-bar-chart"></i>Show Graph</button>
 
       </div>
       <div class="clearfix"></div>
@@ -65,25 +35,12 @@
           </tr>
 
         </tbody>
-      </table>
+      </table>     
 
       <div class="widget-foot">
 
 
-        <ul class="pagination pull-right">
-          <li><a href="#">Prev</a>
-          </li>
-          <li><a href="#">1</a>
-          </li>
-          <li><a href="#">2</a>
-          </li>
-          <li><a href="#">3</a>
-          </li>
-          <li><a href="#">4</a>
-          </li>
-          <li><a href="#">Next</a>
-          </li>
-        </ul>
+        <button type="button" ng-click="showMore()" class="btn btn-lg">Show More <i class="icon-plus"></i></button> <span>Showing {{plus}} - {{templimit}} values</span>
 
         <div class="clearfix"></div>
 
@@ -92,21 +49,12 @@
 
   </div>
 
-  <div id="temperatureGraph">
+  
 
-    <div class="widget">
-      <!-- Widget head -->
-      <div class="widget-head">
-        <div class="pull-left">Temperature Graph</div>
-        <div class="widget-icons pull-right">
-          <a href="#" class="wminimize">
-            <i class="icon-chevron-up"></i>
-          </a>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
 
-        </div>
-        <div class="clearfix"></div>
-      </div>
-
+    <div class="widget">      
       <!-- Widget content -->
       <div class="widget-content">
         <div class="padd">
@@ -120,33 +68,9 @@
               <span id="x">0</span>,
               <span id="y">0</span>).
               <span id="clickdata"></span>
-            </div>
+            </div>          
 
-            <a modaldir="" data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Launch demo modal</a>
-
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Modal title</h4>
-                  </div>
-                  <div class="modal-body">
-                    ...
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-                <!-- /.modal-content -->
-              </div>
-              <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-
-            <!-- Skil this line. <div class="uni"><input id="enableTooltip" type="checkbox">Enable tooltip</div> -->
-
+          
           </div>
         </div>
         <!-- Widget ends -->
@@ -154,8 +78,11 @@
       </div>
 
     </div>
-
   </div>
+  </div>
+
+  
+</div>
   <!--/end temperatureSection-->
 
 

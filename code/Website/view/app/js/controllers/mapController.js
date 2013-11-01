@@ -1,5 +1,3 @@
-var dataPath='../../../RealTimePackageMonitoringandTracking/rfid/index.php?s=package&type=json&';
-
 angular.module('myModule')
 	.controller('mapController', ['$scope','$http',function($scope,$http){
 	  	

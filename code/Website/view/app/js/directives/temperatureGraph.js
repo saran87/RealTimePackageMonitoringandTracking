@@ -24,8 +24,6 @@ angular.module('myDirectives')
 	            		graph.setData(scope[attrs.ngModel]);	            	
                     	graph.setupGrid();                    
                     	graph.draw();
-                    
-	            		
 	            	}
 
 	            });

@@ -1,4 +1,3 @@
-var dataPath='../../../RealTimePackageMonitoringandTracking/rfid/index.php?s=package&type=json&';
 
 angular.module('myServices')
 	.factory('humidityService',['$http',function($http){
@@ -6,7 +5,7 @@ angular.module('myServices')
 		var _humidityData = [];
 		
 		var _getHumidityData = function(){
-			var dataPath = "/data/data.json";	
+			
 			$http.get(dataPath)
 				.success(function(data){
 

@@ -42,9 +42,6 @@
  
   </style>
 
-
-
-
 </head>
 <body>
   <div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
@@ -142,12 +139,12 @@
       <div class="col-md-2">
        <h3><i class="icon-tasks"></i> Package Tracking</h3>
        </div>
-        <div class="col-md-10" id="select_menus">
+        <div ng-controller="selectMenuCtrl" class="col-md-10" id="select_menus">
                 <div class="row">
 
                   <div class="col-md-3 text-center" id="truckSel">
                     
-                        <select data-placeholder="Choose a Truck" class="chosen-select form-control" tabindex="1">
+                        <select data-placeholder="Choose a Truck" class="chosen-select form-control" ng-model="truckid" ng-change="assignTruckid()" tabindex="1">
                           <option value="">--- Select Truck Id---</option>
                           <option value="1">Truck 1</option>        
                           <option value="2">Truck 2</option>        
@@ -196,7 +193,7 @@
         <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
         <ul id="nav">
           <!-- Main menu with font awesome icon -->
-          <li><a href="index.html"><i class="icon-home"></i> Dashboard</a>
+          <li><a href="#/dashboard"><i class="icon-home"></i> Dashboard</a>
             <!-- Sub menu markup 
             <ul>
               <li><a href="#">Submenu #1</a></li>
@@ -247,14 +244,14 @@
 
       <div class="matter">
         <div class="container">
-         
-          <div class="col-md-12" id="mainData">
-
-            <div ng-view>Loading..</div>
-
+          <div class="row">        
             
-          </div>
+
+              <div ng-view>Loading..</div>
+              
+            
           <!-- mainData ends -->
+          </div>
         
         </div> <!--container ends-->
 
@@ -310,9 +307,11 @@
   <script src="js/app.js"></script>
   <script src="lib/angular/ui-bootstrap.js"></script>
   <script src="js/controllers/bootstrap.js"></script> <!-- Loading the module from controllers -->
+  <script src="js/controllers/selectMenuController.js"></script>
   <script src="js/controllers/temperatureController.js"></script>
   <script src="js/controllers/humidityController.js"></script>
   <script src="js/controllers/mapController.js"></script>  
+  <script src="js/controllers/dashboardController.js"></script>  
   <script src="js/controllers/modalController.js"></script>  
 
   <script src="js/services/services.js"></script> <!-- Loading the module from services -->

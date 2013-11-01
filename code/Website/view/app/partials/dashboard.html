@@ -1,0 +1,117 @@
+<div ng-controller="dashboardCtrl">
+<div class="col-md-8 sections" id="dashbd">
+
+  <div class="widget">
+
+    <div class="widget-head">
+      <div class="pull-left">Dashboard {{smallVal}}</div>
+      <div class="widget-icons pull-right">
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+        <a href="#" class="wclose">
+          <i class="icon-remove"></i>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+      <div class="padd">
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="widget" id="temperatureTable">
+
+    <div class="widget-head">
+      <div class="pull-left">Temperature Table
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+      </div>
+      <div class="widget-icons pull-right">
+
+        <span class="btn btn-info" onclick="launchTempGraph()">
+          <i class="icon-bar-chart"></i>Show Graph</span>
+
+
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+
+      <table class="table table-striped table-bordered table-hover">
+        <tbody>
+          <tr>
+            <th>Service</th>
+            <th>Threshold</th>
+          </tr>  
+          <tr ng-repeat="(service,threshold) in thresholds">
+            <td>{{service | uppercase}}</td>
+            <td>{{threshold}}</td>
+          </tr>
+        </tbody>
+        
+      </table>     
+
+      <div class="widget-foot">
+        More Thresholds
+        <div class="clearfix"></div>
+
+      </div>
+    </div>
+
+  </div>  
+</div> 
+
+<div class="col-md-10">
+
+  <div class="widget">
+
+    <div class="widget-head">
+      <div class="pull-left">Feed</div>
+      <div class="widget-icons pull-right">
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+        <a href="#" class="wclose">
+          <i class="icon-remove"></i>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+      <div class="padd">
+
+        <ul class="recent">
+          <li>
+            <div class="recent-content">
+              Package 1 blah blah blah blah blah blah Package 1 blah blah blah blah blah blah
+            </div>
+          </li>
+          <li>
+            <div class="recent-content">
+              Package 2 blah blah blah blah blah blah Package 1 blah blah blah blah blah blah
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+
+
+

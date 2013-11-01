@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>
+	<body>
+
+		<script>
+
+			var datapath = "data.json";
+
+			$.getJSON(datapath, function(data){
+				
+				var tempData = [];
+
+				var d;
+				var i=0;
+				var count=0;
+				var datenow = new Date().getTime();
+				var prevday = datenow-1*86400000;
+
+				while(true){
+					
+					d=data.data[i];
+
+					if(d.humidity){
+
+						if(count<22){
+							datenow = datenow + (Math.floor(Math.random() * (10 - 2 + 1) + 2))*1000;
+							
+							d.timestamp = datenow;
+						}
+						else {
+
+							prevday = prevday + (Math.floor(Math.random() * (10 - 2 + 1) + 2))*1000;
+							
+							d.timestamp = prevday;	
+						}
+
+						tempData.push(d);
+						count++;						
+					}
+					i++;
+
+					if(count>100){
+						break;
+					}
+				}
+
+				var myobj = JSON.stringify(tempData);
+				console.log(myobj);
+			});
+		</script>		
+		
+	</body>
+</html>
