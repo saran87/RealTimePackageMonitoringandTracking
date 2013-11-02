@@ -1,54 +1,36 @@
 angular.module('myModule')
-	.controller('selectMenuCtrl',['$scope','$location',function($scope.$location){
+	.controller('selectMenuCtrl',['$scope','$location',function($scope,$location){
 
 		$scope.location=$location;
-
-		$scope.trucks = [
-			{
-				"truckid": 1,
-				"name": "xyz",
-				"packages": [1,2,3]
-			},
-			{
-				"truckid": 2,
-				"name": "abc",
-				"packages": [1,2,3]
-			},
-			{
-				"truckid": 2,
-				"name": "mno",
-				"packages": [1,2,3]
-			}
-		];
-		
-
 		$scope.truckid=0;
-		$scope.packageid=0;
+		$scope.packageid=0;			
 
-		$scope.assignTruckid = function(truckid){
+		$scope.selected = {};
 
-			$scope.truckid = truckid;
-			return $scope.truckid;
+	    $scope.trucks = [
+	        {
+	            "id" : "1",
+	            "name" : "TruckOne",
+	            "packages" : ["1","2","3"]
+	        }
 
-		};
+	       ,{
+	            "id" : "2",
+	            "name" : "TruckTwo",
+	            "packages" : ["1","2","3"]
+	        }
+	       ,
+	        {
 
-		$scope.assignPackageid = function(packageid){
-			$scope.packageid = packageid;
-			return $scope.packageid;
-		};
+	        	"id" : "3",
+	            "name" : "Volvo",
+	            "packages" : ["1","2","3"]
 
-		$scope.$watch('location.search()', function() {
+	        }
+	    ];
 
-			$scope.truckid = $location.search().truckid;
-			$scope.packageid = $location.search().packageid;
-			
-		},true);
-
-		$scope.change = function(x,y){
-
-			$location.search('truckid',x);
-
-
-		}
+	  	$scope.urlFunc = function(){
+	    	$location.path('temperature/'+$scope.selected.id.id+'/'+$scope.selected.package);
+	    };		
 
 	}]);

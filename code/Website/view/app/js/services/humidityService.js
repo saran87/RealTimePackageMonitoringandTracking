@@ -5,11 +5,11 @@ angular.module('myServices')
 		var _humidityData = [];
 		
 		var _getHumidityData = function(){
-<<<<<<< HEAD
+
 			
-=======
+
 			var dataPath = "data/data.json";	
->>>>>>> fb25a946287a920e13da76e420460eaf4e06e9c4
+
 			$http.get(dataPath)
 				.success(function(data){
 

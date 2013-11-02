@@ -144,22 +144,16 @@
 
                   <div class="col-md-3 text-center" id="truckSel">
                     
-                        <select data-placeholder="Choose a Truck" class="chosen-select form-control" ng-model="truckid" ng-change="assignTruckid()" tabindex="1">
-                          <option value="">--- Select Truck Id---</option>
-                          <option value="1">Truck 1</option>        
-                          <option value="2">Truck 2</option>        
-                          <option value="3">Truck 3</option>        
-                        </select>                 
-                      
-                  </div>
+                        <select class="chosen-select form-control" ng-model="selected.id" ng-options="t.id for t in trucks">
+                          <option value="">-- Truck --</option>
+                        </select>
+
+                  </div>                 
                   
                   <div class="col-md-3 col-md-offset-1 text-center" id="packSel">
                     
-                        <select data-placeholder="Choose a Package" class="chosen-select form-control"  tabindex="1">
-                          <option value="">--- Select Package Id ---</option>
-                          <option value="1">Package 1</option>        
-                          <option value="2">Package 2</option>        
-                          <option value="3">Package 3</option>        
+                         <select ng-change="urlFunc()" class="chosen-select form-control" ng-model="selected.package" ng-options="p for p in selected.id.packages">
+                            <option value="">-- Package --</option>
                         </select>
                   </div>  
 
