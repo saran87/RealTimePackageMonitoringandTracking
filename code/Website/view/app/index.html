@@ -159,9 +159,9 @@
 
                   <div id="inputTrack" class="col-md-4 pull-right">               
                     <div class="input-group">                      
-                        <input type="text" class="form-control input-sm" id="txtPackageId" placeholder="Enter Package ID">
+                        <input type="text" class="form-control input-sm" id="txtPackageId" placeholder="Enter Package ID" ng-model="txtPackageid">
                         <span class="input-group-btn">
-                          <button id="packageIdBtn" class="btn btn-info btn-sm" type="button"><i class="icon-chevron-right"></i></button>
+                          <button ng-click="packageUrl()" id="packageIdBtn" class="btn btn-info btn-sm" type="button"><i class="icon-chevron-right"></i></button>
                         </span>
                     </div>
                                 
@@ -220,17 +220,7 @@
 
     <!-- Page heading -->
       <div class="page-head">
-       <!-- <div class="container">
-        <div class="row">
-           <ul class="menu">
-                <li><a href="#/map">Map</a></li>
-                <li><a href="#/temperature">Temperature</a></li>
-                <li><a href="#/humidity">Humidity</a></li>
-                <li><a href="#/vibration">Vibration</a></li>
-              </ul>
-        </div>
-       </div>
-          -->
+       
         <div class="clearfix"></div>
         
       </div>
@@ -303,6 +293,7 @@
   <script src="js/controllers/bootstrap.js"></script> <!-- Loading the module from controllers -->
   <script src="js/controllers/selectMenuController.js"></script>
   <script src="js/controllers/temperatureController.js"></script>
+  <script src="js/controllers/temperatureSpecificController.js"></script>  
   <script src="js/controllers/humidityController.js"></script>
   <script src="js/controllers/mapController.js"></script>  
   <script src="js/controllers/dashboardController.js"></script>  

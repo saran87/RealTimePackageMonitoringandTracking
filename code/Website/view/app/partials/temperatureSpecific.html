@@ -1,1 +1,98 @@
-<h1>THis is tempspartaaa !</h1>
+<div class="col-md-12 sections" id="temperatureSection" ng-controller="temperatureSpecificCtrl">
+
+	<div class="row page-head">
+
+		<h3 class="pull-left">{{headMessage}}</h3>
+			
+	</div>
+
+  <div class="widget" id="temperatureTable">
+
+    <div class="widget-head">
+      <div class="pull-left">Temperature Table
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+      </div>
+      <div class="widget-icons pull-right">
+
+        <button modaldir="" data-toggle="modal" data-target="#myModal" class="btn btn-info">
+          <i class="icon-bar-chart"></i>Show Graph</button>
+
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Temperature</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr ng-repeat="tdata in temperatureData">
+            <td>{{tdata.timestamp | date: 'medium'}}</td>
+            <td>{{tdata.location.latitude}}, {{tdata.location.longitude}}</td>
+            <td>{{tdata.temperature.value}}</td>
+          </tr>
+
+        </tbody>
+      </table>     
+
+      <div class="widget-foot">
+
+
+        <button type="button" ng-click="showMore()" class="btn btn-lg">Show More <i class="icon-plus"></i></button> <span>Showing {{plus}} - {{templimit}} values```</span>
+
+        <div class="clearfix"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+  
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="widget">      
+      <!-- Widget content -->
+      <div class="widget-content">
+        <div class="padd">
+
+          <!-- Curve chart (Blue color). jQuery Flot plugin used. -->
+          <div style="height:500px; width:500px;">
+            <div id="tGraph" class="chart" chart="temperature" ng-model='data' style="width:400px;height:200px"></div>
+            <hr />
+            <!-- Hover location -->
+            <div id="hoverdata">Mouse hovers at (
+              <span id="x">0</span>,
+              <span id="y">0</span>).
+              <span id="clickdata"></span>
+            </div>          
+
+          
+          </div>
+        </div>
+        <!-- Widget ends -->
+
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  
+</div>
+  <!--/end temperatureSection-->
+
+
+
+
+
