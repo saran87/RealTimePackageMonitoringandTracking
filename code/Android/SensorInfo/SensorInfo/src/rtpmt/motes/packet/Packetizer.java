@@ -51,7 +51,6 @@ import com.example.sensorinfo.R;
 import com.ftdi.j2xx.FT_Device;
 import com.rtpmt.packtrack.SensorInfo;
 import com.rtpmt.packtrack.SensorList;
-import com.rtpmt.packtrack.ServiceInfo;
 import com.rtpmt.packtrack.StartActivity;
 import com.rtpmt.packtrack.Threshold;
 import com.rtpmt.packtrack.TimePeriod;
@@ -447,7 +446,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 					Long macId = (long) (packet[5] & 0xff) | (packet[6] & 0xff) << 8 | 
 							(packet[7] & 0xff) << 16 | (packet[8] & 0xff) << 24;
 					Integer shortId = nodeId;
-<<<<<<< HEAD
+
 				
 					sensorInfo = new SensorInfo(macId,nodeId);
 					//if the separate list contains this SensorID info
@@ -455,14 +454,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 					
 					SensorList.add(nodeId,sensorInfo);
 					
-=======
-					//Threshold threshold = new Threshold():
-					//int tempThreshold = threshold.temperatureThresholdValue;
-					//create a hash map with short id as key and NewSensorList object as value
-					SensorInfo sensorInfo = new SensorInfo(macId, 1, 2);
-					StartActivity.sensorMap.put(shortId, sensorInfo);
-					StartActivity.sensorList.put(macId,shortId);
->>>>>>> 1b9a62278bff9978baccc60a3a3a17f615ab5c84
+
 					Log.i("Packetizer","Registered Short:"+nodeId+" MAC:"+macId);
 					
 					//TODO Send nodeid, 64bit id to server
