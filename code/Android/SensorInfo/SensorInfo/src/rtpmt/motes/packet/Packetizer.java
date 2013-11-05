@@ -50,6 +50,8 @@ import android.widget.TextView;
 import com.example.sensorinfo.R;
 import com.ftdi.j2xx.FT_Device;
 import com.rtpmt.packtrack.SensorInfo;
+import com.rtpmt.packtrack.SensorList;
+import com.rtpmt.packtrack.ServiceInfo;
 import com.rtpmt.packtrack.StartActivity;
 import com.rtpmt.packtrack.Threshold;
 import com.rtpmt.packtrack.TimePeriod;
@@ -159,8 +161,9 @@ public class Packetizer extends AbstractSource implements Runnable {
 	private Thread reader;
 
 	private LinkedList[] received;
+	public static SensorInfo sensorInfo ;
 
-	private HashMap<Integer, Integer> sensorList;
+	//public static SensorList<Integer, SensorInfo> sensorList;
 	//private  Map sensorMap;
 
 	/**
@@ -176,8 +179,9 @@ public class Packetizer extends AbstractSource implements Runnable {
 		received = new LinkedList[256];
 		packageLocation = new PackageLocation(mainActivity);
 		received[P_ACK] = new LinkedList();
+		//sensorList = new SensorList<Integer, SensorInfo>();
 		received[P_PACKET_NO_ACK] = new LinkedList();
-		sensorList = new HashMap<Integer, Integer>();
+		
 		//sensorMap = new HashMap();
 		activity = mainActivity;
 		
@@ -431,22 +435,34 @@ public class Packetizer extends AbstractSource implements Runnable {
 				int packetType = packet[0] & 0xff;
 				int nodeId = (packet[1] & 0xff) | (packet[2] & 0xff) << 8; 
 				
+				
 				Log.i("Packetizer","Registered Short:"+nodeId);
 				//int pdataOffset = 0;
 				if (packetType == P_REGISTRATION) {
 					count++;
+					
 					//TODO Store nodeid, 64bit id (MAC) in hashtable
 					
 					//Storing nodeid and 64bit id in hashtable
 					Long macId = (long) (packet[5] & 0xff) | (packet[6] & 0xff) << 8 | 
 							(packet[7] & 0xff) << 16 | (packet[8] & 0xff) << 24;
 					Integer shortId = nodeId;
+<<<<<<< HEAD
+				
+					sensorInfo = new SensorInfo(macId,nodeId);
+					//if the separate list contains this SensorID info
+					//then set the other values too 
+					
+					SensorList.add(nodeId,sensorInfo);
+					
+=======
 					//Threshold threshold = new Threshold():
 					//int tempThreshold = threshold.temperatureThresholdValue;
 					//create a hash map with short id as key and NewSensorList object as value
 					SensorInfo sensorInfo = new SensorInfo(macId, 1, 2);
 					StartActivity.sensorMap.put(shortId, sensorInfo);
 					StartActivity.sensorList.put(macId,shortId);
+>>>>>>> 1b9a62278bff9978baccc60a3a3a17f615ab5c84
 					Log.i("Packetizer","Registered Short:"+nodeId+" MAC:"+macId);
 					
 					//TODO Send nodeid, 64bit id to server
@@ -455,6 +471,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 					System.out.println("Time sync sent to "+count);
 					sendServiceRequest(nodeId); // Sending the Service Request
 					System.out.println("Service Request sent!");
+					
 					//sendReportRate(nodeId);
 					
 					// And merge with un-acked packets
@@ -464,9 +481,11 @@ public class Packetizer extends AbstractSource implements Runnable {
 				{
 					Log.i("Packetizer", "Service Response Received");
 					System.out.println("Sending Threshold for node: "+count);
+					// adding the services
 					sendReportRate(nodeId);
 					//sendThresholdRequest(nodeId);
 					System.out.println("Threshold Sent");
+					
 					
 				}
 				else if (packetType == P_UPDATE) {
@@ -618,148 +637,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 	        receiveBuffer[count++] = b;
 	    }
 	    }
-	/*
-		int count = 0;
-		boolean isLength = false;
-		int payLoad = 0;
-		inSync = false;
-		byte[] readByte = new byte[1];
-		byte[] syncFrame = new byte[FRAME_SYNC.length];
 
-		for (;;) {
-			synchronized (input) {
-				if (input.getQueueStatus() > 0) {
-					System.out.println("Available bytes : "
-							+ input.getQueueStatus());
-					readByte = new byte[1];
-					if (!inSync) {
-						message(name + ": resynchronising");
-				
-						// re-synchronize
-						input.read(readByte, 1);
-						int b = readByte[0] & 0xff;
-						//syncFrame[count++] = (byte) b & 0xff;
-						while (b != 170){
-							input.read(readByte, 1);
-				            b  = readByte[0] & 0xff;
-				        }
-						
-						System.out.println("count:"+ count + "InSync:" + inSync);
-						 if (count >= MTU) 
-					        {
-					          // PacketHelper too long, give up and try to resync
-					          message(name + ": packet too long");
-					          inSync = false;
-							  count = 0;					          
-					          continue;
-					        }
-						syncFrame[count++] = (byte)(b & 0xff);
-						
-						while (count < FRAME_SYNC.length) {
-							input.read(readByte, 1);
-							b = readByte[0] & 0xff;
-							syncFrame[count++] = (byte)(b & 0xff);
-
-						}
-
-						if (DEBUG) {
-//							for (int i = 0; i < count; i++) {
-//								System.out.print(syncFrame[i]);
-//							}
-//							System.out.println();
-							Dump.printPacket(System.out, syncFrame);
-						}
-
-						if (Utils.compare(syncFrame, FRAME_SYNC)) {
-							inSync = true;
-							System.out.println("IN SYNC");
-						}
-						count = 0;
-					}
-
-					else {
-						byte b = 0 & 0xff;
-						
-					
-						if (count >= MTU) {
-							// PacketHelper too long, give up and try to resync
-							message(name + ": packet too long");
-							inSync = false;
-							count = 0;
-							continue;
-						}
-						if (!isLength) {
-							input.read(readByte, 1);
-							// command
-							receiveBuffer[count++] = (byte) (readByte[0] & 0xff);
-							input.read(readByte, 1);
-
-							// 2 for node id
-							receiveBuffer[count++] = (byte) (readByte[0] & 0xff);
-							input.read(readByte, 1);
-							receiveBuffer[count++] = (byte) (readByte[0] & 0xff);
-							// Length
-							input.read(readByte, 1);
-							//int length = readByte[0] & 0xff;
-							//b = (byte) length;
-						
-							
-							receiveBuffer[count++] = (byte) (readByte[0] & 0xff);
-							input.read(readByte, 1);
-							receiveBuffer[count++] = (byte) (readByte[0] & 0xff);
-							input.read(readByte, 1);
-							
-							int length = (receiveBuffer[count-1] & 0xff) | (receiveBuffer[count-2] & 0xff) << 8;
-							
-							payLoad = count + length;
-							isLength = true;
-							continue;
-							
-						} else if (count <= payLoad) {
-							input.read(readByte, 1);
-							Log.i("Packetizer", "ReadByte:: "+readByte);
-							Log.i("Packetizer", "b:: "+(readByte[0] & 0xff));
-							b =  (byte)(readByte[0] & 0xff);
-						} else {
-							byte[] packet = new byte[count - 2];
-							System.arraycopy(receiveBuffer, 0, packet, 0,
-									count - 2);
-
-							int readCrc = (receiveBuffer[count - 1] & 0xff)
-									| (receiveBuffer[count - 2] & 0xff) << 8;
-							int computedCrc = Crc.calc(packet, packet.length);
-
-							if (DEBUG) {
-								System.err.println("received: ");
-								Dump.printPacket(System.err, packet);
-								System.err.println(" rcrc: "
-										+ Integer.toHexString(readCrc)
-										+ " ccrc: "
-										+ Integer.toHexString(computedCrc));
-							}
-
-          if (readCrc != computedCrc) {
-            return packet;
-          } else {
-            message(name + ": bad packet");
-            /*
-             * We don't lose sync here. If we did, garbage on the line at startup
-             * will cause loss of the first packet.
-            
-            count = 0;
-            inSync = false;
-            continue;
-						}
-						}
-						System.out.println("Data :" + b);
-						receiveBuffer[count++] = (byte)(b & 0xff);
-					}
-				} else {
-					//System.out.println("No Data Available");
-					input.wait(2);
-				}
-			}
-			}*/
 		}
 
 	// Class to build a framed, escaped and crced packet byte stream
@@ -866,7 +744,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 	public synchronized void sendReportRate() 
 			throws IOException
 	{
-		Set<Integer> nodeIds = StartActivity.sensorList.ShortIdSet();
+		Set<Integer> nodeIds = SensorList.getSensorList().keySet();
 		Iterator<Integer> iterator = nodeIds.iterator();
 		
 		while(iterator.hasNext())

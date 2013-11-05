@@ -1,0 +1,41 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+         >
+
+        <EditText
+            android:id="@+id/TruckIDEditText"
+            android:layout_width="449dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TruckID" />
+
+        <Button
+            android:id="@+id/AddTruckBtn"
+            android:layout_width="454dp"
+            android:layout_height="wrap_content"
+            android:text="Update Truck ID" />
+
+        <EditText
+            android:id="@+id/SensorIDEditText"
+            android:layout_width="448dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="SensorID" />
+
+        <EditText
+            android:id="@+id/PackageIDEditText"
+            android:layout_width="445dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="PackageID" />
+
+        <Button
+            android:id="@+id/AddBtn"
+            android:layout_width="446dp"
+            android:layout_height="wrap_content"
+            android:text="Add" />
+
+    </LinearLayout>

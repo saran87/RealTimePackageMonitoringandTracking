@@ -10,6 +10,7 @@ angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives'])
     $routeProvider.when('/humidity', {templateUrl: 'partials/humidity.html', controller: 'humidityController'});
     $routeProvider.when('/vibration', {templateUrl: 'partials/vibration.html', controller: 'vibrationController'});
     $routeProvider.when('/temperature/:truckid/:packageid', {templateUrl: 'partials/temperatureSpecific.html'});
+    $routeProvider.when('/temperature/:packageid', {templateUrl: 'partials/temperatureSpecific.html'});
     $routeProvider.when('/humidity/:truckid/:packageid', {templateUrl: 'partials/humidity.html'});
     $routeProvider.otherwise({redirectTo: '/map'});
   

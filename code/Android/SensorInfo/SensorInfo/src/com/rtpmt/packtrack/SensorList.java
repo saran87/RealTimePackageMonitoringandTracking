@@ -13,13 +13,22 @@ import java.util.Set;
  * @param <S> Short ID
  */
 
-public class SensorList<M,S>
+public final class SensorList
 {
+<<<<<<< HEAD
+	private static HashMap sensorList;
+	//HashMap<Integer, SensorInfo> SensorMap;
+=======
 	HashMap<M,S> macIds;
 	HashMap<S,M> shortIds;
+>>>>>>> 1b9a62278bff9978baccc60a3a3a17f615ab5c84
 	
-	public SensorList()
+	static
 	{
+<<<<<<< HEAD
+		sensorList = new HashMap<Integer,SensorInfo>(); 
+		
+=======
 		macIds = new HashMap<M,S>(); 
 		shortIds = new HashMap<S,M>();
 	}
@@ -36,7 +45,9 @@ public class SensorList<M,S>
 			return true;
 		else
 			return false;
+>>>>>>> 1b9a62278bff9978baccc60a3a3a17f615ab5c84
 	}
+
 	
 	public boolean constainsMac(M macId){
 		if(macIds.containsKey(macId))
@@ -45,6 +56,31 @@ public class SensorList<M,S>
 			return false;
 	}
 	
+<<<<<<< HEAD
+	public static void add(Integer _shortID, SensorInfo _sensorInfo){
+		if(!(sensorList.containsKey(_shortID)))
+			sensorList.put( _shortID,_sensorInfo);
+		
+	}
+
+	public static HashMap<Integer,SensorInfo> getSensorList(){
+		return sensorList;
+	}
+	
+	public static void updateSensorInfo(Integer _shortID, SensorInfo _sensorInfo){
+		if((sensorList.containsKey(_shortID)))
+			sensorList.put( _shortID,_sensorInfo);
+		else
+			sensorList.put( null,_sensorInfo);
+	}
+    
+	public static  boolean  containsKey(int _shortID){
+		if((sensorList.containsKey(_shortID)))
+			return true;
+		else
+			return false;
+		
+=======
 	public boolean constainsShort(S shortId){
 		if(shortIds.containsKey(shortId))
 			return true;
@@ -94,6 +130,7 @@ public class SensorList<M,S>
 
 	public int size() {
 		return macIds.size();
+>>>>>>> 1b9a62278bff9978baccc60a3a3a17f615ab5c84
 	}
 
 }

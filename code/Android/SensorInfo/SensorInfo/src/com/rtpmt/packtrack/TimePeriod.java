@@ -28,7 +28,7 @@ public class TimePeriod extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	// Set sensor threshold and frequency
-    	View selfView = inflater.inflate(R.layout.time_period, container, false);
+    	View selfView = inflater.inflate(R.layout.threshold, container, false);
     	
 		final SeekBar temperatureInterval = (SeekBar)selfView.findViewById(R.id.temperatureInterval); 
 		final TextView textTemperatureInterval = (TextView)selfView.findViewById(R.id.temperatureText); 

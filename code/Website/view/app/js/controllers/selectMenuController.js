@@ -4,6 +4,7 @@ angular.module('myModule')
 		$scope.location=$location;
 		$scope.truckid=0;
 		$scope.packageid=0;			
+		//$scope.txtPackageid=0;
 
 		$scope.selected = {};
 
@@ -31,6 +32,15 @@ angular.module('myModule')
 
 	  	$scope.urlFunc = function(){
 	    	$location.path('temperature/'+$scope.selected.id.id+'/'+$scope.selected.package);
-	    };		
+	    };
+
+	    $scope.packageUrl = function(){
+	    	if($scope.txtPackageid!='undefined'){
+
+	    		$location.path('temperature/'+$scope.txtPackageid);
+
+	    	}
+	    	
+	    }		
 
 	}]);
