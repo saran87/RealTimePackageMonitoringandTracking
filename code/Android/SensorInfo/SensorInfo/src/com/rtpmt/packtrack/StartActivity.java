@@ -7,28 +7,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import rtpmt.motes.packet.Packetizer;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
 import rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation;
-
-
-import com.example.sensorinfo.R;
-import com.ftdi.j2xx.D2xxManager;
-import com.ftdi.j2xx.FT_Device;
-import com.ftdi.j2xx.D2xxManager.D2xxException;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.rtpmt.android.network.tcp2.TCPClient;
-
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context; 
+import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -44,6 +33,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.sensorinfo.R;
+import com.ftdi.j2xx.D2xxManager;
+import com.ftdi.j2xx.D2xxManager.D2xxException;
+import com.ftdi.j2xx.FT_Device;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.rtpmt.android.network.tcp2.TCPClient;
 
 public class StartActivity extends Activity {
 	public static Context appContext;
@@ -107,25 +103,53 @@ public class StartActivity extends Activity {
         ActionBar actionbar = getActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
-        ActionBar.Tab TimeIntervalTab = actionbar.newTab().setText("Time Interval");
-        ActionBar.Tab ThresholdTab = actionbar.newTab().setText("Threshold");
+        //ActionBar.Tab TimeIntervalTab = actionbar.newTab().setText("Time Interval");
+        ActionBar.Tab SettingsTab = actionbar.newTab().setText("Settings");
         ActionBar.Tab LogTab = actionbar.newTab().setText("Logs");
         ActionBar.Tab ConnectTab = actionbar.newTab().setText("Connections");
+        ActionBar.Tab SensorTab = actionbar.newTab().setText("Add Sensor");
+        ActionBar.Tab FragmentTab = actionbar.newTab().setText("Sensors");
         
-        Fragment PlayerFragment = new TimePeriod(); //Time Period (Response Rate)
+       // Fragment PlayerFragment = new TimePeriod(); //Time Period (Response Rate)
         Fragment StationsFragment = new Threshold(); //Threshold
         Fragment LogsFragment = new Logs(); //Logs
         Fragment ConnectsFragment = new ConnectList(); //List of sensor connections
-
-        TimeIntervalTab.setTabListener(new MyTabsListener(PlayerFragment));
-        ThresholdTab.setTabListener(new MyTabsListener(StationsFragment));
+        Fragment AddSensorFragment = new AddSensor(); 
+       // Fragment SensorFragment = new ConnectionFragment();
+        
+       /* SensorFragment.setArguments(getIntent().getExtras());
+        getFragmentManager().beginTransaction()
+        .add(R.id.fragment_container, SensorFragment).commit();*/
+        
+     // Create fragment and give it an argument specifying the article it should show
+        //SensorInfoFragment newFragment = new SensorInfoFragment();
+   
+        
+        //TimeIntervalTab.setTabListener(new MyTabsListener(PlayerFragment));
+        SettingsTab.setTabListener(new MyTabsListener(StationsFragment));
         LogTab.setTabListener(new MyTabsListener(LogsFragment));
         ConnectTab.setTabListener(new MyTabsListener(ConnectsFragment));
-
-        actionbar.addTab(TimeIntervalTab);
-        actionbar.addTab(ThresholdTab);
-        actionbar.addTab(LogTab);
+        SensorTab.setTabListener(new MyTabsListener (AddSensorFragment));
+       // FragmentTab.setTabListener(new MyTabsListener (SensorFragment));
+        
         actionbar.addTab(ConnectTab);
+        //actionbar.addTab(TimeIntervalTab);
+        actionbar.addTab(SettingsTab);
+        actionbar.addTab(LogTab);
+        actionbar.addTab(SensorTab);
+        //actionbar.addTab(FragmentTab);
+        
+      /*  
+        if (findViewById(R.id.fragment_container) != null) {
+
+            if (savedInstanceState != null) {
+                return;
+            }
+
+        }*/
+        
+        
+        
 		Log.i("SensorDisplay", "Entered SensorDisplay");
 		try {
 			ftdid2xx = D2xxManager.getInstance(this);
@@ -593,8 +617,8 @@ public class StartActivity extends Activity {
 class MyTabsListener implements ActionBar.TabListener {
 	public Fragment fragment;
 	
-	public MyTabsListener(Fragment fragment) {
-		this.fragment = fragment;
+	public MyTabsListener(Fragment sensorFragment) {
+		this.fragment = sensorFragment;
 	}
 	
 	@Override

@@ -1,0 +1,60 @@
+<div class="col-md-12 sections" ng-controller="humidityController">
+
+	 <div class="widget">
+
+    <div class="widget-head">
+      <div class="pull-left">Real Time Chart</div>
+      <div class="widget-icons pull-right">
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+        <a href="#" class="wclose">
+          <i class="icon-remove"></i>
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+      <div class="padd">
+
+        <div id="live-chart" temp-graph></div>
+        <hr />Time Inverval:
+        <input id="updateInterval" type="text" class="span3" value="">
+
+      </div>
+    </div>
+  </div>
+
+	<div class="widget" id="humidityTable">
+
+		<div class="widget-content">
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Time</th>
+						<th>Location</th>
+						<th>Humidity</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="hdata in humidityData">
+						<td>{{hdata.timestamp}}</td>
+						<td>{{hdata.location.latitude}}, {{hdata.location.longitude}}</td>
+						<td>{{hdata.humidity.value}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+
+	<!--<ul>
+		<li ng-repeat="td in temperatureData">
+		Latitude: {{td.location.latitude}} Longitude: {{td.location.longitude}} <br />
+        TruckId: {{td.truckId}} PackageId: {{td.packageId}} <br />
+        Temperature: {{td.temperature.value}}
+		</li>
+	</ul>-->
+	
+</div>

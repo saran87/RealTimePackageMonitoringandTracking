@@ -1,0 +1,296 @@
+2013-09-30 19:46:26,897 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-09-30 19:46:26,897 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-09-30 19:46:26,902 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:46:26,910 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-09-30 19:46:26,941 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-09-30 19:46:26,942 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-09-30 19:46:26,943 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-09-30 19:46:26,947 [SEVERE ] [11] - org.quickserver.net.server.QuickServer.run - [QuickServer - RTMPT Server Admin v 1.0] - RTMPT Server Admin v 1.0 BindException for Port 3,002 @ 127.0.0.1 : Address already in use
+2013-09-30 19:46:26,948 [WARNING] [11] - org.quickserver.net.server.QuickServer.run - [QuickServer - RTMPT Server Admin v 1.0] - Closing RTMPT Server Admin v 1.0
+2013-09-30 19:46:26,948 [WARNING] [11] - org.quickserver.net.server.QuickServer.run - [QuickServer - RTMPT Server Admin v 1.0] - Closed RTMPT Server Admin v 1.0
+2013-09-30 19:46:26,948 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.startServer - [main] - AppError : org.quickserver.net.AppException: Could not start server RTMPT Server Admin v 1.0! Details: java.net.BindException: Address already in use
+2013-09-30 19:46:26,948 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_SHUTDOWN hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-09-30 19:47:55,178 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-09-30 19:47:55,178 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-09-30 19:47:55,186 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:47:55,196 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-09-30 19:47:55,232 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-09-30 19:47:55,235 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-09-30 19:47:55,235 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-09-30 19:47:55,241 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-09-30 19:47:55,241 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-09-30 19:47:55,242 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-09-30 19:47:55,242 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-09-30 19:47:55,243 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 9/30/13 7:47 PM
+2013-09-30 19:47:55,247 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-09-30 19:47:55,247 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-09-30 19:47:55,247 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-09-30 19:47:55,248 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:47:55,249 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Could not load class/s: java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler
+[StackTrace: java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.quickserver.net.server.QuickServer.getClass(QuickServer.java:2181)
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3148)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtmpt.server.Server.main(Server.java:35)
+]
+2013-09-30 19:48:51,207 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-09-30 19:48:51,208 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-09-30 19:48:51,214 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:48:51,225 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-09-30 19:48:51,258 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-09-30 19:48:51,260 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-09-30 19:48:51,261 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-09-30 19:48:51,266 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-09-30 19:48:51,266 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-09-30 19:48:51,267 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-09-30 19:48:51,267 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-09-30 19:48:51,267 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 9/30/13 7:48 PM
+2013-09-30 19:48:51,268 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-09-30 19:48:51,268 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-09-30 19:48:51,268 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-09-30 19:48:51,269 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:48:51,270 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Could not load class/s: java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler
+[StackTrace: java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.quickserver.net.server.QuickServer.getClass(QuickServer.java:2181)
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3148)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtmpt.server.Server.main(Server.java:35)
+]
+2013-09-30 19:49:30,583 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-09-30 19:49:30,583 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-09-30 19:49:30,587 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:49:30,594 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-09-30 19:49:30,623 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-09-30 19:49:30,626 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-09-30 19:49:30,626 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-09-30 19:49:30,631 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-09-30 19:49:30,632 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-09-30 19:49:30,632 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-09-30 19:49:30,633 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-09-30 19:49:30,633 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 9/30/13 7:49 PM
+2013-09-30 19:49:30,634 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-09-30 19:49:30,639 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-09-30 19:49:30,639 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:49:30,640 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Could not load class/s: java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler
+[StackTrace: java.lang.ClassNotFoundException: rtpmt.Server.ClientMessageHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.quickserver.net.server.QuickServer.getClass(QuickServer.java:2181)
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3148)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtmpt.server.Server.main(Server.java:35)
+]
+2013-09-30 19:49:30,639 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-09-30 19:50:13,169 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-09-30 19:50:13,169 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-09-30 19:50:13,173 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-09-30 19:50:13,180 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-09-30 19:50:13,210 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-09-30 19:50:13,213 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-09-30 19:50:13,213 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-09-30 19:50:13,218 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-09-30 19:50:13,219 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-09-30 19:50:13,219 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-09-30 19:50:13,220 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-09-30 19:50:13,220 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-09-30 19:50:13,220 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-09-30 19:50:13,220 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 9/30/13 7:50 PM
+2013-09-30 19:50:13,221 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-09-30 19:50:13,223 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 18:40:00,820 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-10-13 18:40:00,852 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-10-13 18:40:00,877 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 18:40:00,891 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-10-13 18:40:00,994 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-10-13 18:40:01,015 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-13 18:40:01,016 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-10-13 18:40:01,056 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-13 18:40:01,057 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-13 18:40:01,057 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-13 18:40:01,057 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-10-13 18:40:01,057 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 10/13/13 6:40 PM
+2013-10-13 18:40:01,058 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-10-13 18:40:01,057 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-10-13 18:40:01,058 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 18:40:01,059 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 18:59:09,395 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-10-13 18:59:09,395 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-10-13 18:59:09,400 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 18:59:09,407 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-10-13 18:59:09,441 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-10-13 18:59:09,444 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-13 18:59:09,444 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-10-13 18:59:09,449 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-13 18:59:09,449 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-13 18:59:09,449 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-13 18:59:09,450 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-10-13 18:59:09,450 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 10/13/13 6:59 PM
+2013-10-13 18:59:09,450 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-10-13 18:59:09,450 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-10-13 18:59:09,450 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 18:59:09,452 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:39:52,520 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:39:52,525 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:49:48,900 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:49:48,905 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:55:03,136 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:55:03,140 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:56:47,604 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:56:47,609 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:57:21,375 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:57:21,380 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:57:21,381 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Could not load class/s: java.lang.ClassNotFoundException: ClientMessageHandler
+[StackTrace: java.lang.ClassNotFoundException: ClientMessageHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.quickserver.net.server.QuickServer.getClass(QuickServer.java:2181)
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3148)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtpmt.server.Server.main(Server.java:34)
+]
+2013-10-13 19:57:49,824 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:57:49,829 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:57:49,829 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.loadBusinessLogic - [main] - ClientCommandHandler AND ClientEventHandler was not set.
+2013-10-13 19:57:49,829 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Exception: org.quickserver.net.AppException: ClientCommandHandler AND ClientEventHandler was not set.
+[StackTrace: org.quickserver.net.AppException: ClientCommandHandler AND ClientEventHandler was not set.
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3142)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtpmt.server.Server.main(Server.java:34)
+]
+2013-10-13 19:57:49,830 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - StackTrace:
+org.quickserver.net.AppException: ClientCommandHandler AND ClientEventHandler was not set.
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3142)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtpmt.server.Server.main(Server.java:34)
+
+2013-10-13 19:58:04,221 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:58:04,225 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:58:04,228 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Could not load class/s: java.lang.ClassNotFoundException: rtpmt.Server.ServerPoolableData
+[StackTrace: java.lang.ClassNotFoundException: rtpmt.Server.ServerPoolableData
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.quickserver.net.server.QuickServer.getClass(QuickServer.java:2181)
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3271)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtpmt.server.Server.main(Server.java:34)
+]
+2013-10-13 19:58:20,128 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:58:20,132 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:58:20,135 [SEVERE ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Could not load class/s: java.lang.ClassNotFoundException: rtpmt.Server.ServerPoolableData
+[StackTrace: java.lang.ClassNotFoundException: rtpmt.Server.ServerPoolableData
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:202)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:306)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	at org.quickserver.net.server.QuickServer.getClass(QuickServer.java:2181)
+	at org.quickserver.net.server.QuickServer.loadBusinessLogic(QuickServer.java:3271)
+	at org.quickserver.net.server.QuickServer.startServer(QuickServer.java:432)
+	at rtpmt.server.Server.main(Server.java:34)
+]
+2013-10-13 19:58:29,135 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 19:58:29,139 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:58:29,143 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTPMT Server v 1.0] - Creating pools
+2013-10-13 19:58:29,165 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTPMT Server v 1.0] - Created pools
+2013-10-13 19:58:29,167 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-13 19:58:29,168 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - Making a normal ServerSocket for RTPMT Server v 1.0
+2013-10-13 19:58:29,173 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-13 19:58:29,173 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-13 19:58:29,174 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-13 19:58:29,174 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - Server Mode RTPMT Server v 1.0 - Blocking
+2013-10-13 19:58:29,174 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTPMT Server v 1.0, Date: 10/13/13 7:58 PM
+2013-10-13 19:58:29,175 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTPMT Server v 1.0 : 3000)] - Starting GhostSocketReaper thread - RTPMT Server v 1.0
+2013-10-13 19:58:29,174 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTPMT Server v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-10-13 19:58:29,175 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-10-13 19:58:29,176 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-10-13 19:58:29,177 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 19:58:29,186 [FINE   ] [13] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-10-13 19:58:29,197 [FINE   ] [13] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-10-13 19:58:29,197 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-13 19:58:29,197 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-10-13 19:58:29,198 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-13 19:58:29,198 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-13 19:58:29,198 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-13 19:58:29,199 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-10-13 19:58:29,199 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 10/13/13 7:58 PM
+2013-10-13 19:58:29,199 [FINE   ] [14] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-10-13 19:58:29,199 [FINE   ] [13] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-10-13 21:05:39,070 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-13 21:05:39,076 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 21:05:39,082 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTPMT Server v 1.0] - Creating pools
+2013-10-13 21:05:39,107 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTPMT Server v 1.0] - Created pools
+2013-10-13 21:05:39,109 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-13 21:05:39,110 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - Making a normal ServerSocket for RTPMT Server v 1.0
+2013-10-13 21:05:39,115 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-13 21:05:39,115 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-13 21:05:39,115 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-13 21:05:39,116 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - Server Mode RTPMT Server v 1.0 - Blocking
+2013-10-13 21:05:39,116 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTPMT Server v 1.0, Date: 10/13/13 9:05 PM
+2013-10-13 21:05:39,116 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTPMT Server v 1.0 : 3000)] - Starting GhostSocketReaper thread - RTPMT Server v 1.0
+2013-10-13 21:05:39,116 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTPMT Server v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-10-13 21:05:39,118 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-10-13 21:05:39,118 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-10-13 21:05:39,119 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-13 21:05:39,128 [FINE   ] [13] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-10-13 21:05:39,137 [FINE   ] [13] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-10-13 21:05:39,138 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-13 21:05:39,138 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-10-13 21:05:39,138 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-13 21:05:39,139 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-13 21:05:39,139 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-13 21:05:39,139 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-10-13 21:05:39,139 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 10/13/13 9:05 PM
+2013-10-13 21:05:39,140 [FINE   ] [14] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-10-13 21:05:39,140 [FINE   ] [13] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-10-27 03:11:33,603 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTPMT Server v 1.0
+2013-10-27 03:11:33,631 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-27 03:11:33,636 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTPMT Server v 1.0] - Creating pools
+2013-10-27 03:11:33,664 [FINE   ] [11] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTPMT Server v 1.0] - Created pools
+2013-10-27 03:11:33,666 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-27 03:11:33,666 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - Making a normal ServerSocket for RTPMT Server v 1.0
+2013-10-27 03:11:33,672 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-27 03:11:33,673 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-27 03:11:33,673 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-27 03:11:33,673 [FINE   ] [11] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTPMT Server v 1.0] - Server Mode RTPMT Server v 1.0 - Blocking
+2013-10-27 03:11:33,674 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTPMT Server v 1.0, Date: 10/27/13 3:11 AM
+2013-10-27 03:11:33,675 [FINE   ] [11] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTPMT Server v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
+2013-10-27 03:11:33,675 [FINE   ] [12] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTPMT Server v 1.0 : 3000)] - Starting GhostSocketReaper thread - RTPMT Server v 1.0
+2013-10-27 03:11:33,676 [WARNING] [10] - org.quickserver.net.qsadmin.QSAdminServer.prepareCommandPlugin - [main] - Error loading plugin : java.lang.ClassNotFoundException: echoserver.QSAdminCommandPlugin
+2013-10-27 03:11:33,676 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Starting RTMPT Server Admin v 1.0
+2013-10-27 03:11:33,677 [FINE   ] [10] - org.quickserver.net.server.QuickServer.processServerHooks - [main] - Invoked PRE_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: false
+2013-10-27 03:11:33,688 [FINE   ] [13] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Creating pools
+2013-10-27 03:11:33,736 [FINE   ] [13] - org.quickserver.net.server.QuickServer.initAllPools - [QuickServer - RTMPT Server Admin v 1.0] - Created pools
+2013-10-27 03:11:33,737 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - NetworkInterface: name:lo0 (lo0)
+2013-10-27 03:11:33,737 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Making a normal ServerSocket for RTMPT Server Admin v 1.0
+2013-10-27 03:11:33,737 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesConnectionTime : 0
+2013-10-27 03:11:33,737 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesLatency : 0
+2013-10-27 03:11:33,738 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - getPerformancePreferencesBandwidth : 0
+2013-10-27 03:11:33,738 [FINE   ] [13] - org.quickserver.net.server.QuickServer.makeServerSocket - [QuickServer - RTMPT Server Admin v 1.0] - Server Mode RTMPT Server Admin v 1.0 - Blocking
+2013-10-27 03:11:33,739 [FINE   ] [10] - org.quickserver.net.server.QuickServer.startServer - [main] - Started RTMPT Server Admin v 1.0, Date: 10/27/13 3:11 AM
+2013-10-27 03:11:33,739 [FINE   ] [14] - org.quickserver.net.server.GhostSocketReaper.run - [GhostSocketReaper-For-(RTMPT Server Admin v 1.0 : 3002)] - Starting GhostSocketReaper thread - RTMPT Server Admin v 1.0
+2013-10-27 03:11:33,739 [FINE   ] [13] - org.quickserver.net.server.QuickServer.processServerHooks - [QuickServer - RTMPT Server Admin v 1.0] - Invoked POST_STARTUP hook [org.quickserver.net.server.GhostSocketReaper] was: true
