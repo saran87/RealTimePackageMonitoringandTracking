@@ -116,23 +116,22 @@ public class Packetizer extends AbstractSource implements Runnable {
     final static int P_SERVICE_REPORT_RATE = 254;
     final static int P_SERVICE_UPDATE_THRESHOLD = 253;
     final static int P_UPDATE = 1;
-    final static int P_PACKET_NO_ACK = 69;
     final static int P_UNKNOWN = 255;
     final static int MTU = 1000;
     final static int ACK_TIMEOUT = 1000; // in milliseconds
-    private InputStream input;
-    private OutputStream output;
+    private final InputStream input;
+    private final OutputStream output;
     private boolean inSync;
-    private byte[] receiveBuffer = new byte[MTU];
-    private int seqNo;
+    private final byte[] receiveBuffer = new byte[MTU];
+    private final int seqNo;
     // Packets are received by a separate thread and placed in a
     // per-packet-type queue. If received[x] is null, then x is an
     // unknown protocol (but P_UNKNOWN and P_PACKET_ACK are handled
     // specially)
-    private Thread reader;
-    private LinkedList[] received;
-    private ConcurrentHashMap<Integer,byte[]> recievedShortData;
-    private HashMap<Integer, Long> sensorList;
+    private final Thread reader;
+    private final LinkedList[] received;
+    private final ConcurrentHashMap<Integer, Packet> partialData;
+    private final HashMap<Integer, Long> sensorList;
 
     /**
      * Packetizers are built using the makeXXX methods in BuildSource
@@ -146,8 +145,8 @@ public class Packetizer extends AbstractSource implements Runnable {
         reader = new Thread(this);
         received = new LinkedList[256];
         received[P_ACK] = new LinkedList();
-        received[P_PACKET_NO_ACK] = new LinkedList();
-        recievedShortData = new ConcurrentHashMap<Integer, byte[]>();
+        received[P_UPDATE] = new LinkedList();
+        partialData = new ConcurrentHashMap<Integer, Packet>();
         sensorList = new HashMap<Integer, Long>();
     }
 
@@ -196,21 +195,34 @@ public class Packetizer extends AbstractSource implements Runnable {
 
     // Place a packet in its packet queue, or reject unknown packet
     // types (which don't have a queue)
-    protected void pushProtocolPacket(int packetType, byte[] packet) {
+    protected void pushProtocolPacket(int packetType, Packet packet) {
         LinkedList inPackets = received[packetType];
 
         if (inPackets != null) {
-            
-            Packet packetHelper = new Packet(packet);
-            
+
             synchronized (inPackets) {
-                inPackets.add(packetHelper);
+                inPackets.add(packet);
                 inPackets.notify();
             }
-            
+
         } else if (packetType != P_UNKNOWN) {
             message(name + ": ignoring unknown packet type 0x"
                     + Integer.toHexString(packetType));
+        }
+    }
+
+    private void handlePartialPackets(Packet packet) {
+        if (packet.isPartialPacket()) {
+            if (partialData.containsKey(packet.NodeId)) {
+                Packet partialpacket = partialData.get(packet.NodeId);
+                packet.isCompletePacket(partialpacket);
+                packet.combinePacket(partialpacket);
+                System.out.println("I am Cobining the packets" + packet.getDataLength());
+                pushProtocolPacket(P_UPDATE, packet);
+                partialData.remove(packet.NodeId);
+            } else {
+                partialData.put(packet.NodeId, packet);
+            }
         }
     }
 
@@ -224,8 +236,8 @@ public class Packetizer extends AbstractSource implements Runnable {
     protected Packet readSourcePacket() throws IOException {
         // Packetizer packet format is identical to PacketSource's
         for (;;) {
-            Packet packet = readProtocolPacket(P_PACKET_NO_ACK, 0);
-            
+            Packet packet = readProtocolPacket(P_UPDATE, 0);
+
             return packet;
         }
     }
@@ -239,89 +251,89 @@ public class Packetizer extends AbstractSource implements Runnable {
     @Override
     protected SensorInformation readFormattedPacket() throws IOException {
         // Packetizer packet format is identical to PacketSource's
-        for (;;){
+        for (;;) {
 
-                Packet packet = readProtocolPacket(P_PACKET_NO_ACK, 0);
-                if(DEBUG){
-                     Dump.dump(packet);
+            Packet packet = readProtocolPacket(P_UPDATE, 0);
+            if (DEBUG) {
+                Dump.dump(packet);
+            }
+
+            SensorInformation.Builder message = SensorInformation.newBuilder();
+            message.setDeviceId("1");
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            message.setTimeStamp(packet.getTimeStamp());
+
+            SensorInformation.Sensor.Builder sensor = SensorInformation.Sensor.newBuilder();
+
+            if (packet.isTemperature()) {
+                sensor.setSensorId("1");
+                sensor.setSensorUnit("F");
+                sensor.setSensorType(SensorInformation.SensorType.TEMPERATURE);
+                sensor.setSensorValue(String.valueOf(packet.getValue()));
+                //sensor.setSensorValue("80");
+                message.addSensors(sensor);
+            } else if (packet.isHumidty()) {
+                sensor = SensorInformation.Sensor.newBuilder();
+                sensor.setSensorId("2");
+                sensor.setSensorUnit("%RH");
+                sensor.setSensorType(SensorInformation.SensorType.HUMIDITY);
+                System.out.println(packet.getHumidity());
+                sensor.setSensorValue(String.valueOf((packet.getHumidity())));
+                message.addSensors(sensor);
+            } else if (packet.isVibration()) {
+                sensor = SensorInformation.Sensor.newBuilder();
+                sensor.setSensorId("3");
+                sensor.setSensorUnit("g");
+                if (packet.isX()) {
+                    System.out.println("X=");
+                    sensor.setSensorType(SensorInformation.SensorType.VIBRATIONX);
+                } else if (packet.isY()) {
+                    System.out.println("Y=");
+                    sensor.setSensorType(SensorInformation.SensorType.VIBRATIONY);
+                } else if (packet.isZ()) {
+                    System.out.println("Z=");
+                    sensor.setSensorType(SensorInformation.SensorType.VIBRATIONZ);
                 }
-                
-                SensorInformation.Builder message = SensorInformation.newBuilder();
-                message.setDeviceId("1");
-                
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date date = new Date();
-                message.setTimeStamp(packet.getTimeStamp());
-
-                SensorInformation.Sensor.Builder sensor = SensorInformation.Sensor.newBuilder();
-
-                if (packet.isTemperature()) {
-                    sensor.setSensorId("1");
-                    sensor.setSensorUnit("F");
-                    sensor.setSensorType(SensorInformation.SensorType.TEMPERATURE);
-                    sensor.setSensorValue(String.valueOf(packet.getValue()));
-                    //sensor.setSensorValue("80");
-                    message.addSensors(sensor);
-                } else if (packet.isHumidty()) {
-                    sensor = SensorInformation.Sensor.newBuilder();
-                    sensor.setSensorId("2");
-                    sensor.setSensorUnit("%RH");
-                    sensor.setSensorType(SensorInformation.SensorType.HUMIDITY);
-                    System.out.println(packet.getHumidity());
-                    sensor.setSensorValue(String.valueOf((packet.getHumidity())));
-                    message.addSensors(sensor);
-                } else if (packet.isVibration()) {
-                    sensor = SensorInformation.Sensor.newBuilder();
-                    sensor.setSensorId("3");
-                    sensor.setSensorUnit("g");
-                    if (packet.isX()) {
-                        System.out.println("X=");
-                        sensor.setSensorType(SensorInformation.SensorType.VIBRATIONX);
-                    } else if (packet.isY()) {
-                        System.out.println("Y=");
-                        sensor.setSensorType(SensorInformation.SensorType.VIBRATIONY);
-                    } else if (packet.isZ()) {
-                        System.out.println("Z=");
-                        sensor.setSensorType(SensorInformation.SensorType.VIBRATIONZ);
-                    }
-                    System.out.print(packet.getVibration());
-                    sensor.setSensorValue(String.valueOf((packet.getVibration())));
-                    message.addSensors(sensor);
-                } else if (packet.isShock()) {
-                    sensor = SensorInformation.Sensor.newBuilder();
-                    sensor.setSensorId("4");
-                    sensor.setSensorUnit("g");
-                    if (packet.isX()) {
-                        sensor.setSensorType(SensorInformation.SensorType.SHOCKX);
-                    } else if (packet.isY()) {
-                        sensor.setSensorType(SensorInformation.SensorType.SHOCKY);
-                    } else if (packet.isZ()) {
-                        sensor.setSensorType(SensorInformation.SensorType.SHOCKZ);
-                    }
-                    System.out.println(packet.getShock());
-                    sensor.setSensorValue(String.valueOf((packet.getShock())));
-                    message.addSensors(sensor);
+                System.out.print(packet.getVibration());
+                sensor.setSensorValue(String.valueOf((packet.getVibration())));
+                message.addSensors(sensor);
+            } else if (packet.isShock()) {
+                sensor = SensorInformation.Sensor.newBuilder();
+                sensor.setSensorId("4");
+                sensor.setSensorUnit("g");
+                if (packet.isX()) {
+                    sensor.setSensorType(SensorInformation.SensorType.SHOCKX);
+                } else if (packet.isY()) {
+                    sensor.setSensorType(SensorInformation.SensorType.SHOCKY);
+                } else if (packet.isZ()) {
+                    sensor.setSensorType(SensorInformation.SensorType.SHOCKZ);
                 }
+                System.out.println(packet.getShock());
+                sensor.setSensorValue(String.valueOf((packet.getShock())));
+                message.addSensors(sensor);
+            }
 
-                SensorInformation.LocationInformation.Builder location = SensorInformation.LocationInformation.newBuilder();
-                Location loc = LocationTracker.getLocation();
-                if (loc != null) {
-                    location.setLatitude(loc.getLatitude());
-                    location.setLongitude(loc.getLongitude());
-                    message.setLocation(location);
-                } else {
-                    location.setLatitude(43.084603);
-                    location.setLongitude(-77.680312);
-                    message.setLocation(location);
-                }
-                return message.build();
+            SensorInformation.LocationInformation.Builder location = SensorInformation.LocationInformation.newBuilder();
+            Location loc = LocationTracker.getLocation();
+            if (loc != null) {
+                location.setLatitude(loc.getLatitude());
+                location.setLongitude(loc.getLongitude());
+                message.setLocation(location);
+            } else {
+                location.setLatitude(43.084603);
+                location.setLongitude(-77.680312);
+                message.setLocation(location);
+            }
+            return message.build();
         }
     }
 
     protected Packet getPacket() throws IOException {
         // Packetizer packet format is identical to PacketSource's
         for (;;) {
-            Packet rawpacket = readProtocolPacket(P_PACKET_NO_ACK, 0);
+            Packet rawpacket = readProtocolPacket(P_UPDATE, 0);
             return rawpacket;
         }
     }
@@ -333,11 +345,11 @@ public class Packetizer extends AbstractSource implements Runnable {
             for (;;) {
                 byte[] packet = readFramedPacket();
                 int packetType = packet[0] & 0xff;
-                int nodeId = (packet[1] & 0xff) << 8 | (packet[2] & 0xff) ;
+                int nodeId = (packet[1] & 0xff) << 8 | (packet[2] & 0xff);
 
                 //int pdataOffset = 0;
                 if (packetType == P_REGISTRATION) {
-                  
+
                     //TODO Store nodeid, 64bit id (MAC) in hashtable
                     Long macId = (long) (packet[5] & 0xff) | (packet[6] & 0xff) << 8
                             | (packet[7] & 0xff) << 16 | (packet[8] & 0xff) << 24;
@@ -348,19 +360,23 @@ public class Packetizer extends AbstractSource implements Runnable {
                     System.out.println("Service Request sent!");
 
                     // And merge with un-acked packets
-                    packetType = P_PACKET_NO_ACK;
+                    packetType = P_UPDATE;
                 } else if (packetType == P_SERVICE_RESPONSE) {
                     //Log.i("Packetizer", "Service Response Received");
                     //System.out.println("Sending Threshold for node: "+count);
                     //sendReportRate(nodeId);
                     //sendThresholdRequest(nodeId);
-                    
+
                     System.out.println("Service Response Recieved Sent");
 
                 } else if (packetType == P_UPDATE) {
-                    packetType = P_PACKET_NO_ACK;
-                    pushProtocolPacket(packetType, packet);
-
+                    packetType = P_UPDATE;
+                    Packet packetHelper = new Packet(packet);
+                    if(packetHelper.isPartialPacket()){
+                        handlePartialPackets(packetHelper);
+                    }else{
+                        pushProtocolPacket(packetType, packetHelper);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -483,26 +499,30 @@ public class Packetizer extends AbstractSource implements Runnable {
     @Override
     public void configure(ArrayList<Integer> timeInterval, ArrayList<Double> thresholdList) throws IOException {
         Integer time = 0;
-        
-       for (Map.Entry<Integer, Long> entry : sensorList.entrySet()) {
+
+        for (Map.Entry<Integer, Long> entry : sensorList.entrySet()) {
             Integer shortId = entry.getKey();
             Long macId = entry.getValue();
-             if (shortId != 0) {
+            if (shortId != 0) {
                 int serviceId = 0;
                 for (int i = 0; i < thresholdList.size(); i++) {
-                     if(i == 0){ serviceId = 3;}
-                     else if(i == 1){ serviceId = 1;}
-                     else{ serviceId = 255;}
+                    if (i == 0) {
+                        serviceId = 3;
+                    } else if (i == 1) {
+                        serviceId = 1;
+                    } else {
+                        serviceId = 255;
+                    }
                     Double threshold = thresholdList.get(i);
                     System.out.println("threshold = " + threshold);
-                    if(i < timeInterval.size()){
+                    if (i < timeInterval.size()) {
                         time = timeInterval.get(i);
-                        sendReportRate(shortId,i,serviceId,time);
+                        sendReportRate(shortId, i, serviceId, time);
                     }
-                    sendThreshold(shortId,i,serviceId,time,threshold.intValue());
+                    sendThreshold(shortId, i, serviceId, time, threshold.intValue());
                 }
-             }
-       }
+            }
+        }
 
     }
 
@@ -561,7 +581,7 @@ public class Packetizer extends AbstractSource implements Runnable {
         payload[1] = (byte) (serviceId & 0xff); //service Id
         payload[2] = (byte) (reportRate >> 8);
         payload[3] = (byte) (reportRate & 0xff);
-        payload[4] = (byte) (threshold >> 8) ;
+        payload[4] = (byte) (threshold >> 8);
         payload[5] = (byte) (threshold & 0xff);
 
         writeFramedPacket(P_SERVICE_UPDATE_THRESHOLD, nodeId, payload);
@@ -572,7 +592,6 @@ public class Packetizer extends AbstractSource implements Runnable {
     private synchronized void writeFramedPacket(int packetType, int nodeId,
             byte[] packet) throws IOException {
 
-
         Escaper buffer = new Escaper(packet.length + 7);
 
         buffer.nextByte(packetType);
@@ -580,14 +599,12 @@ public class Packetizer extends AbstractSource implements Runnable {
         //Node Id is 16 bit
         buffer.nextByte(nodeId >> 8);
         buffer.nextByte(nodeId & 0xff);
-        
 
         //+2 for crc
         int length = packet.length + 2;
         //length 
         buffer.nextByte(length >> 8);
         buffer.nextByte(length & 0xff);
-       
 
         for (int i = 0; i < length - 2; i++) {
             buffer.nextByte(packet[i]);
@@ -599,10 +616,9 @@ public class Packetizer extends AbstractSource implements Runnable {
         byte[] realPacket = new byte[buffer.escapePtr];
         System.arraycopy(buffer.escaped, 0, realPacket, 0, buffer.escapePtr);
 
-       
         output.flush();
         output.write(realPacket);
-       
+
         if (DEBUG) {
             System.err.println("Data written: ");
             System.err.println("sending: ");
