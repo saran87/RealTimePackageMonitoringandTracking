@@ -6,34 +6,41 @@ package sensorconfiguration.swing.ui;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 /**
  *
  * @author Kumar
  */
 public class MainUI extends javax.swing.JFrame {
-    
-        
+
     /**
      * Declare UI Event Handler Object
-     * 
+     *
      */
-    
     UIEventHanler eventHandler;
-   
-    
+
     /**
      * Creates new form MainUI
      */
     public MainUI() {
-        initComponents();
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+             // If Nimbus is not available, you can set the GUI to another look and feel.
+            
+        }
+       initComponents();
+        txtLog.addMouseListener(new ContextMenuMouseListener());
         eventHandler = new UIEventHanler(this);
         eventHandler.initSerialPort();
     }
-    
-        
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,8 +51,6 @@ public class MainUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFrame1 = new javax.swing.JFrame();
-        jFrame2 = new javax.swing.JFrame();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -112,28 +117,6 @@ public class MainUI extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtLog = new javax.swing.JTextArea();
-
-        org.jdesktop.layout.GroupLayout jFrame1Layout = new org.jdesktop.layout.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 300, Short.MAX_VALUE)
-        );
-
-        org.jdesktop.layout.GroupLayout jFrame2Layout = new org.jdesktop.layout.GroupLayout(jFrame2.getContentPane());
-        jFrame2.getContentPane().setLayout(jFrame2Layout);
-        jFrame2Layout.setHorizontalGroup(
-            jFrame2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 400, Short.MAX_VALUE)
-        );
-        jFrame2Layout.setVerticalGroup(
-            jFrame2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 300, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -667,6 +650,7 @@ public class MainUI extends javax.swing.JFrame {
         jTabbedPane1.addTab("Local Data", jPanel3);
 
         txtLog.setColumns(20);
+        txtLog.setLineWrap(true);
         txtLog.setRows(5);
         jScrollPane4.setViewportView(txtLog);
 
@@ -704,18 +688,18 @@ public class MainUI extends javax.swing.JFrame {
 
     private void jbConfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfigureActionPerformed
         // TODO add your handling code here:     
-        
-       ArrayList<Integer> timeInterval =  new ArrayList<Integer>();
-       ArrayList<Double> threshold =  new ArrayList<Double>();
-       timeInterval.add((Integer)tempTime.getValue());
-       timeInterval.add((Integer)humTime.getValue());
-       timeInterval.add((Integer)vibTime.getValue());
-       
-       threshold.add((Double)tempThreshold.getValue());
-       threshold.add((Double)humThreshold.getValue());
-       threshold.add((Double)vibThreshold.getValue());
-       threshold.add((Double)shockThreshold.getValue());
-       eventHandler.configureSensor(timeInterval,threshold);  
+
+        ArrayList<Integer> timeInterval = new ArrayList<Integer>();
+        ArrayList<Double> threshold = new ArrayList<Double>();
+        timeInterval.add((Integer) tempTime.getValue());
+        timeInterval.add((Integer) humTime.getValue());
+        timeInterval.add((Integer) vibTime.getValue());
+
+        threshold.add((Double) tempThreshold.getValue());
+        threshold.add((Double) humThreshold.getValue());
+        threshold.add((Double) vibThreshold.getValue());
+        threshold.add((Double) shockThreshold.getValue());
+        eventHandler.configureSensor(timeInterval, threshold);
     }//GEN-LAST:event_jbConfigureActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -773,8 +757,6 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JFrame jFrame1;
-    private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -835,16 +817,16 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JSpinner vibTime;
     private javax.swing.JSpinner vibTimeThreshold;
     // End of variables declaration//GEN-END:variables
-
+    
     public void setConnected(boolean isSensorConnected) {
-        
-      if(isSensorConnected){
-        jlblSensorStatus.setText("Connected");
-        jlblSensorStatus.setForeground(Color.GREEN);
-      }else{
-        jlblSensorStatus.setText("Not Connected");
-        jlblSensorStatus.setForeground(Color.RED);
-      }
+
+        if (isSensorConnected) {
+            jlblSensorStatus.setText("Connected");
+            jlblSensorStatus.setForeground(Color.GREEN);
+        } else {
+            jlblSensorStatus.setText("Not Connected");
+            jlblSensorStatus.setForeground(Color.RED);
+        }
     }
 
 }

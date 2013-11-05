@@ -17,7 +17,7 @@ import rtpmt.motes.packet.Header;
  */
 public final class Packet extends Header {
 
-    private ArrayList<Byte> PayLoad;
+    private final ArrayList<Byte> PayLoad;
     static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Date date = null;
 
@@ -27,11 +27,12 @@ public final class Packet extends Header {
     }
 
     /**
-     * Constructor 
+     * Constructor
+     * @param byteArray
      */
     public Packet(byte[] byteArray) {
 
-        PayLoad = new ArrayList<Byte>(byteArray.length);
+        PayLoad = new ArrayList<Byte>();
 
         this.ProtocolType = byteArray[0];
         this.NodeId = (byteArray[1]& 0xff) << 8 | (byteArray[2] & 0xff);
@@ -39,8 +40,8 @@ public final class Packet extends Header {
         this.Service = byteArray[5];
         this.ServiceId = byteArray[6];
 
-        int i = 0;
-        for (i = 7; i < byteArray.length - 4; i++) {
+        int i = 7;
+        for (;i < byteArray.length - 4; i++) {
             this.addDataToPacket(byteArray[i]);
         }
 
@@ -53,7 +54,7 @@ public final class Packet extends Header {
     /**
      * add Data to the packet
      *
-     * @return void
+     * @param value
      */
     public void addDataToPacket(Byte value) {
         PayLoad.add(value);
@@ -73,6 +74,7 @@ public final class Packet extends Header {
     /**
      * get the payload data based on the index
      *
+     * @param index
      * @return byte
      */
     public Byte getData(int index) {
@@ -144,8 +146,8 @@ public final class Packet extends Header {
 
         StringBuilder shock = new StringBuilder();
         double g;
-        int i = 0;
-        
+        int i;
+
         for (i = 2; i < 72; i++) {
             short value = PayLoad.get(i);
             g = (value * 15.6) / 1000;
@@ -157,7 +159,7 @@ public final class Packet extends Header {
             g = (value - 128) / 0.64;
             shock.append(String.valueOf(g)).append("|");
         }
-        
+
         shock.deleteCharAt(shock.length() - 1);
         return shock.toString();
 
@@ -174,93 +176,121 @@ public final class Packet extends Header {
     }
 
     public boolean isHumidty() {
-
-        if (this.Service == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.Service == 1;
     }
 
     public boolean isTemperature() {
-
-        if (this.Service == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.Service == 0;
     }
 
     public boolean isVibration() {
-
-        if (this.Service == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.Service == 2;
 
     }
 
     public boolean isShock() {
-
-        if (this.Service == 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.Service == 3;
 
     }
-
+    /**
+     * 
+     * @return 
+     */
     public boolean isX() {
 
         boolean isTrue;
 
         if (this.Service == 3 || this.Service == 2) {
-            if (this.ServiceId == 1) {
-                isTrue = true;
-            } else {
-                isTrue = false;
-            }
+            isTrue = this.ServiceId == 1;
         } else {
             isTrue = false;
         }
-
         return isTrue;
     }
-
+    /**
+     * 
+     * @return 
+     */
     public boolean isY() {
 
 
         boolean isTrue;
 
         if (this.Service == 3 || this.Service == 2) {
-            if (this.ServiceId == 2) {
-                isTrue = true;
-            } else {
-                isTrue = false;
-            }
+            isTrue = this.ServiceId == 2;
         } else {
             isTrue = false;
         }
-
         return isTrue;
     }
-
+    /**
+     * 
+     * @return 
+     */
     public boolean isZ() {
 
         boolean isTrue;
 
         if (this.Service == 3 || this.Service == 2) {
-
-            if (this.ServiceId == 3) {
-                isTrue = true;
-            } else {
-                isTrue = false;
-            }
+            isTrue = this.ServiceId == 3;
         } else {
             isTrue = false;
         }
-
         return isTrue;
     }
+    /**
+     * 
+     * @return 
+     */
+    public boolean isPartialPacket() {
+
+        return this.isVibration() || this.isShock();
+    }
+    /**
+     * 
+     * @param byteValue
+     * @param N
+     * @return 
+     */
+    private boolean isBitSet(Byte byteValue, int N){
+
+        return (byteValue & (1<<N)) == 1;
+
+    }
+    private int getPacketNumber(){
+        Byte value;
+        value = PayLoad.get(0);
+        return (value & (1<<4));
+    }
+    /**
+     * 
+     * @param partialpacket
+     * @return 
+     */
+    public boolean isCompletePacket(Packet partialpacket) {
+
+        Byte value;
+        value = PayLoad.get(0);
+        if(this.Service == partialpacket.Service  && this.ServiceId == partialpacket.ServiceId &&
+                this.date.equals(partialpacket.date)){
+
+            return !(this.isBitSet(value, 4) && partialpacket.isBitSet(value,4) );
+        }
+
+        return false;
+    }
+
+    public void combinePacket(Packet partialpacket) {
+       
+        if(this.getPacketNumber() == 0){
+            //remove the first information byte
+            partialpacket.PayLoad.remove(0);
+            this.PayLoad.addAll( partialpacket.PayLoad);
+        }else{
+            //remove the first information byte
+             this.PayLoad.remove(0);
+             this.PayLoad.addAll(0,partialpacket.PayLoad);
+        }
+    }
+
 }
