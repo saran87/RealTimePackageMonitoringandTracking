@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme" >
         <service android:name=".services.BitBangModeIntentService"  android:enabled="true"/>
         <service android:name=".services.BitBangModeService"  android:enabled="true"/>
-        <activity
+        <activity 
+            android:windowSoftInputMode="adjustPan" 
             android:name="com.rtpmt.packtrack.StartActivity"
             android:label="@string/app_name" >
             <intent-filter>
