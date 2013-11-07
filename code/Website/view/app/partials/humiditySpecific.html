@@ -1,31 +1,30 @@
-<div class="col-md-12 sections" ng-controller="humiditySpecificCtrl">
+<div class="humiditySection sections" ng-controller="humiditySpecificCtrl">
 
-	 <div class="widget">
+	<div class="col-md-12">
 
-    <div class="widget-head">
-      <div class="pull-left">Humidity Chart</div>
-      <div class="widget-icons pull-right">
-        <a href="#" class="wminimize">
-          <i class="icon-chevron-up"></i>
-        </a>
-        <a href="#" class="wclose">
-          <i class="icon-remove"></i>
-        </a>
-      </div>
-      <div class="clearfix"></div>
-    </div>
+		<div class="widget">      
+      <!-- Widget content -->
+	      <div class="widget-content">
+	        <div class="padd">
 
-    <div class="widget-content">
-      <div class="padd">
+	          <!-- Curve chart (Blue color). jQuery Flot plugin used. -->
+	          <div style="height:600px; width:800px;">
+	            <div id="hGraph" class="chart" humiditychart="humiditychart" ng-model='data' style="width:800px;height:400px"></div>
+	            <hr />
+	            <!-- Hover location -->
+	          </div>
+	        </div>
+	        <!-- Widget ends -->
 
-        <div id="live-chart" temp-graph></div>
-        <hr />Time Inverval:
-        <input id="updateInterval" type="text" class="span3" value="">
+	      </div>
 
-      </div>
-    </div>
-  </div>
+	    </div> 
 
+		
+	</div>
+
+
+<div class="col-md-12">
 	<div class="widget" id="humidityTable">
 
 		<div class="widget-content">
@@ -48,5 +47,6 @@
 		</div>
 		
 	</div>
+</div>
 	
 </div>

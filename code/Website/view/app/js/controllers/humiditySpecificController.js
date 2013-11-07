@@ -9,9 +9,12 @@ angular.module('myModule')
 	    	$scope.headMessage = "Humidity for Package ID "+$routeParams.packageid;
 
 	    }
-    
-    $scope.humidityData=humidityService.humidityData;
-  	
+
+	$scope.data =[];	  
+	$scope.humidityData=[];
+
     humidityService.getH();        
+    $scope.humidityData=humidityService.humidityData;
+    $scope.data=[humidityService.hgData];
 
   }]);
