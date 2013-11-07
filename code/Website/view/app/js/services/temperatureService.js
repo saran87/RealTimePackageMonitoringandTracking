@@ -3,8 +3,7 @@ angular.module('myServices')
 	.factory('temperatureService',['$http', function($http){
 
 		var _temperatureData = [];
-		var _gData=[];
-		//var plus = 0;
+		var _gData=[];		
 		var max = 0;
 
 		var _getTemperatureData = function(plus,limit){

@@ -31,16 +31,20 @@ angular.module('myModule')
 	    ];
 
 	  	$scope.urlFunc = function(){
-	    	$location.path('temperature/'+$scope.selected.id.id+'/'+$scope.selected.package);
+	  		$scope.currentUrl=$location.path();
+	  		console.log($scope.currentUrl+$scope.selected.id.id+'/'+$scope.selected.package);
+	    	$location.path($scope.currentUrl+'/'+$scope.selected.id.id+'/'+$scope.selected.package);
+
 	    };
 
 	    $scope.packageUrl = function(){
+
 	    	if($scope.txtPackageid!='undefined'){
 
-	    		$location.path('temperature/'+$scope.txtPackageid);
+	    		$scope.currentUrl=$location.path();
+	    		$location.path($scope.currentUrl+'/'+$scope.txtPackageid);
 
-	    	}
-	    	
+	    	}    	
 	    }		
 
 	}]);

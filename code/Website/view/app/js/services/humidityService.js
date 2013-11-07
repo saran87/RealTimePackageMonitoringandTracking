@@ -3,25 +3,29 @@ angular.module('myServices')
 	.factory('humidityService',['$http',function($http){
 
 		var _humidityData = [];
+		var _hData = [];		
 		
-		var _getHumidityData = function(){
+		var _getHumidityData = function(){			
 
-			
-
-			var dataPath = "data/data.json";	
+			var dataPath = "data/humiditydata.json";	
 
 			$http.get(dataPath)
 				.success(function(data){
-
+					max=data.length;
 					var d;
-					for(var i=0; i<=100; i++){
-						d=data.data[i];
+
+					for(var i=0; i<max; i++){
+						d=data[i];
 
 						if(d.humidity){
+							
 							_humidityData.push(d);
+							
+							_hData.push([d.timestamp,d.humidity.value]);
 						}
 
-					}
+					}				
+
 
 				});
 
@@ -30,7 +34,8 @@ angular.module('myServices')
 		return {
 
 			humidityData: _humidityData,
-			getHumidityData: _getHumidityData
+			getH: _getHumidityData
+			
 		};
 
 

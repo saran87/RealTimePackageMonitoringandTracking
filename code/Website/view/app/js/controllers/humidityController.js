@@ -1,8 +1,12 @@
 angular.module('myModule')
-  .controller('humidityController',['$scope','humidityService',function($scope,humidityService){
+  .controller('humidityController',['$scope','humidityService',function($scope,humidityService){  	
 
+    $scope.headMessage="Humidity data for All";
+    
     $scope.humidityData=humidityService.humidityData;
   	
-    humidityService.getHumidityData();
+    humidityService.getH();    
+
+    console.log($scope.humidityData);
 
   }]);
