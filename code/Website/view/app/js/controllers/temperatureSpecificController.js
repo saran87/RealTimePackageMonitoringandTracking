@@ -1,5 +1,5 @@
 angular.module('myModule')
-	.controller('temperatureSpecificCtrl',['$scope','$location','$routeParams','temperatureService',function($scope,$location,$routeParams,temperatureService){
+	.controller('temperatureSpecificCtrl',['$scope','$location','$routeParams','temperatureService','$timeout',function($scope,$location,$routeParams,temperatureService,$timeout){
 
 		if($routeParams.truckid && $routeParams.packageid){
 	    	$scope.headMessage = "Temperature for Package ID "+$routeParams.packageid+" in truck "+$routeParams.truckid;
@@ -11,20 +11,27 @@ angular.module('myModule')
 	    }
 
 		$scope.data =[];
-	  	$scope.temperatureData=[];
-	  	$scope.limit=10;
-	  	$scope.templimit=10;
-	  	$scope.plus = 0;
-	    temperatureService.getT($scope.plus,$scope.limit);
-	    $scope.temperatureData=temperatureService.tdata;
-	    $scope.data=[temperatureService.gdata];
+	  	$scope.temperatureData=[];	  	
+	  	temperatureService.getT();
+	  	$scope.temperatureData=temperatureService.tdata;
+	  	$scope.presentTemperature=temperatureService.firstTemperatureTimeStamp;
+		$scope.latestTemperature=temperatureService.getLatestTemperatureEntry();
+	    
+	    $scope.data=[temperatureService.gdata];	    
 
-	    $scope.showMore = function(){
+	    //$scope.timeInMs = 0;
+  
+	    var updateLatest = function() {
 
-	    	$scope.plus += $scope.limit;
-	    	$scope.templimit += $scope.limit;
-	    	temperatureService.getT($scope.plus,$scope.templimit);
-	    	$scope.temperatureData=temperatureService.tdata;   
-	    }	    
+	    	if($scope.latestTemperature > $scope.presentTemperature){
+	    		
+	    		//get the latest temeprature value and update
+	    	}
+
+	        $scope.timeInMs+= 500;
+	        $timeout(updateLatest, 5000);
+	    }
+	    
+	    $timeout(updateLatest, 5000);
 
 	}]);

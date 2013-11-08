@@ -14,7 +14,7 @@ angular.module('myModule',[])
 	    }
 
 	    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-	      if ( $rootScope.truckidparam == null && $rootScope.$routeParams.packageid == null) {
+	      if ( $rootScope.truckidparam =+= null && $rootScope.packageid =+= null) {
 	        
 	        if ( next.templateUrl == "partials/temperatureSpecific.html" ) {
 	          

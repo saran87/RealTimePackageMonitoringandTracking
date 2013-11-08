@@ -5,19 +5,9 @@ angular.module('myModule')
     
   	$scope.data =[];
   	$scope.temperatureData=[];
-  	$scope.limit=10;
-  	$scope.templimit=10;
-  	$scope.plus = 0;
-    temperatureService.getT($scope.plus,$scope.limit);
+  	
+    temperatureService.getT();
     $scope.temperatureData=temperatureService.tdata;
-    $scope.data=[temperatureService.gdata];
-
-    $scope.showMore = function(){
-
-    	$scope.plus += $scope.limit;
-    	$scope.templimit += $scope.limit;
-    	temperatureService.getT($scope.plus,$scope.templimit);
-    	$scope.temperatureData=temperatureService.tdata;   
-    }
+    $scope.data=[temperatureService.gdata];    
 
    }]);

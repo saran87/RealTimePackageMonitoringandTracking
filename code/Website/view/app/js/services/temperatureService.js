@@ -2,42 +2,59 @@
 angular.module('myServices')
 	.factory('temperatureService',['$http', function($http){
 
+		var dataPath="data/tempdata.json";
 		var _temperatureData = [];
 		var _gData=[];		
 		var max = 0;
+		var _firstTemperatureTimeStamp;
+		var _latestTemperatureTimeStamp;
 
-		var _getTemperatureData = function(plus,limit){
-		
-			var dataPath="data/tempdata.json";
+		var _getTemperatureData = function(){		
+			
 			$http.get(dataPath)
 				.success(function(data){
 					max = data.length;
 					var d;
-					if((plus>=max)==false){
 
-						for(var i=plus; i<=limit; i++){
+					_firstTemperatureTimeStamp=data[0].timestamp;
+					
 
-					        d=data[i];
-					        
-					        if(d.temperature){
-					          
-					          _temperatureData.push(d);
-					          _gData.push([d.timestamp,d.temperature.value]);
-					         
-					        }
-				      	}
-			      	} else {
-			      		console.log("No more values");
-			      	}     	
+					for(var i=0; i<max; i++){
+						
+				        d=data[i];
+				        
+				        if(d.temperature){
+				          
+				          _temperatureData.push(d);
+				          _gData.push([d.timestamp,d.temperature.value]);
+				         
+				        }
+			      	}
+			      	    	
 
 				});	
 
-		}	
+		}
+
+		var _getLatestTemperatureEntry = function(){
+
+			$http.get(dataPath)
+				.success(function(data){										
+
+					_latestTemperatureTimeStamp=data[0].timestamp;
+
+				});	
+
+				return _latestTemperatureTimeStamp;
+
+		}
 
 		return{
 
 			tdata: _temperatureData,
-			gdata: _gData,	
+			gdata: _gData,
+			firstTemperatureTimeStamp: _firstTemperatureTimeStamp,
+			getLatestTemperatureEntry: _getLatestTemperatureEntry,
 			getT: _getTemperatureData,
 			getMax: max
 		};
