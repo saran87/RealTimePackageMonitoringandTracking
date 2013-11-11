@@ -44,8 +44,6 @@ package rtpmt.motes.packet;
 import rtpmt.sensor.util.Packet;
 import rtpmt.sensor.util.Utils;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,6 +57,7 @@ import java.util.logging.Logger;
 import rtpmt.location.tracker.Location;
 import rtpmt.location.tracker.LocationTracker;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
+import rtpmt.sensor.reader.SerialPortInterface;
 
 /**
  * The Packetizer class implements the new mote-PC protocol, using a ByteSource
@@ -119,8 +118,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     final static int P_UNKNOWN = 255;
     final static int MTU = 1000;
     final static int ACK_TIMEOUT = 1000; // in milliseconds
-    private final InputStream input;
-    private final OutputStream output;
+    private final SerialPortInterface port;
     private boolean inSync;
     private final byte[] receiveBuffer = new byte[MTU];
     private final int seqNo;
@@ -130,23 +128,24 @@ public class Packetizer extends AbstractSource implements Runnable {
     // specially)
     private final Thread reader;
     private final LinkedList[] received;
-    private final ConcurrentHashMap<Integer, Packet> partialData;
+    private final ConcurrentHashMap<String, Packet> partialData;
     private final HashMap<Integer, Long> sensorList;
 
     /**
      * Packetizers are built using the makeXXX methods in BuildSource
+     * @param name
+     * @param _inputPort
      */
-    public Packetizer(String name, InputStream io, OutputStream ou) {
+    public Packetizer(String name, SerialPortInterface _inputPort) {
         super(name);
-        this.input = io;
-        output = ou;
+        this.port = _inputPort;
         inSync = false;
         seqNo = 13;
         reader = new Thread(this);
         received = new LinkedList[256];
         received[P_ACK] = new LinkedList();
         received[P_UPDATE] = new LinkedList();
-        partialData = new ConcurrentHashMap<Integer, Packet>();
+        partialData = new ConcurrentHashMap<String, Packet>();
         sensorList = new HashMap<Integer, Long>();
     }
 
@@ -166,7 +165,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     @Override
     protected void closeSource() {
         try {
-            input.close();
+            port.close();
         } catch (IOException ex) {
             Logger.getLogger(Packetizer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -213,15 +212,17 @@ public class Packetizer extends AbstractSource implements Runnable {
 
     private void handlePartialPackets(Packet packet) {
         if (packet.isPartialPacket()) {
-            if (partialData.containsKey(packet.NodeId)) {
-                Packet partialpacket = partialData.get(packet.NodeId);
-                packet.isCompletePacket(partialpacket);
-                packet.combinePacket(partialpacket);
+            String key = packet.uniqueId();
+            System.out.println("Key:"+ key);
+            if (partialData.containsKey(key)) {
+                Packet partialpacket = partialData.get(key);
+                partialpacket.isCompletePacket(packet);
+                partialpacket.combinePacket(partialpacket);
                 System.out.println("I am Cobining the packets" + packet.getDataLength());
-                pushProtocolPacket(P_UPDATE, packet);
-                partialData.remove(packet.NodeId);
+                pushProtocolPacket(P_UPDATE, partialData.remove(key));
+               
             } else {
-                partialData.put(packet.NodeId, packet);
+                partialData.put(key, packet);
             }
         }
     }
@@ -338,8 +339,9 @@ public class Packetizer extends AbstractSource implements Runnable {
         }
     }
 
-    static private byte dummyPacket[] = new byte[0];
+    private static final byte dummyPacket[] = new byte[0];
 
+    @Override
     public void run() {
         try {
             for (;;) {
@@ -357,6 +359,7 @@ public class Packetizer extends AbstractSource implements Runnable {
                     sensorList.put(shortId, macId);
 
                     sendServiceRequest(nodeId); // Sending the Service Request
+                    sendTimeSyncPacket(nodeId);
                     System.out.println("Service Request sent!");
 
                     // And merge with un-acked packets
@@ -401,11 +404,11 @@ public class Packetizer extends AbstractSource implements Runnable {
                 message(name + ": resynchronising");
                 // re-synchronise 
 
-                int b = input.read() & 0xff;
+                int b = port.read() & 0xff;
 
                 while (b != 170) {
 
-                    b = input.read() & 0xff;
+                    b = port.read() & 0xff;
                     System.out.println(b);
                 }
                 System.out.println("count:" + count + "InSync:" + inSync);
@@ -419,7 +422,7 @@ public class Packetizer extends AbstractSource implements Runnable {
                 syncFrame[count++] = (byte) (b & 0xff);
 
                 while (count < FRAME_SYNC.length) {
-                    b = input.read();
+                    b = port.read();
                     syncFrame[count++] = (byte) (b & 0xff);
                 }
 
@@ -442,13 +445,13 @@ public class Packetizer extends AbstractSource implements Runnable {
                     continue;
                 }
                 if (!isLength) {
-                    byte command = (byte) input.read();
+                    byte command = (byte) port.read();
                     receiveBuffer[count++] = command;
-                    receiveBuffer[count++] = (byte) input.read();
-                    receiveBuffer[count++] = (byte) input.read();
+                    receiveBuffer[count++] = (byte) port.read();
+                    receiveBuffer[count++] = (byte) port.read();
 
-                    receiveBuffer[count++] = (byte) input.read();
-                    receiveBuffer[count++] = (byte) input.read();
+                    receiveBuffer[count++] = (byte) port.read();
+                    receiveBuffer[count++] = (byte) port.read();
 
                     int length = (receiveBuffer[count - 1] & 0xff) | (receiveBuffer[count - 2] & 0xff) << 8;
                     payLoad = count + length;
@@ -456,7 +459,7 @@ public class Packetizer extends AbstractSource implements Runnable {
                     isLength = true;
                     continue;
                 } else if (count < payLoad) {
-                    b = (byte) (input.read() & 0xff);
+                    b = (byte) (port.read() & 0xff);
                     System.out.print(b);
                 } else {
                     byte[] packet = new byte[count - 2];
@@ -524,6 +527,10 @@ public class Packetizer extends AbstractSource implements Runnable {
             }
         }
 
+    }
+
+    private void sendTimeSyncPacket(int nodeId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     // Class to build a framed, escaped and crced packet byte stream
@@ -616,8 +623,8 @@ public class Packetizer extends AbstractSource implements Runnable {
         byte[] realPacket = new byte[buffer.escapePtr];
         System.arraycopy(buffer.escaped, 0, realPacket, 0, buffer.escapePtr);
 
-        output.flush();
-        output.write(realPacket);
+        port.flush();
+        port.write(realPacket);
 
         if (DEBUG) {
             System.err.println("Data written: ");

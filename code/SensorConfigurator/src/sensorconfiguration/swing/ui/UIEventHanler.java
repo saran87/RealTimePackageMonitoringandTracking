@@ -26,11 +26,11 @@ import rtpmt.network.packet.SensorMessage.SensorInformation;
  */
 public class UIEventHanler extends ValidateUI implements Runnable {
 
-    private MainUI UIObject;
+    private final MainUI UIObject;
     //packet reader to read the data from the motes
     Packetizer packetReader;
     //background thread for sending data to the server.
-    private Thread bgCommunicator;
+    private final Thread bgCommunicator;
     //input and output streams for sending and receiving data
     private InputStream input = null;
     private OutputStream output = null;
@@ -132,7 +132,9 @@ public class UIEventHanler extends ValidateUI implements Runnable {
         boolean successful = false;
 
         try {
-            packetReader = new Packetizer("Packet Reader", input, output);
+            rtpmt.sensor.reader.SerialPort port;
+            port = new rtpmt.sensor.reader.SerialPort(input, output);
+            packetReader = new Packetizer("Packet Reader", port);
             packetReader.open(null);
             successful = true;
         } catch (IOException ex) {

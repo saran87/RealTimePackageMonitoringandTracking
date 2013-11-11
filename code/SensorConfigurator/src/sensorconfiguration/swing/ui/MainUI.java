@@ -149,7 +149,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel4.setText("Threshold");
 
-        vibThreshold.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 20.0d, 0.5d));
+        vibThreshold.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 0));
 
         jLabel5.setText("Time Interval");
 
@@ -220,7 +220,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel8.setText("Threshold");
 
-        humThreshold.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(1.0d)));
+        humThreshold.setModel(new javax.swing.SpinnerNumberModel());
 
         jLabel9.setText("Time Interval");
 
@@ -295,7 +295,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel12.setText("Threshold");
 
-        tempThreshold.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(1.0d)));
+        tempThreshold.setModel(new javax.swing.SpinnerNumberModel());
 
         jLabel13.setText("Time Interval");
 
@@ -374,7 +374,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel16.setText("Threshold");
 
-        shockThreshold.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 200.0d, 0.5d));
+        shockThreshold.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 0));
 
         jLabel19.setText("g value");
 

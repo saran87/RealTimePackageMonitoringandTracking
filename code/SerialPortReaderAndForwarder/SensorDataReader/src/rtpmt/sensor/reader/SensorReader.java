@@ -4,11 +4,13 @@
  */
 package rtpmt.sensor.reader;
 
+import java.util.Observable;
+
 /**
  *
  * @author Kumar
  */
-public class SensorReader {
+public class SensorReader extends Observable {
     
     
     

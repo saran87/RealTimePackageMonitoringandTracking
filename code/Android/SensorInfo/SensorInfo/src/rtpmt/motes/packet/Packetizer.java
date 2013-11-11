@@ -45,9 +45,6 @@ import android.app.Activity;
 import android.location.Location;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.TextView;
-
-import com.example.sensorinfo.R;
 import com.ftdi.j2xx.FT_Device;
 import com.rtpmt.packtrack.SensorInfo;
 import com.rtpmt.packtrack.SensorList;
@@ -177,9 +174,9 @@ public class Packetizer extends AbstractSource implements Runnable {
 		reader = new Thread(this);
 		received = new LinkedList[256];
 		packageLocation = new PackageLocation(mainActivity);
-		received[P_ACK] = new LinkedList();
+		received[P_ACK] = new LinkedList<Object>();
 		//sensorList = new SensorList<Integer, SensorInfo>();
-		received[P_PACKET_NO_ACK] = new LinkedList();
+		received[P_PACKET_NO_ACK] = new LinkedList<Object>();
 		
 		//sensorMap = new HashMap();
 		activity = mainActivity;
@@ -207,7 +204,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 
 	protected byte[] readProtocolPacket(int packetType, long deadline)
 			throws IOException {
-		LinkedList inPackets = received[packetType];
+		LinkedList<?> inPackets = received[packetType];
 
 		// Wait for a packet on inPackets
 		synchronized (inPackets) {
