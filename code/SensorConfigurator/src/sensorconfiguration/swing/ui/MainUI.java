@@ -690,15 +690,15 @@ public class MainUI extends javax.swing.JFrame {
         // TODO add your handling code here:     
 
         ArrayList<Integer> timeInterval = new ArrayList<Integer>();
-        ArrayList<Double> threshold = new ArrayList<Double>();
+        ArrayList<Integer> threshold = new ArrayList<Integer>();
         timeInterval.add((Integer) tempTime.getValue());
         timeInterval.add((Integer) humTime.getValue());
         timeInterval.add((Integer) vibTime.getValue());
 
-        threshold.add((Double) tempThreshold.getValue());
-        threshold.add((Double) humThreshold.getValue());
-        threshold.add((Double) vibThreshold.getValue());
-        threshold.add((Double) shockThreshold.getValue());
+        threshold.add((Integer) tempThreshold.getValue());
+        threshold.add((Integer) humThreshold.getValue());
+        threshold.add((Integer) vibThreshold.getValue());
+        threshold.add((Integer) shockThreshold.getValue());
         eventHandler.configureSensor(timeInterval, threshold);
     }//GEN-LAST:event_jbConfigureActionPerformed
 

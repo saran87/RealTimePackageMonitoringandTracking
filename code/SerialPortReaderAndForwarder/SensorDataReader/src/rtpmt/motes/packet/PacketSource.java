@@ -104,14 +104,15 @@ public interface PacketSource
      * @param packet The packet to write. The format is described above.
      * @return Some packet sources will return false if the packet
      *   could not be written.
+     * @throws java.io.IOException
      */
     public HashMap<Integer,Long> getSensorList() throws IOException;
     
     /**
      * Write a packet
-     * @param packet The packet to write. The format is described above.
-     * @return Some packet sources will return false if the packet
-     *   could not be written.
+     * @param timeInterval
+     * @param threshold
+     * @throws java.io.IOException
      */
-    public void configure(ArrayList<Integer> timeInterval, ArrayList<Double> threshold) throws IOException;
+    public void configure(ArrayList<Integer> timeInterval, ArrayList<Integer> threshold) throws IOException;
 }

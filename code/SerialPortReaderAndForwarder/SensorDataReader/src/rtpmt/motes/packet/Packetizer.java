@@ -44,6 +44,8 @@ package rtpmt.motes.packet;
 import rtpmt.sensor.util.Packet;
 import rtpmt.sensor.util.Utils;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -114,7 +116,9 @@ public class Packetizer extends AbstractSource implements Runnable {
     final static int P_SERVICE_RESPONSE = 0;
     final static int P_SERVICE_REPORT_RATE = 254;
     final static int P_SERVICE_UPDATE_THRESHOLD = 253;
+    final static int P_TIME_SYNC = 160;
     final static int P_UPDATE = 1;
+     final static int P_UPDATE_THRESHOLD = 2;
     final static int P_UNKNOWN = 255;
     final static int MTU = 1000;
     final static int ACK_TIMEOUT = 1000; // in milliseconds
@@ -130,6 +134,7 @@ public class Packetizer extends AbstractSource implements Runnable {
     private final LinkedList[] received;
     private final ConcurrentHashMap<String, Packet> partialData;
     private final HashMap<Integer, Long> sensorList;
+    
 
     /**
      * Packetizers are built using the makeXXX methods in BuildSource
@@ -260,8 +265,9 @@ public class Packetizer extends AbstractSource implements Runnable {
             }
 
             SensorInformation.Builder message = SensorInformation.newBuilder();
-            message.setDeviceId("1");
-
+            long packageId = sensorList.containsKey(packet.NodeId) ? sensorList.get(packet.NodeId) : 1;
+            message.setDeviceId(String.valueOf(packageId));
+       
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             message.setTimeStamp(packet.getTimeStamp());
@@ -353,8 +359,11 @@ public class Packetizer extends AbstractSource implements Runnable {
                 if (packetType == P_REGISTRATION) {
 
                     //TODO Store nodeid, 64bit id (MAC) in hashtable
-                    Long macId = (long) (packet[5] & 0xff) | (packet[6] & 0xff) << 8
-                            | (packet[7] & 0xff) << 16 | (packet[8] & 0xff) << 24;
+                    Long macId ;
+                    macId = (long)(packet[12] & 0xff) << 56 | 
+                            (packet[11] & 0xff)<< 48 | (packet[10] & 0xff) << 40 | (packet[9] & 0xff) << 32
+                            |  (packet[8] & 0xff)<< 24 | (packet[7] & 0xff) << 16
+                            | (packet[6] & 0xff) << 8 | (packet[5] & 0xff);
                     Integer shortId = nodeId;
                     sensorList.put(shortId, macId);
 
@@ -372,7 +381,7 @@ public class Packetizer extends AbstractSource implements Runnable {
 
                     System.out.println("Service Response Recieved Sent");
 
-                } else if (packetType == P_UPDATE) {
+                } else if (packetType == P_UPDATE || packetType == P_UPDATE_THRESHOLD) {
                     packetType = P_UPDATE;
                     Packet packetHelper = new Packet(packet);
                     if(packetHelper.isPartialPacket()){
@@ -500,14 +509,14 @@ public class Packetizer extends AbstractSource implements Runnable {
     }
 
     @Override
-    public void configure(ArrayList<Integer> timeInterval, ArrayList<Double> thresholdList) throws IOException {
+    public void configure(ArrayList<Integer> timeInterval, ArrayList<Integer> thresholdList) throws IOException {
         Integer time = 0;
 
         for (Map.Entry<Integer, Long> entry : sensorList.entrySet()) {
             Integer shortId = entry.getKey();
             Long macId = entry.getValue();
             if (shortId != 0) {
-                int serviceId = 0;
+                int serviceId;
                 for (int i = 0; i < thresholdList.size(); i++) {
                     if (i == 0) {
                         serviceId = 3;
@@ -516,7 +525,7 @@ public class Packetizer extends AbstractSource implements Runnable {
                     } else {
                         serviceId = 255;
                     }
-                    Double threshold = thresholdList.get(i);
+                    Integer threshold = thresholdList.get(i);
                     System.out.println("threshold = " + threshold);
                     if (i < timeInterval.size()) {
                         time = timeInterval.get(i);
@@ -529,8 +538,12 @@ public class Packetizer extends AbstractSource implements Runnable {
 
     }
 
-    private void sendTimeSyncPacket(int nodeId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void sendTimeSyncPacket(int nodeId) throws IOException {
+        long currentTime = System.currentTimeMillis()/1000;
+		
+        System.out.println("SendTime: "+currentTime);
+        byte timePacket[] = (new BigInteger(Long.toHexString(currentTime),16)).toByteArray();//ByteBuffer.allocate(8). array();
+        writeFramedPacket(P_TIME_SYNC, nodeId, timePacket);
     }
 
     // Class to build a framed, escaped and crced packet byte stream

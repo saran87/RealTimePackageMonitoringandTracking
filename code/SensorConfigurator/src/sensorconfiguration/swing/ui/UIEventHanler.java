@@ -6,7 +6,9 @@ package sensorconfiguration.swing.ui;
 
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import gnu.io.UnsupportedCommOperationException;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,29 +73,32 @@ public class UIEventHanler extends ValidateUI implements Runnable {
 
         Pattern pattern = Pattern.compile("\\d+");
         isSensorConnected = false;
+
+        ArrayList<CommPortIdentifier> serialPortList = new ArrayList<CommPortIdentifier>();
         while (ports.hasMoreElements()) {
             CommPortIdentifier curPort = (CommPortIdentifier) ports.nextElement();
-
-            //get only serial ports
             if (curPort.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-                try {
-                    CommPort commPort = curPort.open(null, 0);
-                    Matcher tokenMatcher = pattern.matcher(commPort.getName());
-                    if (tokenMatcher.find()) {
-                        serialPort = (SerialPort) commPort;
-                        //setting serial port parameters 
-                        //this setting is based on telosb mote specification
-                        //baud rate is important here i.e(9600)
-                        //for controlling GUI elements
-                        serialPort.setSerialPortParams(230400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                        isSensorConnected = true;
-                    }
-
-
-                } catch (Exception ex) {
-                    // System.err.println(ex);
-                }
+                System.out.println(curPort.getName());
+                serialPortList.add(curPort);
             }
+        }
+        try {
+
+            if (serialPortList.size() > 0) {
+                CommPort commPort = serialPortList.get(serialPortList.size() - 1).open(null, 0);
+                serialPort = (SerialPort) commPort;
+                    //setting serial port parameters 
+                //this setting is based on telosb mote specification
+                //baud rate is important here i.e(9600)
+                //for controlling GUI elements
+                serialPort.setSerialPortParams(230400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                isSensorConnected = true;
+            }
+
+        } catch (PortInUseException ex) {
+            // System.err.println(ex);
+        } catch (UnsupportedCommOperationException ex) {
+            // System.err.println(ex);
         }
         UIObject.setConnected(isSensorConnected);
     }
@@ -154,23 +159,24 @@ public class UIEventHanler extends ValidateUI implements Runnable {
             for (;;) {
 
                 SensorInformation sensorInfo = packetReader.readPacket();
-
+                String message = sensorInfo.getDeviceId() + "," + sensorInfo.getTimeStamp() + ",";
+                UIObject.txtLog.append(message);
                 for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
 
-                    String message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit() + "   " + sensorInfo.getTimeStamp();
+                    message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
                     UIObject.txtLog.append(message + "\n");
                 }
 
+                /*
+                 HashMap<Integer, Long> sensorList = packetReader.getSensorList();
 
-                HashMap<Integer, Long> sensorList = packetReader.getSensorList();
+                 for (Map.Entry<Integer, Long> entry : sensorList.entrySet()) {
+                 Integer integer = entry.getKey();
+                 Long long1 = entry.getValue();
 
-                for (Map.Entry<Integer, Long> entry : sensorList.entrySet()) {
-                    Integer integer = entry.getKey();
-                    Long long1 = entry.getValue();
-
-                    UIObject.txtLog.append("Sensor " + long1  + " is using ShortId:" + integer + "\n");
-                }
-
+                 UIObject.txtLog.append("Sensor " + long1  + " is using ShortId:" + integer + "\n");
+                 }
+                 */
             }
         } catch (IOException ex) {
             String logText = "Too many listeners. (" + ex.toString() + ")";
@@ -179,7 +185,7 @@ public class UIEventHanler extends ValidateUI implements Runnable {
         }
     }
 
-    void configureSensor(ArrayList<Integer> timeInterval, ArrayList<Double> threshold) {
+    void configureSensor(ArrayList<Integer> timeInterval, ArrayList<Integer> threshold) {
 
         try {
             packetReader.configure(timeInterval, threshold);
@@ -188,7 +194,6 @@ public class UIEventHanler extends ValidateUI implements Runnable {
             UIObject.txtLog.setForeground(Color.red);
             UIObject.txtLog.append(logText + "\n");
         }
-
 
     }
 }
