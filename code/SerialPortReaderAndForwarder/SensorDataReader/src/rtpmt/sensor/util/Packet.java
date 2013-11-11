@@ -292,5 +292,34 @@ public final class Packet extends Header {
              this.PayLoad.addAll(0,partialpacket.PayLoad);
         }
     }
+    
+    
+    public String uniqueId(){
+        return  (this.getTimeStamp()) + this.NodeId + this.Service + this.ServiceId;
+    }
+    /**
+     *
+     * @return
+     */
+    @Override
+    public int hashCode(){
+        return this.NodeId + this.Service + this.ServiceId + this.getTimeStamp().hashCode();
+        
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Packet other = (Packet) obj;
+        if (this.PayLoad != other.PayLoad && (this.PayLoad == null || !this.PayLoad.equals(other.PayLoad))) {
+            return false;
+        }
+        return this.NodeId == other.NodeId || this.date == other.date || (this.date != null && this.date.equals(other.date));
+    }
 
 }

@@ -59,7 +59,6 @@ public class BitBangModeIntentService extends IntentService {
 		ftDevice.setBitMode((byte) 0xFF, D2xxManager.FT_BITMODE_ASYNC_BITBANG);
 		// configure Baud rate
 		ftDevice.setBaudRate(9600);
-
     	while (System.currentTimeMillis() < endTime) {
     		synchronized (this) {
     			try {
