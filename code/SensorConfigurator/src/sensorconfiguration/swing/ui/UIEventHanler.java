@@ -4,20 +4,24 @@
  */
 package sensorconfiguration.swing.ui;
 
+import filewriter.FileWriter;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
 import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import rtpmt.motes.packet.Packetizer;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
@@ -36,16 +40,19 @@ public class UIEventHanler extends ValidateUI implements Runnable {
     //input and output streams for sending and receiving data
     private InputStream input = null;
     private OutputStream output = null;
+    private final FileOutputStream datalog;
+    private final String DATA_LOG_FILE = "datalog.buff";
     /*
      * Connected sensor indicator
      */
     boolean isSensorConnected;
     SerialPort serialPort;
 
-    public UIEventHanler(MainUI object) {
+    public UIEventHanler(MainUI object) throws FileNotFoundException {
 
         UIObject = object;
         bgCommunicator = new Thread(this);
+        datalog = new FileOutputStream(DATA_LOG_FILE);
     }
 
     /**
@@ -166,7 +173,7 @@ public class UIEventHanler extends ValidateUI implements Runnable {
                     message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
                     UIObject.txtLog.append(message + "\n");
                 }
-
+                sensorInfo.writeTo(datalog);
                 /*
                  HashMap<Integer, Long> sensorList = packetReader.getSensorList();
 
@@ -195,5 +202,16 @@ public class UIEventHanler extends ValidateUI implements Runnable {
             UIObject.txtLog.append(logText + "\n");
         }
 
+    }
+
+    void generateCSV(File file) throws FileNotFoundException, Exception {
+        try {     
+            FileWriter fw = new  FileWriter();
+            FileInputStream inputStream = new FileInputStream(DATA_LOG_FILE);
+            fw.writeCSV(inputStream, file);
+        } catch (Exception ex) {
+            Logger.getLogger(UIEventHanler.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
     }
 }

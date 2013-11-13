@@ -5,7 +5,13 @@
 package sensorconfiguration.swing.ui;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -34,11 +40,15 @@ public class MainUI extends javax.swing.JFrame {
             }
         } catch (Exception e) {
              // If Nimbus is not available, you can set the GUI to another look and feel.
-            
+
         }
-       initComponents();
+        initComponents();
         txtLog.addMouseListener(new ContextMenuMouseListener());
-        eventHandler = new UIEventHanler(this);
+        try {
+            eventHandler = new UIEventHanler(this);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         eventHandler.initSerialPort();
     }
 
@@ -115,8 +125,10 @@ public class MainUI extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtLog = new javax.swing.JTextArea();
+        btnSaveAsCSV = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -570,7 +582,7 @@ public class MainUI extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jLabel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 98, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jLabel24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 540, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -630,7 +642,7 @@ public class MainUI extends javax.swing.JFrame {
                 .add(jLabel26, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 189, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 150, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 162, Short.MAX_VALUE)
                 .add(jButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 345, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -652,9 +664,43 @@ public class MainUI extends javax.swing.JFrame {
         txtLog.setColumns(20);
         txtLog.setLineWrap(true);
         txtLog.setRows(5);
+        txtLog.setBorder(null);
         jScrollPane4.setViewportView(txtLog);
 
-        jTabbedPane1.addTab("Logs", jScrollPane4);
+        btnSaveAsCSV.setText("Save as CSV");
+        btnSaveAsCSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveAsCSVActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(btnSaveAsCSV, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                .addContainerGap())
+            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel4Layout.createSequentialGroup()
+                .add(btnSaveAsCSV)
+                .add(0, 559, Short.MAX_VALUE))
+            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .add(26, 26, 26)
+                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+
+        jTabbedPane1.addTab("logs", jPanel4);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -715,6 +761,30 @@ public class MainUI extends javax.swing.JFrame {
         eventHandler.initSerialPort();
     }//GEN-LAST:event_searchForPorts
 
+    private void btnSaveAsCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveAsCSVActionPerformed
+
+        //Create a file chooser
+        final JFileChooser fc;
+        fc = new JFileChooser();
+        int returnVal = fc.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                File file = fc.getSelectedFile();
+                //This is where a real application would open the file.
+                System.out.print(file.getName());
+                eventHandler.generateCSV(file);
+            } catch (FileNotFoundException ex) {
+                handleError(ex.getMessage());
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                handleError("Couldn't able to create the file. Try again later");
+            }
+        } else {
+        }
+    }//GEN-LAST:event_btnSaveAsCSVActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -750,6 +820,7 @@ public class MainUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSaveAsCSV;
     private javax.swing.JSpinner humThreshold;
     private javax.swing.JSpinner humTime;
     private javax.swing.JSpinner humTimeThreshold;
@@ -792,6 +863,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -817,7 +889,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JSpinner vibTime;
     private javax.swing.JSpinner vibTimeThreshold;
     // End of variables declaration//GEN-END:variables
-    
+
     public void setConnected(boolean isSensorConnected) {
 
         if (isSensorConnected) {
@@ -827,6 +899,10 @@ public class MainUI extends javax.swing.JFrame {
             jlblSensorStatus.setText("Not Connected");
             jlblSensorStatus.setForeground(Color.RED);
         }
+    }
+
+    private void handleError(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
     }
 
 }
