@@ -60,9 +60,9 @@
 package rtpmt.motes.packet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import rtpmt.network.packet.SensorMessage.SensorInformation;
+import rtpmt.packages.Package;
 
 public interface PacketSource
 {
@@ -101,7 +101,6 @@ public interface PacketSource
 
     /**
      * Write a packet
-     * @param packet The packet to write. The format is described above.
      * @return Some packet sources will return false if the packet
      *   could not be written.
      * @throws java.io.IOException
@@ -110,9 +109,8 @@ public interface PacketSource
     
     /**
      * Write a packet
-     * @param timeInterval
-     * @param threshold
+     * @param pack
      * @throws java.io.IOException
      */
-    public void configure(ArrayList<Integer> timeInterval, ArrayList<Integer> threshold) throws IOException;
+    public void configure(Package pack) throws IOException;
 }

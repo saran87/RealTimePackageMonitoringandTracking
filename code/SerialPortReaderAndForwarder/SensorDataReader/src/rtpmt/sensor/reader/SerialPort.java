@@ -42,7 +42,7 @@ public class SerialPort implements SerialPortInterface{
     }
 
     @Override
-    public byte read() {
+    public byte read() throws IOException {
         byte data = 0;
         
         try{
@@ -51,6 +51,7 @@ public class SerialPort implements SerialPortInterface{
            
         } catch (IOException ex) {
             Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE, "Error while reading the data ", ex);
+            throw ex;
         }
         
         return data;

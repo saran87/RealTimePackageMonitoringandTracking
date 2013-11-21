@@ -288,7 +288,7 @@
                 <Component class="javax.swing.JSpinner" name="vibThreshold">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="0" maximum="20" minimum="0" numberType="java.lang.Integer" stepSize="0" type="number"/>
+                      <SpinnerModel initial="0.0" maximum="20.0" minimum="0.0" numberType="java.lang.Double" stepSize="0.5" type="number"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -424,7 +424,7 @@
                 <Component class="javax.swing.JSpinner" name="humThreshold">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                      <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="0.5" type="number"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -561,7 +561,7 @@
                 <Component class="javax.swing.JSpinner" name="tempThreshold">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                      <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="0.5" type="number"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -658,7 +658,7 @@
                 <Component class="javax.swing.JSpinner" name="shockThreshold">
                   <Properties>
                     <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                      <SpinnerModel initial="0" maximum="200" minimum="0" numberType="java.lang.Integer" stepSize="0" type="number"/>
+                      <SpinnerModel initial="0.0" maximum="200.0" minimum="0.0" numberType="java.lang.Double" stepSize="0.5" type="number"/>
                     </Property>
                   </Properties>
                 </Component>

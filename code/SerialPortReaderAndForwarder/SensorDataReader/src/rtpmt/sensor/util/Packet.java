@@ -20,7 +20,7 @@ public final class Packet extends Header {
     private final ArrayList<Byte> PayLoad;
     static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Date date = null;
-
+   
     public Packet() {
         PayLoad = new ArrayList<Byte>();
         date = new Date();
@@ -135,7 +135,7 @@ public final class Packet extends Header {
         for (int i = 0; i < PayLoad.size(); i++) {
             short value = PayLoad.get(i);
             g = (value * 15.6) / 1000;
-            vibration.append(String.valueOf(g)).append("|");
+            vibration.append(String.valueOf(g)).append(" ");
         }
         vibration.deleteCharAt(vibration.length() - 1);
 
@@ -151,13 +151,13 @@ public final class Packet extends Header {
         for (i = 2; i < 72; i++) {
             short value = PayLoad.get(i);
             g = (value * 15.6) / 1000;
-            shock.append(String.valueOf(g)).append("|");
+            shock.append(String.valueOf(g)).append(" ");
         }
         for (; i < PayLoad.size(); i++) {
             //Unsigned integer value, note the 0xffff not 0xff
             short value = (short) (PayLoad.get(i) & 0xFF);
             g = (value - 128) / 0.64;
-            shock.append(String.valueOf(g)).append("|");
+            shock.append(String.valueOf(g)).append(" ");
         }
 
         shock.deleteCharAt(shock.length() - 1);

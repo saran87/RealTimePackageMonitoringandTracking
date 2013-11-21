@@ -14,6 +14,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+import rtpmt.packages.Package;
 
 /**
  *
@@ -25,7 +27,7 @@ public class MainUI extends javax.swing.JFrame {
      * Declare UI Event Handler Object
      *
      */
-    UIEventHanler eventHandler;
+    UIEventHandler eventHandler;
 
     /**
      * Creates new form MainUI
@@ -38,14 +40,20 @@ public class MainUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
              // If Nimbus is not available, you can set the GUI to another look and feel.
 
+        } catch (IllegalAccessException e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        } catch (InstantiationException e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        } catch (UnsupportedLookAndFeelException e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
         initComponents();
         txtLog.addMouseListener(new ContextMenuMouseListener());
         try {
-            eventHandler = new UIEventHanler(this);
+            eventHandler = new UIEventHandler(this);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -161,7 +169,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel4.setText("Threshold");
 
-        vibThreshold.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 0));
+        vibThreshold.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 20.0d, 0.5d));
 
         jLabel5.setText("Time Interval");
 
@@ -232,7 +240,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel8.setText("Threshold");
 
-        humThreshold.setModel(new javax.swing.SpinnerNumberModel());
+        humThreshold.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(0.5d)));
 
         jLabel9.setText("Time Interval");
 
@@ -307,7 +315,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel12.setText("Threshold");
 
-        tempThreshold.setModel(new javax.swing.SpinnerNumberModel());
+        tempThreshold.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(0.5d)));
 
         jLabel13.setText("Time Interval");
 
@@ -386,7 +394,7 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel16.setText("Threshold");
 
-        shockThreshold.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 0));
+        shockThreshold.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 200.0d, 0.5d));
 
         jLabel19.setText("g value");
 
@@ -734,18 +742,29 @@ public class MainUI extends javax.swing.JFrame {
 
     private void jbConfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfigureActionPerformed
         // TODO add your handling code here:     
-
-        ArrayList<Integer> timeInterval = new ArrayList<Integer>();
-        ArrayList<Integer> threshold = new ArrayList<Integer>();
-        timeInterval.add((Integer) tempTime.getValue());
-        timeInterval.add((Integer) humTime.getValue());
-        timeInterval.add((Integer) vibTime.getValue());
-
-        threshold.add((Integer) tempThreshold.getValue());
-        threshold.add((Integer) humThreshold.getValue());
-        threshold.add((Integer) vibThreshold.getValue());
-        threshold.add((Integer) shockThreshold.getValue());
-        eventHandler.configureSensor(timeInterval, threshold);
+        
+        Package pack = new Package();
+        
+        pack.setSensorId(1);
+        //temperature
+        pack.setTemperatureTimePeriod((Integer) tempTime.getValue());
+        pack.setTemperatureThreshold((Double)tempThreshold.getValue());
+        pack.setTemperatureAfterThresholdTimePeriod((Integer)tempTimeThreshold.getValue());
+        
+        //Humidity 
+        pack.setHumididtyTimePeriod((Integer) humTime.getValue());
+        pack.setHumidtyThreshold((Double)humThreshold.getValue());
+        pack.setHumididtyAfterThresholdTimePeriod((Integer)humTimeThreshold.getValue());
+        
+        //Vibration 
+        pack.setVibrationTimePeriod((Integer) vibTime.getValue());
+        pack.setVibrationThreshold((Double)vibThreshold.getValue());
+        pack.setVibrationAfterThresholdTimePeriod((Integer)vibTimeThreshold.getValue());
+       
+        //shock
+        pack.setShockThreshold((Double)shockThreshold.getValue());
+        
+        eventHandler.configureSensor(pack);
     }//GEN-LAST:event_jbConfigureActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -774,6 +793,7 @@ public class MainUI extends javax.swing.JFrame {
                 //This is where a real application would open the file.
                 System.out.print(file.getName());
                 eventHandler.generateCSV(file);
+                handleError(file.getName() + " successfully generated");
             } catch (FileNotFoundException ex) {
                 handleError(ex.getMessage());
                 Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -814,6 +834,7 @@ public class MainUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MainUI().setVisible(true);
             }

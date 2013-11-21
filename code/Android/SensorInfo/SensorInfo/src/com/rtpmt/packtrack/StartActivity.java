@@ -109,12 +109,15 @@ public class StartActivity extends Activity {
         ActionBar.Tab ConnectTab = actionbar.newTab().setText("Connections");
         ActionBar.Tab SensorTab = actionbar.newTab().setText("Add Sensor");
         ActionBar.Tab FragmentTab = actionbar.newTab().setText("Sensors");
+        ActionBar.Tab SensorViewTab = actionbar.newTab().setText("SensorList");
         
        // Fragment PlayerFragment = new TimePeriod(); //Time Period (Response Rate)
         Fragment StationsFragment = new Threshold(); //Threshold
         Fragment LogsFragment = new Logs(); //Logs
         Fragment ConnectsFragment = new ConnectList(); //List of sensor connections
         Fragment AddSensorFragment = new AddSensor(); 
+        Fragment SensorViewFragment = new SensorView(); 
+        
        // Fragment SensorFragment = new ConnectionFragment();
         
        /* SensorFragment.setArguments(getIntent().getExtras());
@@ -130,14 +133,14 @@ public class StartActivity extends Activity {
         LogTab.setTabListener(new MyTabsListener(LogsFragment));
         ConnectTab.setTabListener(new MyTabsListener(ConnectsFragment));
         SensorTab.setTabListener(new MyTabsListener (AddSensorFragment));
-       // FragmentTab.setTabListener(new MyTabsListener (SensorFragment));
+        SensorViewTab.setTabListener(new MyTabsListener (SensorViewFragment));
         
         actionbar.addTab(ConnectTab);
         //actionbar.addTab(TimeIntervalTab);
         actionbar.addTab(SettingsTab);
         actionbar.addTab(LogTab);
         actionbar.addTab(SensorTab);
-        //actionbar.addTab(FragmentTab);
+        actionbar.addTab(SensorViewTab);
         
       /*  
         if (findViewById(R.id.fragment_container) != null) {
@@ -161,7 +164,7 @@ public class StartActivity extends Activity {
 		
 		readText = (TextView) findViewById(R.id.readValues);
 		readText.setMovementMethod(new ScrollingMovementMethod());
-
+        
 		Log.i("SensorDisplay", "readText set");
 
 		/*

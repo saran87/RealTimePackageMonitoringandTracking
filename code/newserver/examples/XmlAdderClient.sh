@@ -1,2 +1,0 @@
-#!/bin/bash
-exec java -Dxmladder.XmlAdderClient.bebug=true -Dxmladder.XmlAdderClient.brokenReq=true -cp ./dist/xmladder.jar:./../dist/commons-digester.jar:./../dist/commons-collections.jar:./../dist/commons-logging.jar:./../dist/commons-beanutils.jar xmladder.XmlAdderClient "$@"

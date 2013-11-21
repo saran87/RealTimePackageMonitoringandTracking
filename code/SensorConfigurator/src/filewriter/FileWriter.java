@@ -58,13 +58,13 @@ public class FileWriter {
                     writer.close();
                     break;
                 }
-                SensorInformation sensorInfo =  SensorMessage.SensorInformation.parseFrom(inputStream);
+                SensorInformation sensorInfo =  SensorMessage.SensorInformation.parseDelimitedFrom(inputStream);
                 
                 if(sensorInfo != null){
                     String line =  sensorInfo.getDeviceId() + "," + sensorInfo.getTimeStamp() + ",";
                     for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
 
-                        line += sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
+                        line = line + sensor.getSensorType().name() + "," + sensor.getSensorValue();
                     }
                     writer.write(line);
                     writer.newLine();
