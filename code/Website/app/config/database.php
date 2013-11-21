@@ -85,11 +85,11 @@ return array(
 
 		'mongodb' => array(
 	    'driver'   => 'mongodb',
-	    'host'     => '54.243.241.254',
+	    'host'     => '54.204.32.227',
 	    'port'     => 27017,
 	    'username' => '',
 	    'password' => '',
-	    'database' => 'RFID'
+	    'database' => 'realTimeDataDb'
 	),
 
 	),
