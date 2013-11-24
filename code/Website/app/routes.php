@@ -20,3 +20,5 @@ Route::get('/temperature','ServiceController@temperature');
 Route::get('temperature/{truckid}/{packageid}', 'ServiceController@temperatureShow')->where('truckid', '\d+')->where('packageid','\d+');
 
 Route::get('/humidity','ServiceController@humidity');
+
+Route::get('/vibration', 'ServiceController@vibration');

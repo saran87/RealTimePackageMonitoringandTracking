@@ -33,6 +33,13 @@ class ServiceController extends BaseController{
 		return $humidityAll;
 
 	}
+
+	public function vibration(){
+
+		$vibrationAll = Vibration::all();
+
+		return $vibrationAll;
+	}
 }
 
  ?>
