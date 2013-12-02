@@ -22,3 +22,5 @@ Route::get('temperature/{truckid}/{packageid}', 'ServiceController@temperatureSh
 Route::get('/humidity','ServiceController@humidity');
 
 Route::get('/vibration', 'ServiceController@vibration');
+
+Route::get('/psd', 'ServiceController@psd');
