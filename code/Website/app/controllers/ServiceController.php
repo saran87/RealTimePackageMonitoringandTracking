@@ -40,6 +40,20 @@ class ServiceController extends BaseController{
 
 		return $vibrationAll;
 	}
+
+	public function vibrationgraphdata($id){
+
+		$vibgraphdata=Vibration::find($id);
+
+		return $vibgraphdata;
+
+	}
+
+	public function tryStuff($id){
+
+		return Vibration::all()[$id];
+
+	}
 }
 
  ?>
