@@ -163,6 +163,9 @@ public class SensorConfigurator extends javax.swing.JFrame {
         btnSaveAsCSV = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sensor Configurator");
+        setBackground(java.awt.SystemColor.textHighlight);
+        setIconImages(null);
 
         jTabbedPane1.setBackground(java.awt.Color.gray);
         jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -179,6 +182,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
             }
         });
 
+        jlblSensorStatus.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jlblSensorStatus.setForeground(new java.awt.Color(255, 0, 0));
         jlblSensorStatus.setText("Not Connected");
 
@@ -232,10 +236,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
             .add(temPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(temPanelLayout.createSequentialGroup()
-                        .add(vibTimeThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 137, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel32))
                     .add(jLabel31)
                     .add(temPanelLayout.createSequentialGroup()
                         .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -245,12 +245,17 @@ public class SensorConfigurator extends javax.swing.JFrame {
                                 .add(jLabel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(jLabel4))
                         .add(79, 79, 79)
-                        .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel5)
+                        .add(jLabel5))
+                    .add(temPanelLayout.createSequentialGroup()
+                        .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(temPanelLayout.createSequentialGroup()
-                                .add(vibTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jLabel6)))))
+                                .add(250, 250, 250)
+                                .add(vibTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(vibTimeThreshold))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel32)
+                            .add(jLabel6))))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         temPanelLayout.setVerticalGroup(
@@ -305,28 +310,27 @@ public class SensorConfigurator extends javax.swing.JFrame {
             .add(temPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(tempTimeThreshold)
                     .add(temPanel1Layout.createSequentialGroup()
+                        .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(tempThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel12))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(temPanel1Layout.createSequentialGroup()
-                                .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                    .add(tempThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel12))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(temPanel1Layout.createSequentialGroup()
-                                        .add(jLabel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .add(82, 82, 82)
-                                        .add(tempTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jLabel14))
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanel1Layout.createSequentialGroup()
-                                        .add(jLabel13)
-                                        .add(31, 31, 31))))
-                            .add(jLabel29))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .add(606, 606, 606)
-                .add(jLabel30))
+                                .add(jLabel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(82, 82, 82)
+                                .add(tempTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 82, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel14))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanel1Layout.createSequentialGroup()
+                                .add(jLabel13)
+                                .add(31, 31, 31))))
+                    .add(jLabel29)
+                    .add(temPanel1Layout.createSequentialGroup()
+                        .add(tempTimeThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 327, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel30)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         temPanel1Layout.setVerticalGroup(
             temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -345,13 +349,10 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .add(18, 18, 18)
                 .add(jLabel29)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(temPanel1Layout.createSequentialGroup()
-                        .add(jLabel30, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(15, 15, 15))
-                    .add(temPanel1Layout.createSequentialGroup()
-                        .add(tempTimeThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                .add(temPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(tempTimeThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel30, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         temPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Shock"));
@@ -418,7 +419,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblSensorId.setText("xxxxxxxx");
 
         jButton2.setText("Restore Deafult Configuration");
-        jButton2.setActionCommand("Restore Deafult Configuration");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -466,15 +466,15 @@ public class SensorConfigurator extends javax.swing.JFrame {
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jLabel10)))
                         .add(12, 12, 12))
-                    .add(humidtyPanelLayout.createSequentialGroup()
-                        .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(humidtyPanelLayout.createSequentialGroup()
-                                .add(humTimeThreshold)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jLabel34)
-                                .add(69, 69, 69))
-                            .add(jLabel33))
-                        .add(102, 102, 102))))
+                    .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(humidtyPanelLayout.createSequentialGroup()
+                            .add(humTimeThreshold)
+                            .add(10, 10, 10)
+                            .add(jLabel34)
+                            .add(171, 171, 171))
+                        .add(humidtyPanelLayout.createSequentialGroup()
+                            .add(jLabel33)
+                            .add(102, 102, 102)))))
         );
         humidtyPanelLayout.setVerticalGroup(
             humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -491,12 +491,12 @@ public class SensorConfigurator extends javax.swing.JFrame {
                             .add(jLabel11, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(humThreshold)
                             .add(humTime))))
-                .add(18, 18, 18)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
                 .add(jLabel33)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(humTimeThreshold))
+                    .add(humTimeThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(15, 15, 15))
         );
 
@@ -508,15 +508,14 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .add(32, 32, 32)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(validationLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 715, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                        .add(jPanel1Layout.createSequentialGroup()
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel1)
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(jScrollPane1))
-                        .add(jPanel1Layout.createSequentialGroup()
-                            .add(jLabel2)
-                            .add(18, 18, 18)
-                            .add(jtxtTuckId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 264, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                            .add(jLabel2))
+                        .add(18, 18, 18)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jtxtTuckId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 264, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 267, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
             .add(jPanel1Layout.createSequentialGroup()
                 .add(24, 24, 24)
@@ -524,7 +523,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(temPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 400, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 41, Short.MAX_VALUE)
@@ -547,8 +546,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
                         .add(jLabel28)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jlblSensorStatus)
-                        .add(4, 4, 4)
-                        .add(jbtnConnect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 118, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jbtnConnect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(0, 0, Short.MAX_VALUE))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 421, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -561,22 +560,21 @@ public class SensorConfigurator extends javax.swing.JFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(validationLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel2)
-                    .add(jtxtTuckId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel3)
-                    .add(jtxtPackageId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(28, 28, 28)
-                        .add(jLabel1))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(28, 28, 28)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jLabel17)
-                            .add(jlblSensorId)))
+                            .add(jLabel2)
+                            .add(jLabel3)
+                            .add(jtxtPackageId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jtxtTuckId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(28, 28, 28)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel1)
+                            .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                .add(jLabel17)
+                                .add(jlblSensorId))))
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(18, 18, 18)
+                        .add(33, 33, 33)
                         .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 37, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .add(28, 28, 28)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -1088,7 +1086,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
         if (isSensorConnected) {
             jlblSensorStatus.setText("Connected");
-            jlblSensorStatus.setForeground(Color.GREEN);
+            jlblSensorStatus.setForeground(Color.getHSBColor((float)145.58823529411762, (float)78.16091954022988, (float)68.23529411764706));
             jbtnConnect.setText("Reconnect");
         } else {
             jlblSensorStatus.setText("Not Connected");

@@ -21,7 +21,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -72,6 +71,9 @@ public class UIEventHandler extends ValidateUI implements Runnable,SensorEventHa
      * Initialize serial port with connected sensor port
      */
     public void initSerialPort() {
+      if(isSensorConnected){
+          disConnectSensor();
+      }
       CommPortIdentifier commPort = SerialPortFinder.findSensorPort();
       if(commPort !=null){
           connect(commPort);
@@ -90,9 +92,7 @@ public class UIEventHandler extends ValidateUI implements Runnable,SensorEventHa
      */
     public void connect(CommPortIdentifier commPortIdentifier)
     {
-        if(isSensorConnected){
-            disConnectSensor();
-        }
+        
         String selectedPort = "";
         isSensorConnected = false;
         CommPort commPort = null;
