@@ -11,12 +11,49 @@
 |
 */
 
+
+/*Routes to get configurations Data*/
+
 Route::get('/configs', 'ServiceController@configurations');
+
+
+
+/*Routes to get Temperature Data*/
 
 Route::get('/temperature','ServiceController@temperature');
 
-	/*return Response::json(array('packageId' => '1', 'truckId' => '1', 'timestamp' => 1372702120000, 'temperature' => array('sensorId' => '1','value' => '72.275'), 'location' => array('latitude'=>43.084136089005405, 'longitude' => -77.67932448361998)));*/
-
 Route::get('temperature/{truckid}/{packageid}', 'ServiceController@temperatureShow')->where('truckid', '\d+')->where('packageid','\d+');
 
+
+
+/*Routes to get Humidity Data*/
+
 Route::get('/humidity','ServiceController@humidity');
+
+
+
+/*Routes to get Vibration Data*/
+
+Route::get('/vibration', 'ServiceController@vibration');
+
+Route::get('/vibration/{truckid}/{packageid}', 'ServiceController@vibration')->where('truckid', '\d+')->where('packageid', '\d+');
+
+Route::get('/vibrationgraph/{id}', 'ServiceController@vibrationgraphdata');
+
+Route::get('/psd/{id}', 'PSDController@doStuff');
+
+
+
+/*Routes to get Shock Data*/
+
+Route::get('/shock', 'ShockController@shockData');
+
+Route::get('/shock/{truckid}/{packageid}', 'ShockController@shockData');
+
+
+
+/*Routes to get Map Data*/
+
+
+
+/*Routes to get Dashboards Data*/
