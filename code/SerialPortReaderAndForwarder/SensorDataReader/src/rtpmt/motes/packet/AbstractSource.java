@@ -43,9 +43,9 @@
 
 package rtpmt.motes.packet;
 
-import rtpmt.sensor.util.Packet;
 import java.io.IOException;
-import rtpmt.network.packet.SensorMessage.SensorInformation;
+import java.util.ArrayList;
+import rtpmt.packages.SensorEventHandler;
 
 
 /**
@@ -59,6 +59,7 @@ abstract public class AbstractSource implements PacketSource
     protected String name;
     protected boolean opened = false;
     protected Messenger messages;
+    protected ArrayList<SensorEventHandler>  eventListenerObjects = null;
 
     protected void message(String s) {
 	if (messages != null) {
@@ -76,7 +77,7 @@ abstract public class AbstractSource implements PacketSource
     }
 
     @Override
-    synchronized public void open(Messenger messages) throws IOException {
+    synchronized public void open(Messenger messages) throws IOException,InterruptedException {
 	if (opened) {
             throw new IOException("already open");
         }
@@ -92,38 +93,20 @@ abstract public class AbstractSource implements PacketSource
 	    closeSource();
 	}
     }
-
-    protected void failIfClosed() throws IOException {
-	if (!opened) {
-            throw new IOException("closed");
+ 
+    @Override
+    public boolean addSensorEventHandler(SensorEventHandler eventListenerObject){
+        boolean add = false;
+        if( eventListenerObject !=  null){
+            if(eventListenerObjects == null){
+               eventListenerObjects = new ArrayList<SensorEventHandler>();
+            }
+            add = eventListenerObjects.add(eventListenerObject);
         }
-    }
-    /*
-    @Override
-    public byte[] readRawPacket() throws IOException {
-	failIfClosed();
-
-	try {
-	    return check(readSourcePacket());
-	}
-	catch (IOException e) {
-	    close();
-	    throw e;
-	}
-    }*/
-    @Override
-    public SensorInformation readPacket() throws IOException {
-	failIfClosed();
-	
-        return readFormattedPacket();
-    }
-    protected byte[] check(byte[] packet) throws IOException {
-	return packet;
+        return add;
     }
     
     // Implementation interfaces
-    abstract protected void openSource() throws IOException;
+    abstract protected void openSource() throws IOException,InterruptedException;
     abstract protected void closeSource() throws IOException;
-    abstract protected Packet readSourcePacket() throws IOException;
-    abstract protected SensorInformation readFormattedPacket() throws IOException;
 }

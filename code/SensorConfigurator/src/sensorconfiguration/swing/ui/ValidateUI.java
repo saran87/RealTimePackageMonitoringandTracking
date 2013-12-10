@@ -16,9 +16,7 @@ public class ValidateUI {
     public ValidateUI() {
        
     }
-    
-    
-    
+        
     protected ArrayList<String> validateConfiguration(){
         
         ArrayList<String> errorList = null;

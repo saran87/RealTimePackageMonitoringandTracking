@@ -2,14 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package rtpmt.sensor.util;
-
+package rtpmt.sensor.util;;
 import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import rtpmt.motes.packet.Header;
+import java.util.TimeZone;
+import rtpmt.location.tracker.Location;
+import rtpmt.location.tracker.LocationTracker;
+import rtpmt.network.packet.NetworkMessage.PackageInformation;
+import rtpmt.packages.Package;
+import rtpmt.packages.PackageList;
 
 /**
  *
@@ -33,24 +37,76 @@ public final class Packet extends Header {
     public Packet(byte[] byteArray) {
 
         PayLoad = new ArrayList<Byte>();
-
-        this.ProtocolType = byteArray[0];
+     
+        this.ProtocolType = byteArray[0] & 0xff;
+        
+        int i = 5;
         this.NodeId = (byteArray[1]& 0xff) << 8 | (byteArray[2] & 0xff);
         this.PayloadLength = (byteArray[3] & 0xff << 8) | (byteArray[4] & 0xff);
-        this.Service = byteArray[5];
-        this.ServiceId = byteArray[6];
-
-        int i = 7;
-        for (;i < byteArray.length - 4; i++) {
+        
+        int payLoadLength = byteArray.length;
+        //to handle black box response packet
+        if(this.ProtocolType != Constants.P_BLACKBOX_RESPONSE){
+            
+            this.Service = byteArray[5];
+            this.ServiceId = byteArray[6];
+            i = 7;
+            payLoadLength =  byteArray.length-4;
+        }
+        
+        for (;i < payLoadLength ; i++) {
             this.addDataToPacket(byteArray[i]);
         }
-
-        ByteBuffer bb = ByteBuffer.wrap(byteArray, i, 4);
-        long timeStamp = (bb.getInt() * (long) 1000);
-        date = new Date(timeStamp);
-
+        
+        if(this.ProtocolType != Constants.P_BLACKBOX_RESPONSE){
+            ByteBuffer bb = ByteBuffer.wrap(byteArray, i, 4);
+            long timeStamp = (bb.getInt() * (long) 1000);
+            date = new Date(timeStamp);
+        }
     }
+    
+    /**
+     * Constructor
+     * @param byteArray
+     */
+    public Packet(byte[] byteArray,boolean isSDCardData) {
 
+        PayLoad = new ArrayList<Byte>();
+
+        this.ProtocolType = byteArray[0];
+        
+        int i = 0;
+        int payLoadLength = byteArray.length;
+        //to handle black box response packet
+        if(this.ProtocolType != Constants.P_BLACKBOX_RESPONSE){
+            this.NodeId = (byteArray[1]& 0xff) << 8 | (byteArray[2] & 0xff);
+            this.PayloadLength = (byteArray[3] & 0xff << 8) | (byteArray[4] & 0xff);
+            this.Service = byteArray[5];
+            this.ServiceId = byteArray[6];
+            //to give space for timestamp
+            payLoadLength = byteArray.length - 4;
+            i = 7;
+        }else{
+            if(isSDCardData){
+                ByteBuffer bb = ByteBuffer.wrap(byteArray, 1, 4);
+                this.PayloadLength = bb.getInt();
+                i = 5;
+            }else{
+                this.PayloadLength = (byteArray[1]& 0xff) << 8 | (byteArray[2] & 0xff);
+                i = 3;
+            }
+        }
+        
+        for (;i < payLoadLength; i++) {
+            this.addDataToPacket(byteArray[i]);
+        }
+       
+        if(this.ProtocolType != Constants.P_BLACKBOX_RESPONSE){
+            ByteBuffer bb = ByteBuffer.wrap(byteArray, i, 4);
+            long timeStamp = (bb.getInt() * (long) 1000);
+            date = new Date(timeStamp);
+        }
+    }
     /**
      * add Data to the packet
      *
@@ -89,9 +145,7 @@ public final class Packet extends Header {
      * @return byte of data
      */
     public Byte[] getData() {
-
-        return (Byte[]) PayLoad.toArray(new Byte[0]);
-
+        return PayLoad.toArray(new Byte[0]);
     }
 
     /**
@@ -146,14 +200,8 @@ public final class Packet extends Header {
 
         StringBuilder shock = new StringBuilder();
         double g;
-        int i;
-
-        for (i = 2; i < 72; i++) {
-            short value = PayLoad.get(i);
-            g = (value * 15.6) / 1000;
-            shock.append(String.valueOf(g)).append(" ");
-        }
-        for (; i < PayLoad.size(); i++) {
+        
+        for (int i=0; i < PayLoad.size(); i++) {
             //Unsigned integer value, note the 0xffff not 0xff
             short value = (short) (PayLoad.get(i) & 0xFF);
             g = (value - 128) / 0.64;
@@ -281,21 +329,35 @@ public final class Packet extends Header {
     }
 
     public void combinePacket(Packet partialpacket) {
-       
-        if(this.getPacketNumber() == 0){
-            //remove the first information byte
-            partialpacket.PayLoad.remove(0);
-            this.PayLoad.addAll( partialpacket.PayLoad);
-        }else{
-            //remove the first information byte
-             this.PayLoad.remove(0);
-             this.PayLoad.addAll(0,partialpacket.PayLoad);
-        }
+       //remove the first information byte
+        partialpacket.PayLoad.remove(0);
+        this.PayLoad.remove(0);
+        this.PayLoad.addAll( partialpacket.PayLoad);
     }
     
     
     public String uniqueId(){
         return  (this.getTimeStamp()) + this.NodeId + this.Service + this.ServiceId;
+    }
+    
+    /**
+     * This one works only for the get board ID request, Don't use it for other requests
+     * @return 
+     */
+    public long sensorId(){
+       
+       if(this.ProtocolType == Constants.P_BLACKBOX_RESPONSE){
+             return ((((long)this.PayLoad.get(0) & 0xff) << 56) |
+                (((long)this.PayLoad.get(1) & 0xff) << 48) |
+                (((long)this.PayLoad.get(2) & 0xff) << 40) |
+                (((long)this.PayLoad.get(3) & 0xff) << 32) |
+                (((long)this.PayLoad.get(4) & 0xff) << 24) |
+                (((long)this.PayLoad.get(5) & 0xff) << 16) |
+                (((long)this.PayLoad.get(6) & 0xff) <<  8) |
+                (((long)this.PayLoad.get(7) & 0xff)));
+        }else{
+           return 0;
+       }
     }
     /**
      *
@@ -320,6 +382,92 @@ public final class Packet extends Header {
             return false;
         }
         return this.NodeId == other.NodeId || this.date == other.date || (this.date != null && this.date.equals(other.date));
+    }
+    
+    /**
+     *
+     * @param isRealTime
+     * @return
+     */
+    public PackageInformation getNetworkMessage(boolean isRealTime) {
+            Package pack = PackageList.getPackage(this.NodeId);
+            if(pack==null)pack = PackageList.getPackage(0);
+            PackageInformation.Builder message = PackageInformation.newBuilder();
+            //compulsary information
+            message.setIsRealTime(isRealTime);
+            message.setMessageType(PackageInformation.MessageType.CONFIG);
+            message.setTimeStamp(this.date.getTime());
+            
+            if(pack!=null){
+                if(pack.getSensorId()!= 0 ) message.setSensorId(pack.getSensorId());
+                if(pack.getPackageId() != null ) message.setPackageId(pack.getPackageId());
+                if(pack.getTruckId() != null )  message.setTruckId(pack.getTruckId()) ;
+                if(pack.getComments() != null ) message.setComments(pack.getComments());
+            }
+           
+            
+            PackageInformation.Sensor.Builder sensor = PackageInformation.Sensor.newBuilder();
+
+            if (this.isTemperature()) {
+                sensor.setSensorId("1");
+                sensor.setSensorUnit("F");
+                sensor.setSensorType(PackageInformation.SensorType.TEMPERATURE);
+                sensor.setSensorValue(String.valueOf(this.getValue()));
+                //sensor.setSensorValue("80");
+                message.addSensors(sensor);
+            } else if (this.isHumidty()) {
+                sensor = PackageInformation.Sensor.newBuilder();
+                sensor.setSensorId("2");
+                sensor.setSensorUnit("%RH");
+                sensor.setSensorType(PackageInformation.SensorType.HUMIDITY);
+                System.out.println(this.getHumidity());
+                sensor.setSensorValue(String.valueOf((this.getHumidity())));
+                message.addSensors(sensor);
+            } else if (this.isVibration()) {
+                sensor = PackageInformation.Sensor.newBuilder();
+                sensor.setSensorId("3");
+                sensor.setSensorUnit("g");
+                if (this.isX()) {
+                    System.out.println("X=");
+                    sensor.setSensorType(PackageInformation.SensorType.VIBRATIONX);
+                } else if (this.isY()) {
+                    System.out.println("Y=");
+                    sensor.setSensorType(PackageInformation.SensorType.VIBRATIONY);
+                } else if (this.isZ()) {
+                    System.out.println("Z=");
+                    sensor.setSensorType(PackageInformation.SensorType.VIBRATIONZ);
+                }
+                System.out.print(this.getVibration());
+                sensor.setSensorValue(String.valueOf((this.getVibration())));
+                message.addSensors(sensor);
+            } else if (this.isShock()) {
+                sensor = PackageInformation.Sensor.newBuilder();
+                sensor.setSensorId("4");
+                sensor.setSensorUnit("g");
+                if (this.isX()) {
+                    sensor.setSensorType(PackageInformation.SensorType.SHOCKX);
+                } else if (this.isY()) {
+                    sensor.setSensorType(PackageInformation.SensorType.SHOCKY);
+                } else if (this.isZ()) {
+                    sensor.setSensorType(PackageInformation.SensorType.SHOCKZ);
+                }
+                System.out.println(this.getShock());
+                sensor.setSensorValue(String.valueOf((this.getShock())));
+                message.addSensors(sensor);
+            }
+
+            PackageInformation.LocationInformation.Builder location = PackageInformation.LocationInformation.newBuilder();
+            Location loc = LocationTracker.getLocation();
+            if (loc != null) {
+                location.setLatitude(loc.getLatitude());
+                location.setLongitude(loc.getLongitude());
+                message.setLocation(location);
+            } else {
+                location.setLatitude(43.084603);
+                location.setLongitude(-77.680312);
+                message.setLocation(location);
+            }
+            return message.build();
     }
 
 }

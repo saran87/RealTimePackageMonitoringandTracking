@@ -60,9 +60,9 @@
 package rtpmt.motes.packet;
 
 import java.io.IOException;
-import java.util.HashMap;
-import rtpmt.network.packet.SensorMessage.SensorInformation;
 import rtpmt.packages.Package;
+import rtpmt.packages.SensorEventHandler;
+import rtpmt.sensor.util.Packet;
 
 public interface PacketSource
 {
@@ -78,8 +78,9 @@ public interface PacketSource
      * @param messages A destination for informative messages from the
      *   packet source, or null to discard these.
      * @exception IOException If the source could not be opened
+     * @throws java.lang.InterruptedException
      */
-    public void open(Messenger messages) throws IOException;
+    public void open(Messenger messages) throws IOException,InterruptedException;
 
     /**
      * Close a packet source. Closing a source must force any 
@@ -97,20 +98,51 @@ public interface PacketSource
      * @exception IOException If the source detected a problem. The source
      *   is automatically closed.
      */
-    public SensorInformation readPacket() throws IOException;
-
-    /**
-     * Write a packet
-     * @return Some packet sources will return false if the packet
-     *   could not be written.
-     * @throws java.io.IOException
-     */
-    public HashMap<Integer,Long> getSensorList() throws IOException;
+    public Packet readPacket() throws IOException;
     
     /**
-     * Write a packet
+     * Write a packet and configure the sensors
      * @param pack
+     * @return 
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
+     */
+    public boolean configure(Package pack) throws IOException, NullPointerException,InterruptedException;
+    
+    /**
+     *  Bind event listener object to the sensor reader
+     * @param eventListenerObject
+     * @return 
+     */
+    public boolean addSensorEventHandler(SensorEventHandler eventListenerObject);
+    
+    /**
+     * Reset the connected sensors, Format the SD card and reset the settings
+     * @throws java.lang.InterruptedException
      * @throws java.io.IOException
      */
-    public void configure(Package pack) throws IOException;
+    public void reset() throws InterruptedException,IOException;
+    
+    /**
+     * Reset the connected sensors, Format the SD card and reset the settings
+     * @throws java.lang.InterruptedException
+     * @throws java.io.IOException
+     */
+    public void resetConfig() throws InterruptedException,IOException;
+    
+    /**
+     * Reset the connected sensors, Format the SD card and reset the settings
+     * @throws java.lang.InterruptedException
+     * @throws java.io.IOException
+     */
+    public void resetRadio() throws InterruptedException,IOException;
+    
+    /***
+     * 
+     * @throws java.lang.InterruptedException
+     * @throws java.io.IOException
+     */
+    public void clearData() throws InterruptedException,IOException;
+    
+    
 }

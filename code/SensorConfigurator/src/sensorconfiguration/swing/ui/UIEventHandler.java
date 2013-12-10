@@ -4,7 +4,7 @@
  */
 package sensorconfiguration.swing.ui;
 
-import filewriter.FileWriter;
+import rtpmt.file.FileWriter;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -19,99 +19,130 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Date;
 import java.util.logging.Level;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.logging.Logger;
-import rtpmt.motes.packet.Packetizer;
-import rtpmt.network.packet.SensorMessage.SensorInformation;
+import javax.swing.table.DefaultTableModel;
+import rtpmt.file.FileReader;
+import rtpmt.network.packet.NetworkMessage.PackageInformation;
 import rtpmt.packages.Package;
+import rtpmt.packages.PackageList;
+import rtpmt.packages.SensorEventHandler;
+import rtpmt.sensor.reader.SensorReader;
+import rtpmt.sensor.util.Constants;
+import rtpmt.sensor.util.Packet;
+import rtpmt.tcpclient.SensorClient;
 
 /**
  *
  * @author Kumar
  */
-public class UIEventHandler extends ValidateUI implements Runnable {
+public class UIEventHandler extends ValidateUI implements Runnable,SensorEventHandler {
 
-    private final MainUI UIObject;
+    private final SensorConfigurator UIObject;
     //packet reader to read the data from the motes
-    Packetizer packetReader;
-    //background thread for sending data to the server.
-    private final Thread bgCommunicator;
+    SensorReader packetReader;
     //input and output streams for sending and receiving data
     private InputStream input = null;
     private OutputStream output = null;
-    private final FileOutputStream datalog;
-    private final String DATA_LOG_FILE = "datalog.buff";
+    //map the port names to CommPortIdentifiers
+    private final HashMap portMap = new HashMap();
+    private FileOutputStream datalog;
+    public String DATA_LOG_FILE = "datalog.buff";
     /*
      * Connected sensor indicator
      */
-    boolean isSensorConnected;
+    private boolean isSensorConnected = false;
     SerialPort serialPort;
-
-    public UIEventHandler(MainUI object) throws FileNotFoundException {
+    rtpmt.sensor.reader.SerialPort port;
+    private CommPortIdentifier selectedPortIdentifier;
+    private final int TIMEOUT = 1000;
+    public final String FOLDER = "data/";
+    public final String CONFIG_FOLDER = "configdata/";
+    private SensorClient sensorClient;
+    
+    public UIEventHandler(SensorConfigurator object) throws FileNotFoundException {
 
         UIObject = object;
-        bgCommunicator = new Thread(this);
-        datalog = new FileOutputStream(DATA_LOG_FILE);
     }
 
     /**
      * Initialize serial port with connected sensor port
      */
     public void initSerialPort() {
-
-        searchForPorts();
-        if (isSensorConnected) {
+      CommPortIdentifier commPort = SerialPortFinder.findSensorPort();
+      if(commPort !=null){
+          connect(commPort);
+      }else{
+          isSensorConnected = false;
+      }
+       UIObject.setConnected(isSensorConnected);
+    }
+    
+    
+    /**
+     *connect to the selected port in the combo box
+     *pre: ports are already found by using the searchForPorts method
+     *post: the connected comm port is stored in commPort, otherwise,
+     *an exception is generated
+     */
+    public void connect(CommPortIdentifier commPortIdentifier)
+    {
+        if(isSensorConnected){
+            disConnectSensor();
+        }
+        String selectedPort = "";
+        isSensorConnected = false;
+        CommPort commPort = null;
+        try
+        {
+            //the method below returns an object of type CommPort
+            commPort = commPortIdentifier.open("RFID", TIMEOUT);
+            //the CommPort object can be casted to a SerialPort object
+            serialPort = (SerialPort)commPort;
+            //setting serial port parameters 
+            //this setting is based on telosb mote specification
+            //baud rate is important here i.e(9600)
+             //for controlling GUI elements
+            serialPort.setSerialPortParams(115200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
             initIOStream();
             initPacketReader();
-
-            if (!bgCommunicator.isAlive()) {
-                bgCommunicator.start();
-            }
+            isSensorConnected = true;
+            UIObject.setConnected(isSensorConnected);
+           
+            //logging
+            String logText = selectedPort + " opened successfully.";
+            UIObject.txtLog.setForeground(Color.black);
+            UIObject.txtLog.append(logText + "\n");
+               
+        }catch (PortInUseException e){
+            String logText = selectedPort + " is in use. (" + e.toString() + ")";
+            Logger.getLogger(logText).log(Level.OFF, logText, e);
+            UIObject.handleError(logText);
+            serialPort.close();
+        }catch (UnsupportedCommOperationException ex) {
+            String logText = "Unsupported ComPort" + selectedPort + "(" + ex.toString() + ")";
+            Logger.getLogger(logText).log(Level.OFF, logText, ex);
+            UIObject.handleError(logText);
+            serialPort.close();
+        }catch (Exception e){
+            String logText = "Failed to open " + selectedPort + "(" + e.toString() + ")";
+            Logger.getLogger(logText).log(Level.OFF, logText, e);
+            UIObject.handleError("Not able to communicate with sensor, try again");
+            serialPort.close();
         }
-
+       
     }
-
-    //search for all the serial ports
-    //pre: none
-    //post: adds all the found ports to a combo box on the GUI
-    protected void searchForPorts() {
-        Enumeration ports = CommPortIdentifier.getPortIdentifiers();
-
-        isSensorConnected = false;
-
-        ArrayList<CommPortIdentifier> serialPortList = new ArrayList<CommPortIdentifier>();
-        while (ports.hasMoreElements()) {
-            CommPortIdentifier curPort = (CommPortIdentifier) ports.nextElement();
-            if (curPort.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-                System.out.println(curPort.getName());
-                serialPortList.add(curPort);
-            }
-        }
-        try {
-
-            if (serialPortList.size() > 0) {
-                CommPort commPort = serialPortList.get(serialPortList.size() - 1).open(null, 0);
-                serialPort = (SerialPort) commPort;
-                    //setting serial port parameters 
-                //this setting is based on telosb mote specification
-                //baud rate is important here i.e(9600)
-                //for controlling GUI elements
-                serialPort.setSerialPortParams(230400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                isSensorConnected = true;
-            }
-
-        } catch (PortInUseException ex) {
-            // System.err.println(ex);
-        } catch (UnsupportedCommOperationException ex) {
-            // System.err.println(ex);
-        }
-        UIObject.setConnected(isSensorConnected);
-    }
-    //open the input and output streams
-    //pre: an open port
-    //post: initialized intput and output streams for use to communicate data
-
+    
+     /**
+     * open the input and output streams
+     * pre: an open port
+     * post:initialized input and output streams for use to communicate data
+     * @return 
+     */
+    
     private boolean initIOStream() {
         //return value for whather opening the streams is successful or not
         boolean successful = false;
@@ -136,16 +167,18 @@ public class UIEventHandler extends ValidateUI implements Runnable {
      * stream and output stream post: packetReader is initialized and ready to
      * read
      */
-    private boolean initPacketReader() {
+    private boolean initPacketReader() throws InterruptedException {
 
         //return value for whather opening the streams is successful or not
         boolean successful;
 
         try {
-            rtpmt.sensor.reader.SerialPort port;
+            
             port = new rtpmt.sensor.reader.SerialPort(input, output);
-            packetReader = new Packetizer("Packet Reader", port);
-            packetReader.open(null);
+            boolean isRealTime = false;
+            packetReader = new SensorReader(port, isRealTime);
+            packetReader.addSensorEventHandler(this);
+            packetReader.open();
             successful = true;
         } catch (IOException ex) {
             String logText = "I/O Streams failed to open. (" + ex.toString() + ")";
@@ -156,37 +189,79 @@ public class UIEventHandler extends ValidateUI implements Runnable {
 
         return successful;
     }
+    
+    /**
+     *  Disconnect the sensor
+     */
+    private void disConnectSensor() {
+        try {
+            if(packetReader!=null)
+                packetReader.close();
+            if(serialPort!=null)
+                serialPort.close();
+        } catch (IOException ex) {
+            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+             serialPort = null;
+             packetReader = null;
+        }
+    }
+    
+    void saveDataLocally() {
+       if(isSensorConnected){
+           try {
+               Package pack = PackageList.getPackage(0);
+               if( pack !=null){
+                    writeConfigData();
+                    DATA_LOG_FILE = FOLDER + pack.getUniqueId();
+                    File file =  new File(DATA_LOG_FILE);
+                    file.deleteOnExit();
+                    file.createNewFile();
+                    datalog = new FileOutputStream(file);
+                    packetReader.readPacket();
+                    datalog.close();
+                    UIObject.handleError("Sensor data read successfully");
+               }
+           } catch (IOException ex) {
+               Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+               UIObject.handleError("Problem with connecting to sensor.Try again");
+           }
+       }else{
+           UIObject.handleError("Connect the sensor and try again");
+       }
+    }
+    
+   
 
     //thread to get the mote packet from the queue and send it to the server
     @Override
     public void run() {
         try {
             for (;;) {
+                
+                Packet packet =  packetReader.readPacket();
+                if(packet != null){
+                    PackageInformation sensorInfo = packet.getNetworkMessage(false);
+                    String message = sensorInfo.getSensorId()+ "," + sensorInfo.getTimeStamp() + ",";
+                    UIObject.txtLog.append(message);
+                    for (PackageInformation.Sensor sensor : sensorInfo.getSensorsList()) {
 
-                SensorInformation sensorInfo = packetReader.readPacket();
-                String message = sensorInfo.getDeviceId() + "," + sensorInfo.getTimeStamp() + ",";
-                UIObject.txtLog.append(message);
-                for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
-
-                    message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
-                    UIObject.txtLog.append(message + "\n");
+                        message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
+                        UIObject.txtLog.append(message + "\n");
+                    }
+                    sensorInfo.writeDelimitedTo(datalog);
                 }
-                sensorInfo.writeDelimitedTo(datalog);
-                /*
-                 HashMap<Integer, Long> sensorList = packetReader.getSensorList();
-
-                 for (Map.Entry<Integer, Long> entry : sensorList.entrySet()) {
-                 Integer integer = entry.getKey();
-                 Long long1 = entry.getValue();
-
-                 UIObject.txtLog.append("Sensor " + long1  + " is using ShortId:" + integer + "\n");
-                 }
-                 */
             }
         } catch (IOException ex) {
             String logText = "Too many listeners. (" + ex.toString() + ")";
             UIObject.txtLog.setForeground(Color.red);
             UIObject.txtLog.append(logText + "\n");
+            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception ex){
+            UIObject.handleError(ex.toString());
+             Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
             try {
@@ -200,13 +275,60 @@ public class UIEventHandler extends ValidateUI implements Runnable {
     void configureSensor(Package packs) {
 
         try {
-            packetReader.configure(packs);
+            if(!isSensorConnected || !packetReader.configure(packs)){
+                UIObject.handleError("Cannot configure the sensor, try again");
+            }else{
+                UIObject.handleError("Sensor configured Successfuly");
+            }
         } catch (IOException ex) {
             String logText = "Too many listeners. (" + ex.toString() + ")";
             UIObject.txtLog.setForeground(Color.red);
             UIObject.txtLog.append(logText + "\n");
+            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+            UIObject.handleError("Cannot configure the sensor, try again");
+        }catch(NullPointerException ex){
+             String logText = "NUll Pointer Exception. (" + ex.toString() + ")";
+            UIObject.txtLog.setForeground(Color.red);
+            UIObject.txtLog.append(logText + "\n");
+            UIObject.handleError("Cannot configure the sensor, try again");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+            String logText = "NUll Pointer Exception. (" + ex.toString() + ")";
+            UIObject.handleError("Cannot configure the sensor, try again");
         }
 
+    }
+    
+    void clearSensorData() {
+        if(isSensorConnected){
+            try {
+                packetReader.clearData();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                UIObject.handleError("Not able to clear the data. Try again");
+            } catch (IOException ex) {
+                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                UIObject.handleError("Not able to clear the data. Try again");
+            }
+        }else{
+             UIObject.handleError("Failed to communicated with sensor. Try again");
+        }
+    }
+
+    void restoreDefaultConfig() {
+       if(isSensorConnected){
+            try {
+                packetReader.resetConfig();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                UIObject.handleError("Not able to clear the data. Try again");
+            } catch (IOException ex) {
+                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                UIObject.handleError("Not able to clear the data. Try again");
+            }
+        }else{
+             UIObject.handleError("Failed to communicated with sensor. Try again");
+        }
     }
 
     void generateCSV(File file) throws FileNotFoundException, Exception {
@@ -219,4 +341,83 @@ public class UIEventHandler extends ValidateUI implements Runnable {
             throw ex;
         }
     }
+
+    @Override
+    public void newSensorAdded(Package newPackage) {     
+        UIObject.setSesnorId(String.valueOf(newPackage.getSensorId()));
+        UIObject.updateSensorDetail(newPackage);
+        UIObject.txtLog.append("Sensor " + newPackage.getSensorId()  + " is using ShortId:" + newPackage.getShortId() + "\n");
+    }
+
+    @Override
+    public void handleNewPacket(Packet packet) {
+            if(packet != null){
+                    PackageInformation sensorInfo = packet.getNetworkMessage(false);
+                    String message = sensorInfo.getSensorId()+ "," + sensorInfo.getTimeStamp() + ",";
+                    UIObject.txtLog.append(message);
+                    for (PackageInformation.Sensor sensor : sensorInfo.getSensorsList()) {
+
+                        message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
+                        UIObject.txtLog.append(message + "\n");
+                    }
+                try {
+                    sensorInfo.writeDelimitedTo(datalog);
+                    //sensorClient.send(sensorInfo);
+                } catch (IOException ex) {
+                    Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+          }
+    }
+    
+    
+    private void writeConfigData(){
+        try {
+            
+                Package pack = PackageList.getPackage(0);
+                if( pack !=null){
+                     String CONFIG_LOG_FILE = CONFIG_FOLDER + pack.getUniqueId();
+                     File file =  new File(CONFIG_LOG_FILE);
+                     file.deleteOnExit();
+                     file.createNewFile();
+                     FileOutputStream configdatalog = new FileOutputStream(file);
+                     pack.getConfigMessage(false).writeDelimitedTo(configdatalog);
+                     configdatalog.close();
+                 }
+                
+              }catch (IOException ex) {
+                    Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+              }
+    }
+    void populateLocalData() {
+        try {
+           ArrayList<File> fileList = FileReader.listFilesForFolder(new File(FOLDER));
+           
+           DefaultTableModel model = (DefaultTableModel) UIObject.jtblLocalData.getModel();
+           
+            for (File file : fileList) {
+                String[] fieldArray = file.getName().split(Constants.SEPERATOR);
+                String column1 = fieldArray[0];
+                String column2 = fieldArray[1];
+                String column3 = fieldArray[2];
+                Date date = new Date(file.lastModified());
+
+                String column4 = date.toString();
+                model.addRow(new Object[]{column1, column2, column3,column4});
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void initServerConnection() {
+        try {
+            //sensorClient = new SensorClient("localhost", 8080);
+            //sensorClient.connect();
+        } catch (Exception ex) {
+            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
 }

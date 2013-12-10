@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package filewriter;
+package rtpmt.file;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,8 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
-import rtpmt.network.packet.SensorMessage;
-import rtpmt.network.packet.SensorMessage.SensorInformation;
+import rtpmt.network.packet.NetworkMessage.PackageInformation;
+
 
 /**
  *
@@ -58,13 +58,13 @@ public class FileWriter {
                     writer.close();
                     break;
                 }
-                SensorInformation sensorInfo =  SensorMessage.SensorInformation.parseDelimitedFrom(inputStream);
+                PackageInformation sensorInfo =  PackageInformation.parseDelimitedFrom(inputStream);
                 
                 if(sensorInfo != null){
-                    String line =  sensorInfo.getDeviceId() + "," + sensorInfo.getTimeStamp() + ",";
-                    for (SensorInformation.Sensor sensor : sensorInfo.getSensorsList()) {
+                    String line =  sensorInfo.getSensorId() + "," + sensorInfo.getTimeStamp() + ",";
+                    for (PackageInformation.Sensor sensor : sensorInfo.getSensorsList()) {
 
-                        line = line + sensor.getSensorType().name() + "," + sensor.getSensorValue();
+                        line = line + sensor.getSensorType().name() + "," + sensor.getSensorValue().replace(' ', ',');
                     }
                     writer.write(line);
                     writer.newLine();

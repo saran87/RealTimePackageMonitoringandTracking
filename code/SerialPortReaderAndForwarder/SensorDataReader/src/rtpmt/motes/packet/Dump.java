@@ -59,10 +59,10 @@ import java.io.*;
  *
  * Print packets in hex
  *
- * @version	1, 15 Jul 2002
- * @author	David Gay
+ * @version	2, 15 Dec 2013
+ * @author	David Gay, Saravana Kumar
  */
-public class Dump {
+class Dump {
     public static void printByte(PrintStream p, int b) {
 	String bs = Integer.toHexString(b & 0xff).toUpperCase();
 	if (b >=0 && b < 16) {

@@ -1,0 +1,77 @@
+/**
+ * Sensor Information 
+ *
+ *  Contains the information from a sensor and configuration of a particular package
+ *  Build Command
+ *  protoc  --proto_path=src/rtpmt/network/packet/ --java_out=src/rtpmt/network/packet/ src/rtpmt/network/packet/SensorInformation.proto
+ *
+ * @author      Saravana Kumar
+ * @version     1.0
+ * @since       1.0
+ */
+
+package rtpmt.network.packet;
+
+option java_package = "rtpmt.network.packet";
+option java_outer_classname = "NetworkMessage";
+
+message PackageInformation {
+
+	message LocationInformation {
+		required double latitude = 1;
+		required double longitude = 2;
+	}
+	
+	enum SensorType {
+		TEMPERATURE = 0;
+                HUMIDITY = 1;
+		VIBRATIONX = 2;
+                VIBRATIONY = 3;
+                VIBRATIONZ = 4;
+                SHOCKX = 5;
+                SHOCKY = 6;
+		SHOCKZ = 7;
+	}
+        enum MessageType {
+            CONFIG = 0;
+            SENSOR_INFO = 1;
+	}
+  
+	message Sensor {
+		optional string sensorId = 1;		
+		required SensorType sensorType = 2 [default = TEMPERATURE];
+		required string sensorValue = 3;
+		required string sensorUnit = 4 ;
+	}
+
+        message Config{
+                required SensorType sensorType = 1 [default = TEMPERATURE];
+		required double maxThreshold = 2;
+                optional double minThreshold = 3;
+		optional int32 timePeriod = 4 ;
+                required int32 timePeriodAfterThreshold = 5;
+        }
+
+        required uint64 sensorId = 1;
+        required string packageId = 2;
+        optional string truckId   = 3;
+        optional LocationInformation location = 4;
+	repeated Sensor sensors = 5;
+        repeated Config configs = 6;
+        required uint64 timeStamp = 7;
+        required MessageType messageType = 8;
+        required bool isRealTime = 9;
+        optional string comments   = 10;
+}
+
+
+/*Packages have list package information.
+* This is used to store the information in a file and retrieve effectively
+*
+*/
+message Packages{
+    repeated  PackageInformation packageInfo = 1;
+}
+
+
+

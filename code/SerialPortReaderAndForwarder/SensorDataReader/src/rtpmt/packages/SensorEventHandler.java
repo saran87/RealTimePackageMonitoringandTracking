@@ -6,21 +6,14 @@
 
 package rtpmt.packages;
 
+import rtpmt.sensor.util.Packet;
+
 /**
  *
  * @author Kumar
  */
-public class PackageList {
-
-    /**
-     *
-     */
-    /*
-    private static INSTANCE(new HashMap<Integer,Package>());
-    PackageList(final HashMap<Integer,Package>() _packageList ){
-        INSTANCE = _packageList;
-    }
- 
-    */
+public interface SensorEventHandler {
     
+   void newSensorAdded(Package newPackage);
+   void handleNewPacket(Packet packet);
 }

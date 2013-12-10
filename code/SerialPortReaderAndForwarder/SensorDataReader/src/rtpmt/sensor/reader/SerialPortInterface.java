@@ -36,6 +36,7 @@ public interface SerialPortInterface {
      * @throws java.io.IOException 
      */
     public boolean write(byte data) throws IOException;
+    
     /**
      * 
      * @param data
@@ -44,6 +45,17 @@ public interface SerialPortInterface {
      */
     public boolean write(byte[] data) throws IOException;
     
+    /**
+     * 
+     * @throws IOException 
+     */
     public void flush() throws IOException;
+    
+    /**
+     * 
+     * @return
+     * @throws IOException 
+     */
+    public boolean isAvailable() throws IOException;
     
 }

@@ -41,9 +41,9 @@
  */
 package rtpmt.motes.packet;
 
-public class Crc {
+class Crc {
     public static int calcByte(int crc, int b) {
-      crc = crc ^ (int)b << 8;
+      crc = crc ^ b << 8;
 
       for (int i = 0; i < 8; i++) {
 	if ((crc & 0x8000) == 0x8000) {

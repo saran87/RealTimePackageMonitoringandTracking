@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package rtpmt.sensor.reader;
 
 import java.io.IOException;
@@ -11,78 +10,55 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Kumar
  */
-public class SerialPort implements SerialPortInterface{
-    
+public class SerialPort implements SerialPortInterface {
+
     private final InputStream input;
     private final OutputStream output;
-    
-    public  SerialPort(InputStream _input, OutputStream _output){
-        
+
+    public SerialPort(InputStream _input, OutputStream _output) {
+
         this.input = _input;
         this.output = _output;
     }
 
     @Override
     public void open() {
-      
+
     }
 
     @Override
-    public void close() {
-        try {
-            input.close();
-            output.close();
-        } catch (IOException ex) {
-            Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE,"Not able to close input/output stream", ex);
-        }
+    public void close() throws IOException {
+        input.close();
+        output.close();
     }
 
     @Override
     public byte read() throws IOException {
         byte data = 0;
-        
-        try{
-           
-            data = (byte) (input.read() &  0xff);
-           
-        } catch (IOException ex) {
-            Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE, "Error while reading the data ", ex);
-            throw ex;
-        }
-        
+
+        data = (byte) (input.read() & 0xff);
+
         return data;
     }
 
     @Override
-    public boolean write(byte data) {
-        
-        try{
-            output.write(data);
-            return true;
-           
-        } catch (IOException ex) {
-            Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE, "Error while writing the data to serial port", ex);
-            return false;
-        }
+    public boolean write(byte data) throws IOException {
+
+        output.write(data);
+        return true;
+
     }
 
     @Override
-    public boolean write(byte[] data) {
-      
-         try{
-            output.write(data);
-            return true;
-           
-        } catch (IOException ex) {
-            Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-         
-       
+    public boolean write(byte[] data) throws IOException {
+
+        output.write(data);
+        return true;
     }
 
     @Override
@@ -93,6 +69,12 @@ public class SerialPort implements SerialPortInterface{
             Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
+    @Override
+    public boolean isAvailable() throws IOException {
+
+        return input.available() > 0;
+
+    }
+
 }

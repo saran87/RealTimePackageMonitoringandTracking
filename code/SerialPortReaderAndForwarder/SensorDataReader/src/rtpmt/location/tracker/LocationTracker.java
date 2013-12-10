@@ -5,6 +5,7 @@
 package rtpmt.location.tracker;
 import gnu.io.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 
@@ -15,7 +16,8 @@ import java.util.LinkedList;
 public class LocationTracker implements SerialPortEventListener, Runnable{
     
     //location stack to store the location collected over time
-    static LinkedList<Location>  locStack = new LinkedList();
+    @SuppressWarnings("unchecked")
+    static LinkedList<Location>  locStack = new LinkedList<Location>();
     //the timeout value for connecting with the port
     final static int TIMEOUT = 2000;
     //port name
@@ -160,9 +162,11 @@ public class LocationTracker implements SerialPortEventListener, Runnable{
                     } 
                 }
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
               System.out.println("My Error" + ex.getMessage());
+            } catch (NumberFormatException ex) {
+                System.out.println("My Error" + ex.getMessage());
             }
         }
     }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package rtpmt.motes.packet;
+package rtpmt.sensor.util;
 
 /**
  *
@@ -11,18 +11,18 @@ package rtpmt.motes.packet;
 public class Header {
     
     //Handle Id to identify the message type
-    protected int ProtocolType;
+    public int ProtocolType;
     
     //This 2 byte indicates the Node Id
-    protected int NodeId;
+    public int NodeId;
     
     //Payload Length
-    protected int PayloadLength;
+    public int PayloadLength;
      
     //service
-    protected int Service;
+    public int Service;
       
     //service Id
-    protected int ServiceId;
+    public int ServiceId;
     
 }
