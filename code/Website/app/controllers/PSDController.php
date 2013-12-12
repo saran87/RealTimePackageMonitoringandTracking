@@ -17,7 +17,7 @@ class PSDController extends BaseController {
 
 
 	
-	function doStuff($id){
+	function getPSDArray($id){
 
 			$dataArray = Vibration::find($id);
 

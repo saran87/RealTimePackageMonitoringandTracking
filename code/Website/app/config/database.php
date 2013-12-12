@@ -85,7 +85,7 @@ return array(
 
 		'mongodb' => array(
 	    'driver'   => 'mongodb',
-	    'host'     => '127.0.0.1', //'54.204.32.227',
+	    'host'     => '54.243.241.254',			//'127.0.0.1', //'54.204.32.227',
 	    'port'     => 27017,
 	    'username' => '',
 	    'password' => '',
