@@ -57,6 +57,8 @@ Route::get('/vibrationgraph/{id}', 'VibrationController@vibrationgraphdata');
 
 Route::get('/psd/{id}', 'PSDController@getPSDArray');
 
+Route::get('/psdeach/{id}', 'PSDEachController@getPSDEach');
+
 
 
 /*Routes to get Shock Data*/

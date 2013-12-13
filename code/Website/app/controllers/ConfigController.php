@@ -41,6 +41,10 @@ class ConfigController extends BaseController{
 		return $allTrucksArr;
 	}
 
+	/*
+		[{"_id":"52a9f81e68f40f52d8d60664","packageid":"5"},{"_id":"52a9f84068f40f52d8d60665","packageid":"1"},{"_id":"52a9fbea68f40f52d8d60666","packageid":"9"}]
+	*/
+
 	public function listPackagesInTruckWithTruckId($truckid){
 
 		$packagesInTruckArr = Configurations::where('truckid', $truckid)->select('packageid')->get();

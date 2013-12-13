@@ -1,6 +1,6 @@
 <?php 
 
-class PSDController extends BaseController {
+class PSDEachController extends BaseController {
 
 	private $dataArray;
 
@@ -17,7 +17,7 @@ class PSDController extends BaseController {
 
 
 	
-	function getPSDArray($id){
+	/*function getPSDArray($id){
 
 			$dataArray = Vibration::find($id);
 
@@ -29,16 +29,33 @@ class PSDController extends BaseController {
 
 			$this->ProcessDataArray();			
 
-			$arr['rms']=$this->GetPSD();
-
-			$arr['x']=$this->GetPSDEach($this->mainArray['x']);
-			$arr['y']=$this->GetPSDEach($this->mainArray['y']);
-			$arr['z']=$this->GetPSDEach($this->mainArray['z']);
+			$arr=$this->GetPSD();
 
 			return $arr;
+	}*/
+
+	public function getPSDEach($id){
+
+		$dataArr = Vibration::find($id);
+
+		$mainArr['x']['value']=$dataArr['value']['x'];
+		$mainArr['y']['value']=$dataArr['value']['y'];
+		$mainArr['z']['value']=$dataArr['value']['z'];
+
+		$this->intitalize($mainArr);		
+
+		$psdArr['x']=$this->GetPSD($this->mainArray['x']);
+		$psdArr['y']=$this->GetPSD($this->mainArray['y']);
+		$psdArr['z']=$this->GetPSD($this->mainArray['z']);
+
+		print_r($psdArr);
+
+
+
 	}
 
-	private function intitalize($dataArray){
+
+	public function intitalize($dataArray){
 
 			//include all of the files with .inc extension in section folder
 			/*foreach(glob("fft/*.php") as $filename){
@@ -56,7 +73,9 @@ class PSDController extends BaseController {
 
 				$this->mainArray[$key] = explode(" ",$value["value"]);
 			}
-		}
+
+			
+	}
 		
 
 		public function GetRMSValue(){
@@ -65,23 +84,7 @@ class PSDController extends BaseController {
 		}
 
 
-		public function GetPSD(){
-
-			$count = count($this->rmsArray);
-			
-			$fft = new FFT($count);
-			$filter = new Filter();
-
-			//Filter the signal
-			$this->rmsArray = $filter->hannWindow($this->rmsArray);
-			
-			// Calculate the FFT 
-			$f = $fft->getAbsFFT($fft->fft($this->rmsArray));
-			
-			return $f;
-		}
-
-		public function GetPSDEach($inArr){
+		public function GetPSD($inArr){
 
 			$count = count($inArr);
 			
