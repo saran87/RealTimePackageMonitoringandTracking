@@ -132,6 +132,13 @@ class ShockController extends BaseController{
 		return $data;
 	}
 
+	public function latestEntry(){
+
+		$last = Shock::all()->last();
+		
+		return $last;
+	}
+
 }
 
  ?>

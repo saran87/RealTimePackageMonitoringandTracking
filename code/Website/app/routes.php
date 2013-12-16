@@ -32,17 +32,25 @@ Route::get('/package/{packageid}', 'ConfigController@packagesWithPackageId');
 
 /*Routes to get Temperature Data*/
 
-Route::get('/temperature','ServiceController@temperature');
+Route::get('/temperature','TemperatureController@temperatureOf');
 
-Route::get('temperature/{truckid}/{packageid}', 'ServiceController@temperatureShow')->where('truckid', '\d+')->where('packageid','\d+');
+Route::get('/temperature/{truckid}/{packageid}', 'TemperatureController@temperatureOfPackageInTruck');
 
-Route::get('/temperature/latestEntry', 'ConfigController@latestEntry');
+Route::get('/temperature/{packageid}', 'TemperatureController@temperatureOfPackage');
+
+Route::get('/temperatureLatestEntry', 'TemperatureController@latestEntry');
+
+Route::get('temperatureEntry/{truckid}/{packageid}/{timestamp}', 'TemperatureController@TemperatureAfterTimestamp');
 
 /*Routes to get Humidity Data*/
 
-Route::get('/humidity','ServiceController@humidity');
+Route::get('/humidity','HumidityController@humidityOf');
 
-Route::get('/humidity/latestEntry', 'ConfigController@latestEntry');
+Route::get('/humidity/{truckid}/{packageid}', 'HumidityController@humidityOfPackageInTruck');
+
+Route::get('/humidity/{packageid}', 'HumidityController@humidityOfPackage');
+
+Route::get('/humidityLatestEntry', 'HumidityController@latestEntry');
 
 /*Routes to get Vibration Data*/
 
@@ -51,14 +59,11 @@ Route::get('/vibration', 'VibrationController@vibration');
 Route::get('/vibration/{truckid}/{packageid}', 'VibrationController@vibration')
 	->where('truckid', '\d+')->where('packageid', '\d+');
 
-Route::get('/vibration/latestEntry', 'ConfigController@latestEntry');
-
 Route::get('/vibrationgraph/{id}', 'VibrationController@vibrationgraphdata');
 
 Route::get('/psd/{id}', 'PSDController@getPSDArray');
 
-Route::get('/psdeach/{id}', 'PSDEachController@getPSDEach');
-
+Route::get('/vibrationLatestEntry', 'VibrationController@latestEntry');
 
 
 /*Routes to get Shock Data*/
@@ -69,7 +74,7 @@ Route::get('/shock/{truckid}/{packageid}', 'ShockController@shockData');
 
 Route::get('/shockgraph/{id}', 'ShockController@shockGraphData');
 
-Route::get('/shock/latestEntry', 'ConfigController@latestEntry');
+Route::get('/shockLatestEntry', 'ShockController@latestEntry');
 
 
 /*Routes to get Map Data*/

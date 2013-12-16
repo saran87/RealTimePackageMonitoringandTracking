@@ -15,12 +15,13 @@ class VibrationController extends BaseController{
 
 		return $vibgraphdata;
 
-	}
+	}	
 
-	public function tryStuff($id){
+	public function latestEntry(){
 
-		return Vibration::all()[$id];
-
+		$last = Humidity::all()->last();
+		
+		return $last;
 	}
 
 }
