@@ -58,8 +58,7 @@ class ConfigController extends BaseController{
 		
 		return $last;
 
-	}	
-
+	}
 }
 
  ?>

@@ -52,18 +52,23 @@ Route::get('/humidity/{packageid}', 'HumidityController@humidityOfPackage');
 
 Route::get('/humidityLatestEntry', 'HumidityController@latestEntry');
 
+Route::get('/humidityEntry/{truckid}/{packageid}/{timestamp}', 'HumidityController@HumidityAfterTimestamp');
+
 /*Routes to get Vibration Data*/
 
 Route::get('/vibration', 'VibrationController@vibration');
 
-Route::get('/vibration/{truckid}/{packageid}', 'VibrationController@vibration')
-	->where('truckid', '\d+')->where('packageid', '\d+');
+Route::get('/vibration/{truckid}/{packageid}', 'VibrationController@vibrationOfPackageInTruck');
 
 Route::get('/vibrationgraph/{id}', 'VibrationController@vibrationgraphdata');
 
 Route::get('/psd/{id}', 'PSDController@getPSDArray');
 
 Route::get('/vibrationLatestEntry', 'VibrationController@latestEntry');
+
+Route::get('/vibrationEntry/{truckid}/{packageid}/{timestamp}', 'VibrationController@VibrationAfterTimestamp');
+
+
 
 
 /*Routes to get Shock Data*/

@@ -35,6 +35,15 @@ class HumidityController extends BaseController{
 
 	}
 
+	public function HumidityAfterTimestamp($truckid, $packageid, $timestamp){
+
+		$ts = (float)$timestamp ;
+
+		$humidityAfterTimestampArr = Humidity::where('truckid',$truckid)->where('packageid', $packageid)->where('timestamp','>',$ts)->get();
+
+		return $humidityAfterTimestampArr;
+	}
+
 }//end class
 
  ?>
