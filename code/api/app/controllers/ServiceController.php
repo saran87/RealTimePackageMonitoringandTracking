@@ -18,9 +18,9 @@ class ServiceController extends BaseController{
 
 	}
 
-	public function temperatureShow($truckid,$packageid){		
+	public function temperatureShow($truck_id,$package_id){		
 
-		$temp = Temperature::where('packageid', $packageid)->where('truckid',$truckid)->get();
+		$temp = Temperature::where('package_id', $package_id)->where('truck_id',$truck_id)->get();
 
 		return $temp;
 

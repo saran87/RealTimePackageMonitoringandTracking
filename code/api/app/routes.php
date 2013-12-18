@@ -18,47 +18,47 @@ Route::get('/configs', 'ConfigController@configurations');
 
 Route::get('/alltrucks', 'ConfigController@listAllTrucks');
 
-//returns all packages having in specified truckid
-Route::get('/packages/{truckid}', 'ConfigController@listPackagesInTruckWithTruckId'); 
+//returns all packages having in specified truck_id
+Route::get('/packages/{truck_id}', 'ConfigController@listPackagesInTruckWithtruck_id'); 
 
 Route::get('/latestEntry', 'ConfigController@latestEntry');
 
 
-Route::get('truck/{truckid}/package/{packageid}', 'ConfigController@configsPackageInTruck');
+Route::get('truck/{truck_id}/package/{package_id}', 'ConfigController@configsPackageInTruck');
 
-//returns all documents having packageid
-Route::get('/package/{packageid}', 'ConfigController@packagesWithPackageId'); 
+//returns all documents having package_id
+Route::get('/package/{package_id}', 'ConfigController@packagesWithpackage_id'); 
 
 
 /*Routes to get Temperature Data*/
 
 Route::get('/temperature','TemperatureController@temperatureOf');
 
-Route::get('/temperature/{truckid}/{packageid}', 'TemperatureController@temperatureOfPackageInTruck');
+Route::get('/temperature/{truck_id}/{package_id}', 'TemperatureController@temperatureOfPackageInTruck');
 
-Route::get('/temperature/{packageid}', 'TemperatureController@temperatureOfPackage');
+Route::get('/temperature/{package_id}', 'TemperatureController@temperatureOfPackage');
 
 Route::get('/temperatureLatestEntry', 'TemperatureController@latestEntry');
 
-Route::get('temperatureEntry/{truckid}/{packageid}/{timestamp}', 'TemperatureController@TemperatureAfterTimestamp');
+Route::get('temperatureEntry/{truck_id}/{package_id}/{timestamp}', 'TemperatureController@TemperatureAfterTimestamp');
 
 /*Routes to get Humidity Data*/
 
 Route::get('/humidity','HumidityController@humidityOf');
 
-Route::get('/humidity/{truckid}/{packageid}', 'HumidityController@humidityOfPackageInTruck');
+Route::get('/humidity/{truck_id}/{package_id}', 'HumidityController@humidityOfPackageInTruck');
 
-Route::get('/humidity/{packageid}', 'HumidityController@humidityOfPackage');
+Route::get('/humidity/{package_id}', 'HumidityController@humidityOfPackage');
 
 Route::get('/humidityLatestEntry', 'HumidityController@latestEntry');
 
-Route::get('/humidityEntry/{truckid}/{packageid}/{timestamp}', 'HumidityController@HumidityAfterTimestamp');
+Route::get('/humidityEntry/{truck_id}/{package_id}/{timestamp}', 'HumidityController@HumidityAfterTimestamp');
 
 /*Routes to get Vibration Data*/
 
 Route::get('/vibration', 'VibrationController@vibration');
 
-Route::get('/vibration/{truckid}/{packageid}', 'VibrationController@vibrationOfPackageInTruck');
+Route::get('/vibration/{truck_id}/{package_id}', 'VibrationController@vibrationOfPackageInTruck');
 
 Route::get('/vibrationgraph/{id}', 'VibrationController@vibrationgraphdata');
 
@@ -66,7 +66,7 @@ Route::get('/psd/{id}', 'PSDController@getPSDArray');
 
 Route::get('/vibrationLatestEntry', 'VibrationController@latestEntry');
 
-Route::get('/vibrationEntry/{truckid}/{packageid}/{timestamp}', 'VibrationController@VibrationAfterTimestamp');
+Route::get('/vibrationEntry/{truck_id}/{package_id}/{timestamp}', 'VibrationController@VibrationAfterTimestamp');
 
 
 
@@ -75,7 +75,7 @@ Route::get('/vibrationEntry/{truckid}/{packageid}/{timestamp}', 'VibrationContro
 
 Route::get('/shock', 'ShockController@shockData');
 
-Route::get('/shock/{truckid}/{packageid}', 'ShockController@shockData');
+Route::get('/shock/{truck_id}/{package_id}', 'ShockController@shockData');
 
 Route::get('/shockgraph/{id}', 'ShockController@shockGraphData');
 

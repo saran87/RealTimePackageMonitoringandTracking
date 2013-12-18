@@ -9,9 +9,9 @@ class VibrationController extends BaseController{
 		return $vibrationAll;
 	}
 
-	public function vibrationOfPackageInTruck($truckid,$packageid){		
+	public function vibrationOfPackageInTruck($truck_id,$package_id){		
 
-		$vibrationOfPackageInTruckArr = Vibration::where('packageid', $packageid)->where('truckid',$truckid)->get();
+		$vibrationOfPackageInTruckArr = Vibration::where('package_id', $package_id)->where('truck_id',$truck_id)->get();
 
 		return $vibrationOfPackageInTruckArr;		
 	}
@@ -31,13 +31,13 @@ class VibrationController extends BaseController{
 		return $last;
 	}
 
-	public function VibrationAfterTimestamp($truckid, $packageid, $timestamp){
+	public function VibrationAfterTimestamp($truck_id, $package_id, $timestamp){
 
 
 
 		$ts = (float)$timestamp ;
 
-		$vibrationAfterTimestampArr = Vibration::where('truckid',$truckid)->where('packageid', $packageid)->where('timestamp','>',$ts)->get();
+		$vibrationAfterTimestampArr = Vibration::where('truck_id',$truck_id)->where('package_id', $package_id)->where('timestamp','>',$ts)->get();
 
 		return $vibrationAfterTimestampArr;
 
