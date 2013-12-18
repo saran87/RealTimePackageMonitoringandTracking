@@ -54,6 +54,8 @@ class ClientHandler extends SimpleChannelInboundHandler<PackageInformation> {
     }
 
     boolean send(PackageInformation msg) {
+        
+        System.out.println(channel.isOpen() + "-" + channel.isWritable() + channel.remoteAddress());
         ChannelFuture write = channel.writeAndFlush(msg);
         return write.isSuccess();
     }

@@ -20,18 +20,18 @@ import rtpmt.sensor.util.Constants;
 public class Package {
     
     private int shortId;
-    private long sensorId;
+    private String sensorId;
     private String packageId;
     private String truckId;
     private String comments;
     
     private final HashMap<Sensor, Config> sensorConfigs;
     
-    public long getSensorId() {
+    public String getSensorId() {
         return sensorId;
     }
 
-    public void setSensorId(long sensorId) {
+    public void setSensorId(String sensorId) {
         this.sensorId = sensorId;
     }
 
@@ -91,7 +91,7 @@ public class Package {
      * @param _shortId
      * @param macId 
      */
-    public Package(int _shortId,long macId){
+    public Package(int _shortId,String macId){
         sensorConfigs = new HashMap<Sensor, Config>();
         this.shortId = _shortId;
         this.sensorId = macId;
@@ -102,7 +102,7 @@ public class Package {
      * @param packageId
      * @param truckId 
      */
-    public Package(long macId,String packageId,String truckId){
+    public Package(String macId,String packageId,String truckId){
         sensorConfigs = new HashMap<Sensor, Config>();
         this.sensorId = macId;
         this.packageId = packageId;
@@ -520,15 +520,30 @@ public class Package {
             NetworkMessage.PackageInformation.Builder message = NetworkMessage.PackageInformation.newBuilder();
             //compulsary information
             message.setIsRealTime(isRealTime);
-            message.setMessageType(NetworkMessage.PackageInformation.MessageType.SENSOR_INFO);
+            message.setMessageType(NetworkMessage.PackageInformation.MessageType.CONFIG);
             message.setTimeStamp(new Date().getTime());
            
-            if(this.getSensorId()!= 0 ) message.setSensorId(this.getSensorId());
-            if(this.getPackageId() != null ) message.setPackageId(this.getPackageId());
-            if(this.getTruckId() != null )  message.setTruckId(this.getTruckId()) ;
-            if(this.getComments() != null ) message.setComments(this.getComments());
+            if(this.getSensorId()!= null &&  !this.getSensorId().isEmpty()){
+                message.setSensorId(this.getSensorId());
+            }else{
+                message.setSensorId(Constants.NO_ID);
+            }
+            if(this.getPackageId() != null ){
+                message.setPackageId(this.getPackageId());
+            }else{
+                message.setPackageId(Constants.NO_ID);
+            }
+            if(this.getTruckId() != null ){  
+                message.setTruckId(this.getTruckId()) ;
+            }else{
+                message.setTruckId(Constants.NO_ID);
+            }
+            if(this.getComments() != null ){ 
+               message.setComments(this.getComments());
+            }else{
+                message.setComments(Constants.NO_ID);
+            }
 
-        
             NetworkMessage.PackageInformation.Config.Builder config = NetworkMessage.PackageInformation.Config.newBuilder();
 
             if (this.getConfigs().containsKey(Sensor.TEMPERATURE)) {  
@@ -576,7 +591,7 @@ public class Package {
         if (this.shortId != other.shortId) {
             return false;
         }
-        if (this.sensorId != other.sensorId) {
+        if (this.sensorId == null ? other.sensorId != null : !this.sensorId.equals(other.sensorId)) {
             return false;
         }
         if ((this.packageId == null) ? (other.packageId != null) : !this.packageId.equals(other.packageId)) {
@@ -615,7 +630,7 @@ public class Package {
     public int hashCode() {
         int hash = 5;
         hash = 17 * hash + this.shortId;
-        hash = 17 * hash + (int) (this.sensorId ^ (this.sensorId >>> 32));
+        hash = 17 * hash + (this.sensorId != null ? this.sensorId.hashCode() : 0);
         hash = 17 * hash + (this.packageId != null ? this.packageId.hashCode() : 0);
         hash = 17 * hash + (this.truckId != null ? this.truckId.hashCode() : 0);
         hash = 17 * hash + (this.comments != null ? this.comments.hashCode() : 0);

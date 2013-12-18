@@ -37,11 +37,10 @@ message PackageInformation {
             SENSOR_INFO = 1;
 	}
   
-	message Sensor {
-		optional string sensorId = 1;		
-		required SensorType sensorType = 2 [default = TEMPERATURE];
-		required string sensorValue = 3;
-		required string sensorUnit = 4 ;
+	message Sensor {		
+		required SensorType sensorType = 1 [default = TEMPERATURE];
+		required string sensorValue = 2;
+		required string sensorUnit = 3;
 	}
 
         message Config{
@@ -52,7 +51,7 @@ message PackageInformation {
                 required int32 timePeriodAfterThreshold = 5;
         }
 
-        required uint64 sensorId = 1;
+        required string sensorId = 1;
         required string packageId = 2;
         optional string truckId   = 3;
         optional LocationInformation location = 4;

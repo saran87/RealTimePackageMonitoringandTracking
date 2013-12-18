@@ -6,9 +6,20 @@
 
 package rtpmt.tcpclient;
 
+import com.google.protobuf.CodedOutputStream;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import static io.netty.buffer.Unpooled.wrappedBuffer;
+import io.netty.channel.Channel;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import rtpmt.network.packet.NetworkMessage;
 /**
@@ -21,20 +32,36 @@ public final class SensorClient {
     private final int port;
     private Socket mySocket;
     private OutputStream os;
-
+    private Channel ch;
+     EventLoopGroup group;
+       Bootstrap b;
+       ClientHandler handler;
+    private boolean isServerAvaialable = false;
 
     public SensorClient(String host, int port) throws Exception {
         this.host = host;
         this.port = port;
-        connect();
    }
     
     public void connect() throws Exception{
-        mySocket = new Socket(this.host,this.port);
-        os = mySocket.getOutputStream();   
+            /*
+            mySocket = new Socket(this.host,this.port);
+            os = mySocket.getOutputStream();
+             */
+        group = new NioEventLoopGroup();
+        b = new Bootstrap();
+        b.group(group)
+                .channel(NioSocketChannel.class)
+                .handler(new ClientInitializer());
+        ch = b.connect(host, port).sync().channel();
+        handler =
+                ch.pipeline().get(ClientHandler.class);
+        isServerAvaialable = true;
     }
     
     public void send(NetworkMessage.PackageInformation msg) throws IOException{
-          msg.writeTo(os);
+       if(isServerAvaialable)
+           handler.send(msg);
+       
     }
 }

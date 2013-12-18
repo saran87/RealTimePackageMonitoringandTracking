@@ -6,9 +6,12 @@ package sensorconfiguration.swing.ui;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -56,6 +59,11 @@ public class SensorConfigurator extends javax.swing.JFrame {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
         initComponents();
+        try {
+            setupLogger();
+        } catch (IOException ex) {
+            Logger.getLogger(SensorConfigurator.class.getName()).log(Level.SEVERE, null, ex);
+        }
         txtLog.addMouseListener(new ContextMenuMouseListener());
         try {
             eventHandler = new UIEventHandler(this);
@@ -63,21 +71,18 @@ public class SensorConfigurator extends javax.swing.JFrame {
             Logger.getLogger(SensorConfigurator.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File f = new File(eventHandler.FOLDER);
-        File cf = new File(eventHandler.CONFIG_FOLDER);
-        try{
-            if(f.mkdir() && cf.mkdir()) { 
-                System.out.println("Directory Created");
-            } else {
-                System.out.println("Directory is not created");
-            }
-        } catch(Exception e){
-            handleError("Not able to create neccessary file. Run as administrator");
-        } 
-        eventHandler.initSerialPort();
-        eventHandler.initServerConnection();
     }
-
+    // Create a FileHandler and attach it to the root logger.
+   // Create a MyHtmlFormatter and attach to the FileHandler.
+   public static void setupLogger() throws IOException {
+     /* Logger rootLogger = Logger.getLogger("");
+      Handler htmlFileHandler = new FileHandler("log.html");
+      HTMLFormatter htmlFormatter = new HTMLFormatter();
+      rootLogger.addHandler(htmlFileHandler);
+      htmlFileHandler.setFormatter(htmlFormatter);*/
+      FileInputStream fis =  new FileInputStream("logging.properties");
+       // LogManager.getLogManager().readConfiguration(fis);
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -906,7 +911,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
             Package pack = new Package();
             System.out.println(jlblSensorId.getText());
 
-            long sensorId = Long.parseLong( jlblSensorId.getText());
+            String sensorId = jlblSensorId.getText();
             pack.setSensorId(sensorId);
             if(!jtxtPackageId.getText().equals("") && !jtxtTuckId.getText().equals("") && !jtxtComments.getText().equals("")){
 

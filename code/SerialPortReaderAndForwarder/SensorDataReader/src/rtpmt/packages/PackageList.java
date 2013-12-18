@@ -40,14 +40,13 @@ public class PackageList {
      * @param shortId
      * @param macId 
      */
-    public static void addPackage(int shortId,long macId){
+    public static void addPackage(int shortId,String macId){
         
         ConcurrentHashMap<Integer, Package> packageTable =  getInstance();
         
         if(packageTable.containsKey(shortId)){
             
             Package pack =  packageTable.get(shortId);
-            
             pack.setSensorId(macId);
            
         }else{
@@ -95,14 +94,14 @@ public class PackageList {
      * @param macId
      * @return Package
      */
-    public static Package getPackage(long macId){
+    public static Package getPackage(String macId){
         
         ConcurrentHashMap<Integer, Package> packageTable =  getInstance();
         
         for (Map.Entry<Integer, Package> entry : packageTable.entrySet()) {
             Package package1 = entry.getValue();
             
-            if(package1.getSensorId() == macId){
+            if(package1.getSensorId().equals(macId)){
                 return package1;
             }  
             

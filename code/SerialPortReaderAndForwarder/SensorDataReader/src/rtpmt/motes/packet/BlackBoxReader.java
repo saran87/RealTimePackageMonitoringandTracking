@@ -6,11 +6,13 @@
 package rtpmt.motes.packet;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static rtpmt.motes.packet.RealTimeReader.DEBUG;
 import rtpmt.packages.Package;
 import rtpmt.packages.PackageList;
 import rtpmt.packages.SensorEventHandler;
@@ -59,7 +61,7 @@ public class BlackBoxReader extends AbstractSource {
         writeFramedPacket(Constants.SAVE_ALL_CONFIG, dummyPacket);
         writeFramedPacket(Constants.SAVE_COMMENT, configPack.getNote().getBytes());
         Package updatedPack = getSensorInformation();
-
+        sendTimeSyncPacket(0);
         return configPack.equals(updatedPack);
     }
 
@@ -87,7 +89,7 @@ public class BlackBoxReader extends AbstractSource {
      * @throws InterruptedException
      */
     public Package getSensorInformation() throws IOException, InterruptedException {
-        long sensorId;
+        String sensorId;
         sensorId = getBoardId();
         Packet packet = getConfiguration();
         String note = getNote();
@@ -114,7 +116,7 @@ public class BlackBoxReader extends AbstractSource {
      * @return @throws IOException
      * @throws InterruptedException
      */
-    private long getBoardId() throws IOException, InterruptedException {
+    private String getBoardId() throws IOException, InterruptedException {
 
         writeFramedPacket(Constants.GET_BOARD_ID, dummyPacket);
         Packet packet = getSerailPacket(false);
@@ -152,6 +154,18 @@ public class BlackBoxReader extends AbstractSource {
         processSDCardPacket();
         writeFramedPacket(Constants.GET_SHOCK, dummyPacket);
         processSDCardPacket();
+    }
+    // Class to build a framed, escaped and crced packet byte stream
+    private void sendTimeSyncPacket(int nodeId) throws IOException {
+        try {
+            long currentTime = System.currentTimeMillis()/1000;
+            
+            System.out.println("SendTime: "+currentTime);
+            byte timePacket[] = (new BigInteger(Long.toHexString(currentTime),16)).toByteArray();//ByteBuffer.allocate(8). array();
+            writeFramedPacket(Constants.P_TIME_SYNC, nodeId, timePacket);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(BlackBoxReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -327,6 +341,9 @@ public class BlackBoxReader extends AbstractSource {
                 while (b != 170) {
                     b = port.read() & 0xff;
                     notInSyncCount++;
+                    if(notInSyncCount > Constants.MTU){
+                        return null;
+                    }
                 }
                 if (count >= Constants.MTU) {
                     // PacketHelper too long, give up and try to resync
@@ -546,8 +563,50 @@ public class BlackBoxReader extends AbstractSource {
         Thread.sleep(100);
         return write;
     }
+    
+      private synchronized boolean writeFramedPacket(int packetType, int nodeId,
+            byte[] packet) throws IOException, InterruptedException {
 
-    private Package getPackage(long sensorId, Packet packet, String note) {
+        SensorPacket buffer = new SensorPacket(packet.length + 7);
+
+        buffer.nextByte(packetType);
+
+        //Node Id is 16 bit
+        buffer.nextByte(nodeId >> 8);
+        buffer.nextByte(nodeId & 0xff);
+
+        //+2 for crc
+        int length = packet.length + 2;
+        //length 
+        buffer.nextByte(length >> 8);
+        buffer.nextByte(length & 0xff);
+
+        for (int i = 0; i < length - 2; i++) {
+            buffer.nextByte(packet[i]);
+            System.out.println(i);
+        }
+
+        buffer.terminate();
+
+        byte[] realPacket = new byte[buffer.escapePtr];
+        System.arraycopy(buffer.escaped, 0, realPacket, 0, buffer.escapePtr);
+
+        port.flush();
+        boolean write =  port.write(realPacket);
+        port.flush();
+        if (DEBUG) {
+            System.err.println("Data written: ");
+            System.err.println("sending: ");
+            Dump.printByte(System.err, packetType);
+            Dump.printByte(System.err, packet.length);
+            Dump.dump("encoded", realPacket);
+            System.err.println();
+        }
+        Thread.sleep(100);
+        return write;
+    }
+
+    private Package getPackage(String sensorId, Packet packet, String note) {
         Package pack = new Package(0, sensorId);
         pack.setNote(note);
         int i = -1;

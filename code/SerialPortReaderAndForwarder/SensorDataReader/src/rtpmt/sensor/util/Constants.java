@@ -14,6 +14,7 @@ package rtpmt.sensor.util;
 public class Constants {
    
    public final static String SEPERATOR = "-";
+   public final static String NO_ID = "NO_ID";
    public final static int[] FRAME_SYNC = {170, 255, 85};
    public final static int SYNC_BYTE = 126;
    public final static int ESCAPE_BYTE = 125;

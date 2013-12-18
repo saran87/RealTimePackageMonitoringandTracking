@@ -230,11 +230,13 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                 int nodeId = (packet[1] & 0xff) << 8 | (packet[2] & 0xff);
 
                 if (packetType == Constants.P_REGISTRATION) {
-                    Long macId ;
-                    ByteBuffer bb = ByteBuffer.wrap(packet, 5, 8);
-                    macId = bb.getLong();
+                    StringBuilder macId  = new StringBuilder();
+                    for (int i = 5; i < packet.length; i++) {
+                        macId.append(Integer.toHexString(packet[i] & 0xff));
+                    }
+           
                     Integer shortId = nodeId;
-                    PackageList.addPackage(shortId, macId);
+                    PackageList.addPackage(shortId, macId.toString());
 
                     sendServiceRequest(nodeId); // Sending the Service Request
                     sendTimeSyncPacket(nodeId);
@@ -376,7 +378,7 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
         for (Package  connpack: PackageList.getPackages()) {
             Integer shortId = connpack.getShortId();
-            Long macId = connpack.getSensorId();
+            String macId = connpack.getSensorId();
             
             if (shortId != 0) {
                 HashMap<Sensor,Config> configList = pack.getConfigs();
@@ -399,7 +401,6 @@ public class RealTimeReader extends AbstractSource implements Runnable {
     
 
     // Class to build a framed, escaped and crced packet byte stream
-     
     private void sendTimeSyncPacket(int nodeId) throws IOException {
         long currentTime = System.currentTimeMillis()/1000;
 		

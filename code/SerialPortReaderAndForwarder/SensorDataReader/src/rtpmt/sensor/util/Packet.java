@@ -8,9 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 import rtpmt.location.tracker.Location;
-import rtpmt.location.tracker.LocationTracker;
 import rtpmt.network.packet.NetworkMessage.PackageInformation;
 import rtpmt.packages.Package;
 import rtpmt.packages.PackageList;
@@ -68,6 +66,7 @@ public final class Packet extends Header {
     /**
      * Constructor
      * @param byteArray
+     * @param isSDCardData
      */
     public Packet(byte[] byteArray,boolean isSDCardData) {
 
@@ -344,9 +343,15 @@ public final class Packet extends Header {
      * This one works only for the get board ID request, Don't use it for other requests
      * @return 
      */
-    public long sensorId(){
+    public String sensorId(){
+       StringBuilder sensorId =  new StringBuilder();
        
        if(this.ProtocolType == Constants.P_BLACKBOX_RESPONSE){
+           for (int i = 0; i < 8; i++) {
+               sensorId.append(Integer.toHexString(this.PayLoad.get(i) & 0xff).toUpperCase());
+           }
+           return sensorId.toString();
+           /*
              return ((((long)this.PayLoad.get(0) & 0xff) << 56) |
                 (((long)this.PayLoad.get(1) & 0xff) << 48) |
                 (((long)this.PayLoad.get(2) & 0xff) << 40) |
@@ -355,8 +360,9 @@ public final class Packet extends Header {
                 (((long)this.PayLoad.get(5) & 0xff) << 16) |
                 (((long)this.PayLoad.get(6) & 0xff) <<  8) |
                 (((long)this.PayLoad.get(7) & 0xff)));
+           */
         }else{
-           return 0;
+           return "00";
        }
     }
     /**
@@ -389,27 +395,44 @@ public final class Packet extends Header {
      * @param isRealTime
      * @return
      */
-    public PackageInformation getNetworkMessage(boolean isRealTime) {
+    private PackageInformation.Builder getNetworkMessage(boolean isRealTime) {
             Package pack = PackageList.getPackage(this.NodeId);
-            if(pack==null)pack = PackageList.getPackage(0);
+            if(pack==null){
+                pack = PackageList.getPackage(0);
+             }
             PackageInformation.Builder message = PackageInformation.newBuilder();
             //compulsary information
             message.setIsRealTime(isRealTime);
-            message.setMessageType(PackageInformation.MessageType.CONFIG);
+            message.setMessageType(PackageInformation.MessageType.SENSOR_INFO);
             message.setTimeStamp(this.date.getTime());
-            
-            if(pack!=null){
-                if(pack.getSensorId()!= 0 ) message.setSensorId(pack.getSensorId());
-                if(pack.getPackageId() != null ) message.setPackageId(pack.getPackageId());
-                if(pack.getTruckId() != null )  message.setTruckId(pack.getTruckId()) ;
-                if(pack.getComments() != null ) message.setComments(pack.getComments());
-            }
-           
-            
-            PackageInformation.Sensor.Builder sensor = PackageInformation.Sensor.newBuilder();
 
+            if(pack!=null){
+                if(pack.getSensorId()!= null &&  !pack.getSensorId().isEmpty()){
+                    message.setSensorId(pack.getSensorId());
+                }else{
+                    message.setSensorId(Constants.NO_ID);
+                }
+                if(pack.getPackageId() != null ){
+                    message.setPackageId(pack.getPackageId());
+                }else{
+                    message.setPackageId(Constants.NO_ID);
+                }
+                if(pack.getTruckId() != null ){  
+                    message.setTruckId(pack.getTruckId()) ;
+                }else{
+                    message.setTruckId(Constants.NO_ID);
+                }
+                /*
+                * no need for comments in the sensorInformation
+                if(pack.getComments() != null ){ 
+                   message.setComments(pack.getComments());
+                }else{
+                    message.setComments(Constants.NO_ID);
+                }*/
+            }
+ 
+            PackageInformation.Sensor.Builder sensor = PackageInformation.Sensor.newBuilder();
             if (this.isTemperature()) {
-                sensor.setSensorId("1");
                 sensor.setSensorUnit("F");
                 sensor.setSensorType(PackageInformation.SensorType.TEMPERATURE);
                 sensor.setSensorValue(String.valueOf(this.getValue()));
@@ -417,7 +440,6 @@ public final class Packet extends Header {
                 message.addSensors(sensor);
             } else if (this.isHumidty()) {
                 sensor = PackageInformation.Sensor.newBuilder();
-                sensor.setSensorId("2");
                 sensor.setSensorUnit("%RH");
                 sensor.setSensorType(PackageInformation.SensorType.HUMIDITY);
                 System.out.println(this.getHumidity());
@@ -425,7 +447,6 @@ public final class Packet extends Header {
                 message.addSensors(sensor);
             } else if (this.isVibration()) {
                 sensor = PackageInformation.Sensor.newBuilder();
-                sensor.setSensorId("3");
                 sensor.setSensorUnit("g");
                 if (this.isX()) {
                     System.out.println("X=");
@@ -442,7 +463,6 @@ public final class Packet extends Header {
                 message.addSensors(sensor);
             } else if (this.isShock()) {
                 sensor = PackageInformation.Sensor.newBuilder();
-                sensor.setSensorId("4");
                 sensor.setSensorUnit("g");
                 if (this.isX()) {
                     sensor.setSensorType(PackageInformation.SensorType.SHOCKX);
@@ -456,18 +476,36 @@ public final class Packet extends Header {
                 message.addSensors(sensor);
             }
 
-            PackageInformation.LocationInformation.Builder location = PackageInformation.LocationInformation.newBuilder();
-            Location loc = LocationTracker.getLocation();
-            if (loc != null) {
-                location.setLatitude(loc.getLatitude());
-                location.setLongitude(loc.getLongitude());
-                message.setLocation(location);
-            } else {
-                location.setLatitude(43.084603);
-                location.setLongitude(-77.680312);
-                message.setLocation(location);
-            }
-            return message.build();
+            
+            return message;
+    }
+    
+    /**
+     * 
+     * @param location
+     * @return 
+     */
+    public PackageInformation getRealTimeMessage(Location location){
+       boolean isRealTime = true;
+       PackageInformation.Builder message= getNetworkMessage(isRealTime);
+       PackageInformation.LocationInformation.Builder loc;
+       loc = PackageInformation.LocationInformation.newBuilder();
+        if (location != null) {
+            loc.setLatitude(location.getLatitude());
+            loc.setLongitude(location.getLongitude());
+            message.setLocation(loc);
+        }
+        return message.build();
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public PackageInformation getBlackBoxMessage(){
+        boolean isRealTime = false;
+        PackageInformation.Builder message= getNetworkMessage(isRealTime);
+        return message.build();
     }
 
 }

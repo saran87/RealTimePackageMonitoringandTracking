@@ -11,15 +11,20 @@ public final class NetworkMessage {
   public interface PackageInformationOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
-    // required uint64 sensorId = 1;
+    // required string sensorId = 1;
     /**
-     * <code>required uint64 sensorId = 1;</code>
+     * <code>required string sensorId = 1;</code>
      */
     boolean hasSensorId();
     /**
-     * <code>required uint64 sensorId = 1;</code>
+     * <code>required string sensorId = 1;</code>
      */
-    long getSensorId();
+    java.lang.String getSensorId();
+    /**
+     * <code>required string sensorId = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getSensorIdBytes();
 
     // required string packageId = 2;
     /**
@@ -211,9 +216,9 @@ public final class NetworkMessage {
               }
               break;
             }
-            case 8: {
+            case 10: {
               bitField0_ |= 0x00000001;
-              sensorId_ = input.readUInt64();
+              sensorId_ = input.readBytes();
               break;
             }
             case 18: {
@@ -1040,57 +1045,42 @@ public final class NetworkMessage {
     public interface SensorOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
 
-      // optional string sensorId = 1;
+      // required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];
       /**
-       * <code>optional string sensorId = 1;</code>
-       */
-      boolean hasSensorId();
-      /**
-       * <code>optional string sensorId = 1;</code>
-       */
-      java.lang.String getSensorId();
-      /**
-       * <code>optional string sensorId = 1;</code>
-       */
-      com.google.protobuf.ByteString
-          getSensorIdBytes();
-
-      // required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];
-      /**
-       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
        */
       boolean hasSensorType();
       /**
-       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
        */
             rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType getSensorType();
 
-      // required string sensorValue = 3;
+      // required string sensorValue = 2;
       /**
-       * <code>required string sensorValue = 3;</code>
+       * <code>required string sensorValue = 2;</code>
        */
       boolean hasSensorValue();
       /**
-       * <code>required string sensorValue = 3;</code>
+       * <code>required string sensorValue = 2;</code>
        */
       java.lang.String getSensorValue();
       /**
-       * <code>required string sensorValue = 3;</code>
+       * <code>required string sensorValue = 2;</code>
        */
       com.google.protobuf.ByteString
           getSensorValueBytes();
 
-      // required string sensorUnit = 4;
+      // required string sensorUnit = 3;
       /**
-       * <code>required string sensorUnit = 4;</code>
+       * <code>required string sensorUnit = 3;</code>
        */
       boolean hasSensorUnit();
       /**
-       * <code>required string sensorUnit = 4;</code>
+       * <code>required string sensorUnit = 3;</code>
        */
       java.lang.String getSensorUnit();
       /**
-       * <code>required string sensorUnit = 4;</code>
+       * <code>required string sensorUnit = 3;</code>
        */
       com.google.protobuf.ByteString
           getSensorUnitBytes();
@@ -1146,29 +1136,24 @@ public final class NetworkMessage {
                 }
                 break;
               }
-              case 10: {
-                bitField0_ |= 0x00000001;
-                sensorId_ = input.readBytes();
-                break;
-              }
-              case 16: {
+              case 8: {
                 int rawValue = input.readEnum();
                             rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType value = rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType.valueOf(rawValue);
                 if (value == null) {
-                  unknownFields.mergeVarintField(2, rawValue);
+                  unknownFields.mergeVarintField(1, rawValue);
                 } else {
-                  bitField0_ |= 0x00000002;
+                  bitField0_ |= 0x00000001;
                   sensorType_ = value;
                 }
                 break;
               }
-              case 26: {
-                bitField0_ |= 0x00000004;
+              case 18: {
+                bitField0_ |= 0x00000002;
                 sensorValue_ = input.readBytes();
                 break;
               }
-              case 34: {
-                bitField0_ |= 0x00000008;
+              case 26: {
+                bitField0_ |= 0x00000004;
                 sensorUnit_ = input.readBytes();
                 break;
               }
@@ -1212,76 +1197,33 @@ public final class NetworkMessage {
       }
 
       private int bitField0_;
-      // optional string sensorId = 1;
-      public static final int SENSORID_FIELD_NUMBER = 1;
-      private java.lang.Object sensorId_;
+      // required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];
+      public static final int SENSORTYPE_FIELD_NUMBER = 1;
+      private rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType sensorType_;
       /**
-       * <code>optional string sensorId = 1;</code>
+       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
        */
-      public boolean hasSensorId() {
+      public boolean hasSensorType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>optional string sensorId = 1;</code>
-       */
-      public java.lang.String getSensorId() {
-        java.lang.Object ref = sensorId_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            sensorId_ = s;
-          }
-          return s;
-        }
-      }
-      /**
-       * <code>optional string sensorId = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getSensorIdBytes() {
-        java.lang.Object ref = sensorId_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          sensorId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      // required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];
-      public static final int SENSORTYPE_FIELD_NUMBER = 2;
-      private rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType sensorType_;
-      /**
-       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
-       */
-      public boolean hasSensorType() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+       * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
        */
       public rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType getSensorType() {
         return sensorType_;
       }
 
-      // required string sensorValue = 3;
-      public static final int SENSORVALUE_FIELD_NUMBER = 3;
+      // required string sensorValue = 2;
+      public static final int SENSORVALUE_FIELD_NUMBER = 2;
       private java.lang.Object sensorValue_;
       /**
-       * <code>required string sensorValue = 3;</code>
+       * <code>required string sensorValue = 2;</code>
        */
       public boolean hasSensorValue() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required string sensorValue = 3;</code>
+       * <code>required string sensorValue = 2;</code>
        */
       public java.lang.String getSensorValue() {
         java.lang.Object ref = sensorValue_;
@@ -1298,7 +1240,7 @@ public final class NetworkMessage {
         }
       }
       /**
-       * <code>required string sensorValue = 3;</code>
+       * <code>required string sensorValue = 2;</code>
        */
       public com.google.protobuf.ByteString
           getSensorValueBytes() {
@@ -1314,17 +1256,17 @@ public final class NetworkMessage {
         }
       }
 
-      // required string sensorUnit = 4;
-      public static final int SENSORUNIT_FIELD_NUMBER = 4;
+      // required string sensorUnit = 3;
+      public static final int SENSORUNIT_FIELD_NUMBER = 3;
       private java.lang.Object sensorUnit_;
       /**
-       * <code>required string sensorUnit = 4;</code>
+       * <code>required string sensorUnit = 3;</code>
        */
       public boolean hasSensorUnit() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required string sensorUnit = 4;</code>
+       * <code>required string sensorUnit = 3;</code>
        */
       public java.lang.String getSensorUnit() {
         java.lang.Object ref = sensorUnit_;
@@ -1341,7 +1283,7 @@ public final class NetworkMessage {
         }
       }
       /**
-       * <code>required string sensorUnit = 4;</code>
+       * <code>required string sensorUnit = 3;</code>
        */
       public com.google.protobuf.ByteString
           getSensorUnitBytes() {
@@ -1358,7 +1300,6 @@ public final class NetworkMessage {
       }
 
       private void initFields() {
-        sensorId_ = "";
         sensorType_ = rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType.TEMPERATURE;
         sensorValue_ = "";
         sensorUnit_ = "";
@@ -1388,16 +1329,13 @@ public final class NetworkMessage {
                           throws java.io.IOException {
         getSerializedSize();
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeBytes(1, getSensorIdBytes());
+          output.writeEnum(1, sensorType_.getNumber());
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeEnum(2, sensorType_.getNumber());
+          output.writeBytes(2, getSensorValueBytes());
         }
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          output.writeBytes(3, getSensorValueBytes());
-        }
-        if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          output.writeBytes(4, getSensorUnitBytes());
+          output.writeBytes(3, getSensorUnitBytes());
         }
         getUnknownFields().writeTo(output);
       }
@@ -1410,19 +1348,15 @@ public final class NetworkMessage {
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(1, getSensorIdBytes());
+            .computeEnumSize(1, sensorType_.getNumber());
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(2, sensorType_.getNumber());
+            .computeBytesSize(2, getSensorValueBytes());
         }
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(3, getSensorValueBytes());
-        }
-        if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(4, getSensorUnitBytes());
+            .computeBytesSize(3, getSensorUnitBytes());
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -1540,14 +1474,12 @@ public final class NetworkMessage {
 
         public Builder clear() {
           super.clear();
-          sensorId_ = "";
-          bitField0_ = (bitField0_ & ~0x00000001);
           sensorType_ = rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType.TEMPERATURE;
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
           sensorValue_ = "";
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000002);
           sensorUnit_ = "";
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000004);
           return this;
         }
 
@@ -1579,17 +1511,13 @@ public final class NetworkMessage {
           if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
             to_bitField0_ |= 0x00000001;
           }
-          result.sensorId_ = sensorId_;
+          result.sensorType_ = sensorType_;
           if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
             to_bitField0_ |= 0x00000002;
           }
-          result.sensorType_ = sensorType_;
+          result.sensorValue_ = sensorValue_;
           if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
             to_bitField0_ |= 0x00000004;
-          }
-          result.sensorValue_ = sensorValue_;
-          if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-            to_bitField0_ |= 0x00000008;
           }
           result.sensorUnit_ = sensorUnit_;
           result.bitField0_ = to_bitField0_;
@@ -1608,21 +1536,16 @@ public final class NetworkMessage {
 
         public Builder mergeFrom(rtpmt.network.packet.NetworkMessage.PackageInformation.Sensor other) {
           if (other == rtpmt.network.packet.NetworkMessage.PackageInformation.Sensor.getDefaultInstance()) return this;
-          if (other.hasSensorId()) {
-            bitField0_ |= 0x00000001;
-            sensorId_ = other.sensorId_;
-            onChanged();
-          }
           if (other.hasSensorType()) {
             setSensorType(other.getSensorType());
           }
           if (other.hasSensorValue()) {
-            bitField0_ |= 0x00000004;
+            bitField0_ |= 0x00000002;
             sensorValue_ = other.sensorValue_;
             onChanged();
           }
           if (other.hasSensorUnit()) {
-            bitField0_ |= 0x00000008;
+            bitField0_ |= 0x00000004;
             sensorUnit_ = other.sensorUnit_;
             onChanged();
           }
@@ -1665,126 +1588,52 @@ public final class NetworkMessage {
         }
         private int bitField0_;
 
-        // optional string sensorId = 1;
-        private java.lang.Object sensorId_ = "";
+        // required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];
+        private rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType sensorType_ = rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType.TEMPERATURE;
         /**
-         * <code>optional string sensorId = 1;</code>
+         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
          */
-        public boolean hasSensorId() {
+        public boolean hasSensorType() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
         /**
-         * <code>optional string sensorId = 1;</code>
-         */
-        public java.lang.String getSensorId() {
-          java.lang.Object ref = sensorId_;
-          if (!(ref instanceof java.lang.String)) {
-            java.lang.String s = ((com.google.protobuf.ByteString) ref)
-                .toStringUtf8();
-            sensorId_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <code>optional string sensorId = 1;</code>
-         */
-        public com.google.protobuf.ByteString
-            getSensorIdBytes() {
-          java.lang.Object ref = sensorId_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            sensorId_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <code>optional string sensorId = 1;</code>
-         */
-        public Builder setSensorId(
-            java.lang.String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-          sensorId_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>optional string sensorId = 1;</code>
-         */
-        public Builder clearSensorId() {
-          bitField0_ = (bitField0_ & ~0x00000001);
-          sensorId_ = getDefaultInstance().getSensorId();
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>optional string sensorId = 1;</code>
-         */
-        public Builder setSensorIdBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-          sensorId_ = value;
-          onChanged();
-          return this;
-        }
-
-        // required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];
-        private rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType sensorType_ = rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType.TEMPERATURE;
-        /**
-         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
-         */
-        public boolean hasSensorType() {
-          return ((bitField0_ & 0x00000002) == 0x00000002);
-        }
-        /**
-         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
          */
         public  rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType getSensorType() {
           return sensorType_;
         }
         /**
-         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
          */
         public Builder setSensorType(rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType value) {
           if (value == null) {
             throw new NullPointerException();
           }
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
           sensorType_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 2 [default = TEMPERATURE];</code>
+         * <code>required .rtpmt.network.packet.PackageInformation.SensorType sensorType = 1 [default = TEMPERATURE];</code>
          */
         public Builder clearSensorType() {
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
           sensorType_ = rtpmt.network.packet.NetworkMessage.PackageInformation.SensorType.TEMPERATURE;
           onChanged();
           return this;
         }
 
-        // required string sensorValue = 3;
+        // required string sensorValue = 2;
         private java.lang.Object sensorValue_ = "";
         /**
-         * <code>required string sensorValue = 3;</code>
+         * <code>required string sensorValue = 2;</code>
          */
         public boolean hasSensorValue() {
-          return ((bitField0_ & 0x00000004) == 0x00000004);
+          return ((bitField0_ & 0x00000002) == 0x00000002);
         }
         /**
-         * <code>required string sensorValue = 3;</code>
+         * <code>required string sensorValue = 2;</code>
          */
         public java.lang.String getSensorValue() {
           java.lang.Object ref = sensorValue_;
@@ -1798,7 +1647,7 @@ public final class NetworkMessage {
           }
         }
         /**
-         * <code>required string sensorValue = 3;</code>
+         * <code>required string sensorValue = 2;</code>
          */
         public com.google.protobuf.ByteString
             getSensorValueBytes() {
@@ -1814,51 +1663,51 @@ public final class NetworkMessage {
           }
         }
         /**
-         * <code>required string sensorValue = 3;</code>
+         * <code>required string sensorValue = 2;</code>
          */
         public Builder setSensorValue(
             java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000002;
           sensorValue_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>required string sensorValue = 3;</code>
+         * <code>required string sensorValue = 2;</code>
          */
         public Builder clearSensorValue() {
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000002);
           sensorValue_ = getDefaultInstance().getSensorValue();
           onChanged();
           return this;
         }
         /**
-         * <code>required string sensorValue = 3;</code>
+         * <code>required string sensorValue = 2;</code>
          */
         public Builder setSensorValueBytes(
             com.google.protobuf.ByteString value) {
           if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000002;
           sensorValue_ = value;
           onChanged();
           return this;
         }
 
-        // required string sensorUnit = 4;
+        // required string sensorUnit = 3;
         private java.lang.Object sensorUnit_ = "";
         /**
-         * <code>required string sensorUnit = 4;</code>
+         * <code>required string sensorUnit = 3;</code>
          */
         public boolean hasSensorUnit() {
-          return ((bitField0_ & 0x00000008) == 0x00000008);
+          return ((bitField0_ & 0x00000004) == 0x00000004);
         }
         /**
-         * <code>required string sensorUnit = 4;</code>
+         * <code>required string sensorUnit = 3;</code>
          */
         public java.lang.String getSensorUnit() {
           java.lang.Object ref = sensorUnit_;
@@ -1872,7 +1721,7 @@ public final class NetworkMessage {
           }
         }
         /**
-         * <code>required string sensorUnit = 4;</code>
+         * <code>required string sensorUnit = 3;</code>
          */
         public com.google.protobuf.ByteString
             getSensorUnitBytes() {
@@ -1888,36 +1737,36 @@ public final class NetworkMessage {
           }
         }
         /**
-         * <code>required string sensorUnit = 4;</code>
+         * <code>required string sensorUnit = 3;</code>
          */
         public Builder setSensorUnit(
             java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000004;
           sensorUnit_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>required string sensorUnit = 4;</code>
+         * <code>required string sensorUnit = 3;</code>
          */
         public Builder clearSensorUnit() {
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000004);
           sensorUnit_ = getDefaultInstance().getSensorUnit();
           onChanged();
           return this;
         }
         /**
-         * <code>required string sensorUnit = 4;</code>
+         * <code>required string sensorUnit = 3;</code>
          */
         public Builder setSensorUnitBytes(
             com.google.protobuf.ByteString value) {
           if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000004;
           sensorUnit_ = value;
           onChanged();
           return this;
@@ -2688,20 +2537,47 @@ public final class NetworkMessage {
     }
 
     private int bitField0_;
-    // required uint64 sensorId = 1;
+    // required string sensorId = 1;
     public static final int SENSORID_FIELD_NUMBER = 1;
-    private long sensorId_;
+    private java.lang.Object sensorId_;
     /**
-     * <code>required uint64 sensorId = 1;</code>
+     * <code>required string sensorId = 1;</code>
      */
     public boolean hasSensorId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required uint64 sensorId = 1;</code>
+     * <code>required string sensorId = 1;</code>
      */
-    public long getSensorId() {
-      return sensorId_;
+    public java.lang.String getSensorId() {
+      java.lang.Object ref = sensorId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          sensorId_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string sensorId = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getSensorIdBytes() {
+      java.lang.Object ref = sensorId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sensorId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     // required string packageId = 2;
@@ -2976,7 +2852,7 @@ public final class NetworkMessage {
     }
 
     private void initFields() {
-      sensorId_ = 0L;
+      sensorId_ = "";
       packageId_ = "";
       truckId_ = "";
       location_ = rtpmt.network.packet.NetworkMessage.PackageInformation.LocationInformation.getDefaultInstance();
@@ -3038,7 +2914,7 @@ public final class NetworkMessage {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeUInt64(1, sensorId_);
+        output.writeBytes(1, getSensorIdBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getPackageIdBytes());
@@ -3078,7 +2954,7 @@ public final class NetworkMessage {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(1, sensorId_);
+          .computeBytesSize(1, getSensorIdBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
@@ -3235,7 +3111,7 @@ public final class NetworkMessage {
 
       public Builder clear() {
         super.clear();
-        sensorId_ = 0L;
+        sensorId_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
         packageId_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -3366,7 +3242,9 @@ public final class NetworkMessage {
       public Builder mergeFrom(rtpmt.network.packet.NetworkMessage.PackageInformation other) {
         if (other == rtpmt.network.packet.NetworkMessage.PackageInformation.getDefaultInstance()) return this;
         if (other.hasSensorId()) {
-          setSensorId(other.getSensorId());
+          bitField0_ |= 0x00000001;
+          sensorId_ = other.sensorId_;
+          onChanged();
         }
         if (other.hasPackageId()) {
           bitField0_ |= 0x00000002;
@@ -3512,35 +3390,76 @@ public final class NetworkMessage {
       }
       private int bitField0_;
 
-      // required uint64 sensorId = 1;
-      private long sensorId_ ;
+      // required string sensorId = 1;
+      private java.lang.Object sensorId_ = "";
       /**
-       * <code>required uint64 sensorId = 1;</code>
+       * <code>required string sensorId = 1;</code>
        */
       public boolean hasSensorId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required uint64 sensorId = 1;</code>
+       * <code>required string sensorId = 1;</code>
        */
-      public long getSensorId() {
-        return sensorId_;
+      public java.lang.String getSensorId() {
+        java.lang.Object ref = sensorId_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          sensorId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>required uint64 sensorId = 1;</code>
+       * <code>required string sensorId = 1;</code>
        */
-      public Builder setSensorId(long value) {
-        bitField0_ |= 0x00000001;
+      public com.google.protobuf.ByteString
+          getSensorIdBytes() {
+        java.lang.Object ref = sensorId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sensorId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
+      public Builder setSensorId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         sensorId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required uint64 sensorId = 1;</code>
+       * <code>required string sensorId = 1;</code>
        */
       public Builder clearSensorId() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        sensorId_ = 0L;
+        sensorId_ = getDefaultInstance().getSensorId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string sensorId = 1;</code>
+       */
+      public Builder setSensorIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        sensorId_ = value;
         onChanged();
         return this;
       }
@@ -5208,8 +5127,8 @@ public final class NetworkMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\024NetworkMessage.proto\022\024rtpmt.network.pa" +
-      "cket\"\352\007\n\022PackageInformation\022\020\n\010sensorId\030" +
-      "\001 \002(\004\022\021\n\tpackageId\030\002 \002(\t\022\017\n\007truckId\030\003 \001(" +
+      "cket\"\330\007\n\022PackageInformation\022\020\n\010sensorId\030" +
+      "\001 \002(\t\022\021\n\tpackageId\030\002 \002(\t\022\017\n\007truckId\030\003 \001(" +
       "\t\022N\n\010location\030\004 \001(\0132<.rtpmt.network.pack" +
       "et.PackageInformation.LocationInformatio" +
       "n\022@\n\007sensors\030\005 \003(\0132/.rtpmt.network.packe" +
@@ -5220,23 +5139,22 @@ public final class NetworkMessage {
       "kageInformation.MessageType\022\022\n\nisRealTim" +
       "e\030\t \002(\010\022\020\n\010comments\030\n \001(\t\032:\n\023LocationInf" +
       "ormation\022\020\n\010latitude\030\001 \002(\001\022\021\n\tlongitude\030" +
-      "\002 \002(\001\032\231\001\n\006Sensor\022\020\n\010sensorId\030\001 \001(\t\022T\n\nse" +
-      "nsorType\030\002 \002(\01623.rtpmt.network.packet.Pa" +
+      "\002 \002(\001\032\207\001\n\006Sensor\022T\n\nsensorType\030\001 \002(\01623.r" +
+      "tpmt.network.packet.PackageInformation.S" +
+      "ensorType:\013TEMPERATURE\022\023\n\013sensorValue\030\002 " +
+      "\002(\t\022\022\n\nsensorUnit\030\003 \002(\t\032\300\001\n\006Config\022T\n\nse" +
+      "nsorType\030\001 \002(\01623.rtpmt.network.packet.Pa" +
       "ckageInformation.SensorType:\013TEMPERATURE" +
-      "\022\023\n\013sensorValue\030\003 \002(\t\022\022\n\nsensorUnit\030\004 \002(" +
-      "\t\032\300\001\n\006Config\022T\n\nsensorType\030\001 \002(\01623.rtpmt" +
-      ".network.packet.PackageInformation.Senso" +
-      "rType:\013TEMPERATURE\022\024\n\014maxThreshold\030\002 \002(\001",
-      "\022\024\n\014minThreshold\030\003 \001(\001\022\022\n\ntimePeriod\030\004 \001" +
-      "(\005\022 \n\030timePeriodAfterThreshold\030\005 \002(\005\"\177\n\n" +
-      "SensorType\022\017\n\013TEMPERATURE\020\000\022\014\n\010HUMIDITY\020" +
-      "\001\022\016\n\nVIBRATIONX\020\002\022\016\n\nVIBRATIONY\020\003\022\016\n\nVIB" +
-      "RATIONZ\020\004\022\n\n\006SHOCKX\020\005\022\n\n\006SHOCKY\020\006\022\n\n\006SHO" +
-      "CKZ\020\007\"*\n\013MessageType\022\n\n\006CONFIG\020\000\022\017\n\013SENS" +
-      "OR_INFO\020\001\"I\n\010Packages\022=\n\013packageInfo\030\001 \003" +
-      "(\0132(.rtpmt.network.packet.PackageInforma" +
-      "tionB&\n\024rtpmt.network.packetB\016NetworkMes" +
-      "sage"
+      "\022\024\n\014maxThreshold\030\002 \002(\001\022\024\n\014minThreshold\030\003",
+      " \001(\001\022\022\n\ntimePeriod\030\004 \001(\005\022 \n\030timePeriodAf" +
+      "terThreshold\030\005 \002(\005\"\177\n\nSensorType\022\017\n\013TEMP" +
+      "ERATURE\020\000\022\014\n\010HUMIDITY\020\001\022\016\n\nVIBRATIONX\020\002\022" +
+      "\016\n\nVIBRATIONY\020\003\022\016\n\nVIBRATIONZ\020\004\022\n\n\006SHOCK" +
+      "X\020\005\022\n\n\006SHOCKY\020\006\022\n\n\006SHOCKZ\020\007\"*\n\013MessageTy" +
+      "pe\022\n\n\006CONFIG\020\000\022\017\n\013SENSOR_INFO\020\001\"I\n\010Packa" +
+      "ges\022=\n\013packageInfo\030\001 \003(\0132(.rtpmt.network" +
+      ".packet.PackageInformationB&\n\024rtpmt.netw" +
+      "ork.packetB\016NetworkMessage"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -5260,7 +5178,7 @@ public final class NetworkMessage {
           internal_static_rtpmt_network_packet_PackageInformation_Sensor_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_PackageInformation_Sensor_descriptor,
-              new java.lang.String[] { "SensorId", "SensorType", "SensorValue", "SensorUnit", });
+              new java.lang.String[] { "SensorType", "SensorValue", "SensorUnit", });
           internal_static_rtpmt_network_packet_PackageInformation_Config_descriptor =
             internal_static_rtpmt_network_packet_PackageInformation_descriptor.getNestedTypes().get(2);
           internal_static_rtpmt_network_packet_PackageInformation_Config_fieldAccessorTable = new

@@ -25,7 +25,7 @@ import rtpmt.sensor.reader.SensorReader;
  * @author Kumar
  */
 public class SerialPortFinder {
-    private static int TIMEOUT = 100;
+    private static final int TIMEOUT = 100;
     private static rtpmt.sensor.reader.SerialPort port;
     
     /**
@@ -59,13 +59,14 @@ public class SerialPortFinder {
     public static CommPortIdentifier findSensorPort(){
         
         HashSet<CommPortIdentifier> comPortList = getAvailableSerialPorts();
-       
+        CommPort commPort = null;
+        SensorReader packetReader = null;
         for (CommPortIdentifier commPortIdentifier : comPortList) {
             try {
                 
                 System.out.println("Port, "  + commPortIdentifier.getName() + ", is in use.");
                 //the method below returns an object of type CommPort
-                CommPort commPort = commPortIdentifier.open("RFID", TIMEOUT);
+                commPort = commPortIdentifier.open("RFID", TIMEOUT);
                 
                 //the CommPort object can be casted to a SerialPort object
                 SerialPort serialPort = (SerialPort)commPort;
@@ -80,22 +81,32 @@ public class SerialPortFinder {
                 
                 port = new rtpmt.sensor.reader.SerialPort(input, output);
                 boolean isRealTime = false;
-                SensorReader packetReader = new SensorReader(port, isRealTime);
+                packetReader = new SensorReader(port, isRealTime);
                 packetReader.open();
                 //packetReader.addSensorEventHandler()    
                 packetReader.close();
                 commPort.close();
                 return commPortIdentifier;
             } catch (PortInUseException ex) {
-                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                
             } catch (UnsupportedCommOperationException ex) {
-                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             } catch (IOException ex) {
-                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             } catch (InterruptedException ex) {
-                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }catch(Exception ex){
-                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            }finally{
+                try {
+                    if(commPort!=null)
+                        commPort.close();
+                    if(packetReader !=null)
+                        packetReader.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                }
             }
         }
         
