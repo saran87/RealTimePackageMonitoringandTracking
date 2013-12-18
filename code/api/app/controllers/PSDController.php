@@ -17,7 +17,7 @@ class PSDController extends BaseController {
 
 
 	
-	function doStuff($id){
+	function getPSDArray($id){
 
 			$dataArray = Vibration::find($id);
 
@@ -26,13 +26,17 @@ class PSDController extends BaseController {
 			$mainArray['z']['value']=$dataArray['value']['z'];					
 
 			$this->intitalize($mainArray);
+
 			$this->ProcessDataArray();			
 
-			$arr=$this->GetPSD();
+			$arr['rms']=$this->GetPSD();
+
+			$arr['x']=$this->GetPSDEach($this->mainArray['x']);
+			$arr['y']=$this->GetPSDEach($this->mainArray['y']);
+			$arr['z']=$this->GetPSDEach($this->mainArray['z']);
 
 			return $arr;
 	}
-
 
 	private function intitalize($dataArray){
 
@@ -77,6 +81,22 @@ class PSDController extends BaseController {
 			return $f;
 		}
 
+		public function GetPSDEach($inArr){
+
+			$count = count($inArr);
+			
+			$fft = new FFT($count);
+			$filter = new Filter();
+
+			//Filter the signal
+			$inArr = $filter->hannWindow($inArr);
+			
+			// Calculate the FFT 
+			$f = $fft->getAbsFFT($fft->fft($inArr));
+			
+			return $f;
+		}
+
 		/*
 		*  Process Data Array  - Function
 		*   	Data array in below format 
@@ -94,9 +114,7 @@ class PSDController extends BaseController {
 			$index = 0;
 			$maxAxis = "";
 
-			// for each axis go through the values and calculate the square root of each instance
-
-			//var_dump($this->mainArray);
+			// for each axis go through the values and calculate the square root of each instance			
 			
 			foreach ($this->mainArray as $axis => $axisValues) {
 				
