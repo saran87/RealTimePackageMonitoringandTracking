@@ -560,7 +560,7 @@ public class BlackBoxReader extends AbstractSource {
             Dump.dump(System.err, "encoded", realPacket);
             System.err.println();
         }
-        Thread.sleep(100);
+        Thread.sleep(1000);
         return write;
     }
     
@@ -602,7 +602,7 @@ public class BlackBoxReader extends AbstractSource {
             Dump.dump("encoded", realPacket);
             System.err.println();
         }
-        Thread.sleep(100);
+        Thread.sleep(1000);
         return write;
     }
 
