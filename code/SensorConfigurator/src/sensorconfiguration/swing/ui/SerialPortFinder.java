@@ -35,6 +35,7 @@ public class SerialPortFinder {
      */
     private static HashSet<CommPortIdentifier> getAvailableSerialPorts() {
         HashSet<CommPortIdentifier> h = new HashSet<CommPortIdentifier>();
+        
         Enumeration thePorts = CommPortIdentifier.getPortIdentifiers();
         while (thePorts.hasMoreElements()) {
             CommPortIdentifier com = (CommPortIdentifier) thePorts.nextElement();
@@ -59,11 +60,17 @@ public class SerialPortFinder {
     public static CommPortIdentifier findSensorPort(){
         
         HashSet<CommPortIdentifier> comPortList = getAvailableSerialPorts();
+        int maximumSize = comPortList.size();
+        int size = 0;
+        ProgressBar bar = new ProgressBar(maximumSize, "Starting to read "+maximumSize+" ports");
+        bar.run();
         CommPort commPort = null;
         SensorReader packetReader = null;
         for (CommPortIdentifier commPortIdentifier : comPortList) {
             try {
-                
+                Thread.sleep(1000);
+                bar.setProgress(size++, "Reading port "+commPortIdentifier.getName());
+                Thread.sleep(1000);
                 System.out.println("Port, "  + commPortIdentifier.getName() + ", is in use.");
                 //the method below returns an object of type CommPort
                 commPort = commPortIdentifier.open("RFID", TIMEOUT);
@@ -99,6 +106,7 @@ public class SerialPortFinder {
             }catch(Exception ex){
                 Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }finally{
+                 bar.done();
                 try {
                     if(commPort!=null)
                         commPort.close();
@@ -109,7 +117,7 @@ public class SerialPortFinder {
                 }
             }
         }
-        
+       
         
         return null;
         
