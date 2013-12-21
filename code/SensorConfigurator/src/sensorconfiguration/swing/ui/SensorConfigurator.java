@@ -947,7 +947,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
                 //shock
                 pack.setMaxShockThreshold((Double)shockThreshold.getValue());
-
                 eventHandler.configureSensor(pack);
                
             }else{

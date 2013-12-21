@@ -30,6 +30,7 @@ public class DBConstants {
     public final static String UNIT = "unit";
     public final static String COMMENTS ="comments";
     public final static String DOT = ".";
-    static final String DB_ADDRESS = "54.243.241.254";
-    static final String DB_NAME = "realTimeDataDb";
+    public final static String DB_ADDRESS = "54.243.241.254";
+    public final static String DB_NAME = "realTimeDataDb";
+    public final static String LOCATION = "loc";
 }
