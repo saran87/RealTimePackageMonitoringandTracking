@@ -1,4 +1,4 @@
-	package com.rtpmt.packtrack;
+package com.rtpmt.packtrack;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,13 +6,31 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import rtpmt.motes.packet.Packetizer;
-import rtpmt.network.packet.SensorMessage.SensorInformation;
-import rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation;
+import rtpmt.location.tracker.PackageLocation;
+import rtpmt.network.packet.NetworkMessage;
+import rtpmt.network.packet.NetworkMessage.PackageInformation;
+import rtpmt.sensor.reader.SensorReader;
+import rtpmt.sensor.util.Packet;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sensorinfo.R;
 import com.ftdi.j2xx.D2xxManager;
@@ -20,28 +38,8 @@ import com.ftdi.j2xx.D2xxManager.D2xxException;
 import com.ftdi.j2xx.FT_Device;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.rtpmt.android.network.tcp2.TCPClient;
+import com.rtpmt.serialport.SerialPortReader;
 
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.Menu;
-
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-
-import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 @Deprecated
 public class SensorDisplay extends Activity {
 
@@ -54,8 +52,7 @@ public class SensorDisplay extends Activity {
 	int openIndex = 0;
 	TextView readText;
 
-	ArrayAdapter<CharSequence> portAdapter; 
-
+	ArrayAdapter<CharSequence> portAdapter;
 	Button configButton;
 	Button openButton;
 	Button readEnButton;
@@ -79,23 +76,25 @@ public class SensorDisplay extends Activity {
 	String readDataToText;
 	public boolean bReadThreadGoing = false;
 	public readThread read_thread;
-	public Packetizer sensorPacketizer;
+	public SensorReader sensorPacketizer;
 	boolean uart_configured = false;
-	
+
 	TCPClient tCPClient;
-	LocationInformation location;
-	
-	//private String host = "saranlap.student.rit.edu";
+	Location location;
+
+	// private String host = "saranlap.student.rit.edu";
 	private String host = "apurv.student.rit.edu";
-	//private String host = "192.168.1.128";
+	// private String host = "192.168.1.128";
 	private int port = 3000;
 	private int byteArraySize = 0;
+	private static final boolean IS_REALTIME = true;
+	private PackageLocation packageLocation;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.sensor_display);		
-		
+		setContentView(R.layout.sensor_display);
+
 		Log.i("SensorDisplay", "Entered SensorDisplay");
 		try {
 			ftdid2xx = D2xxManager.getInstance(this);
@@ -104,7 +103,7 @@ public class SensorDisplay extends Activity {
 		}
 
 		readData = new byte[readLength];
-		
+
 		readText = (TextView) findViewById(R.id.readValues);
 		readText.setMovementMethod(new ScrollingMovementMethod());
 
@@ -130,8 +129,7 @@ public class SensorDisplay extends Activity {
 					Toast.LENGTH_SHORT).show();
 		} else {
 			SetConfig(baudRate, dataBit, stopBit, parity, flowControl);
-			
-			
+
 		}
 
 		// Read
@@ -148,6 +146,7 @@ public class SensorDisplay extends Activity {
 			Log.i("SensorDisplay", "Read started");
 			EnableRead();
 		}
+		packageLocation = new PackageLocation(this);
 
 	}
 
@@ -178,27 +177,26 @@ public class SensorDisplay extends Activity {
 	final Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-				Log.i("SensorDisplay", "iavailable > 0");
-//				if(readDataToText.contains( "TEMPERATURE")){
+			Log.i("SensorDisplay", "iavailable > 0");
+			// if(readDataToText.contains( "TEMPERATURE")){
 
-					//readText.append();
-					readText.setText(readDataToText+" "+isNetworkAvailable()+"\n\r"+readText.getText());
-					//readText.append(location.getLatitude()+"Lat "+location.getLongitude());
-//				}
-				
-				
+			// readText.append();
+			readText.setText(readDataToText + " " + isNetworkAvailable()
+					+ "\n\r" + readText.getText());
+			// readText.append(location.getLatitude()+"Lat "+location.getLongitude());
+			// }
+
 		}
 	};
 
 	private class readThread extends Thread {
 		Handler mHandler;
-		Packetizer sensorPacketizer;
+		SensorReader sensorPacketizer;
 		boolean connectionAvailable;
-		
-		
-		readThread(final Handler h, final Packetizer sensorPacketizer) {
+
+		readThread(final Handler h, final SensorReader sensorPacketizer) {
 			mHandler = h;
-			this.sensorPacketizer  = sensorPacketizer;
+			this.sensorPacketizer = sensorPacketizer;
 			this.setPriority(Thread.MIN_PRIORITY);
 		}
 
@@ -206,156 +204,162 @@ public class SensorDisplay extends Activity {
 		public void run() {
 			Log.i("SensorDisplay", "readThread started");
 			Log.i("SensorDisplay", "Before TCP init");
-			
+
 			String packageName = getPackageName();
 			String folderName = null;
 			try {
 				folderName = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.dataDir;
 			} catch (NameNotFoundException e1) {
 				// TODO Auto-generated catch block
-				System.out.println("File Exception: "+e1.toString());
+				System.out.println("File Exception: " + e1.toString());
 			}
-			
-			File file = new File(folderName+"/dataBuffer.proto");
+
+			File file = new File(folderName + "/dataBuffer.proto");
 			if (!file.exists()) {
-			        try {
-			            file.createNewFile();
-			        } catch (IOException e) {
-			            e.printStackTrace();
-			        }
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-			
-			
-			
+
 			try {
 				Log.i("SensorDisplay", "Init TCP started");
 				tCPClient = new TCPClient();
-				//tCPClient.connect("saranlap.student.rit.edu", 3000);
+				// tCPClient.connect("saranlap.student.rit.edu", 3000);
 				tCPClient.connect(host, port);
 				connectionAvailable = true;
 				Log.i("SensorDisplay", "TCPClient Initiated");
 			} catch (Exception ex) {
 				ex.printStackTrace();
-			} //TODO TCPClient configurable
+			} // TODO TCPClient configurable
 			Log.i("SensorDisplay", "After TCP init");
-			
+
 			try {
-				for (;;){
-					SensorInformation sensorInfo = sensorPacketizer.readPacket();
-					if(sensorInfo != null)
-					for (SensorInformation.Sensor sensor : sensorInfo
-							.getSensorsList()) {
-						readDataToText = sensor.getSensorType().name() + " : "
-								+ sensor.getSensorValue() + " "
-								+ sensor.getSensorUnit() + "   "
-								+ sensorInfo.getTimeStamp();
-						location = sensorInfo.getLocation();
-						Log.i("SensorValue:",  readDataToText);
-						Message msg = mHandler.obtainMessage();
-						mHandler.sendMessage(msg);
-					}
+				for (;;) {
+					Packet packet = sensorPacketizer.readPacket();
+					// TODO make getLocation function returns the location info
+					// object
+					// instead of mapping latitude and longitude
+					location = packageLocation.getLocation();
+					rtpmt.location.tracker.Location locationInfo = new rtpmt.location.tracker.Location();
+					locationInfo.setLatitude(location.getLatitude());
+					locationInfo.setLongitude(location.getLongitude());
+					NetworkMessage.PackageInformation sensorInfo = packet
+							.getRealTimeMessage(locationInfo);
+					if (sensorInfo != null)
+						for (PackageInformation.Sensor sensor : sensorInfo
+								.getSensorsList()) {
+							readDataToText = sensor.getSensorType().name()
+									+ " : " + sensor.getSensorValue() + " "
+									+ sensor.getSensorUnit() + "   "
+									+ sensorInfo.getTimeStamp();
+
+							Log.i("SensorValue:", readDataToText);
+							Message msg = mHandler.obtainMessage();
+							mHandler.sendMessage(msg);
+						}
 
 					System.out.println();
 					System.out.flush();
 
 					// Sending data to server
-										
-					if(isNetworkAvailable())
-					{
-						if(!connectionAvailable)
-						{
-							//TODO Add code here to send data from file and then empty the file
-							tCPClient.connect(host,port);
-							connectionAvailable = true;						
+
+					if (isNetworkAvailable()) {
+						if (!connectionAvailable) {
+							// TODO Add code here to send data from file and
+							// then empty the file
+							tCPClient.connect(host, port);
+							connectionAvailable = true;
 							readDataToText = "";
-							
-							FileInputStream fis = new FileInputStream(folderName+"/dataBuffer.proto");
+
+							FileInputStream fis = new FileInputStream(
+									folderName + "/dataBuffer.proto");
 							DataInputStream dis = new DataInputStream(fis);
-							
-							for(;;)
-							{		
-								SensorInformation sensorInfoReadByte;
-								
-								try
-								{
-									Log.i("SensorDisplay", "Inside Read From File");
-									sensorInfoReadByte = SensorInformation.parseDelimitedFrom(dis);	
-									
+
+							for (;;) {
+								PackageInformation sensorInfoReadByte;
+
+								try {
+									Log.i("SensorDisplay",
+											"Inside Read From File");
+									sensorInfoReadByte = PackageInformation
+											.parseDelimitedFrom(dis);
+
 									Log.i("SensorDisplay", "Delimited Parse");
-									
-									if(sensorInfoReadByte == null)
-									{
-										Log.i("SensorDisplay", "sensorInfoReadByte == null");
+
+									if (sensorInfoReadByte == null) {
+										Log.i("SensorDisplay",
+												"sensorInfoReadByte == null");
 										break;
 									}
-									
+
 									readDataToText += "Resending buffer data\n\r";
 									Message msg = mHandler.obtainMessage();
 									mHandler.sendMessage(msg);
-									
+
 									tCPClient.sendData(sensorInfoReadByte);
-								}
-								catch(InvalidProtocolBufferException e)
-								{
-									System.out.println("Exception: "+e.toString());
+								} catch (InvalidProtocolBufferException e) {
+									System.out.println("Exception: "
+											+ e.toString());
 									break;
 								}
-								
-								
+
 							}
-							
+
 							dis.close();
 							fis.close();
 							file.delete();
 						}
-						
-						
+
 						// If network exists send the data to the server
 						Log.i("SensorDisplay", "Before sending server data");
 						tCPClient.sendData(sensorInfo);
 						Log.i("SensorDisplay", "Sending Data to server");
-					}
-					else
-					{
+					} else {
 						// If network does not exist, store to a file
 						connectionAvailable = false;
-						
-						Log.i("SensorDisplay", "Before saving server data to file");
+
+						Log.i("SensorDisplay",
+								"Before saving server data to file");
 						try {
-						    // Write the new address book back to disk.
-	
-						   FileOutputStream output = new FileOutputStream(folderName+"/dataBuffer.proto", true);
-						   DataOutputStream dos = new DataOutputStream(output);            
-						   	   sensorInfo.writeDelimitedTo(dos);
-						  // dos.close();
-						   output.close();   
-						   Log.i("SensorDisplay", "After saving server data to file");
-						} catch (Exception e) {   
-							Log.i("SensorDisplay", "Saving server data to file Exception: "+e);
+							// Write the new address book back to disk.
+
+							FileOutputStream output = new FileOutputStream(
+									folderName + "/dataBuffer.proto", true);
+							DataOutputStream dos = new DataOutputStream(output);
+							sensorInfo.writeDelimitedTo(dos);
+							// dos.close();
+							output.close();
+							Log.i("SensorDisplay",
+									"After saving server data to file");
+						} catch (Exception e) {
+							Log.i("SensorDisplay",
+									"Saving server data to file Exception: "
+											+ e);
 						}
 					}
-					
+
 				}
 			} catch (IOException ex) {
-//				logText = "Too many listeners. (" + ex.toString() + ")";
-				
+				// logText = "Too many listeners. (" + ex.toString() + ")";
+
 				System.out.println(ex.toString());
-//				window.txtLog.setForeground(Color.red);
-//				window.txtLog.append(logText + "\n");
+				// window.txtLog.setForeground(Color.red);
+				// window.txtLog.append(logText + "\n");
 			}
 		}
 	}
-	
-	private boolean isNetworkAvailable() 
-	{
 
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    
-	    return activeNetworkInfo != null && activeNetworkInfo.isAvailable(); 
+	private boolean isNetworkAvailable() {
+
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+
+		return activeNetworkInfo != null && activeNetworkInfo.isAvailable();
 	}
-	
+
 	/*
 	 * Initialize TCP Client
 	 */
@@ -439,16 +443,19 @@ public class SensorDisplay extends Activity {
 			if (false == bReadThreadGoing) {
 				Log.i("SensorDisplay", "false == bReadThreadGoing");
 				Log.i("SensorDisplay", "readThread started");
-
-				sensorPacketizer = new Packetizer("SensorData", this, ftDev);
+				SerialPortReader serialPort = new SerialPortReader(ftDev);
+				sensorPacketizer = new SensorReader(serialPort,IS_REALTIME);
 				try {
-					sensorPacketizer.open(null);
+					sensorPacketizer.open();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				 read_thread = new readThread(handler,sensorPacketizer);
-				 read_thread.start();
+				read_thread = new readThread(handler, sensorPacketizer);
+				read_thread.start();
 				bReadThreadGoing = true;
 			}
 
@@ -493,7 +500,7 @@ public class SensorDisplay extends Activity {
 			// Toast.makeText(DeviceUARTContext, "Need to get permission!",
 			// Toast.LENGTH_SHORT).show();
 		}
-		
+
 	}
 
 	public void SetConfig(int baud, byte dataBits, byte stopBits, byte parity,
@@ -585,6 +592,3 @@ public class SensorDisplay extends Activity {
 	}
 
 }
-
-	
-

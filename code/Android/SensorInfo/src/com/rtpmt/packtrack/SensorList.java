@@ -9,91 +9,47 @@ import java.util.Set;
  * 
  * @author Apurv Kulkarni
  *
- * @param <M> MAC ID 
+ * @param <M> MAC ID .
  * @param <S> Short ID
  */
 
-public class SensorList<M,S>
+public final class SensorList
 {
-	HashMap<M,S> macIds;
-	HashMap<S,M> shortIds;
+	private static HashMap sensorList;
 	
-	public SensorList()
+	
+	static
 	{
-		macIds = new HashMap<M,S>(); 
-		shortIds = new HashMap<S,M>();
+		sensorList = new HashMap<Integer,SensorInfo>(); 
+		
+		
 	}
 
-	public void clear() {	 
-		macIds.clear();
-		shortIds.clear();		
+
+	
+
+	public static void add(Integer _shortID, SensorInfo _sensorInfo){
+		if(!(sensorList.containsKey(_shortID)))
+			sensorList.put( _shortID,_sensorInfo);
+		
 	}
 
-	public boolean containsKey(Object macOrShort) {
-		if(macIds.containsKey(macOrShort))
-			return true;
-		else if(shortIds.containsKey(macOrShort))
-			return true;
-		else
-			return false;
+	public static HashMap<Integer,SensorInfo> getSensorList(){
+		return sensorList;
 	}
 	
-	public boolean constainsMac(M macId){
-		if(macIds.containsKey(macId))
+	public static void updateSensorInfo(Integer _shortID, SensorInfo _sensorInfo){
+		if((sensorList.containsKey(_shortID)))
+			sensorList.put( _shortID,_sensorInfo);
+		else
+			sensorList.put( null,_sensorInfo);
+	}
+    
+	public static  boolean  containsKey(int _shortID){
+		if((sensorList.containsKey(_shortID)))
 			return true;
 		else
 			return false;
+		
 	}
-	
-	public boolean constainsShort(S shortId){
-		if(shortIds.containsKey(shortId))
-			return true;
-		else
-			return false;
-	}
-
-	public boolean containsValue(Object macOrShort) {
-		if(macIds.containsValue(macOrShort))
-			return true;
-		else if(shortIds.containsKey(macOrShort))
-			return true;
-		else
-			return false;
-	}
-
-	public M get(S key) {
-		if(shortIds.containsKey(key))
-			return shortIds.get(key);
-		else
-			return null;
-	}
-
-	public boolean isEmpty() {
-		return macIds.isEmpty();
-	}
-
-	public Set<S> ShortIdSet() {
-		return shortIds.keySet();
-	}
-	
-	public Set<M> MacIdSet() {
-		return macIds.keySet();
-	}
-
-	public S put(M macId, S shortId) {
-		macIds.put(macId, shortId);
-		shortIds.put(shortId, macId);
-		return shortId;
-	}
-
-	public S removeMacId(M macId) {
-		S shortId = macIds.remove(macId);
-		shortIds.remove(shortId);
-		return shortId;
-	}
-
-	public int size() {
-		return macIds.size();
-	}
-
 }
