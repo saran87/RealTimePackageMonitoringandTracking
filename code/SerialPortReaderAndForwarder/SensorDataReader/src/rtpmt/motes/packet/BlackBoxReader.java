@@ -195,7 +195,7 @@ public class BlackBoxReader extends AbstractSource {
                 while (!port.isAvailable()) {
                     timeout = timeout - 10;
                     if (timeout <= 0) {
-                        System.out.print(timeout);
+                        System.out.print("Timeout = "+timeout);
                         throw new TimeoutException("No data from sensor.Time out");
                     }
                 }
@@ -248,6 +248,7 @@ public class BlackBoxReader extends AbstractSource {
 
                     payLoad = length;
                     isLength = true;
+                    Dump.dump("Recieved File Response", dummyPacket);
                     break;
                 }
             }
@@ -259,13 +260,21 @@ public class BlackBoxReader extends AbstractSource {
     }
     
     private void startProcessingData(int length) throws IOException{
-        
+         if(DEBUG){
+                    System.err.println("Initial Length "+ length);
+                }
+         int counter = 0;
         while (length > 2){
             byte[] rawPacket = readFramedPacket(false);
+            
             if(rawPacket!=null){
                 //Add plus 5 to normal packet, 5 is for adding Frame packet(3) and CRC(2)
+                counter++;
                 length = length - (rawPacket.length + 5);
                 Packet pack = new Packet(rawPacket);
+                if(DEBUG){
+                    System.err.println("Length "+ length+ " counter "+counter);
+                }
                 if(pack.isPartialPacket()){
                     handlePartialPackets(pack);
                 }else{
@@ -560,7 +569,7 @@ public class BlackBoxReader extends AbstractSource {
             Dump.dump(System.err, "encoded", realPacket);
             System.err.println();
         }
-        Thread.sleep(1000);
+        Thread.sleep(100);
         return write;
     }
     
@@ -602,7 +611,7 @@ public class BlackBoxReader extends AbstractSource {
             Dump.dump("encoded", realPacket);
             System.err.println();
         }
-        Thread.sleep(1000);
+        Thread.sleep(100);
         return write;
     }
 

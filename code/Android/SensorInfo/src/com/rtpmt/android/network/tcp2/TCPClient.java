@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import rtpmt.network.packet.SensorMessage;
+import rtpmt.network.packet.NetworkMessage;
+import rtpmt.network.packet.NetworkMessage.PackageInformation;
 /**
  *
  * @author kumar
@@ -55,7 +56,7 @@ public class TCPClient {
         }
     }
     
-    public boolean sendData(SensorMessage.SensorInformation data)
+    public boolean sendData(PackageInformation data)
     {
         try
         {
@@ -71,7 +72,7 @@ public class TCPClient {
         }
     }
     
-    public boolean sendDelimitedData(SensorMessage.SensorInformation data)
+    public boolean sendDelimitedData(PackageInformation data)
     {
         try
         {

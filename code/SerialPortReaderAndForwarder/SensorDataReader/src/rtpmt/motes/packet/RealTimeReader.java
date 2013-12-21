@@ -259,6 +259,8 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                 }
             }
         } catch (IOException e) {
+        }catch(Exception e){
+           
         }
     }
 

@@ -8,30 +8,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import rtpmt.motes.packet.Packetizer;
-import rtpmt.network.packet.SensorMessage.SensorInformation;
-import rtpmt.network.packet.SensorMessage.SensorInformation.LocationInformation;
-
-
-import com.example.sensorinfo.R;
-import com.ftdi.j2xx.D2xxManager;
-import com.ftdi.j2xx.FT_Device;
-import com.ftdi.j2xx.D2xxManager.D2xxException;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.rtpmt.android.network.tcp2.TCPClient;
-
+import rtpmt.location.tracker.PackageLocation;
+import rtpmt.network.packet.NetworkMessage;
+import rtpmt.network.packet.NetworkMessage.PackageInformation;
+import rtpmt.packages.Package;
+import rtpmt.packages.SensorEventHandler;
+import rtpmt.sensor.reader.SensorReader;
+import rtpmt.sensor.util.Packet;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context; 
+import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -43,9 +40,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StartActivity extends Activity {
+import com.example.sensorinfo.R;
+import com.ftdi.j2xx.D2xxManager;
+import com.ftdi.j2xx.D2xxManager.D2xxException;
+import com.ftdi.j2xx.FT_Device;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.rtpmt.android.network.tcp2.TCPClient;
+import com.rtpmt.serialport.SerialPortReader;
+
+public class StartActivity extends Activity implements SensorEventHandler {
 	public static Context appContext;
-	
+
 	static Context DeviceUARTContext;
 	D2xxManager ftdid2xx;
 	FT_Device ftDev = null;
@@ -54,7 +59,7 @@ public class StartActivity extends Activity {
 	int openIndex = 0;
 	TextView readText;
 
-	ArrayAdapter<CharSequence> portAdapter; 
+	ArrayAdapter<CharSequence> portAdapter;
 
 	Button configButton;
 	Button openButton;
@@ -77,45 +82,88 @@ public class StartActivity extends Activity {
 	public int iavailable = 0;
 	byte[] readData;
 	String readDataToText;
+	String readSensorData;
 	public boolean bReadThreadGoing = false;
 	public readThread read_thread;
-	public static Packetizer sensorPacketizer;
+	public static SensorReader sensorReader;
+	public static ArrayList<PackageInfo> packageList = new ArrayList<PackageInfo>();
 	boolean uart_configured = false;
-	
+
 	TCPClient tCPClient;
-	LocationInformation location;
-	public static SensorList<Long,Integer> sensorList = new SensorList<Long,Integer>();
-	
-	//private String host = "saranlap.student.rit.edu";
-	//private String host = "apurv.student.rit.edu";
-	private String host = "192.168.1.128";
-	private int port = 3000;
-	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        appContext = getApplicationContext();
+	Location location;
+	// public static SensorList<Long,Integer> sensorList = new
+	// SensorList<Long,Integer>();
+	// public static Map sensorMap = new HashMap();
 
-       //ActionBar Initialization
-        ActionBar actionbar = getActionBar();
-        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-        ActionBar.Tab TimeIntervalTab = actionbar.newTab().setText("Time Interval");
-        ActionBar.Tab ThresholdTab = actionbar.newTab().setText("Threshold");
-        ActionBar.Tab LogTab = actionbar.newTab().setText("Logs");
-        
-        Fragment PlayerFragment = new TimePeriod(); //Time Period (Response Rate)
-        Fragment StationsFragment = new Threshold(); //Threshold
+	// private String host = "saranlap.student.rit.edu";
+	// private String host = "apurv.student.rit.edu";
+	private String host = "54.204.32.227";
+	private int port = 8080;
+	private static final boolean IS_REALTIME = true;
+	private PackageLocation packageLocation;
 
-        TimeIntervalTab.setTabListener(new MyTabsListener(PlayerFragment));
-        ThresholdTab.setTabListener(new MyTabsListener(StationsFragment));
-        ThresholdTab.setTabListener(new MyTabsListener(StationsFragment));
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+		appContext = getApplicationContext();
 
-        actionbar.addTab(TimeIntervalTab);
-        actionbar.addTab(ThresholdTab);
-        
+		// ActionBar Initialization
+		ActionBar actionbar = getActionBar();
+		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// ActionBar.Tab TimeIntervalTab =
+		// actionbar.newTab().setText("Time Interval");
+		ActionBar.Tab SettingsTab = actionbar.newTab().setText("Settings");
+		ActionBar.Tab LogTab = actionbar.newTab().setText("Logs");
+		ActionBar.Tab ConnectTab = actionbar.newTab().setText("Connections");
+		ActionBar.Tab SensorTab = actionbar.newTab().setText("Add Sensor");
+		ActionBar.Tab FragmentTab = actionbar.newTab().setText("Sensors");
+
+		// Fragment PlayerFragment = new TimePeriod(); //Time Period (Response
+		// Rate)
+		Fragment StationsFragment = new Settings(); // Threshold
+		Fragment LogsFragment = new Logs(); // Logs
+		Fragment ConnectsFragment = new ConnectList(); // List of sensor
+														// connections
+		Fragment AddSensorFragment = new AddSensor();
+		// Fragment SensorFragment = new ConnectionFragment();
+
+		/*
+		 * SensorFragment.setArguments(getIntent().getExtras());
+		 * getFragmentManager().beginTransaction() .add(R.id.fragment_container,
+		 * SensorFragment).commit();
+		 */
+
+		// Create fragment and give it an argument specifying the article it
+		// should show
+		// SensorInfoFragment newFragment = new SensorInfoFragment();
+
+		// TimeIntervalTab.setTabListener(new MyTabsListener(PlayerFragment));
+		SettingsTab.setTabListener(new MyTabsListener(StationsFragment));
+		LogTab.setTabListener(new MyTabsListener(LogsFragment));
+		ConnectTab.setTabListener(new MyTabsListener(ConnectsFragment));
+		SensorTab.setTabListener(new MyTabsListener(AddSensorFragment));
+		// FragmentTab.setTabListener(new MyTabsListener (SensorFragment));
+
+		actionbar.addTab(ConnectTab);
+		// actionbar.addTab(TimeIntervalTab);
+		actionbar.addTab(SettingsTab);
+		actionbar.addTab(LogTab);
+		actionbar.addTab(SensorTab);
+		// actionbar.addTab(FragmentTab);
+
+		/*
+		 * if (findViewById(R.id.fragment_container) != null) {
+		 * 
+		 * if (savedInstanceState != null) { return; }
+		 * 
+		 * }
+		 */
+
+		packageLocation = new PackageLocation(this);
+
 		Log.i("SensorDisplay", "Entered SensorDisplay");
 		try {
 			ftdid2xx = D2xxManager.getInstance(this);
@@ -124,7 +172,7 @@ public class StartActivity extends Activity {
 		}
 
 		readData = new byte[readLength];
-		
+
 		readText = (TextView) findViewById(R.id.readValues);
 		readText.setMovementMethod(new ScrollingMovementMethod());
 
@@ -143,15 +191,14 @@ public class StartActivity extends Activity {
 			connectFunction();
 		}
 
-		// Config
+		// Configuration
 		if (DevCount <= 0 || ftDev == null) {
 			Log.i("SensorDisplay", "Device not open yet at config");
 			Toast.makeText(DeviceUARTContext, "Device not open yet...",
 					Toast.LENGTH_SHORT).show();
 		} else {
 			SetConfig(baudRate, dataBit, stopBit, parity, flowControl);
-			
-			
+
 		}
 
 		// Read
@@ -168,24 +215,22 @@ public class StartActivity extends Activity {
 			Log.i("SensorDisplay", "Read started");
 			EnableRead();
 		}
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
-    }
+	}
 
-    
-	
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
-    }
-    
-    public void EnableRead() {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+	}
+
+	public void EnableRead() {
 		Log.i("SensorDisplay", "inside EnableRead");
 
 		Log.i("SensorDisplay", "EnableReadFlag set: " + iEnableReadFlag);
@@ -200,32 +245,31 @@ public class StartActivity extends Activity {
 		}
 	}
 
-
 	@SuppressLint("HandlerLeak")
 	final Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-				Log.i("SensorDisplay", "iavailable > 0");
-				
-				readText.setText(readDataToText+" "+isNetworkAvailable()+"\n\r"+readText.getText());
-			
-				
+			Log.i("SensorDisplay", readDataToText);
+
+			readText.setText(readDataToText + " " + isNetworkAvailable()
+					+ "\n\r" + readText.getText());
+
 		}
 	};
 
 	private class readThread extends Thread {
 		Handler mHandler;
-		Packetizer sensorPacketizer;
+		SensorReader sensorPacketizer;
 		boolean connectionAvailable = true;
 		boolean serverAvailable;
-		
-		readThread(final Handler h, final Packetizer sensorPacketizer) {
+
+		readThread(final Handler h, final SensorReader sensorPacketizer) {
 			mHandler = h;
-			this.sensorPacketizer  = sensorPacketizer;
+			this.sensorPacketizer = sensorPacketizer;
 			this.setPriority(Thread.MIN_PRIORITY);
 		}
-		
-		private boolean connectToServer(){
+
+		private boolean connectToServer() {
 			try {
 				Log.i("SensorDisplay", "Init TCP started");
 				tCPClient = new TCPClient();
@@ -234,8 +278,8 @@ public class StartActivity extends Activity {
 				Log.i("SensorDisplay", "TCPClient Initiated");
 			} catch (Exception ex) {
 				serverAvailable = false;
-			} //TODO TCPClient configurable
-			
+			} // TODO TCPClient configurable
+
 			return serverAvailable;
 		}
 
@@ -243,144 +287,160 @@ public class StartActivity extends Activity {
 		public void run() {
 			Log.i("SensorDisplay", "readThread started");
 			Log.i("SensorDisplay", "Before TCP init");
-			
+
 			String packageName = getPackageName();
 			String folderName = null;
 			try {
 				folderName = getPackageManager().getPackageInfo(packageName, 0).applicationInfo.dataDir;
 			} catch (NameNotFoundException e1) {
-				System.out.println("File Exception: "+e1.toString());
+				System.out.println("File Exception: " + e1.toString());
 			}
-			
-			File file = new File(folderName+"/dataBuffer.proto");
+
+			File file = new File(folderName + "/dataBuffer.proto");
 			if (!file.exists()) {
-			        try {
-			            file.createNewFile();
-			        } catch (IOException e) {
-			            e.printStackTrace();
-			        }
+				try {
+					file.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-			
-			
-			
+
 			connectToServer();
 			Log.i("SensorDisplay", "After TCP init");
-			
+            if(null == Looper.myLooper())
+            {
+                    Looper.prepare();
+                    Log.i("SensorDisplay", "looper prepared");
+            }    
+		
 			try {
-				for (;;){
-					SensorInformation sensorInfo = sensorPacketizer.readPacket();
-					if(sensorInfo != null)
-					for (SensorInformation.Sensor sensor : sensorInfo
-							.getSensorsList()) {
-						readDataToText = sensor.getSensorType().name() + " : "
-								+ sensor.getSensorValue() + " "
-								+ sensor.getSensorUnit() + "   "
-								+ sensorInfo.getTimeStamp();
-						location = sensorInfo.getLocation();
-						Log.i("SensorValue:",  readDataToText);
-						Message msg = mHandler.obtainMessage();
-						mHandler.sendMessage(msg);
+				for (;;) {
+					Packet packet = sensorReader.readPacket();
+					//TODO make getLocation function returns the location info object 
+					// instead of mapping latitude and longitude
+					location = packageLocation.getLocation();
+					rtpmt.location.tracker.Location locationInfo = new rtpmt.location.tracker.Location();
+					if(location!=null){
+						locationInfo.setLatitude(location.getLatitude());
+						locationInfo.setLongitude(location.getLongitude());
 					}
+					else{
+						locationInfo.setLatitude(45.00);
+						locationInfo.setLongitude(46.00);
+					}
+					NetworkMessage.PackageInformation sensorInfo = packet
+							.getRealTimeMessage(locationInfo);
+					if (sensorInfo != null)
+						for (PackageInformation.Sensor sensor : sensorInfo
+								.getSensorsList()) {
+							readDataToText = sensor.getSensorType().name()
+									+ " : " + sensor.getSensorValue() + " "
+									+ sensor.getSensorUnit() + "   "
+									+ sensorInfo.getTimeStamp();
+
+							Log.i("SensorValue:", readDataToText);
+							Message msg = mHandler.obtainMessage();
+							mHandler.sendMessage(msg);
+						}
 
 					System.out.println();
 					System.out.flush();
 
 					// Sending data to server
-										
-					if(isNetworkAvailable())
-					{
-						if(!connectionAvailable && connectToServer())
-						{
-							//TODO Add code here to send data from file and then empty the file
+
+					if (isNetworkAvailable()) {
+						if (!connectionAvailable && connectToServer()) {
+							// TODO Add code here to send data from file and
+							// then empty the file
 							connectionAvailable = true;
 							readDataToText = "";
-							
-							FileInputStream fis = new FileInputStream(folderName+"/dataBuffer.proto");
+
+							FileInputStream fis = new FileInputStream(
+									folderName + "/dataBuffer.proto");
 							DataInputStream dis = new DataInputStream(fis);
-							
-							for(;;)
-							{		
-								SensorInformation sensorInfoReadByte;
-								
-								try
-								{
-									Log.i("SensorDisplay", "Inside Read From File");
-									sensorInfoReadByte = SensorInformation.parseDelimitedFrom(dis);	
-									
+
+							for (;;) {
+								PackageInformation sensorInfoReadByte;
+
+								try {
+									Log.i("SensorDisplay",
+											"Inside Read From File");
+									sensorInfoReadByte = PackageInformation
+											.parseDelimitedFrom(dis);
+
 									Log.i("SensorDisplay", "Delimited Parse");
-									
-									if(sensorInfoReadByte == null)
-									{
-										Log.i("SensorDisplay", "sensorInfoReadByte == null");
+
+									if (sensorInfoReadByte == null) {
+										Log.i("SensorDisplay",
+												"sensorInfoReadByte == null");
 										break;
 									}
-									
+
 									readDataToText += "Resending buffer data\n\r";
 									Message msg = mHandler.obtainMessage();
 									mHandler.sendMessage(msg);
-									
+
 									tCPClient.sendData(sensorInfoReadByte);
-								}
-								catch(InvalidProtocolBufferException e)
-								{
-									System.out.println("Exception: "+e.toString());
+								} catch (InvalidProtocolBufferException e) {
+									System.out.println("Exception: "
+											+ e.toString());
 									break;
 								}
-								
-								
+
 							}
-							
+
 							dis.close();
 							fis.close();
 							file.delete();
 						}
-						
-						
+
 						// If network exists send the data to the server
 						Log.i("SensorDisplay", "Before sending server data");
 						tCPClient.sendData(sensorInfo);
 						Log.i("SensorDisplay", "Sending Data to server");
-					}
-					else
-					{
+					} else {
 						// If network does not exist, store to a file
 						connectionAvailable = false;
-						
-						Log.i("SensorDisplay", "Before saving server data to file");
+
+						Log.i("SensorDisplay",
+								"Before saving server data to file");
 						try {
-						    // Write the new address book back to disk.
-	
-						   FileOutputStream output = new FileOutputStream(folderName+"/dataBuffer.proto", true);
-						   DataOutputStream dos = new DataOutputStream(output);            
-						   	   sensorInfo.writeDelimitedTo(dos);
-						  // dos.close();
-						   output.close();   
-						   Log.i("SensorDisplay", "After saving server data to file");
-						} catch (Exception e) {   
-							Log.i("SensorDisplay", "Saving server data to file Exception: "+e);
+							// Write the new address book back to disk.
+
+							FileOutputStream output = new FileOutputStream(
+									folderName + "/dataBuffer.proto", true);
+							DataOutputStream dos = new DataOutputStream(output);
+							sensorInfo.writeDelimitedTo(dos);
+							// dos.close();
+							output.close();
+							Log.i("SensorDisplay",
+									"After saving server data to file");
+						} catch (Exception e) {
+							Log.i("SensorDisplay",
+									"Saving server data to file Exception: "
+											+ e);
 						}
 					}
-					
+
 				}
 			} catch (IOException ex) {
 				System.out.println(ex.toString());
 			}
 		}
 	}
-	
-	private boolean isNetworkAvailable() 
-	{
 
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    boolean connectionAvailable = false;
-	    if(activeNetworkInfo != null && activeNetworkInfo.isAvailable())
-	    	connectionAvailable = true;
-	    
-	    return connectionAvailable;
+	private boolean isNetworkAvailable() {
+
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		boolean connectionAvailable = false;
+		if (activeNetworkInfo != null && activeNetworkInfo.isAvailable())
+			connectionAvailable = true;
+
+		return connectionAvailable;
 	}
-	
+
 	/*
 	 * Initialize TCP Client
 	 */
@@ -464,16 +524,21 @@ public class StartActivity extends Activity {
 			if (false == bReadThreadGoing) {
 				Log.i("SensorDisplay", "false == bReadThreadGoing");
 				Log.i("SensorDisplay", "readThread started");
-
-				sensorPacketizer = new Packetizer("SensorData", this, ftDev);
+				
+				SerialPortReader serialPort = new SerialPortReader(ftDev);
+				sensorReader = new SensorReader(serialPort,IS_REALTIME );
+				sensorReader.addSensorEventHandler(this);
 				try {
-					sensorPacketizer.open(null);
+					sensorReader.open();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				 read_thread = new readThread(handler,sensorPacketizer);
-				 read_thread.start();
+				read_thread = new readThread(handler, sensorReader);
+				read_thread.start();
 				bReadThreadGoing = true;
 			}
 
@@ -483,7 +548,7 @@ public class StartActivity extends Activity {
 					"open device port(" + tmpProtNumber + ") NG",
 					Toast.LENGTH_LONG).show();
 		}
-		
+
 	}
 
 	public void SetConfig(int baud, byte dataBits, byte stopBits, byte parity,
@@ -573,21 +638,32 @@ public class StartActivity extends Activity {
 		Toast.makeText(DeviceUARTContext, "Config done", Toast.LENGTH_SHORT)
 				.show();
 	}
-    
+
+	@Override
+	public void handleNewPacket(Packet arg0) {
+		// TODO Auto-generated met
+		
+	}
+
+	@Override
+	public void newSensorAdded(Package pack) {
+		// TODO Auto-generated method stub
+		Log.i("NewSensorAdded", pack.getShortId() + pack.getSensorId());
+	}
+
 }
-
-
 
 class MyTabsListener implements ActionBar.TabListener {
 	public Fragment fragment;
-	
-	public MyTabsListener(Fragment fragment) {
-		this.fragment = fragment;
+
+	public MyTabsListener(Fragment sensorFragment) {
+		this.fragment = sensorFragment;
 	}
-	
+
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		Toast.makeText(StartActivity.appContext, "Reselected!", Toast.LENGTH_LONG).show();
+		Toast.makeText(StartActivity.appContext, "Reselected!",
+				Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -599,5 +675,5 @@ class MyTabsListener implements ActionBar.TabListener {
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		ft.remove(fragment);
 	}
-	
+
 }
