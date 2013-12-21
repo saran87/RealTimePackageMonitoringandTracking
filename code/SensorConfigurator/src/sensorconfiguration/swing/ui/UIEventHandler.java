@@ -62,6 +62,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     private SensorClient sensorClient;
     
     private ProgressBar bar;
+    private final static String address = "saranlap.student.rit.edu";
 
     public UIEventHandler(SensorConfigurator object) throws FileNotFoundException {
         
@@ -83,7 +84,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
 
     private void initServer() {
         try {
-            sensorClient = new SensorClient("localhost", 8080);
+            sensorClient = new SensorClient(address, 8080);
             sensorClient.connect();
         } catch (Exception ex) {
             Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -241,7 +242,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     datalog = new FileOutputStream(file);
                     packetReader.readPacket();
                     datalog.close();
-                    bar.done();
+                    
                     UIObject.handleError("Sensor data read successfully");
                 }
             } catch (IOException ex) {
@@ -251,6 +252,9 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             catch (Exception ex) {
                 Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
                 UIObject.handleError("Problem with connecting to sensor.Try again");
+            }
+            finally{
+                bar.done();
             }
         } else {
             UIObject.handleError("Connect the sensor and try again");
@@ -382,7 +386,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                 message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
                 UIObject.txtLog.append(message + "\n");
             }
-            bar.setProgress(100, message);
+            bar.setProgress(100, "Reading "+message);
             try {
                 sensorInfo.writeDelimitedTo(datalog);
                 sensorClient.send(sensorInfo);

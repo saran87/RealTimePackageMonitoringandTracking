@@ -55,6 +55,7 @@ public class ProgressBar implements Runnable{
         dialog.getContentPane().paintAll(panel.getGraphics());
     }
     public void done(){
+        System.err.println("hiihihihihihiihihihiihihihihi");
         dialog.removeAll();
         this.dialog.dispose();
             dialog.setVisible(false);

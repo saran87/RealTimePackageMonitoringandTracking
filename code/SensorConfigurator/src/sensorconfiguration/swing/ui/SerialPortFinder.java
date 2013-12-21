@@ -68,9 +68,9 @@ public class SerialPortFinder {
         SensorReader packetReader = null;
         for (CommPortIdentifier commPortIdentifier : comPortList) {
             try {
-                Thread.sleep(1000);
+                
                 bar.setProgress(size++, "Reading port "+commPortIdentifier.getName());
-                Thread.sleep(1000);
+                
                 System.out.println("Port, "  + commPortIdentifier.getName() + ", is in use.");
                 //the method below returns an object of type CommPort
                 commPort = commPortIdentifier.open("RFID", TIMEOUT);
@@ -115,9 +115,10 @@ public class SerialPortFinder {
                 } catch (IOException ex) {
                     Logger.getLogger(SerialPortFinder.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
+                
             }
         }
-       
+       bar.done();
         
         return null;
         
