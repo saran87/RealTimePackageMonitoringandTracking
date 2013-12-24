@@ -75,7 +75,7 @@ Route::get('/vibrationEntry/{truck_id}/{package_id}/{timestamp}', 'VibrationCont
 
 Route::get('/shock', 'ShockController@shockData');
 
-Route::get('/shock/{truck_id}/{package_id}', 'ShockController@shockData');
+Route::get('/shock/{truck_id}/{package_id}', 'ShockController@shockOfPackageInTruck');
 
 Route::get('/shockgraph/{id}', 'ShockController@shockGraphData');
 
@@ -83,6 +83,10 @@ Route::get('/shockLatestEntry', 'ShockController@latestEntry');
 
 
 /*Routes to get Map Data*/
+
+Route::get('/map/{truck_id}/{package_id}', 'MapController@coordinatesOfPackageInTruck');
+
+Route::get('/maps/{truck_id}/{package_id}', 'MapController@coords');
 
 
 

@@ -16,6 +16,13 @@ class ShockController extends BaseController{
 		return $shockall;
 	}
 
+	public function shockOfPackageInTruck($truck_id,$package_id){		
+
+		$shockOfPackageInTruckArr = Shock::where('package_id', $package_id)->where('truck_id',$truck_id)->get();
+
+		return $shockOfPackageInTruckArr;		
+	}
+
 	public function shockGraphData($id){
 
 		$shockGraphDataArr=Shock::find($id);
@@ -23,11 +30,12 @@ class ShockController extends BaseController{
 		return $shockGraphDataArr;
 
 	}
+	
 
 	private function intitalize($dataArray){
 
 		foreach ($dataArray as $key => $value) {
-			$this->dataArray[$key] = explode("|",$value["value"]);
+			$this->dataArray[$key] = explode(" ",$value["value"]);
 		}
 	}
 
@@ -131,6 +139,10 @@ class ShockController extends BaseController{
 		
 		return $data;
 	}
+
+	
+
+
 
 	public function latestEntry(){
 
