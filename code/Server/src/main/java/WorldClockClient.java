@@ -85,7 +85,7 @@ public class WorldClockClient {
         }
 
         // Parse options.
-        String host = "localhost";
+        String host = "54.204.32.227";
         int port = 8080;
         Collection<String> cities = new ArrayList<String>();
         cities.add("America/New_York");

@@ -1,0 +1,116 @@
+<div class="sections" id="shockSection" ng-controller="shockController">
+
+<div class="col-md-12 sections"> 
+
+	<div class="widget">
+		<div class="widget-content" id="shockGraphSection">	
+
+      <!--<nvd3-cumulative-line-chart        
+          data="sgData"
+          id="sGraph"                
+          height="500"          
+          tooltips="true"
+          interactive="true"       
+          showLegend="true"
+          showXAxis="true"
+          showYAxis="true"
+          xAxisLabel="Hz"
+          yAxisLabel="G^2/Hz"
+          margin="{left:150,top:200,bottom:100,right:50}"
+          color="colorDefault()"
+          legendcolor="colorDefault()">
+            <svg></svg>
+      </nvd3-cumulative-line-chart> -->
+
+        <nvd3-multi-bar-chart
+        data="discdata"
+        id="showControlsExample"        
+        height="500"
+        showXAxis="true"
+        showYAxis="true"        
+        showControls="true"
+        showLegend="true"
+        xAxisTickFormat="xAxisTickFormatFunction()"
+        reduceXTicks="false"        
+        xaxisticksize="1"
+        margin="{left:100,top:200,bottom:100,right:50}"
+        xAxisLabel="Time"
+        yAxisLabel="Max G-Value"
+        staggerLabels="true"
+        tooltips="true"
+        interactive="true"
+        stacked="true"        
+        >
+          <svg></svg>
+    </nvd3-multi-bar-chart>
+			
+		</div>
+	</div>
+
+</div>
+
+<div class="col-md-12">
+  <div class="widget" id="shockTable">
+
+    <div class="widget-head">
+      <div class="pull-left">Shock Table
+        <a href="#" class="wminimize">
+          <i class="icon-chevron-up"></i>
+        </a>
+      </div>
+      <div class="widget-icons pull-right">
+
+        <button class="btn btn-info">
+          <i class="icon-bar-chart"></i>Download CSV</button>
+
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Shock (Max-G)</th>
+            <th>Drop-Height (m)</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr ng-repeat="sdata in shockData">
+            <td>{{sdata.timestamp | date: 'medium'}}</td>
+            <td>{{sdata.location}} <span class="text-muted">No location available fo Black-Box data</span></td>
+            <td>
+            	<span class="label label-danger">X</span> <strong> {{sdata.value.x}}</strong><br/>
+              <span class="label label-danger">Y</span> <strong> {{sdata.value.y}}</strong><br />
+              <span class="label label-danger">Z</span> <strong> {{sdata.value.z}}</strong><br />
+            </td>
+            <td>
+            	{{sdata.value.dropheight}} m
+            </td>
+          </tr>
+
+        </tbody>
+      </table>     
+
+      <div class="widget-foot">        
+
+        <div class="clearfix"></div>
+
+      </div>
+    </div>
+
+  </div> 
+ </div>  
+
+</div>
+
+  <!--/end shockSection-->
+
+
+
+
+

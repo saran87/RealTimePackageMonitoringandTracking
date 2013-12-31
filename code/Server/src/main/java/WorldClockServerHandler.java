@@ -18,18 +18,9 @@
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.example.worldclock.WorldClockProtocol.Continent;
-import io.netty.example.worldclock.WorldClockProtocol.DayOfWeek;
-import io.netty.example.worldclock.WorldClockProtocol.LocalTime;
-import io.netty.example.worldclock.WorldClockProtocol.LocalTimes;
-import io.netty.example.worldclock.WorldClockProtocol.Location;
-import io.netty.example.worldclock.WorldClockProtocol.Locations;
-
-import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.util.Calendar.*;
 import rtpmt.network.packet.NetworkMessage.PackageInformation;
 
 public class WorldClockServerHandler extends SimpleChannelInboundHandler<PackageInformation> {
