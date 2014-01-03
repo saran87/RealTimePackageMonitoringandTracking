@@ -11,15 +11,13 @@
 
 namespace Predis\Replication;
 
-use \PHPUnit_Framework_TestCase as StandardTestCase;
-
-use Predis\Command\CommandInterface;
+use PredisTestCase;
 use Predis\Profile\ServerProfile;
 
 /**
  *
  */
-class ReplicationStrategyTest extends StandardTestCase
+class ReplicationStrategyTest extends PredisTestCase
 {
     /**
      * @group disconnected
@@ -119,7 +117,6 @@ class ReplicationStrategyTest extends StandardTestCase
                 ->method('getId')
                 ->will($this->returnValue('CMDTEST'));
 
-
         $strategy->setCommandReadOnly('CMDTEST', true);
         $this->assertTrue($strategy->isReadOperation($command));
     }
@@ -135,7 +132,6 @@ class ReplicationStrategyTest extends StandardTestCase
         $command->expects($this->any())
                 ->method('getId')
                 ->will($this->returnValue('CMDTEST'));
-
 
         $strategy->setCommandReadOnly('CMDTEST', false);
         $this->assertFalse($strategy->isReadOperation($command));
@@ -236,14 +232,13 @@ class ReplicationStrategyTest extends StandardTestCase
     /**
      * Returns the list of expected supported commands.
      *
-     * @param string $type Optional type of command (based on its keys)
+     * @param  string $type Optional type of command (based on its keys)
      * @return array
      */
     protected function getExpectedCommands($type = null)
     {
         $commands = array(
             /* commands operating on the connection */
-            'EXISTS'                => 'read',
             'AUTH'                  => 'read',
             'SELECT'                => 'read',
             'ECHO'                  => 'read',

@@ -2,7 +2,7 @@
 
 # Carbon
 
-[![Build Status](https://secure.travis-ci.org/briannesbitt/Carbon.png)](http://travis-ci.org/briannesbitt/Carbon)
+[![Latest Stable Version](https://poser.pugx.org/nesbot/carbon/v/stable.png)](https://packagist.org/packages/nesbot/carbon) [![Total Downloads](https://poser.pugx.org/nesbot/carbon/downloads.png)](https://packagist.org/packages/nesbot/carbon) [![Build Status](https://secure.travis-ci.org/briannesbitt/Carbon.png)](http://travis-ci.org/briannesbitt/Carbon)
 
 A simple API extension for DateTime with PHP 5.3+
 
@@ -342,37 +342,47 @@ The getters are implemented via PHP's `__get()` method.  This enables you to acc
 {{::lint($dt = Carbon::create(2012, 9, 5, 23, 26, 11);)}}
 
 // These getters specifically return integers, ie intval()
-{{getyear::exec(var_dump($dt->year);/*pad(54)*/)}} // {{getyear_eval}}
-{{getmonth::exec(var_dump($dt->month);/*pad(54)*/)}} // {{getmonth_eval}}
-{{getday::exec(var_dump($dt->day);/*pad(54)*/)}} // {{getday_eval}}
-{{gethour::exec(var_dump($dt->hour);/*pad(54)*/)}} // {{gethour_eval}}
-{{getminute::exec(var_dump($dt->minute);/*pad(54)*/)}} // {{getminute_eval}}
-{{getsecond::exec(var_dump($dt->second);/*pad(54)*/)}} // {{getsecond_eval}}
-{{getdow::exec(var_dump($dt->dayOfWeek);/*pad(54)*/)}} // {{getdow_eval}}
-{{getdoy::exec(var_dump($dt->dayOfYear);/*pad(54)*/)}} // {{getdoy_eval}}
-{{getwoy::exec(var_dump($dt->weekOfYear);/*pad(54)*/)}} // {{getwoy_eval}}
-{{getdnm::exec(var_dump($dt->daysInMonth);/*pad(54)*/)}} // {{getdnm_eval}}
-{{getts::exec(var_dump($dt->timestamp);/*pad(54)*/)}} // {{getts_eval}}
-{{getage::exec(var_dump(Carbon::createFromDate(1975, 5, 21)->age);/*pad(54)*/)}} // {{getage_eval}} calculated vs now in the same tz
-{{getq::exec(var_dump($dt->quarter);/*pad(54)*/)}} // {{getq_eval}}
+{{getyear::exec(var_dump($dt->year);/*pad(60)*/)}} // {{getyear_eval}}
+{{getmonth::exec(var_dump($dt->month);/*pad(60)*/)}} // {{getmonth_eval}}
+{{getday::exec(var_dump($dt->day);/*pad(60)*/)}} // {{getday_eval}}
+{{gethour::exec(var_dump($dt->hour);/*pad(60)*/)}} // {{gethour_eval}}
+{{getminute::exec(var_dump($dt->minute);/*pad(60)*/)}} // {{getminute_eval}}
+{{getsecond::exec(var_dump($dt->second);/*pad(60)*/)}} // {{getsecond_eval}}
+{{getdow::exec(var_dump($dt->dayOfWeek);/*pad(60)*/)}} // {{getdow_eval}}
+{{getdoy::exec(var_dump($dt->dayOfYear);/*pad(60)*/)}} // {{getdoy_eval}}
+{{getwoy::exec(var_dump($dt->weekOfYear);/*pad(60)*/)}} // {{getwoy_eval}}
+{{getdnm::exec(var_dump($dt->daysInMonth);/*pad(60)*/)}} // {{getdnm_eval}}
+{{getts::exec(var_dump($dt->timestamp);/*pad(60)*/)}} // {{getts_eval}}
+{{getage::exec(var_dump(Carbon::createFromDate(1975, 5, 21)->age);/*pad(60)*/)}} // {{getage_eval}} calculated vs now in the same tz
+{{getq::exec(var_dump($dt->quarter);/*pad(60)*/)}} // {{getq_eval}}
 
 // Returns an int of seconds difference from UTC (+/- sign included)
-{{get1::exec(var_dump(Carbon::createFromTimestampUTC(0)->offset);/*pad(54)*/)}} // {{get1_eval}}
-{{get2::exec(var_dump(Carbon::createFromTimestamp(0)->offset);/*pad(54)*/)}} // {{get2_eval}}
+{{get1::exec(var_dump(Carbon::createFromTimestampUTC(0)->offset);/*pad(60)*/)}} // {{get1_eval}}
+{{get2::exec(var_dump(Carbon::createFromTimestamp(0)->offset);/*pad(60)*/)}} // {{get2_eval}}
 
 // Returns an int of hours difference from UTC (+/- sign included)
-{{get3::exec(var_dump(Carbon::createFromTimestamp(0)->offsetHours);/*pad(54)*/)}} // {{get3_eval}}
+{{get3::exec(var_dump(Carbon::createFromTimestamp(0)->offsetHours);/*pad(60)*/)}} // {{get3_eval}}
 
 // Indicates if day light savings time is on
-{{get4::exec(var_dump(Carbon::createFromDate(2012, 1, 1)->dst);/*pad(54)*/)}} // {{get4_eval}}
+{{getdst::exec(var_dump(Carbon::createFromDate(2012, 1, 1)->dst);/*pad(60)*/)}} // {{getdst_eval}}
+{{getdst2::exec(var_dump(Carbon::createFromDate(2012, 9, 1)->dst);/*pad(60)*/)}} // {{getdst2_eval}}
+
+// Indicates if the instance is in the same timezone as the local timzezone
+{{getLocal::exec(var_dump(Carbon::now()->local);/*pad(60)*/)}} // {{getLocal_eval}}
+{{getLocal2::exec(var_dump(Carbon::now('America/Vancouver')->local);/*pad(60)*/)}} // {{getLocal2_eval}}
+
+// Indicates if the instance is in the UTC timezone
+{{getUTC::exec(var_dump(Carbon::now()->utc);/*pad(60)*/)}} // {{getUTC_eval}}
+{{getUTC2::exec(var_dump(Carbon::now('Europe/London')->utc);/*pad(60)*/)}} // {{getUTC2_eval}}
+{{getUTC3::exec(var_dump(Carbon::createFromTimestampUTC(0)->utc);/*pad(60)*/)}} // {{getUTC3_eval}}
 
 // Gets the DateTimeZone instance
-{{get5::exec(echo get_class(Carbon::now()->timezone);/*pad(54)*/)}} // {{get5_eval}}
-{{get6::exec(echo get_class(Carbon::now()->tz);/*pad(54)*/)}} // {{get6_eval}}
+{{get5::exec(echo get_class(Carbon::now()->timezone);/*pad(60)*/)}} // {{get5_eval}}
+{{get6::exec(echo get_class(Carbon::now()->tz);/*pad(60)*/)}} // {{get6_eval}}
 
 // Gets the DateTimeZone instance name, shortcut for ->timezone->getName()
-{{get7::exec(echo Carbon::now()->timezoneName;/*pad(54)*/)}} // {{get7_eval}}
-{{get8::exec(echo Carbon::now()->tzName;/*pad(54)*/)}} // {{get8_eval}}
+{{get7::exec(echo Carbon::now()->timezoneName;/*pad(60)*/)}} // {{get7_eval}}
+{{get8::exec(echo Carbon::now()->tzName;/*pad(60)*/)}} // {{get8_eval}}
 ```
 
 <a name="api-setters"/>
@@ -449,6 +459,19 @@ All of the available `toXXXString()` methods rely on the base class method [Date
 
 // ... of course format() is still available
 {{format7::exec(echo $dt->format('l jS \\of F Y h:i:s A');/*pad(50)*/)}} // {{format7_eval}}
+```
+
+You can also set the default __toString() format (which defaults to `Y-m-d H:i:s`) thats used when [type juggling](http://php.net/manual/en/language.types.type-juggling.php) occurs.
+
+```php
+{{::lint(
+Carbon::setToStringFormat('jS \o\f F, Y g:i:s a');
+)}}
+{{format8::exec(echo $dt;/*pad(50)*/)}} // {{format8_eval}}
+{{::lint(
+Carbon::resetToStringFormat();
+)}}
+{{format9::exec(echo $dt;/*pad(50)*/)}} // {{format9_eval}}
 ```
 
 Unfortunately the base class DateTime does not have any localization support.  To begin localization support a `formatLocalized($format)` method has been added.  The implementation makes a call to [strftime](http://www.php.net/strftime) using the current instance timestamp.  If you first set the current locale with [setlocale()](http://www.php.net/setlocale) then the string returned will be formatted in the correct locale.
@@ -629,11 +652,14 @@ These functions always return the **total difference** expressed in the specifie
 // diffInYears(), diffInMonths(), diffInDays()
 // diffInHours(), diffInMinutes(), diffInSeconds()
 ```
+```php
+// Carbon::average(Carbon $dt = null)
+```
 
 <a name="api-humandiff"/>
 ### Difference for Humans
 
-It is easier for humans to read `1 month ago` compared to 30 days ago.  This is a common function seen in most date libraries so I thought I would add it here as well.  It uses approximations for month being 30 days which then equates a year to 360 days.  The lone argument for the function is the other Carbon instance to diff against, and of course it defaults to `now()` if not specified.
+It is easier for humans to read `1 month ago` compared to 30 days ago.  This is a common function seen in most date libraries so I thought I would add it here as well.  It uses approximations for a month being 4 weeks. The lone argument for the function is the other Carbon instance to diff against, and of course it defaults to `now()` if not specified.
 
 This method will add a phrase after the difference value relative to the instance and the passed in instance.  There are 4 possibilities:
 
@@ -666,12 +692,16 @@ This method will add a phrase after the difference value relative to the instanc
 {{humandiff5::exec(echo $dt->diffForHumans($dt->copy()->subMonth());/*pad(62)*/)}} // {{humandiff5_eval}}
 
 {{humandiff6::exec(echo Carbon::now()->addSeconds(5)->diffForHumans();/*pad(62)*/)}} // {{humandiff6_eval}}
+
+{{humandiff7::exec(echo Carbon::now()->subDays(24)->diffForHumans();/*pad(62)*/)}} // {{humandiff7_eval}}
 ```
 
 <a name="api-modifiers"/>
 ### Modifiers
 
 These group of methods perform helpful modifications to the current instance.  Most of them are self explanatory from their names... or at least should be.  You'll also notice that the startOfXXX(), next() and previous() methods set the time to 00:00:00 and the endOfXXX() methods set the time to 23:59:59.
+
+The only one slightly different is the `average()` function.  It moves your instance to the middle date between itself and the provided Carbon argument.
 
 ```php
 {{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);/*pad(40)*/)}}
@@ -685,6 +715,24 @@ These group of methods perform helpful modifications to the current instance.  M
 
 {{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
 {{modifier4::exec(echo $dt->endOfMonth();/*pad(50)*/)}} // {{modifier4_eval}}
+
+{{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
+{{modifier15::exec(echo $dt->startOfYear();/*pad(50)*/)}} // {{modifier15_eval}}
+
+{{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
+{{modifier16::exec(echo $dt->endOfYear();/*pad(50)*/)}} // {{modifier16_eval}}
+
+{{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
+{{modifier17::exec(echo $dt->startOfDecade();/*pad(50)*/)}} // {{modifier17_eval}}
+
+{{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
+{{modifier18::exec(echo $dt->endOfDecade();/*pad(50)*/)}} // {{modifier18_eval}}
+
+{{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
+{{modifier19::exec(echo $dt->startOfCentury();/*pad(50)*/)}} // {{modifier19_eval}}
+
+{{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
+{{modifier20::exec(echo $dt->endOfCentury();/*pad(50)*/)}} // {{modifier20_eval}}
 
 {{::lint($dt = Carbon::create(2012, 1, 31, 12, 0, 0);)}}
 {{modifier5::exec(echo $dt->startOfWeek();/*pad(50)*/)}} // {{modifier5_eval}}
@@ -708,10 +756,15 @@ These group of methods perform helpful modifications to the current instance.  M
 {{::lint($dt = Carbon::create(2012, 1, 1, 12, 0, 0);)}}
 {{modifier14::exec(echo $dt->previous();/*pad(50)*/)}} // {{modifier14_eval}}
 
+{{::lint($start = Carbon::create(2014, 1, 1, 0, 0, 0);)}}
+{{::lint($end = Carbon::create(2014, 1, 30, 0, 0, 0);)}}
+{{modifierAverage::exec(echo $start->average($end);/*pad(50)*/)}} // {{modifierAverage_eval}}
+
 // others that are defined that are similar
 //   firstOfMonth(), lastOfMonth(), nthOfMonth()
 //   firstOfQuarter(), lastOfQuarter(), nthOfQuarter()
 //   firstOfYear(), lastOfYear(), nthOfYear()
+
 ```
 
 <a name="api-constants"/>
@@ -814,3 +867,5 @@ You can view the history of the Carbon project in the [history file](https://git
 ### Why the name Carbon?
 
 Read about [Carbon Dating](http://en.wikipedia.org/wiki/Radiocarbon_dating)
+
+![](https://cruel-carlota.pagodabox.com/55ce479cc1edc5e0cc5b4b6f9a7a9200)
