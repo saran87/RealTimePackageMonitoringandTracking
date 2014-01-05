@@ -178,6 +178,9 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Jenssegers\Mongodb\Model', $user);
 		$this->assertEquals(true, $user->exists);
 		$this->assertEquals('Jane Poe', $user->name);
+
+		$check = User::where('name', 'Jane Poe')->first();
+		$this->assertEquals($user, $check);
 	}
 
 	public function testDestroy()
@@ -280,6 +283,14 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 		$items = Item::all();
 		$this->assertEquals($original, $items->toArray());
 		$this->assertEquals($original[0], $items[0]->toArray());
+
+		// with date
+		$item = Item::create(array('name' => 'fork', 'type' => 'sharp'));
+		$array = $item->toArray();
+		$this->assertTrue(array_key_exists('created_at', $array));
+		$this->assertTrue(array_key_exists('updated_at', $array));
+		$this->assertTrue(is_string($array['created_at']));
+		$this->assertTrue(is_string($array['updated_at']));
 	}
 
 	public function testUnset()

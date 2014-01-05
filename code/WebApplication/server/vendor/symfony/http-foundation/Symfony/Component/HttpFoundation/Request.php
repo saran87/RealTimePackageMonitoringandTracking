@@ -480,7 +480,7 @@ class Request
 
         $request = array('g' => $_GET, 'p' => $_POST, 'c' => $_COOKIE);
 
-        $requestOrder = ini_get('request_order') ?: ini_get('variable_order');
+        $requestOrder = ini_get('request_order') ?: ini_get('variables_order');
         $requestOrder = preg_replace('#[^cgp]#', '', strtolower($requestOrder)) ?: 'gp';
 
         $_REQUEST = array();
@@ -757,12 +757,11 @@ class Request
         $clientIps = array_map('trim', explode(',', $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_IP])));
         $clientIps[] = $ip; // Complete the IP chain with the IP the request actually came from
 
-        $trustedProxies = !self::$trustedProxies ? array($ip) : self::$trustedProxies;
         $ip = $clientIps[0]; // Fallback to this when the client IP falls into the range of trusted proxies
 
         // Eliminate all IPs from the forwarded IP chain which are trusted proxies
         foreach ($clientIps as $key => $clientIp) {
-            if (IpUtils::checkIp($clientIp, $trustedProxies)) {
+            if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
                 unset($clientIps[$key]);
             }
         }
@@ -859,14 +858,14 @@ class Request
     }
 
     /**
-     * Returns the root url from which this request is executed.
+     * Returns the root URL from which this request is executed.
      *
      * The base URL never ends with a /.
      *
      * This is similar to getBasePath(), except that it also includes the
      * script filename (e.g. index.php) if one exists.
      *
-     * @return string The raw url (i.e. not urldecoded)
+     * @return string The raw URL (i.e. not urldecoded)
      *
      * @api
      */
@@ -1579,13 +1578,13 @@ class Request
             $requestUri = $this->headers->get('X_REWRITE_URL');
             $this->headers->remove('X_REWRITE_URL');
         } elseif ($this->server->get('IIS_WasUrlRewritten') == '1' && $this->server->get('UNENCODED_URL') != '') {
-            // IIS7 with URL Rewrite: make sure we get the unencoded url (double slash problem)
+            // IIS7 with URL Rewrite: make sure we get the unencoded URL (double slash problem)
             $requestUri = $this->server->get('UNENCODED_URL');
             $this->server->remove('UNENCODED_URL');
             $this->server->remove('IIS_WasUrlRewritten');
         } elseif ($this->server->has('REQUEST_URI')) {
             $requestUri = $this->server->get('REQUEST_URI');
-            // HTTP proxy reqs setup request uri with scheme and host [and port] + the url path, only use url path
+            // HTTP proxy reqs setup request URI with scheme and host [and port] + the URL path, only use URL path
             $schemeAndHttpHost = $this->getSchemeAndHttpHost();
             if (strpos($requestUri, $schemeAndHttpHost) === 0) {
                 $requestUri = substr($requestUri, strlen($schemeAndHttpHost));

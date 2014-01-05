@@ -6,6 +6,6 @@
 
 var constants = {
 
-	"ROOT": "http://localhost/master/RealTimePackageMonitoringandTracking/code/api/public/index.php/",
+	"ROOT": "http://localhost/master/RealTimePackageMonitoringandTracking/code/WebApplication/server/public/index.php/",
 	"DEFAULTSERVICE": "dashboard"
 }

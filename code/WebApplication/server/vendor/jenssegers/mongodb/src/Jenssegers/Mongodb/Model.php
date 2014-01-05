@@ -5,8 +5,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Jenssegers\Mongodb\DatabaseManager as Resolver;
-use Jenssegers\Mongodb\Builder as QueryBuilder;
+use Jenssegers\Mongodb\Query\Builder as QueryBuilder;
 use Jenssegers\Mongodb\Relations\BelongsTo;
+use Jenssegers\Mongodb\Relations\BelongsToMany;
 
 use Carbon\Carbon;
 use DateTime;
@@ -200,6 +201,44 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
     }
 
     /**
+     * Define a many-to-many relationship.
+     *
+     * @param  string  $related
+     * @param  string  $table
+     * @param  string  $foreignKey
+     * @param  string  $otherKey
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function belongsToMany($related, $collection = null, $foreignKey = null, $otherKey = null)
+    {
+        $caller = $this->getBelongsToManyCaller();
+
+        // First, we'll need to determine the foreign key and "other key" for the
+        // relationship. Once we have determined the keys we'll make the query
+        // instances as well as the relationship instances we need for this.
+        $foreignKey = $foreignKey ?: $this->getForeignKey() . 's';
+
+        $instance = new $related;
+
+        $otherKey = $otherKey ?: $instance->getForeignKey() . 's';
+
+        // If no table name was provided, we can guess it by concatenating the two
+        // models using underscores in alphabetical order. The two model names
+        // are transformed to snake case from their default CamelCase also.
+        if (is_null($collection))
+        {
+            $collection = $instance->getTable();
+        }
+
+        // Now we're ready to create a new query builder for the related model and
+        // the relationship instances for the relation. The relations will set
+        // appropriate query constraint and entirely manages the hydrations.
+        $query = $instance->newQuery();
+
+        return new BelongsToMany($query, $this, $collection, $foreignKey, $otherKey, $caller['function']);
+    }
+
+    /**
      * Get a new query builder instance for the connection.
      *
      * @return Builder
@@ -225,15 +264,30 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
             {
                 $value = (string) $value;
             }
+        }
 
+        parent::setRawAttributes($attributes, $sync);
+    }
+
+    /**
+     * Convert the model's attributes to an array.
+     *
+     * @return array
+     */
+    public function attributesToArray()
+    {
+        $attributes = parent::attributesToArray();
+
+        foreach ($attributes as &$value)
+        {
             // Convert MongoDate to string
-            else if ($value instanceof MongoDate)
+            if ($value instanceof MongoDate)
             {
                 $value = $this->asDateTime($value)->format('Y-m-d H:i:s');
             }
         }
 
-        parent::setRawAttributes($attributes, $sync);
+        return $attributes;
     }
 
     /**
