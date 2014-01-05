@@ -14,7 +14,6 @@
  * under the License.
  */
 
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -23,13 +22,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Sends a list of continent/city pairs to a {@link WorldClockServer} to
- * get the local times of the specified cities.
+ * Sends a list of continent/city pairs to a {@link WorldClockServer} to get the
+ * local times of the specified cities.
  */
 public class WorldClockClient {
 
@@ -49,29 +49,29 @@ public class WorldClockClient {
         try {
             Bootstrap b = new Bootstrap();
             b.group(group)
-             .channel(NioSocketChannel.class)
-             .handler(new WorldClockClientInitializer());
+                    .channel(NioSocketChannel.class)
+                    .handler(new WorldClockClientInitializer());
 
             // Make a new connection.
             Channel ch = b.connect(host, port).sync().channel();
 
             // Get the handler instance to initiate the request.
-            WorldClockClientHandler handler =
-                ch.pipeline().get(WorldClockClientHandler.class);
-            
+            WorldClockClientHandler handler
+                    = ch.pipeline().get(WorldClockClientHandler.class);
+
             // Request and get the response.
             List<String> response = handler.getLocalTimes(cities);
-            
+
             // Close the connection.
             ch.close();
             group.shutdownGracefully();
             /*
-            // Print the response at last but not least.
-            Iterator<String> i1 = cities.iterator();
-            Iterator<String> i2 = response.iterator();
-            while (i1.hasNext()) {
-                System.out.format("%28s: %s%n", i1.next(), i2.next());
-            }*/
+             // Print the response at last but not least.
+             Iterator<String> i1 = cities.iterator();
+             Iterator<String> i2 = response.iterator();
+             while (i1.hasNext()) {
+             System.out.format("%28s: %s%n", i1.next(), i2.next());
+             }*/
         } finally {
             group.shutdownGracefully();
         }
@@ -81,7 +81,7 @@ public class WorldClockClient {
         // Print usage if necessary.
         if (args.length < 3) {
             printUsage();
-           // return;
+            // return;
         }
 
         // Parse options.
@@ -99,18 +99,18 @@ public class WorldClockClient {
 
     private static void printUsage() {
         System.err.println(
-                "Usage: " + WorldClockClient.class.getSimpleName() +
-                " <host> <port> <continent/city_name> ...");
+                "Usage: " + WorldClockClient.class.getSimpleName()
+                + " <host> <port> <continent/city_name> ...");
         System.err.println(
-                "Example: " + WorldClockClient.class.getSimpleName() +
-                " localhost 8080 America/New_York Asia/Seoul");
+                "Example: " + WorldClockClient.class.getSimpleName()
+                + " localhost 8080 America/New_York Asia/Seoul");
     }
 
     private static final Pattern CITY_PATTERN = Pattern.compile("^[_A-Za-z]+/[_A-Za-z]+$");
 
     private static List<String> parseCities(String[] args, int offset) {
         List<String> cities = new ArrayList<String>();
-        for (int i = offset; i < args.length; i ++) {
+        for (int i = offset; i < args.length; i++) {
             if (!CITY_PATTERN.matcher(args[i]).matches()) {
                 System.err.println("Syntax error: '" + args[i] + '\'');
                 printUsage();

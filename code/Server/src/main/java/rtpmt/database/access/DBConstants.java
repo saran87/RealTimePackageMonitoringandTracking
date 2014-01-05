@@ -33,4 +33,5 @@ public class DBConstants {
     public final static String DB_ADDRESS = "54.243.241.254";
     public final static String DB_NAME = "realTimeDataDb";
     public final static String LOCATION = "loc";
+    public final static String IS_ABOVE_THRESHOLD = "is_above_threshold";
 }

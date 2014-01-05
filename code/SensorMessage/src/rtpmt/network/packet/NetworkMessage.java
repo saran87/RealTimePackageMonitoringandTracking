@@ -164,6 +164,16 @@ public final class NetworkMessage {
      */
     com.google.protobuf.ByteString
         getCommentsBytes();
+
+    // optional bool isAboveThreshold = 11;
+    /**
+     * <code>optional bool isAboveThreshold = 11;</code>
+     */
+    boolean hasIsAboveThreshold();
+    /**
+     * <code>optional bool isAboveThreshold = 11;</code>
+     */
+    boolean getIsAboveThreshold();
   }
   /**
    * Protobuf type {@code rtpmt.network.packet.PackageInformation}
@@ -284,6 +294,11 @@ public final class NetworkMessage {
             case 82: {
               bitField0_ |= 0x00000080;
               comments_ = input.readBytes();
+              break;
+            }
+            case 88: {
+              bitField0_ |= 0x00000100;
+              isAboveThreshold_ = input.readBool();
               break;
             }
           }
@@ -2851,6 +2866,22 @@ public final class NetworkMessage {
       }
     }
 
+    // optional bool isAboveThreshold = 11;
+    public static final int ISABOVETHRESHOLD_FIELD_NUMBER = 11;
+    private boolean isAboveThreshold_;
+    /**
+     * <code>optional bool isAboveThreshold = 11;</code>
+     */
+    public boolean hasIsAboveThreshold() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    /**
+     * <code>optional bool isAboveThreshold = 11;</code>
+     */
+    public boolean getIsAboveThreshold() {
+      return isAboveThreshold_;
+    }
+
     private void initFields() {
       sensorId_ = "";
       packageId_ = "";
@@ -2862,6 +2893,7 @@ public final class NetworkMessage {
       messageType_ = rtpmt.network.packet.NetworkMessage.PackageInformation.MessageType.CONFIG;
       isRealTime_ = false;
       comments_ = "";
+      isAboveThreshold_ = false;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2943,6 +2975,9 @@ public final class NetworkMessage {
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         output.writeBytes(10, getCommentsBytes());
       }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeBool(11, isAboveThreshold_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2991,6 +3026,10 @@ public final class NetworkMessage {
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(10, getCommentsBytes());
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(11, isAboveThreshold_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3143,6 +3182,8 @@ public final class NetworkMessage {
         bitField0_ = (bitField0_ & ~0x00000100);
         comments_ = "";
         bitField0_ = (bitField0_ & ~0x00000200);
+        isAboveThreshold_ = false;
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
 
@@ -3225,6 +3266,10 @@ public final class NetworkMessage {
           to_bitField0_ |= 0x00000080;
         }
         result.comments_ = comments_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.isAboveThreshold_ = isAboveThreshold_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3324,6 +3369,9 @@ public final class NetworkMessage {
           bitField0_ |= 0x00000200;
           comments_ = other.comments_;
           onChanged();
+        }
+        if (other.hasIsAboveThreshold()) {
+          setIsAboveThreshold(other.getIsAboveThreshold());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -4385,6 +4433,39 @@ public final class NetworkMessage {
         return this;
       }
 
+      // optional bool isAboveThreshold = 11;
+      private boolean isAboveThreshold_ ;
+      /**
+       * <code>optional bool isAboveThreshold = 11;</code>
+       */
+      public boolean hasIsAboveThreshold() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
+      }
+      /**
+       * <code>optional bool isAboveThreshold = 11;</code>
+       */
+      public boolean getIsAboveThreshold() {
+        return isAboveThreshold_;
+      }
+      /**
+       * <code>optional bool isAboveThreshold = 11;</code>
+       */
+      public Builder setIsAboveThreshold(boolean value) {
+        bitField0_ |= 0x00000400;
+        isAboveThreshold_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool isAboveThreshold = 11;</code>
+       */
+      public Builder clearIsAboveThreshold() {
+        bitField0_ = (bitField0_ & ~0x00000400);
+        isAboveThreshold_ = false;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:rtpmt.network.packet.PackageInformation)
     }
 
@@ -5127,7 +5208,7 @@ public final class NetworkMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\024NetworkMessage.proto\022\024rtpmt.network.pa" +
-      "cket\"\330\007\n\022PackageInformation\022\020\n\010sensorId\030" +
+      "cket\"\362\007\n\022PackageInformation\022\020\n\010sensorId\030" +
       "\001 \002(\t\022\021\n\tpackageId\030\002 \002(\t\022\017\n\007truckId\030\003 \001(" +
       "\t\022N\n\010location\030\004 \001(\0132<.rtpmt.network.pack" +
       "et.PackageInformation.LocationInformatio" +
@@ -5137,24 +5218,25 @@ public final class NetworkMessage {
       "mation.Config\022\021\n\ttimeStamp\030\007 \002(\004\022I\n\013mess" +
       "ageType\030\010 \002(\01624.rtpmt.network.packet.Pac",
       "kageInformation.MessageType\022\022\n\nisRealTim" +
-      "e\030\t \002(\010\022\020\n\010comments\030\n \001(\t\032:\n\023LocationInf" +
-      "ormation\022\020\n\010latitude\030\001 \002(\001\022\021\n\tlongitude\030" +
-      "\002 \002(\001\032\207\001\n\006Sensor\022T\n\nsensorType\030\001 \002(\01623.r" +
-      "tpmt.network.packet.PackageInformation.S" +
-      "ensorType:\013TEMPERATURE\022\023\n\013sensorValue\030\002 " +
-      "\002(\t\022\022\n\nsensorUnit\030\003 \002(\t\032\300\001\n\006Config\022T\n\nse" +
-      "nsorType\030\001 \002(\01623.rtpmt.network.packet.Pa" +
-      "ckageInformation.SensorType:\013TEMPERATURE" +
-      "\022\024\n\014maxThreshold\030\002 \002(\001\022\024\n\014minThreshold\030\003",
-      " \001(\001\022\022\n\ntimePeriod\030\004 \001(\005\022 \n\030timePeriodAf" +
-      "terThreshold\030\005 \002(\005\"\177\n\nSensorType\022\017\n\013TEMP" +
-      "ERATURE\020\000\022\014\n\010HUMIDITY\020\001\022\016\n\nVIBRATIONX\020\002\022" +
-      "\016\n\nVIBRATIONY\020\003\022\016\n\nVIBRATIONZ\020\004\022\n\n\006SHOCK" +
-      "X\020\005\022\n\n\006SHOCKY\020\006\022\n\n\006SHOCKZ\020\007\"*\n\013MessageTy" +
-      "pe\022\n\n\006CONFIG\020\000\022\017\n\013SENSOR_INFO\020\001\"I\n\010Packa" +
-      "ges\022=\n\013packageInfo\030\001 \003(\0132(.rtpmt.network" +
-      ".packet.PackageInformationB&\n\024rtpmt.netw" +
-      "ork.packetB\016NetworkMessage"
+      "e\030\t \002(\010\022\020\n\010comments\030\n \001(\t\022\030\n\020isAboveThre" +
+      "shold\030\013 \001(\010\032:\n\023LocationInformation\022\020\n\010la" +
+      "titude\030\001 \002(\001\022\021\n\tlongitude\030\002 \002(\001\032\207\001\n\006Sens" +
+      "or\022T\n\nsensorType\030\001 \002(\01623.rtpmt.network.p" +
+      "acket.PackageInformation.SensorType:\013TEM" +
+      "PERATURE\022\023\n\013sensorValue\030\002 \002(\t\022\022\n\nsensorU" +
+      "nit\030\003 \002(\t\032\300\001\n\006Config\022T\n\nsensorType\030\001 \002(\016" +
+      "23.rtpmt.network.packet.PackageInformati" +
+      "on.SensorType:\013TEMPERATURE\022\024\n\014maxThresho",
+      "ld\030\002 \002(\001\022\024\n\014minThreshold\030\003 \001(\001\022\022\n\ntimePe" +
+      "riod\030\004 \001(\005\022 \n\030timePeriodAfterThreshold\030\005" +
+      " \002(\005\"\177\n\nSensorType\022\017\n\013TEMPERATURE\020\000\022\014\n\010H" +
+      "UMIDITY\020\001\022\016\n\nVIBRATIONX\020\002\022\016\n\nVIBRATIONY\020" +
+      "\003\022\016\n\nVIBRATIONZ\020\004\022\n\n\006SHOCKX\020\005\022\n\n\006SHOCKY\020" +
+      "\006\022\n\n\006SHOCKZ\020\007\"*\n\013MessageType\022\n\n\006CONFIG\020\000" +
+      "\022\017\n\013SENSOR_INFO\020\001\"I\n\010Packages\022=\n\013package" +
+      "Info\030\001 \003(\0132(.rtpmt.network.packet.Packag" +
+      "eInformationB&\n\024rtpmt.network.packetB\016Ne" +
+      "tworkMessage"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -5166,7 +5248,7 @@ public final class NetworkMessage {
           internal_static_rtpmt_network_packet_PackageInformation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_rtpmt_network_packet_PackageInformation_descriptor,
-              new java.lang.String[] { "SensorId", "PackageId", "TruckId", "Location", "Sensors", "Configs", "TimeStamp", "MessageType", "IsRealTime", "Comments", });
+              new java.lang.String[] { "SensorId", "PackageId", "TruckId", "Location", "Sensors", "Configs", "TimeStamp", "MessageType", "IsRealTime", "Comments", "IsAboveThreshold", });
           internal_static_rtpmt_network_packet_PackageInformation_LocationInformation_descriptor =
             internal_static_rtpmt_network_packet_PackageInformation_descriptor.getNestedTypes().get(0);
           internal_static_rtpmt_network_packet_PackageInformation_LocationInformation_fieldAccessorTable = new

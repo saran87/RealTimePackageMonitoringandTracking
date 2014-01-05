@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static rtpmt.motes.packet.RealTimeReader.DEBUG;
 import rtpmt.packages.Package;
 import rtpmt.packages.PackageList;
 import rtpmt.packages.SensorEventHandler;
