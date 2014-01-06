@@ -1,4 +1,4 @@
-/*! angularjs-nvd3-directives - v0.0.4-beta - 2013-12-08
+/*! angularjs-nvd3-directives - v0.0.4-beta - 2013-12-19
 * http://cmaurer.github.io/angularjs-nvd3-directives
 * Copyright (c) 2013 Christian Maurer; Licensed Apache License, v2.0 */
 (function()
@@ -176,10 +176,10 @@
                     color: '&',
                     align: '@',
                     rightalign: '@',
-                    udpateatate: '@',
+                    updatestate: '@',
                     radiobuttonmode: '@',
                     x: '&',
-                    y: '&',
+                    y: '&'
                 },
                 link: function(scope, element, attrs){
                     scope.$watch('data', function(data){
@@ -735,42 +735,6 @@ function initializeMargin(scope, attrs){
         scope.margin = margin;
     }
 
-    function initializeWidth(scope, attrs, element){
-        'use strict';
-        var marginAdjustment = 0;
-        if(attrs.width === undefined){
-            scope.width = element[0].parentElement.offsetWidth;
-        } else {
-            scope.width = (+attrs.width);
-        }
-        if(!scope.margin.left || !scope.margin.right){
-            initializeMargin(scope, attrs, element);
-        }
-        marginAdjustment = (scope.margin.left + scope.margin.right);
-        scope.width = (((scope.width - marginAdjustment) > 0) ? (scope.width - marginAdjustment) : 0);
-    }
-
-    function initializeHeight(scope, attrs, element){
-        'use strict';
-        var marginAdjustment = 0;
-        if(attrs.height === undefined){
-            scope.height = element[0].parentElement.offsetHeight;
-        } else {
-            scope.height = (+attrs.height);
-        }
-        if(!scope.margin.top || !scope.margin.bottom){
-            initializeMargin(scope, attrs, element);
-        }
-        marginAdjustment = (scope.margin.top + scope.margin.bottom);
-        scope.height = (((scope.height - marginAdjustment) > 0) ? (scope.height - marginAdjustment) : 0);
-    }
-
-    function setupDimensions(scope, attrs, element) {
-        'use strict';
-        initializeWidth(scope, attrs, element);
-        initializeHeight(scope, attrs, element);
-    }
-
     function checkElementID(scope, attrs, element, chart, data) {
         'use strict';
         var dataAttributeChartID; //randomly generated if id attribute doesn't exist
@@ -836,6 +800,8 @@ function initializeMargin(scope, attrs){
                     clipedge: '@',
                     clipvoronoi: '@',
                     interpolate: '@',
+
+                    callback: '&',
 
                     //xaxis
                     xaxisorient: '&',
@@ -908,7 +874,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.lineChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -946,7 +912,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -983,6 +950,8 @@ function initializeMargin(scope, attrs){
                     usevoronoi: '@',
                     average: '&',
                     rescaley: '@',
+
+                    callback: '&',
 
                     //xaxis
                     xaxisorient: '&',
@@ -1055,7 +1024,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.cumulativeLineChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -1095,7 +1064,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -1138,6 +1108,8 @@ function initializeMargin(scope, attrs){
                     xRange: '&',
                     yRange: '&',
                     sizeDomain: '&',
+
+                    callback: '&',
 
                     //xaxis
                     showxaxis: '&',
@@ -1212,7 +1184,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.stackedAreaChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -1289,7 +1261,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -1320,6 +1293,8 @@ function initializeMargin(scope, attrs){
                     forcey: '@',
                     delay: '@',
                     stacked: '@',
+
+                    callback: '&',
 
                     //xaxis
                     showxaxis: '&',
@@ -1394,7 +1369,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.multiBarChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -1428,7 +1403,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -1457,6 +1433,8 @@ function initializeMargin(scope, attrs){
                     forcey: '@',
                     showvalues: '@',
                     valueformat: '&',
+
+                    callback: '&',
 
                     //xaxis
                     xaxisorient: '&',
@@ -1529,7 +1507,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.discreteBarChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -1567,7 +1545,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -1598,6 +1577,8 @@ function initializeMargin(scope, attrs){
                     interpolate: '@',
                     highlightPoint: '@',
                     clearHighlights: '@',
+
+                    callback: '&',
 
                     //xaxis
                     xaxisorient: '&',
@@ -1670,7 +1651,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.historicalBarChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -1704,7 +1685,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -1735,6 +1717,8 @@ function initializeMargin(scope, attrs){
                     valueformat: '&',
                     //'xDomain', 'yDomain',
                     //state: '@', //stacked, grouped: same as stacked === true, or stacked === false
+
+                    callback: '&',
 
                     //xaxis
                     xaxisorient: '&',
@@ -1807,7 +1791,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.multiBarHorizontalChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -1839,7 +1823,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -1872,6 +1857,8 @@ function initializeMargin(scope, attrs){
                     tooltipcontent: '&',
                     valueFormat: '&',
 
+                    callback: '&',
+
                     legendmargin: '&',
                     legendwidth: '@',
                     legendheight: '@',
@@ -1903,7 +1890,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.pieChart()
                                         .x(attrs.x === undefined ? function(d){ return d[0]; } : scope.x())
                                         .y(attrs.y === undefined ? function(d){ return d[1]; } : scope.y())
@@ -1934,7 +1921,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -1984,6 +1972,8 @@ function initializeMargin(scope, attrs){
                     sizedomain: '&',
                     zscale: '&',
 
+                    callback: '&',
+
                     //xaxis
                     xaxisorient: '&',
                     xaxisticks: '&',
@@ -2055,7 +2045,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.scatterChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -2116,7 +2106,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -2130,7 +2121,9 @@ function initializeMargin(scope, attrs){
                     data: '=',
                     width: '@',
                     height: '@',
-                    id: '@'
+                    id: '@',
+
+                    callback: '&'
                 },
                 controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs){
                     $scope.d3Call = function(data, chart){
@@ -2146,7 +2139,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.scatterPlusLineChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -2180,7 +2173,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     });
@@ -2214,6 +2208,8 @@ function initializeMargin(scope, attrs){
                     clipvoronoi: '@',
                     interpolate: '@',
     //                'xScale', 'yScale', 'xDomain', 'yDomain', defined
+
+                    callback: '&',
 
                     //xaxis
                     xaxisorient: '&',
@@ -2306,7 +2302,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.linePlusBarChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -2342,7 +2338,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -2372,10 +2369,14 @@ function initializeMargin(scope, attrs){
                     color: '&',
                     x: '&',
                     y: '&',
+                    forceX: '@',
+                    forceY: '@',
                     clipvoronoi: '@',
                     interpolate: '@',
                     isArea: '@',
     //                'xScale', 'yScale', 'xDomain', 'yDomain', defined
+
+                    callback: '&',
 
                     //xaxis
                     xaxisorient: '&',
@@ -2488,7 +2489,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
 
                                     //setup height 2
                                     //height 2 is 100
@@ -2517,6 +2518,8 @@ function initializeMargin(scope, attrs){
                                         .margin2(scope.margin2)
                                         .x(attrs.x === undefined ? function(d){ return d[0]; } : scope.x())
                                         .y(attrs.y === undefined ? function(d){ return d[1]; } : scope.y())
+                                        .forceX(attrs.forcex === undefined ? [] : scope.$eval(attrs.forcex))
+                                        .forceY(attrs.forcey === undefined ? [] : scope.$eval(attrs.forcey))
                                         .showLegend(attrs.showlegend === undefined ? false : (attrs.showlegend === "true"))
                                         .tooltips(attrs.tooltips === undefined ? false : (attrs.tooltips  === "true"))
                                         .noData(attrs.nodata === undefined ? 'No Data Available.' : scope.nodata)
@@ -2538,7 +2541,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -2564,6 +2568,8 @@ function initializeMargin(scope, attrs){
                     tickformat: '&',
                     nodata: '@',
 
+                    callback: '&',
+
                     //angularjs specific
                     objectequality: '@',
 
@@ -2585,7 +2591,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.bulletChart()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -2607,7 +2613,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -2634,6 +2641,8 @@ function initializeMargin(scope, attrs){
                     rightalignvalue: '@',
                     nodata: '@',
 
+                    callback: '&',
+
                     xaxistickformat: '&',
                     yaxistickformat: '&',
 
@@ -2658,7 +2667,7 @@ function initializeMargin(scope, attrs){
                             }
                             nv.addGraph({
                                 generate: function(){
-                                    setupDimensions(scope, attrs, element);
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.sparklinePlus()
                                         .width(scope.width)
                                         .height(scope.height)
@@ -2686,7 +2695,8 @@ function initializeMargin(scope, attrs){
                                     nv.utils.windowResize(chart.update);
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));
@@ -2721,6 +2731,8 @@ function initializeMargin(scope, attrs){
                     alignvalue: '@',
                     rightalignvalue: '@',
                     nodata: '@',
+
+                    callback: '&',
 
                     xaxistickformat: '&',
                     yaxistickformat: '&',
@@ -2810,11 +2822,12 @@ function initializeMargin(scope, attrs){
                             nv.addGraph({
                                 generate: function(){
                                     scope.bandlineProperties = {};
-                                    var sortedValues, margin = setupDimensions(scope, attrs, element);
+                                    var sortedValues;
+                                    initializeMargin(scope, attrs);
                                     var chart = nv.models.sparklinePlus()
                                         .width(scope.width)
                                         .height(scope.height)
-                                        .margin(margin)
+                                        .margin(scope.margin)
                                         .x(attrs.x === undefined ? function(d){ return d.x; } : scope.x())
                                         .y(attrs.y === undefined ? function(d){ return d.y; } : scope.y())
                                         .color(attrs.color === undefined ? nv.utils.getColor(['#000']) : scope.color())
@@ -2860,7 +2873,8 @@ function initializeMargin(scope, attrs){
 
                                     scope.chart = chart;
                                     return chart;
-                                }
+                                },
+                                callback: attrs.callback === undefined ? null : scope.callback()
                             });
                         }
                     }, (attrs.objectequality === undefined ? false : (attrs.objectequality === "true")));

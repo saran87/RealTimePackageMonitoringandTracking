@@ -1,10 +1,25 @@
 angular.module('myModule')
-	.controller('temperatureSpecificCtrl',['$rootScope','$scope','$location','$routeParams','temperatureService','$timeout',function($rootScope,$scope,$location,$routeParams,temperatureService,$timeout){
+	.controller('temperatureSpecificCtrl',['$rootScope','$scope','$location','$routeParams','temperatureService','dashBoardService','$timeout',function($rootScope,$scope,$location,$routeParams,temperatureService, dashBoardService, $timeout){
 
 		
 		var latestTimestamp; //holds the latestTimestamp for data received from a package
-		var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
-		var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+		
+		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+
+			var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
+			var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+		} 
+		else if($routeParams.truck_id && $routeParams.package_id){
+
+			$rootScope.tid=$routeParams.truck_id;
+			$rootScope.pid=$routeParams.package_id;
+
+			var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
+			var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+		} 
+		else {
+			console.log("Undefined truck and package");
+		}
 
 		$scope.location = $location;  //location variable
 
@@ -19,6 +34,17 @@ angular.module('myModule')
 
 	  	$scope.temperatureData=[];
 
+	  	dashBoardService.getConfigurationsOf(truck,pack)
+	  	.then(function(data){
+
+	  		if(!data[2].isError){
+
+	  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
+	  			$scope.maxThreshold = 60;
+	  		}
+
+	  	});
+
 	  	temperatureService.getTemperatureDataOf(truck,pack)
 	  	.then(function(data){
 
@@ -26,6 +52,7 @@ angular.module('myModule')
 	  		if(!data[3].isError){
 
 	  			var tArr = [];
+	  			var thArr = [];
 
 	  			//for(var i=2908; i<data[0].length-5;i++){
 	  			for(var i=0; i<data[0].length;i++){
@@ -33,6 +60,7 @@ angular.module('myModule')
 	  				$scope.temperatureData.push(data[0][i]);
 
 	  				tArr.push(data[1][i]);
+	  				thArr.push([data[1][i][0], $scope.maxThreshold]);
 
 	  			}
 
@@ -46,6 +74,11 @@ angular.module('myModule')
 			    	{
 			    		"key": "Temperature Graph",	    		
 			    		"values": tArr
+			    	},
+
+			    	{
+			    		"key": "Threshold",
+			    		"values": thArr
 			    	}
 		    
 		    	];
@@ -79,6 +112,15 @@ angular.module('myModule')
     	        return d3.time.format('%H:%M:%S')(new Date(d));
             }
         }
+
+        var colors = ['#1f77b4', '#ff7f0e'];
+
+	    $scope.colorDefault = function() {
+	      return function(d, i) {
+	          return colors[i];
+	        };
+	    }
+
 
 
         /*

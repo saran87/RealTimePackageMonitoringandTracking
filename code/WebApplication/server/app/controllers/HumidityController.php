@@ -14,7 +14,7 @@ class HumidityController extends BaseController{
 
 	public function humidityOfPackageInTruck($truck_id,$package_id){		
 
-		$humidityOfPackageInTruckArr = Humidity::where('package_id', $package_id)->where('truck_id',$truck_id)->get();
+		$humidityOfPackageInTruckArr = Humidity::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
 		return $humidityOfPackageInTruckArr;		
 	}

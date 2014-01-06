@@ -1,109 +1,58 @@
 <div ng-controller="dashboardCtrl">
-  <div class="col-md-12">
-    <div class="widget">
-      <div class="widget-head">
-        <div>Threshold Values</div>
-        <div class="clearfix"></div>
-      </div>
-      <div class="widget-content">
-        <div class="padd text-center">
-        <ul class="today-datas">
-          <li class="well"><h3>Temperature</h3> <p>74F</p></li>
-          <li class="well"><h3>Humditiy</h3> <p>45</p></li>
-          <li class="well"><h3>Vibration</h3> <p>0.4G</p></li>
-          <li class="well"><h3>Shock</h3> <p>1.4</p></li>
-        </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-<div class="col-md-12 sections" id="dashbd">
+  <div class="row">  
 
-  <div class="widget">
+    <div class="col-md-12">
 
-    <div class="widget-head">
-      <div class="pull-left">Dashboard {{smallVal}}</div>
-      <div class="widget-icons pull-right">
-        <a href="#" class="wminimize">
-          <i class="icon-chevron-up"></i>
-        </a>
-        <a href="#" class="wclose">
-          <i class="icon-remove"></i>
-        </a>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-
-    <div class="widget-content">
-      <div class="padd">
-
-        <div class="progress progress-striped active">
-              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-              <span class="sr-only">60% Complete</span>
-              </div>
-              </div>
-
-        
-        <h2>Map goes here with recent markers</h2>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-md-5 col-md-offset-1">
               <div class="widget">
-                <!-- Widget title -->
                 <div class="widget-head">
-                  <div class="pull-left">Recent Activity</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                  </div>  
+                  <div class="pull-left">Threshold Values</div>                  
                   <div class="clearfix"></div>
                 </div>
                 <div class="widget-content">
-                  <!-- Widget content -->
-                  <!-- activity starts -->
-                  <ul class="activity">
+                  <div class="padd statement text-center">
+                    
+                    <div class="row">
 
-                    <li>
-                      <!-- Icon with avtivity  -->
-                      </i> <strong>New Package Added</strong> - Truck ID: 2 | PackageID: 44
-                    </li>
+                      <div class="col-md-3">
+                        <div class="well cool-color">
+                          <h3>Temperature</h3>
+                          <p><h4>{{configObj.config.temperature.maxthreshold}}</h4></p>
+                        </div>
+                      </div>
 
-                    <li>
-                       <strong>Truck Activity</strong> - at location 
-                    </li>
+                      <div class="col-md-3">
+                        <div class="well cool-color">
+                          <h3>Humidity</h3>
+                          <p><h4>{{configObj.config.humidity.maxthreshold}}</h4></p>                        
+                        </div>
+                      </div>
 
-                    <li>
-                      <strong>New Package Added</strong>  - Truck ID: 50 | PackageID: 21
-                    </li>
+                      <div class="col-md-3">
+                        <div class="well cool-color">
+                          <h3>Vibration</h3>
+                          <p><h4>{{configObj.config.vibrationx.maxthreshold}}</h4></p>
+                        </div>
+                      </div>
 
-                    <li>
-                       <strong>New Package Added</strong>  - Truck ID: 5 | PackageID: 123
-                    </li>
-                       
-                    <li>
-                      <strong>Package Update:</strong> PacakgeID: 12 in Truck ID: 50 has been checked out <strong>View Log</strong>.
-                    </li>                   
+                      <div class="col-md-3">
+                        <div class="well cool-color">
+                          <h3>Shock</h3>
+                          <p><h4>{{configObj.config.shockx.maxthreshold}}</h4></p>
+                        </div>
+                      </div>
 
-                    <li>
-                      <strong>Admin</strong> added the article <strong>Why not now?</strong>.
-                    </li> 
+                    </div>                   
 
-                  </ul>
-
-                  <div class="widget-foot">
-                    <button class="btn pull-right btn-default">Clear All</button>
-                    <div class="clearfix"></div>
                   </div>
-
+                  <div class="widget-foot">
+                  </div>
                 </div>
-              </div>
+              </div>  
+              
             </div>
+  </div>
 
-            <div class="col-md-5">
+  <div class="col-md-5">
               <div class="widget">
                 <!-- Widget title -->
                 <div class="widget-head">
@@ -135,7 +84,7 @@
 
                 </div>
               </div>
-            </div>
+  </div>
 
 
 </div>

@@ -18,7 +18,7 @@ angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','
         Routes and Partials related to Dashboard
     */
 
-  	$routeProvider.when('/dashboard', 
+    $routeProvider.when('/dashboard', 
     {
         templateUrl: 'partials/dashboardGeneral.html'
         
@@ -26,11 +26,9 @@ angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','
 
     $routeProvider.when('/dashboard/:truck_id/:package_id', 
     {
-        templateUrl: 'partials/dashboardGeneral.html'
+        templateUrl: 'partials/dashboard.html'
         
     });
-
-
 
     /*
         Routes and Partials related to Map

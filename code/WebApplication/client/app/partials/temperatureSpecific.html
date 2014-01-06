@@ -7,28 +7,24 @@
 			      <div class="widget-content">
 
 			      	<div class="padd">
-			        
-
-			          <!-- Curve chart (Blue color). jQuery Flot plugin used. -->
-
 			          	<nvd3-line-with-focus-chart
 			            data="data"
 			            id="exampleId"            
 			            height="500"
-			            height2="50"
+			            height2="50"			            
 			            showXAxis="true"
 			            showYAxis="true"
 			            showLegend="true"
 			            interactive="true"
 			            tooltips="true"
-			            xAxisTickFormat="xAxisTickFormatFunction()"
-			            x2AxisTickFormat="xAxisTickFormatFunction2()"
+			            xAxisTickFormat="xAxisTickFormatFunction()"			            
 			            yAxisLabel="Temperature (F)"
 			            xAxisLabel="Date and Time"
-			            margin="{left:100,top:100,bottom:100,right:10}"			            		            
+			            margin="{left:100,top:100,bottom:100,right:10}"
+			            color="colorDefault()"
+        				legendcolor="colorDefault()"
 			            >
     					</nvd3-line-with-focus-chart>
-
 					</div>
 
 			        

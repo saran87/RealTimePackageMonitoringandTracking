@@ -14,7 +14,7 @@ class TemperatureController extends BaseController{
 
 	public function temperatureOfPackageInTruck($truck_id,$package_id){		
 
-		$temperatureOfPackageInTruckArr = Temperature::where('package_id', $package_id)->where('truck_id',$truck_id)->get();
+		$temperatureOfPackageInTruckArr = Temperature::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
 		return $temperatureOfPackageInTruckArr;		
 	}

@@ -1,11 +1,27 @@
 angular.module('myModule')
-  .controller('humiditySpecificCtrl',['$scope','$rootScope','$routeParams','$location','$timeout','humidityService',function($scope,$rootScope,$routeParams,$location,$timeout,humidityService){
+  .controller('humiditySpecificCtrl',['$scope','$rootScope','$routeParams','$location','$timeout','humidityService', 'dashBoardService',function($scope,$rootScope,$routeParams,$location,$timeout,humidityService,dashBoardService){
 
   	var latestTimestamp; //holds the latestTimestamp for data received from a package
-	var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
-	var pack=$rootScope.pid; //package_id selected in the Dropdown menu
 
-	$scope.location = $location;  //location variable
+    if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+
+      var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
+      var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+    } 
+    else if($routeParams.truck_id && $routeParams.package_id){
+
+      $rootScope.tid=$routeParams.truck_id;
+      $rootScope.pid=$routeParams.package_id;
+
+      var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
+      var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+    } 
+    else {
+      console.log("Undefined truck and package");
+    }
+	
+
+	  $scope.location = $location;  //location variable
 
   	var holder = []; //temporary array to recieve updates and update the graph
 
@@ -18,10 +34,22 @@ angular.module('myModule')
 
     $scope.humidityData=[];
 
+    dashBoardService.getConfigurationsOf(truck,pack)
+    .then(function(data){
+
+      if(!data[2].isError){
+
+        //$scope.maxThreshold = data[0].config.humidity.maxthreshold;
+        $scope.maxThreshold = 72;
+      }
+
+    });
+
   	humidityService.getHumidityDataOf(truck,pack)
 	  	.then(function(data){
 
         var tArr=[];
+        var thArr=[];
 
 	  		//check for error in the error object
 	  		if(!data[3].isError){
@@ -35,7 +63,11 @@ angular.module('myModule')
 
             tArr.push(data[1][i]);
 
+            thArr.push([data[1][i][0], $scope.maxThreshold]);
+
           }
+
+          console.dir(tArr);
 
 		  		//$scope.humidityData=data[0]; //assign the humidity data to be displayed in table
 
@@ -45,7 +77,12 @@ angular.module('myModule')
 			    	{
 			    		"key": "Humidity Graph",	    		
 			    		"values": tArr
-			    	}
+			    	}, 
+
+            {
+              "key": "Threshold",
+              "values": thArr
+            }
 		    
 		    	];
 
@@ -68,15 +105,23 @@ angular.module('myModule')
 
 	  	$scope.xAxisTickFormatFunction2 = function(){
           return function(d){
-              return d3.time.format('%X')(new Date(d));
-            }
-        }
-
-        $scope.xAxisTickFormatFunction = function(){
-          return function(d){
               return d3.time.format('%H:%M:%S')(new Date(d));
             }
-        }
+      }
+
+      $scope.xAxisTickFormatFunction = function(){
+        return function(d){
+            return d3.time.format('%H:%M:%S')(new Date(d));
+          }
+      }
+
+      var colors = ['#1f77b4', '#ff7f0e'];
+
+      $scope.colorDefault = function() {
+        return function(d, i) {
+            return colors[i];
+          };
+      }
 
         var humidityUpdater = function(){
 

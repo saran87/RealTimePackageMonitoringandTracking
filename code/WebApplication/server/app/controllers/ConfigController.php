@@ -59,6 +59,13 @@ class ConfigController extends BaseController{
 		return $last;
 
 	}
+
+	public function configurationsOf($truck_id,$package_id){
+
+		$configurationsOfObj = Configurations::where('package_id', $package_id)->where('truck_id',$truck_id)->get()->last();
+
+		return $configurationsOfObj;
+	}
 }
 
  ?>

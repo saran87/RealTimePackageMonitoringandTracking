@@ -136,23 +136,25 @@ angular.module('myModule')
 
             psdVals.push([
               (320/512)*i,
-              Math.abs((data.rms[i]^2/1024)/1600)
+              Math.abs((data.rms[i]^2)/1600)
             ]);
 
             psdValsX.push([
               (320/512)*i,
-              Math.abs((data.x[i]^2/1024)/1600)
+              Math.abs((data.x[i]^2)/1600)
             ]);
 
             psdValsY.push([
               (320/512)*i,
-              Math.abs((data.y[i]^2/1024)/1600)
+              Math.abs((data.y[i]^2)/1600)
             ]);
-            
-            psdValsZ.push([
-              (320/512)*i,
-              Math.abs((data.z[i]^2/1024)/1600)
-            ]); 
+
+            if(i>2){            
+              psdValsZ.push([
+                (320/512)*i,
+                Math.abs((data.z[i]^2)/1600)
+              ]); 
+            }
 
             /*psdVals.push([
               (320/512)*i,
