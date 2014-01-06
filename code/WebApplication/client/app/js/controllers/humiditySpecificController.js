@@ -40,7 +40,7 @@ angular.module('myModule')
       if(!data[2].isError){
 
         //$scope.maxThreshold = data[0].config.humidity.maxthreshold;
-        $scope.maxThreshold = 55;
+        $scope.maxThreshold = 72;
       }
 
     });

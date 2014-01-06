@@ -48,7 +48,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-class="hdata.value > maxThreshold && 'text-danger' || '' " ng-repeat="hdata in humidityData">						
+					<tr ng-class="hdata.value > maxThreshold && 'danger' || '' " ng-repeat="hdata in humidityData">						
 						<td>{{hdata.timestamp | date: 'medium'}}</td>
 						<td>{{hdata.loc}}</td>
 						<td>{{hdata.value}}</td>
