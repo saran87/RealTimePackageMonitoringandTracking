@@ -7,31 +7,31 @@
 	      <div class="widget-content">
 	        <div class="padd">	       
 
-		    	<nvd3-line-with-focus-chart
+		    	<nvd3-line-chart
 	            data="data"
 	            id="humidityGraphId"            
-	            height="400"
-	            height2="50"
+	            height="500"	            
 	            showXAxis="true"	            
-	            showYAxis="true"	            	            
+	            showYAxis="true"
+	            forcey="[0,100]"	            	            
 	            showLegend="true"
 	            interactive="true"
 	            tooltips="true"
-	            xAxisTickFormat="xAxisTickFormatFunction()"
-	            x2AxisTickFormat="xAxisTickFormatFunction2()"
+	            xAxisTickFormat="xAxisTickFormatFunction()"	            
 	            yAxisLabel="Humidity (RH %)"
 	            xAxisLabel="Date and Time"	            
-	            margin="{left:100,top:100,bottom:100,right:50}"            
-			            >
-    			</nvd3-line-with-focus-chart>
+	            margin="{left:100,top:100,bottom:100,right:100}"	            
+	            color="colorDefault()"
+        		legendcolor="colorDefault()"            
+			    >
+    			</nvd3-line-chart>
+    			
 	        	</div>
 	        <!-- Widget ends -->
 
 	      </div>
 
-	    </div> 
-
-		
+	    </div>		
 	</div>
 
 
@@ -48,7 +48,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="hdata in humidityData">
+					<tr ng-class="hdata.value > maxThreshold && 'text-danger' || '' " ng-repeat="hdata in humidityData">						
 						<td>{{hdata.timestamp | date: 'medium'}}</td>
 						<td>{{hdata.loc}}</td>
 						<td>{{hdata.value}}</td>

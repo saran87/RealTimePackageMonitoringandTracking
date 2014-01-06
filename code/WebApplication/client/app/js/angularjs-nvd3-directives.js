@@ -1,4 +1,4 @@
-/*! angularjs-nvd3-directives - v0.0.4-beta - 2013-12-19
+/*! angularjs-nvd3-directives - v0.0.5-beta - 2013-12-25
 * http://cmaurer.github.io/angularjs-nvd3-directives
 * Copyright (c) 2013 Christian Maurer; Licensed Apache License, v2.0 */
 (function()
@@ -462,10 +462,18 @@ function configureLegend(chart, scope, attrs){
             chart.xAxis.scale(scope.xaxisscale());
         }
         if(attrs.xaxisdomain){
-            chart.xAxis.domain(scope.xaxisdomain());
+            if(Array.isArray(scope.$eval(attrs.xaxisdomain))){
+                chart.xAxis.domain(scope.$eval(attrs.xaxisdomain));
+            } else if(typeof scope.xaxisdomain() === 'function'){
+                chart.xAxis.domain(scope.xaxisdomain());
+            }
         }
         if(attrs.xaxisrange){
-            chart.xAxis.range(scope.xaxisrange());
+            if(Array.isArray(scope.$eval(attrs.xaxisrange))){
+                chart.xAxis.range(scope.$eval(attrs.xaxisrange));
+            } else if(typeof scope.xaxisrange() === 'function'){
+                chart.xAxis.range(scope.xaxisrange());
+            }
         }
         if(attrs.xaxisrangeband){
             chart.xAxis.rangeBand(scope.xaxisrangeband());
@@ -524,10 +532,18 @@ function configureLegend(chart, scope, attrs){
             chart.x2Axis.scale(scope.x2axisscale());
         }
         if(attrs.x2axisdomain){
-            chart.x2Axis.domain(scope.x2axisdomain());
+            if(Array.isArray(scope.$eval(attrs.x2axisdomain))){
+                chart.x2Axis.domain(scope.$eval(attrs.x2axisdomain));
+            } else if(typeof scope.x2axisdomain() === 'function'){
+                chart.x2Axis.domain(scope.x2axisdomain());
+            }
         }
         if(attrs.x2axisrange){
-            chart.x2Axis.range(scope.x2axisrange());
+            if(Array.isArray(scope.$eval(attrs.x2axisrange))){
+                chart.x2Axis.range(scope.$eval(attrs.x2axisrange));
+            } else if(typeof scope.x2axisrange() === 'function'){
+                chart.x2Axis.range(scope.x2axisrange());
+            }
         }
         if(attrs.x2axisrangeband){
             chart.x2Axis.rangeBand(scope.x2axisrangeband());
@@ -586,10 +602,18 @@ function configureLegend(chart, scope, attrs){
             chart.yAxis.scale(scope.yaxisscale());
         }
         if(attrs.yaxisdomain){
-            chart.yAxis.domain(scope.yaxisdomain());
+            if(Array.isArray(scope.$eval(attrs.yaxisdomain))){
+                chart.yAxis.domain(scope.$eval(attrs.yaxisdomain));
+            } else if(typeof scope.yaxisdomain() === 'function'){
+                chart.yAxis.domain(scope.yaxisdomain());
+            }
         }
         if(attrs.yaxisrange){
-            chart.yAxis.range(scope.yaxisrange());
+            if(Array.isArray(scope.$eval(attrs.yaxisrange))){
+                chart.yAxis.range(scope.$eval(attrs.yaxisrange));
+            } else if(typeof scope.yaxisrange() === 'function'){
+                chart.yAxis.range(scope.yaxisrange());
+            }
         }
         if(attrs.yaxisrangeband){
             chart.yAxis.rangeBand(scope.yaxisrangeband());
@@ -642,10 +666,18 @@ function configureLegend(chart, scope, attrs){
             chart.y1Axis.yScale(scope.y1axisscale());
         }
         if(attrs.y1axisdomain){
-            chart.y1Axis.domain(scope.y1axisdomain());
+            if(Array.isArray(scope.$eval(attrs.y1axisdomain))){
+                chart.y1Axis.domain(scope.$eval(attrs.y1axisdomain));
+            } else if(typeof scope.y1axisdomain() === 'function'){
+                chart.y1Axis.domain(scope.y1axisdomain());
+            }
         }
         if(attrs.y1axisrange){
-            chart.y1Axis.range(scope.y1axisrange());
+            if(Array.isArray(scope.$eval(attrs.y1axisrange))){
+                chart.y1Axis.range(scope.$eval(attrs.y1axisrange));
+            } else if(typeof scope.y1axisrange() === 'function'){
+                chart.y1Axis.range(scope.y1axisrange());
+            }
         }
         if(attrs.y1axisrangeband){
             chart.y1Axis.rangeBand(scope.y1axisrangeband());
@@ -698,10 +730,18 @@ function configureLegend(chart, scope, attrs){
             chart.y2Axis.yScale(scope.y2axisscale());
         }
         if(attrs.y2axisdomain){
-            chart.y2Axis.domain(scope.y2axisdomain());
+            if(Array.isArray(scope.$eval(attrs.y2axisdomain))){
+                chart.y2Axis.domain(scope.$eval(attrs.y2axisdomain));
+            } else if(typeof scope.y2axisdomain() === 'function'){
+                chart.y2Axis.domain(scope.y2axisdomain());
+            }
         }
         if(attrs.y2axisrange){
-            chart.y2Axis.range(scope.y2axisrange());
+            if(Array.isArray(scope.$eval(attrs.y2axisrange))){
+                chart.y2Axis.range(scope.$eval(attrs.y2axisrange));
+            } else if(typeof scope.y2axisrange() === 'function'){
+                chart.y2Axis.range(scope.y2axisrange());
+            }
         }
         if(attrs.y2axisrangeband){
             chart.y2Axis.rangeBand(scope.y2axisrangeband());
@@ -2371,10 +2411,13 @@ function initializeMargin(scope, attrs){
                     y: '&',
                     forceX: '@',
                     forceY: '@',
+                    clipedge: '@',
                     clipvoronoi: '@',
                     interpolate: '@',
                     isArea: '@',
-    //                'xScale', 'yScale', 'xDomain', 'yDomain', defined
+                    size: '&',
+                    defined: '&',
+                    interactive: '@',
 
                     callback: '&',
 
@@ -2509,8 +2552,8 @@ function initializeMargin(scope, attrs){
                                     } else {
                                         scope.margin2 = {top: 0, right: 30, bottom: 20, left: 60};
                                     }
-
-                                    var chart = nv.models.lineWithFocusChart()
+//'xDomain', 'yDomain', 'xRange', 'yRange', ''clipEdge', 'clipVoronoi'
+                                   var chart = nv.models.lineWithFocusChart()
                                         .width(scope.width)
                                         .height(scope.height)
                                         .height2((attrs.height2 === undefined ? 100 : (+attrs.height2)))
@@ -2525,7 +2568,13 @@ function initializeMargin(scope, attrs){
                                         .noData(attrs.nodata === undefined ? 'No Data Available.' : scope.nodata)
                                         .color(attrs.color === undefined ? nv.utils.defaultColor()  : scope.color())
                                         .isArea(attrs.isarea === undefined ? function(){return false;} : function(){ return (attrs.isarea === "true"); })
+                                        .size(attrs.size === undefined ? function(d){ return d.size; }: scope.size())
+                                        .interactive(attrs.interactive === undefined ? false : (attrs.interactive === "true"))
                                         .interpolate(attrs.interpolate === undefined ? 'linear' : attrs.interpolate);
+
+                                    if(attrs.defined){
+                                        chart.defined(scope.defined());
+                                    }
 
                                     if(attrs.tooltipcontent){
                                         chart.tooltipContent(scope.tooltipcontent());
