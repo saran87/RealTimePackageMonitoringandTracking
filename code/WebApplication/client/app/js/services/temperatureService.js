@@ -90,9 +90,10 @@ angular.module('myServices')
 						    //console.log("debug d");
 			      			//console.dir(d);
 
-
-					        _temperatureData.push(d);
-					        _temperatureGraphData.push([d.timestamp,d.value]);		         
+			      			if(d.value>=0){
+						        _temperatureData.push(d);
+						        _temperatureGraphData.push([d.timestamp,d.value]);		         
+					    	}
 					        
 			      		}//end for
 

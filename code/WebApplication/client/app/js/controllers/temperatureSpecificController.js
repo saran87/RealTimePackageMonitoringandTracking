@@ -3,8 +3,22 @@ angular.module('myModule')
 
 		
 		var latestTimestamp; //holds the latestTimestamp for data received from a package
-		var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
-		var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+
+			var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
+			var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+		} 
+		else if($routeParams.truck_id && $routeParams.package_id){
+
+			$rootScope.tid=$routeParams.truck_id;
+			$rootScope.pid=$routeParams.package_id;
+
+			var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
+			var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+		} 
+		else {
+			console.log("Undefined truck and package");
+		}
 
 		$scope.location = $location;  //location variable
 

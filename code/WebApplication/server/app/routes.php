@@ -18,6 +18,8 @@ Route::get('/configs', 'ConfigController@configurations');
 
 Route::get('/alltrucks', 'ConfigController@listAllTrucks');
 
+Route::get('/configs/{truck_id}/{package_id}', 'ConfigController@configurationsOf');
+
 //returns all packages having in specified truck_id
 Route::get('/packages/{truck_id}', 'ConfigController@listPackagesInTruckWithtruck_id'); 
 
