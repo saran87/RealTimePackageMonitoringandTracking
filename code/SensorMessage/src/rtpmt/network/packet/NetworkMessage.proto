@@ -61,6 +61,8 @@ message PackageInformation {
         required MessageType messageType = 8;
         required bool isRealTime = 9;
         optional string comments   = 10;
+        optional bool isAboveThreshold = 11;
+        
 }
 
 

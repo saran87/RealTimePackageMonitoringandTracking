@@ -28,6 +28,9 @@ public abstract class BaseInfo extends DataAccess {
         this.put(DBConstants.TRUCK_ID, packageInformation.getTruckId());
         this.put(DBConstants.PACKAGE_ID, packageInformation.getPackageId());
         this.put(DBConstants.TIMESTAMP, packageInformation.getTimeStamp());
+        if (packageInformation.hasIsRealTime()){
+            this.put(DBConstants.IS_ABOVE_THRESHOLD, packageInformation.getIsAboveThreshold());
+        }
         if (packageInformation.hasComments()) {
             this.put(DBConstants.COMMENTS, packageInformation.getComments());
         }

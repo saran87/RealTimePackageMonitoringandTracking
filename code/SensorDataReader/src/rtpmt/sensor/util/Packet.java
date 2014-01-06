@@ -72,7 +72,7 @@ public final class Packet extends Header {
 
         PayLoad = new ArrayList<Byte>();
 
-        this.ProtocolType = byteArray[0];
+        this.ProtocolType = byteArray[0] & 0xff;
         
         int i = 0;
         int payLoadLength = byteArray.length;
@@ -221,7 +221,13 @@ public final class Packet extends Header {
 
         return dateFormat.format(date);
     }
-
+    /**
+     * 
+     * @return boolean 
+     */
+    public boolean isAboveThreshold(){
+        return this.ProtocolType == Constants.P_UPDATE_THRESHOLD;
+    }
     public boolean isHumidty() {
         return this.Service == 1;
     }
@@ -430,7 +436,8 @@ public final class Packet extends Header {
                     message.setComments(Constants.NO_ID);
                 }*/
             }
- 
+            //is sensor value above threshold
+            message.setIsAboveThreshold(this.isAboveThreshold());
             PackageInformation.Sensor.Builder sensor = PackageInformation.Sensor.newBuilder();
             if (this.isTemperature()) {
                 sensor.setSensorUnit("F");

@@ -18,7 +18,7 @@ public class Utils {
             
             for (int i = 0; i < second.length; i++) {
                 System.out.println((first[i] & 0xff) + "--" + second[i]);
-                if( (int)(first[i]&0xff) != second[i]){
+                if( (first[i]&0xff) != second[i]){
                     isEqual = false;
                     break;
                 }
