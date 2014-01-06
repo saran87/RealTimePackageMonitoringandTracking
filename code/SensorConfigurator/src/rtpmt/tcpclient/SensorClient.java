@@ -6,20 +6,14 @@
 
 package rtpmt.tcpclient;
 
-import com.google.protobuf.CodedOutputStream;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import static io.netty.buffer.Unpooled.wrappedBuffer;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import rtpmt.network.packet.NetworkMessage;
 /**

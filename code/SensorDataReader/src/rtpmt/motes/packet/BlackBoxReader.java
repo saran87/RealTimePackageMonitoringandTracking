@@ -615,7 +615,7 @@ public class BlackBoxReader extends AbstractSource {
     }
 
     private Package getPackage(String sensorId, Packet packet, String note) {
-        Package pack = new Package(0, sensorId);
+        Package pack = new Package(0, sensorId);        
         pack.setNote(note);
         int i = -1;
         int rawThreshold = (packet.getData(++i) & 0xff) | (packet.getData(++i) & 0xff) << 8;
