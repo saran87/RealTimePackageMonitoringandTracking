@@ -51,11 +51,11 @@
 					<tr ng-class="hdata.value > maxThreshold && 'danger' || '' " ng-repeat="hdata in humidityData">						
 						<td>{{hdata.timestamp | date: 'medium'}}</td>
 						<td>
-							<a ng-show="rt" ng-href="http://maps.google.com/maps?q={{hdata.loc[1]}},{{hdata.loc[0]}}&ll={{hdata.loc[1]}},{{hdata.loc[0]}}&z=12" target="_blank">
+							<a ng-href="http://maps.google.com/maps?q={{hdata.loc[1]}},{{hdata.loc[0]}}&ll={{hdata.loc[1]}},{{hdata.loc[0]}}&z=12" target="_blank">
 	            				<button class='btn btn-primary'>Show on map</button>
 
 	            			</a>
-	            			<span ng-show="!rt" class="text-muted">No location available fo Black-Box data</span>							
+	            			
 						</td>
 						<td>{{hdata.value}}</td>
 					</tr>
