@@ -59,12 +59,15 @@
         </Property>
       </Properties>
       <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="settings"/>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
       </AccessibilityProperties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane1StateChanged"/>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTabbedPane1FocusGained"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -962,8 +965,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel26" min="-2" pref="126" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel27" min="-2" pref="189" max="-2" attributes="0"/>
-                      <EmptySpace pref="282" max="32767" attributes="0"/>
+                      <Component id="jLabel27" min="-2" pref="97" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
+                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="104" max="32767" attributes="0"/>
                       <Component id="jButton4" min="-2" pref="345" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -977,11 +984,13 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel26" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="381" max="-2" attributes="0"/>
-                      <EmptySpace pref="174" max="32767" attributes="0"/>
+                      <EmptySpace pref="323" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1028,6 +1037,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Not Connected"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Connect"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save as CSV"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
