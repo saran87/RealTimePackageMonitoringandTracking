@@ -38,8 +38,10 @@ public class HTMLFormatter extends Formatter {
       // Message
       buf.append("<td>");
       buf.append(formatMessage(record));
+      
       buf.append("</td>");
       buf.append("<td>");
+      buf.append(record.getThrown()).append("\n");
       buf.append(formatStackTrace(record.getThrown().getStackTrace()));
       buf.append("</td>");
       buf.append("</tr>");

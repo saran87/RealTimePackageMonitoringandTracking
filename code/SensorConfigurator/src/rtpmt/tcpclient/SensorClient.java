@@ -32,6 +32,10 @@ public final class SensorClient {
        ClientHandler handler;
     private boolean isServerAvaialable = false;
 
+    public boolean isIsServerAvaialable() {
+        return isServerAvaialable;
+    }
+
     public SensorClient(String host, int port) throws Exception {
         this.host = host;
         this.port = port;
