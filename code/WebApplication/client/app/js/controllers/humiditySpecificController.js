@@ -40,7 +40,28 @@ angular.module('myModule')
       if(!data[2].isError){
 
         //$scope.maxThreshold = data[0].config.humidity.maxthreshold;
-        $scope.maxThreshold = 72;
+        if(data[0].config.humidity.maxthreshold==0){
+            $scope.maxThreshold = 72; 
+
+          } else {
+
+            $scope.maxThreshold = data[0].config.humidity.maxthreshold;
+
+          }
+          
+
+          if(data[0].config.is_realtime){
+
+            $rootScope.rt=true;           
+
+          } else {
+
+            $rootScope.rt=false;
+
+          }
+
+
+
       }
 
     });
@@ -115,7 +136,7 @@ angular.module('myModule')
           }
       }
 
-      var colors = ['#1f77b4', '#ff7f0e'];
+      var colors = ['#1f77b4', '#DE5454'];
 
       $scope.colorDefault = function() {
         return function(d, i) {

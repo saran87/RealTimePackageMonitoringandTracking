@@ -18,7 +18,7 @@ angular.module('myModule')
 			$rootScope.tid=undefined;
 	  		$rootScope.pid=undefined;
 	  		$scope.render();
-	  		$location.path("#/dashboard");	  		
+	  		$location.path("#/dashboard");
 		}
 
 	  	$scope.urlFunc = function(){	  			  		
@@ -134,7 +134,7 @@ console.log($rootScope.tid + " from botoom " + $rootScope.pid);
 
 			} else {
 
-				
+
 					$scope.sideNavHrefs = {
 
 						"dashboard" : "#/dashboard",

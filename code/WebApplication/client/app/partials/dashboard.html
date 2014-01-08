@@ -20,19 +20,15 @@
                 <li>                  
                   <div class="datas-text">
                     <span class="text-primary">Realtime Tracking: </span>                    
-                    <span class="text-info" ng-show="configObj.is_realtime">Yes</span>
-                    <span class="text-success" ng-show="!configObj.is_realtime">No</span>
+                    <span class="text-success" ng-show="configObj.is_realtime">Yes</span>
+                    <span class="text-danger" ng-show="!configObj.is_realtime">No</span>
                   </div>
                 </li>
                 <li>                  
                   <div class="datas-text">
                     <span class="text-primary">Time Configured: </span>
                     <span class="text-info">{{configObj.timestamp | date: 'medium'}}</span></div>
-                </li> 
-                <li>
-                  
-                  <div class="datas-text">15,000000 visitors till date</div>
-                </li>                                                                                                              
+                </li>                                                                                                                              
               </ul> 
     </div>  
 

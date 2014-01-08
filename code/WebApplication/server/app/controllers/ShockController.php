@@ -18,7 +18,7 @@ class ShockController extends BaseController{
 
 	public function shockOfPackageInTruck($truck_id,$package_id){		
 
-		$shockOfPackageInTruckArr = Shock::where('package_id', $package_id)->where('truck_id',$truck_id)->get();
+		$shockOfPackageInTruckArr = Shock::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
 		return $shockOfPackageInTruckArr;		
 	}

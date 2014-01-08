@@ -41,8 +41,28 @@ angular.module('myModule')
 
 	  			console.log("from thresh " + data[0].config.temperature.maxthreshold);
 	  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
-	  			$scope.maxThreshold = 60;
-	  		}
+	  			if(data[0].config.shockx.maxthreshold==0){
+		        	$scope.maxThreshold = 66;	
+
+		        } else {
+
+		        	$scope.maxThreshold = data[0].config.shockx.maxthreshold;
+
+		        }
+		        
+
+		        if(data[0].config.is_realtime){
+
+					$rootScope.rt=true;	        	
+
+		        } else {
+
+		        	$rootScope.rt=false;
+
+		        }
+
+
+		  		}
 
 	  	});
 
@@ -114,7 +134,7 @@ angular.module('myModule')
             }
         }
 
-        var colors = ['#1f77b4', '#ff7f0e'];
+        var colors = ['#1f77b4', '#DE5454'];
 
 	    $scope.colorDefault = function() {
 	      return function(d, i) {

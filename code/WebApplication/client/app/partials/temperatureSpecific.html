@@ -20,7 +20,7 @@
 			            xAxisTickFormat="xAxisTickFormatFunction()"
 			            x2AxisTickFormat="xAxisTickFormatFunction2()"			            
 			            yAxisLabel="Temperature (F)"
-			            xAxisLabel="Date and Time"
+			            xAxisLabel="Time"
 			            margin="{left:100,top:100,bottom:100,right:50}"
 			            color="colorDefault()"
         				legendcolor="colorDefault()"
@@ -71,13 +71,10 @@
 
 	          <tr ng-class="tdata.value > maxThreshold && 'danger' || '' " ng-repeat="tdata in temperatureData">
 	            <td>{{tdata.timestamp | date: 'medium'}}</td>
-	            <td>
-	            	
-	            	<i class="fa fa-map-marker"></i> <a ng-href="http://maps.google.com/maps?q={{tdata.loc[1]}},{{tdata.loc[0]}}&ll={{tdata.loc[1]}},{{tdata.loc[0]}}&z=12" target="_blank">
-	            		
+	            <td>	            	
+	            	<a ng-href="http://maps.google.com/maps?q={{tdata.loc[1]}},{{tdata.loc[0]}}&ll={{tdata.loc[1]}},{{tdata.loc[0]}}&z=12" target="_blank">
 	            		<button class='btn btn-primary'>Show on map</button>
 	            	</a>
-
 	            </td>
 	            <td>{{tdata.value}}</td>
 	          </tr>

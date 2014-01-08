@@ -1,9 +1,55 @@
 angular.module('myModule')
-	.controller('shockController',['$scope','$rootScope','$routeParams','shockService','$http', function($scope,$rootScope,$routeParams,shockService,$http){
+	.controller('shockController',['$scope','$rootScope','$routeParams','shockService','dashBoardService','$http', function($scope,$rootScope,$routeParams,shockService,dashBoardService,$http){
 
 		var latestTimestamp; //holds the latestTimestamp for data received from a package
-    	var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
-    	var pack=$rootScope.pid; //package_id selected in the Dropdown me
+
+    	if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+
+			var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
+			var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+		} 
+		else if($routeParams.truck_id && $routeParams.package_id){
+
+			$rootScope.tid=$routeParams.truck_id;
+			$rootScope.pid=$routeParams.package_id;
+
+			var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
+			var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+		} 
+		else {
+			console.log("Undefined truck and package");
+		}
+
+    	dashBoardService.getConfigurationsOf(truck,pack)
+    	.then(function(data){
+
+	      if(!data[2].isError){
+
+	        //$scope.maxThreshold = data[0].config.shockx.maxthreshold;
+	        if(data[0].config.shockx.maxthreshold==0){
+	        	$scope.maxThreshold = 12.0;	
+
+	        } else {
+
+	        	$scope.maxThreshold = data[0].config.shockx.maxthreshold;
+
+	        }
+	        
+
+	        if(data[0].config.is_realtime){
+
+				$rootScope.rt=true;	        	
+
+	        } else {
+
+	        	$rootScope.rt=false;
+
+	        }
+	        
+	        
+	      }
+
+    	});
 
 	    shockService.getShockData(truck,pack)
 	    .then(function(data){
@@ -63,7 +109,7 @@ angular.module('myModule')
 
 	    $scope.xAxisTickFormatFunction = function(){
           return function(d){
-              return d3.time.format('%H:%M:%S')(new Date(d));
+              return d3.time.format('%H:%M')(new Date(d));
             }
     	}
 

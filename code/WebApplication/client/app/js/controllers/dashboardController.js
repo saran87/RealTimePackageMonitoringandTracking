@@ -28,7 +28,12 @@ angular.module("myModule")
 
 				$scope.configObj = data[0];
 							//"is_realtime"
-				$rootScope.isR = $scope.configObj.is_realtime;
+				if($scope.configObj.is_realtime){
+					$rootScope.rt = true;
+				} else {
+
+					$rootScope.rt=false;
+				}
 
 			} else {
 				console.log("Error: no data returned");

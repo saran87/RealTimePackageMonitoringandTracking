@@ -1,13 +1,60 @@
 angular.module('myModule')
-  .controller('vibrationController',['$scope','$rootScope','$routeParams','vibrationService','$http','$timeout',function($scope,$rootScope,$routeParams,vibrationService,$http,$timeout){
+  .controller('vibrationController',['$scope','$rootScope','$routeParams','vibrationService','dashBoardService','$http','$timeout',function($scope,$rootScope,$routeParams,vibrationService,dashBoardService,$http,$timeout){
 
     var latestTimestamp; //holds the latestTimestamp for data received from a package
-    var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
-    var pack=$rootScope.pid; //package_id selected in the Dropdown me
+    
+    if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+
+      var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
+      var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+    } 
+    else if($routeParams.truck_id && $routeParams.package_id){
+
+      $rootScope.tid=$routeParams.truck_id;
+      $rootScope.pid=$routeParams.package_id;
+
+      var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
+      var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+    } 
+    else {
+      console.log("Undefined truck and package");
+    }
 
     $scope.isVib=false;
     $scope.isPsd=false;
     $scope.isCl=false;
+
+    dashBoardService.getConfigurationsOf(truck,pack)
+    .then(function(data){
+
+      if(!data[2].isError){
+
+        //$scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
+        if(data[0].config.vibrationx.maxthreshold==0){
+            $scope.maxThreshold = 0.06; 
+
+          } else {
+
+            $scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
+
+          }
+          
+
+          if(data[0].config.is_realtime){
+
+          $rootScope.rt=true;           
+
+          } else {
+
+              $rootScope.rt=false;
+
+          }
+
+
+      }
+
+
+    });
 
     vibrationService.getVibrationData(truck,pack)
     .then(function(data){

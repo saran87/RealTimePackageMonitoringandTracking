@@ -11,7 +11,7 @@ class VibrationController extends BaseController{
 
 	public function vibrationOfPackageInTruck($truck_id,$package_id){		
 
-		$vibrationOfPackageInTruckArr = Vibration::where('package_id', $package_id)->where('truck_id',$truck_id)->get();
+		$vibrationOfPackageInTruckArr = Vibration::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
 		return $vibrationOfPackageInTruckArr;		
 	}

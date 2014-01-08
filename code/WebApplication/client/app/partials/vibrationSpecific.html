@@ -91,9 +91,13 @@
         </thead>
         <tbody>
 
-          <tr ng-repeat="vdata in vibrationData">
+          <tr ng-class="vdata.value.x > maxThreshold && 'danger' || '' " ng-repeat="vdata in vibrationData">
             <td>{{vdata.timestamp | date: 'medium'}}</td>
-            <td>{{vdata.loc}}</td>
+            <td>
+              <a ng-href="http://maps.google.com/maps?q={{vdata.loc[1]}},{{vdata.loc[0]}}&ll={{vdata.loc[1]}},{{vdata.loc[0]}}&z=12" target="_blank">
+                  <button class='btn btn-primary'>Show on map</button>
+              </a>
+            </td>
             <td>
             	<span class="label label-danger">X</span> <strong>{{vdata.value.x}}</strong><br/>
             	<span class="label label-danger">Y</span> <strong>{{vdata.value.y}}</strong><br />
