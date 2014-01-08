@@ -41,12 +41,12 @@ angular.module('myModule')
 
 	  			console.log("from thresh " + data[0].config.temperature.maxthreshold);
 	  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
-	  			if(data[0].config.shockx.maxthreshold==0){
+	  			if(data[0].config.temperature.maxthreshold==0){
 		        	$scope.maxThreshold = 66;	
 
 		        } else {
 
-		        	$scope.maxThreshold = data[0].config.shockx.maxthreshold;
+		        	$scope.maxThreshold = data[0].config.temperature.maxthreshold;
 
 		        }
 		        
