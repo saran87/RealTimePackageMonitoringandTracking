@@ -39,7 +39,9 @@ public class Config extends BaseInfo implements IDataStore {
 
                     configObject.append(config.getSensorType().toString().toLowerCase(), dbObject);
                 }
-
+                if(packageInformation.hasIsRealTime()){
+                    this.put(DBConstants.IS_REALTIME,packageInformation.getIsRealTime());
+                }
                 this.put(DBConstants.CONFIG, configObject);
             }
         }
@@ -56,7 +58,7 @@ public class Config extends BaseInfo implements IDataStore {
         query.put(DBConstants.SENSOR_ID, this.get(DBConstants.SENSOR_ID));
         query.put(DBConstants.TRUCK_ID, this.get(DBConstants.TRUCK_ID));
         query.put(DBConstants.PACKAGE_ID,this.get(DBConstants.PACKAGE_ID));
-        query.put(DBConstants.TIMESTAMP, this.get(DBConstants.TIMESTAMP));
+        //query.put(DBConstants.TIMESTAMP, this.get(DBConstants.TIMESTAMP));
     
         packageColl.update(query,this,true,false, WriteConcern.FSYNCED);
     }
