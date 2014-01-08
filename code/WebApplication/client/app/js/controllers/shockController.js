@@ -129,7 +129,4 @@ angular.module('myModule')
 	        };
 	    }
 
-		
-
-
 	}]);

@@ -39,6 +39,7 @@ angular.module('myModule')
 
 	  		if(!data[2].isError){
 
+	  			console.log("from thresh " + data[0].config.temperature.maxthreshold);
 	  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
 	  			$scope.maxThreshold = 60;
 	  		}
@@ -103,13 +104,13 @@ angular.module('myModule')
 	  	$scope.xAxisTickFormatFunction2 = function(){
 	        return function(d){
     	        //return d3.time.format('%x-%H:%M')(new Date(d));
-    	        return d3.time.format('%H:%M:%S')(new Date(d));
+    	        return d3.time.format('%H:%M')(new Date(d));
             }
         }
 
         $scope.xAxisTickFormatFunction = function(){
 	        return function(d){
-    	        return d3.time.format('%H:%M:%S')(new Date(d));
+    	        return d3.time.format('%H:%M')(new Date(d));
             }
         }
 

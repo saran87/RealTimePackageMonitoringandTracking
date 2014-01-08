@@ -44,8 +44,13 @@ class ShockController extends BaseController{
 
 		$maxGArray = $this->ProcessGValue();
 		$maxIndex = $maxGArray['index'] - 71;
+		
+		/*
+			t=0.0625
+			t is 1/1600
 
-		$time = (($maxIndex * 1.25) + 70)/1000;
+		*/
+		$time = (($maxIndex * 0.0625) + 70)/1000;
 		$height = 4.9 * ($time * $time) ;
 
 		$maxGArray['height'] = $height;

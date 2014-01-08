@@ -1,89 +1,127 @@
 <div ng-controller="dashboardCtrl">
-  <div class="row">  
+  <div class="row"> 
+
+  <div class="col-md-12"> 
+              <!-- List starts -->
+              <ul class="today-datas">
+                
+                <li>                  
+                  <div class="datas-text">
+                    <span class="text-primary">Truck ID: </span>
+                    <span class="text-info">{{tid}}</span>
+                  </div>
+                </li>
+                <li>                  
+                  <div class="datas-text">
+                    <span class="text-primary">Package ID: </span>
+                    <span class="text-info">{{tid}}</span>
+                  </div>
+                </li>
+                <li>                  
+                  <div class="datas-text">
+                    <span class="text-primary">Realtime Tracking: </span>                    
+                    <span class="text-info" ng-show="configObj.is_realtime">Yes</span>
+                    <span class="text-success" ng-show="!configObj.is_realtime">No</span>
+                  </div>
+                </li>
+                <li>                  
+                  <div class="datas-text">
+                    <span class="text-primary">Time Configured: </span>
+                    <span class="text-info">{{configObj.timestamp | date: 'medium'}}</span></div>
+                </li> 
+                <li>
+                  
+                  <div class="datas-text">15,000000 visitors till date</div>
+                </li>                                                                                                              
+              </ul> 
+    </div>  
+
+  </div>
+  <div class="row">
 
     <div class="col-md-12">
 
-              <div class="widget">
-                <div class="widget-head">
-                  <div class="pull-left">Threshold Values</div>                  
-                  <div class="clearfix"></div>
+      <div class="widget">
+        <div class="widget-head">
+          <div class="pull-left">Threshold Values</div>                  
+          <div class="clearfix"></div>
+        </div>
+        <div class="widget-content">
+          <div class="padd statement text-center">
+            
+            <div class="row">
+
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Temperature</h4>
+                  <p><h3>{{configObj.config.temperature.maxthreshold}} <sup>F</sup></h3></p>
                 </div>
-                <div class="widget-content">
-                  <div class="padd statement text-center">
-                    
-                    <div class="row">
+              </div>
 
-                      <div class="col-md-3">
-                        <div class="well cool-color">
-                          <h3>Temperature</h3>
-                          <p><h4>{{configObj.config.temperature.maxthreshold}}</h4></p>
-                        </div>
-                      </div>
-
-                      <div class="col-md-3">
-                        <div class="well cool-color">
-                          <h3>Humidity</h3>
-                          <p><h4>{{configObj.config.humidity.maxthreshold}}</h4></p>                        
-                        </div>
-                      </div>
-
-                      <div class="col-md-3">
-                        <div class="well cool-color">
-                          <h3>Vibration</h3>
-                          <p><h4>{{configObj.config.vibrationx.maxthreshold}}</h4></p>
-                        </div>
-                      </div>
-
-                      <div class="col-md-3">
-                        <div class="well cool-color">
-                          <h3>Shock</h3>
-                          <p><h4>{{configObj.config.shockx.maxthreshold}}</h4></p>
-                        </div>
-                      </div>
-
-                    </div>                   
-
-                  </div>
-                  <div class="widget-foot">
-                  </div>
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Humidity</h4>
+                  <p><h3>{{configObj.config.humidity.maxthreshold}} %RH</h3></p>                        
                 </div>
-              </div>  
+              </div>
+
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Vibration</h4>
+                  <p><h3>{{configObj.config.vibrationx.maxthreshold}} G</h3></p>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Shock</h4>
+                  <p><h3>{{configObj.config.shockx.maxthreshold}} G</h3></p>
+                </div>
+              </div>
+
+            </div>                   
+
+          </div>
+          <div class="widget-foot">
+          </div>
+        </div>
+      </div>  
               
-            </div>
+    </div>
   </div>
 
   <div class="col-md-5">
-              <div class="widget">
-                <!-- Widget title -->
-                <div class="widget-head">
-                  <div class="pull-left">Notifications Feed <i class="icon-warning-sign"></i></div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-content">
-                  <!-- Widget content -->
-                  <!-- activity starts -->
-                  <ul class="activity">
+    <div class="widget">
+      <!-- Widget title -->
+      <div class="widget-head">
+        <div class="pull-left">Notifications Feed <i class="icon-warning-sign"></i></div>
+        <div class="widget-icons pull-right">
+          <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+          <a href="#" class="wclose"><i class="icon-remove"></i></a>
+        </div>  
+        <div class="clearfix"></div>
+      </div>
+      <div class="widget-content">
+        <!-- Widget content -->
+        <!-- activity starts -->
+        <ul class="activity">
 
-                    <li><strong>Package ID: 1 </strong>in <strong>Truck ID: 16</strong> Dropped from height 12m</li>
-                    <li><strong>Package ID: 13</strong> in <strong>Truck ID: 22</strong> temperature above threshold</li>
-                    <li><strong>Package ID: 3 </strong>in <strong>Truck ID: 456</strong> temperature above threshold</li>
-                    <li><strong>Package ID: 53</strong> in <strong>Truck ID: 76</strong> vibration at 0.8G</li>
-                    <li><strong>Package ID: 53</strong> in <strong>Truck ID: 11</strong> Shock at 0.8G</li>
-                    
+          <li><strong>Package ID: 1 </strong>in <strong>Truck ID: 16</strong> Dropped from height 12m</li>
+          <li><strong>Package ID: 13</strong> in <strong>Truck ID: 22</strong> temperature above threshold</li>
+          <li><strong>Package ID: 3 </strong>in <strong>Truck ID: 456</strong> temperature above threshold</li>
+          <li><strong>Package ID: 53</strong> in <strong>Truck ID: 76</strong> vibration at 0.8G</li>
+          <li><strong>Package ID: 53</strong> in <strong>Truck ID: 11</strong> Shock at 0.8G</li>
+          
 
-                  </ul>
+        </ul>
 
-                  <div class="widget-foot">
-                    <button class="btn pull-right btn-default">Clear All</button>
-                    <div class="clearfix"></div>
-                  </div>
+        <div class="widget-foot">
+          <button class="btn pull-right btn-default">Clear All</button>
+          <div class="clearfix"></div>
+        </div>
 
-                </div>
-              </div>
+      </div>
+    </div>
   </div>
 
 

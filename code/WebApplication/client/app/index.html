@@ -47,18 +47,7 @@
 
   .angular-google-map {
       display: block;
-    }
-
-    div.cool-color {
-      background: #34495e;
-    }
-
-    div.cool-color h3,h4 {
-
-      color:#ecf0f1;
-
-
-    }
+    }      
  
   </style>
 
@@ -74,15 +63,13 @@
           </button>
           <!-- Site name for smallar screens -->                   
         </div>
-          
-          
+
+        <a href="" class="navbar-brand">PacMak</a>
 
           <!-- Navigation starts -->
           <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">       
 
-            <ul class="nav navbar-nav">  
-
-              <!-- Upload to server link. Class "dropdown-big" creates big dropdown -->
+            <ul class="nav navbar-nav">                              
               <li>
                 <a ng-click="goHome()" ng-href="#/{{'dashboard'}}"><span class="label label-success"><i class="icon-home"></i></span> Home</a>            
                 
@@ -91,44 +78,6 @@
             
 
               <!--Notifications Dropdown-->   
-            <div class="col-md-4">
-              <ul class="nav navbar-nav nav-pills">
-                <li class="dropdown dropdown-big">
-                  <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                  <span class="label label-danger">
-                    <i class="icon-warning-sign"></i></span> Alerts <sup><span class="label label-danger">2</span></sup> 
-                  </a>
-
-                    <ul class="dropdown-menu">
-                      <li>
-                        <!-- Heading - h5 -->
-                        <h5><i class="icon-warning-sign"></i> Notifications</h5>
-                        <!-- Use hr tag to add border -->
-                        <hr>
-                      </li>
-                      <li>
-                        <!-- List item heading h6 -->
-                        <h6><a href="#"><span class="text-danger">Overheat</span></a></h6>
-                        <!-- List item para -->
-                        <p>Package 1 Overheat at 100F</p>
-                        <hr>
-                      </li>
-                      <li>
-                        <h6><a href="#"><span class="text-danger">Dropped</span></a></h6>
-                        <p>Package 1 Dropped from 5m</p>
-                        <hr>
-                      </li>
-                      <li>
-                        <div class="drop-foot">
-                          <a href="notifications.html">View All</a>
-                        </div>
-                      </li>                                    
-                    </ul>
-                </li>           
-
-              </ul>
-            </div>       
-            
             
             <!-- Links -->
             <ul class="nav navbar-nav pull-right">
@@ -153,11 +102,8 @@
   <!-- Header starts -->
   <header>
     <div class="container">
-      <div class="row">
-      <div class="col-md-2">
-       <h3><i class="icon-tasks"></i> PaCMaK</h3>
-       </div>
-        <div class="col-md-10" id="select_menus">
+      <div class="row">      
+        <div class="col-md-10 col-md-offset-2" id="select_menus">
                 <div class="row">                 
 
                   <div class="col-md-3 text-center" id="truckSel">
@@ -238,10 +184,8 @@
     <div class="mainbar">
 
     <!-- Page heading -->
-      <div class="page-head">
-       
-        <div class="clearfix"></div>
-        
+      <div class="page-head">       
+        <div class="clearfix"></div>        
       </div>
       <!-- Page heading ends -->      
 

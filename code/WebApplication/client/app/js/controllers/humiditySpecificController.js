@@ -105,13 +105,13 @@ angular.module('myModule')
 
 	  	$scope.xAxisTickFormatFunction2 = function(){
           return function(d){
-              return d3.time.format('%H:%M:%S')(new Date(d));
+              return d3.time.format('%H:%M')(new Date(d));
             }
       }
 
       $scope.xAxisTickFormatFunction = function(){
         return function(d){
-            return d3.time.format('%H:%M:%S')(new Date(d));
+            return d3.time.format('%H:%M')(new Date(d));
           }
       }
 

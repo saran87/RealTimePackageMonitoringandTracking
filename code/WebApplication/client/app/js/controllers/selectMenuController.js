@@ -1,5 +1,5 @@
 angular.module('myModule')
-	.controller('selectMenuCtrl',['selectService','$scope','$rootScope','$location','$timeout',function(selectService,$scope,$rootScope,$location,$timeout){	
+	.controller('selectMenuCtrl',['selectService','$scope','$rootScope','$location','$routeParams','$timeout',function(selectService,$scope,$rootScope,$location,$routeParams,$timeout){	
 
 		$rootScope.typeOfService = 'dashboard';
 
@@ -46,7 +46,7 @@ angular.module('myModule')
 	    	}  	
 	    }; //end function packageUrl
 
-	    $scope.sideNavHrefs = {
+	    /*$scope.sideNavHrefs = {
 
 			"dashboard" : "#/dashboard",
 			"map" : "#/map",
@@ -55,12 +55,71 @@ angular.module('myModule')
 			"vibration" : "#/vibration",
 			"shock" : "#/shock"	
 
-		};
+		};*/
+
+		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+console.log($rootScope.tid + " from top " + $rootScope.pid);
+				$scope.sideNavHrefs = {
+
+					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
+				};
+
+			} else if($routeParams.truck_id && $routeParams.package_id) {
+
+				$rootScope.tid = $routeParams.truck_id;
+				$rootScope.pid = $routeParams.package_id;
+console.log($rootScope.tid + " from center " + $rootScope.pid);
+				$scope.sideNavHrefs = {
+
+					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
+				};
+
+
+			} else {
+console.log($rootScope.tid + " from botoom " + $rootScope.pid);
+					$scope.sideNavHrefs = {
+
+						"dashboard" : "#/dashboard",
+						"map" : "#/map",
+						"temperature" : "#/temperature",
+						"humidity" : "#/humidity",
+						"vibration" : "#/vibration",
+						"shock" : "#/shock"	
+
+					};
+			}
 
 		$scope.render = function(){
 
 			//console.log($location.path()+" "+$routeParams);
-			if($rootScope.tid !== undefined || $rootScope.pid !== undefined){
+			if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+					
+				$scope.sideNavHrefs = {
+
+					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
+				};
+
+			} else if($routeParams.truck_id && $routeParams.package_id) {
+
+				$rootScope.tid = $routeParams.truck_id;
+				$rootScope.pid = $routeParams.package_id;
+
+				
 
 				$scope.sideNavHrefs = {
 
@@ -72,8 +131,10 @@ angular.module('myModule')
 					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
 				};
 
+
 			} else {
 
+				
 					$scope.sideNavHrefs = {
 
 						"dashboard" : "#/dashboard",
