@@ -57,12 +57,12 @@ public class SerialPortFinder {
     }
     
     
-    public static CommPortIdentifier findSensorPort(){
+    public static CommPortIdentifier findSensorPort(SensorConfigurator UI){
         
         HashSet<CommPortIdentifier> comPortList = getAvailableSerialPorts();
         int maximumSize = comPortList.size();
         int size = 0;
-        ProgressBar bar = new ProgressBar(maximumSize, "Starting to read "+maximumSize+" ports");
+        ProgressBar bar = new ProgressBar(maximumSize, "Starting to read "+maximumSize+" ports",UI);
         bar.run();
         CommPort commPort = null;
         SensorReader packetReader = null;

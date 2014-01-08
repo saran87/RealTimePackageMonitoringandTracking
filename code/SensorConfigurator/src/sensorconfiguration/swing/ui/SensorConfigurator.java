@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -19,7 +21,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
+import rtpmt.logging.HTMLFormatter;
 import rtpmt.packages.Config;
 import rtpmt.packages.Package;
 import rtpmt.packages.Sensor;
@@ -75,13 +79,13 @@ public class SensorConfigurator extends javax.swing.JFrame {
     // Create a FileHandler and attach it to the root logger.
    // Create a MyHtmlFormatter and attach to the FileHandler.
    public static void setupLogger() throws IOException {
-     /* Logger rootLogger = Logger.getLogger("");
+      Logger rootLogger = Logger.getLogger("");
       Handler htmlFileHandler = new FileHandler("log.html");
       HTMLFormatter htmlFormatter = new HTMLFormatter();
       rootLogger.addHandler(htmlFileHandler);
-      htmlFileHandler.setFormatter(htmlFormatter);*/
+      htmlFileHandler.setFormatter(htmlFormatter);
       FileInputStream fis =  new FileInputStream("logging.properties");
-       // LogManager.getLogManager().readConfiguration(fis);
+        LogManager.getLogManager().readConfiguration(fis);
    }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,6 +166,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtLog = new javax.swing.JTextArea();
@@ -564,7 +570,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .add(validationLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -739,6 +744,20 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
         jLabel27.setText("Not Connected");
 
+        jButton1.setText("Connect");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Save as CSV");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -748,8 +767,12 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(jLabel26, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 126, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 189, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 282, Short.MAX_VALUE)
+                .add(jLabel27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 97, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jButton1)
+                .add(94, 94, 94)
+                .add(jButton3)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 104, Short.MAX_VALUE)
                 .add(jButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 345, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -760,10 +783,12 @@ public class SensorConfigurator extends javax.swing.JFrame {
                     .add(jButton4)
                     .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel26, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(jLabel27)))
+                        .add(jLabel27)
+                        .add(jButton1)
+                        .add(jButton3)))
                 .add(4, 4, 4)
                 .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(323, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Local Data", jPanel3);
@@ -825,13 +850,14 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.getAccessibleContext().setAccessibleName("settings");
+        jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        eventHandler.pushLocalFilesToServer();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnSaveAsCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveAsCSVActionPerformed
@@ -861,6 +887,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
     private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTabbedPane1FocusGained
 
     private void jPanel3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel3FocusGained
@@ -886,6 +913,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
     private void JbtnSaveToServer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnSaveToServer1ActionPerformed
         // TODO add your handling code here:
+        eventHandler.pushToServer();
     }//GEN-LAST:event_JbtnSaveToServer1ActionPerformed
 
     private void jbtnClearDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearDataActionPerformed
@@ -966,8 +994,31 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private void jtxtTuckIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTuckIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtTuckIdActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        eventHandler.initServer(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        final JFileChooser fc;
+        
+        fc = new JFileChooser();
+        fc.setDialogTitle("Select a folder");
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnVal = fc.showSaveDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            
+            eventHandler.saveAsCSV(fc.getSelectedFile().getAbsolutePath());
+        }
+        else{
+            handleError("Please select a folder");
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
     
-    private void clearLocalDataTable(){
+    public void clearLocalDataTable(){
         DefaultTableModel model = (DefaultTableModel) jtblLocalData.getModel();
          int rowCount =   model.getRowCount();
          for (int i = rowCount-1; i > 0 ; i--) {
@@ -1017,7 +1068,9 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JSpinner humTime;
     private javax.swing.JSpinner humTimeThreshold;
     private javax.swing.JPanel humidtyPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1034,7 +1087,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
+    public javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1058,7 +1111,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jbConfigure;
     private javax.swing.JButton jbtnClearData;
     private javax.swing.JButton jbtnConnect;

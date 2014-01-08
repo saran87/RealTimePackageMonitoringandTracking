@@ -22,7 +22,7 @@ public class ProgressBar implements Runnable{
     private JLabel label ;
     private JDialog dialog;
     private JPanel panel;
-    public ProgressBar(int max, String message){
+    public ProgressBar(int max, String message,SensorConfigurator UI){
          label = new JLabel(message);
          progressBar = new JProgressBar(0,max);
          progressBar.setIndeterminate(true);
@@ -30,7 +30,8 @@ public class ProgressBar implements Runnable{
         panel.add(label, BorderLayout.PAGE_START);
         panel.add(progressBar, BorderLayout.CENTER);
         
-         dialog = new JDialog((JFrame)null, "Working ...");
+        dialog = new JDialog(UI, "Working ...");
+         dialog.setAlwaysOnTop(true);
         dialog.getContentPane().add(panel);
         dialog.setResizable(false);
         dialog.pack();
@@ -55,7 +56,6 @@ public class ProgressBar implements Runnable{
         dialog.getContentPane().paintAll(panel.getGraphics());
     }
     public void done(){
-        System.err.println("hiihihihihihiihihihiihihihihi");
         dialog.removeAll();
         this.dialog.dispose();
             dialog.setVisible(false);
