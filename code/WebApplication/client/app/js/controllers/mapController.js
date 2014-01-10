@@ -28,7 +28,7 @@ angular.module('myModule')
           directionsDisplay = new google.maps.DirectionsRenderer();
           var initLocation = new google.maps.LatLng(43.08498749, -77.63056059);
           var mapOptions = {
-            zoom: 12,
+            zoom: 8,
             center: initLocation
           }
           map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -67,19 +67,17 @@ angular.module('myModule')
               travelMode: google.maps.TravelMode.DRIVING
             };
 
-             directionsService.route(request, function(response, status) {
+            directionsService.route(request, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                   directionsDisplay.setDirections(response);
                   var route = response.routes[0];                  
                 }
 
-              });
+            });          
 
-             for(var i=1; i<data[0].length-2; i++){                
+            
 
-                /*waypts.push({
-                    location: new google.maps.LatLng(data[0][i].loc.lng, data[0][i].loc.lat),
-                    stopover:true});*/                
+            for(var i=1; i<data[0].length-2; i++){                                           
 
                 markerArray.push( new google.maps.Marker
                     (

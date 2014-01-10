@@ -6,6 +6,6 @@
 
 var constants = {
 
-	"ROOT": "http://localhost/master/RealTimePackageMonitoringandTracking/code/WebApplication/server/public/index.php/",
+	"ROOT": "http://rfid.dev/api/",
 	"DEFAULTSERVICE": "dashboard"
 }

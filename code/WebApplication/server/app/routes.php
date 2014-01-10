@@ -11,7 +11,6 @@
 |
 */
 
-
 /*Routes to get configurations Data*/
 
 Route::get('/configs', 'ConfigController@configurations');
