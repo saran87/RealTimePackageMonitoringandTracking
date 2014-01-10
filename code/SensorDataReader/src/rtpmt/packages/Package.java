@@ -559,17 +559,7 @@ public class Package {
                message.addConfigs(this.getConfigs().get(Sensor.SHOCK).getConfigMessage()); 
             } 
 
-            NetworkMessage.PackageInformation.LocationInformation.Builder location = NetworkMessage.PackageInformation.LocationInformation.newBuilder();
-            Location loc = LocationTracker.getLocation();
-            if (loc != null) {
-                location.setLatitude(loc.getLatitude());
-                location.setLongitude(loc.getLongitude());
-                message.setLocation(location);
-            } else {
-                location.setLatitude(43.084603);
-                location.setLongitude(-77.680312);
-                message.setLocation(location);
-            }
+            
             return message.build();
     }
     

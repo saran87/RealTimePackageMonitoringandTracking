@@ -37,8 +37,8 @@ public abstract class BaseInfo extends DataAccess {
         if (packageInformation.hasLocation()) {
             BasicDBList loc = new BasicDBList();
             LocationInformation location = packageInformation.getLocation();
-            loc.add(location.getLongitude());
             loc.add(location.getLatitude());
+            loc.add(location.getLongitude());
             this.put(DBConstants.LOCATION, loc);
         }
     }

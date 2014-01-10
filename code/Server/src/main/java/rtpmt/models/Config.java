@@ -33,7 +33,7 @@ public class Config extends BaseInfo implements IDataStore {
                 for (PackageInformation.Config config : packageInformation.getConfigsList()) {
                     BasicDBObject dbObject = new BasicDBObject();
                     dbObject.append(DBConstants.MAX_THRESHOLD, config.getMaxThreshold());
-                    dbObject.append(DBConstants.MAX_THRESHOLD, config.getMinThreshold());
+                    dbObject.append(DBConstants.MIN_THRESHOLD, config.getMinThreshold());
                     dbObject.append(DBConstants.TIME_PERIOD, config.getTimePeriod());
                     dbObject.append(DBConstants.TIME_PERIOD_AFTER_THRESHOLD, config.getTimePeriodAfterThreshold());
 

@@ -171,7 +171,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtLog = new javax.swing.JTextArea();
-        btnSaveAsCSV = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sensor Configurator");
@@ -799,37 +798,21 @@ public class SensorConfigurator extends javax.swing.JFrame {
         txtLog.setBorder(null);
         jScrollPane4.setViewportView(txtLog);
 
-        btnSaveAsCSV.setText("Save as CSV");
-        btnSaveAsCSV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveAsCSVActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(btnSaveAsCSV, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
                 .addContainerGap())
-            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel4Layout.createSequentialGroup()
-                .add(btnSaveAsCSV)
-                .add(0, 565, Short.MAX_VALUE))
-            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                    .add(26, 26, 26)
-                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("logs", jPanel4);
@@ -859,31 +842,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
         // TODO add your handling code here:
         eventHandler.pushLocalFilesToServer();
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void btnSaveAsCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveAsCSVActionPerformed
-
-        //Create a file chooser
-        final JFileChooser fc;
-        fc = new JFileChooser();
-        int returnVal = fc.showSaveDialog(this);
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                File file = fc.getSelectedFile();
-                //This is where a real application would open the file.
-                System.out.print(file.getName());
-                eventHandler.generateCSV(file);
-                handleError(file.getName() + " successfully generated");
-            } catch (FileNotFoundException ex) {
-                handleError(ex.getMessage());
-                Logger.getLogger(SensorConfigurator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(SensorConfigurator.class.getName()).log(Level.SEVERE, null, ex);
-                handleError("Couldn't able to create the file. Try again later");
-            }
-        } else {
-        }
-    }//GEN-LAST:event_btnSaveAsCSVActionPerformed
 
     private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
         // TODO add your handling code here:
@@ -1063,7 +1021,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbtnSave;
     private javax.swing.JButton JbtnSaveToServer1;
-    private javax.swing.JButton btnSaveAsCSV;
     private javax.swing.JSpinner humThreshold;
     private javax.swing.JSpinner humTime;
     private javax.swing.JSpinner humTimeThreshold;

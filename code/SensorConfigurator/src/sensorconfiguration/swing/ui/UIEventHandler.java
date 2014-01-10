@@ -11,8 +11,6 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
 import java.awt.Color;
-import java.awt.event.FocusEvent;
-import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,40 +63,57 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     private FileOutputStream datalog;
     public String DATA_LOG_FILE = "datalog.buff";
     private SensorClient sensorClient;
-    
+
     private ProgressBar bar;
     private final static String address = "localhost";
     private boolean pushToServer = false;
-    
+    private static String logSensorType = "temperaur";
+
     public UIEventHandler(SensorConfigurator object) throws FileNotFoundException {
-        
+
         UIObject = object;
         File f = new File(FOLDER);
         File cf = new File(CONFIG_FOLDER);
-        try{
-            if(f.mkdir() && cf.mkdir()) { 
-                System.out.println("Directory Created");
+        String logText = "Creating data and config folder";
+        log(logText);
+        try {
+            if (f.mkdir() && cf.mkdir()) {
+                logText = "Data and Config Folder Created";
+                System.out.println(logText);
+                log(logText);
+
             } else {
-                System.out.println("Directory is not created");
+                logText = "Data and Config Folder not Created";
+                System.out.println(logText);
+                log(logText);
             }
-        } catch(Exception e){
-           UIObject.handleError("Not able to create neccessary file. Run as administrator");
-        } 
+        } catch (Exception e) {
+            logText = "Not able to create neccessary file. Run as administrator";
+            UIObject.handleError(logText);
+            log(logText, e);
+        }
         //connect to server
         initServer(false);
     }
 
     public void initServer(boolean ui) {
+        String logText = "Connecting to server";
+        log(logText);
         try {
             sensorClient = new SensorClient(address, 8080);
             sensorClient.connect();
-            if(sensorClient.isIsServerAvaialable())
-            UIObject.jLabel27.setText("Connected");
+            if (sensorClient.isIsServerAvaialable()) {
+                logText = "Connected to Server";
+                UIObject.jLabel27.setText("Connected");
+                log(logText);
+            }
         } catch (Exception ex) {
-            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-            UIObject.txtLog.append("Cannot connect to the server. \n");
-            if(ui)
-            UIObject.handleError("Cannot connect to the server");
+            logText = "Cannot connect to the server";
+            log(logText, ex);
+            UIObject.jLabel27.setText("Not Connected");
+            if (ui) {
+                UIObject.handleError("Cannot connect to the server");
+            }
         }
     }
 
@@ -106,6 +121,8 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
      * Initialize serial port with connected sensor port
      */
     public void initSerialPort() {
+        String logText = "Initializing the serial port";
+        log(logText);
         if (isSensorConnected) {
             disConnectSensor();
         }
@@ -114,7 +131,9 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             connect(commPort);
         } else {
             isSensorConnected = false;
-            UIObject.handleError("Check the sensor connection and try again");
+            logText = "Check the sensor connection and try again";
+            log(logText);
+            UIObject.handleError(logText);
         }
         UIObject.setConnected(isSensorConnected);
     }
@@ -127,6 +146,8 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
      * @param commPortIdentifier
      */
     public void connect(CommPortIdentifier commPortIdentifier) {
+        String logText = "Connecting to sensor";
+        log(logText);
         isSensorConnected = false;
         try {
             //the method below returns an object of type CommPort
@@ -144,23 +165,24 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             UIObject.setConnected(isSensorConnected);
 
             //logging
-            String logText = commPortIdentifier.getName() + " opened successfully.";
-            UIObject.txtLog.setForeground(Color.black);
-            UIObject.txtLog.append(logText + "\n");
+            logText = commPortIdentifier.getName() + " opened successfully.";
+            log(logText);
+            //UIObject.txtLog.setForeground(Color.black);
+            //UIObject.txtLog.append(logText + "\n");
 
         } catch (PortInUseException e) {
-            String logText = commPortIdentifier.getName() + " is in use. (" + e.toString() + ")";
-            Logger.getLogger(logText).log(Level.OFF, logText, e);
+            logText = commPortIdentifier.getName() + " is in use. (" + e.toString() + ")";
+            log(logText, e);
             UIObject.handleError(logText);
             serialPort.close();
         } catch (UnsupportedCommOperationException ex) {
-            String logText = "Unsupported ComPort" + commPortIdentifier.getName() + "(" + ex.toString() + ")";
-            Logger.getLogger(logText).log(Level.OFF, logText, ex);
+            logText = "Unsupported ComPort" + commPortIdentifier.getName() + "(" + ex.toString() + ")";
+            log(logText, ex);
             UIObject.handleError(logText);
             serialPort.close();
         } catch (Exception e) {
-            String logText = "Failed to open " + commPortIdentifier.getName() + "(" + e.toString() + ")";
-            Logger.getLogger(logText).log(Level.OFF, logText, e);
+            logText = "Failed to open " + commPortIdentifier.getName() + "(" + e.toString() + ")";
+            log(logText, e);
             UIObject.handleError("Not able to communicate with sensor, try again");
             serialPort.close();
         }
@@ -186,8 +208,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             return successful;
         } catch (IOException e) {
             String logText = "I/O Streams failed to open. (" + e.toString() + ")";
-            UIObject.txtLog.setForeground(Color.red);
-            UIObject.txtLog.append(logText + "\n");
+            log(logText, e);
             return successful;
         }
     }
@@ -212,8 +233,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             successful = true;
         } catch (IOException ex) {
             String logText = "I/O Streams failed to open. (" + ex.toString() + ")";
-            UIObject.txtLog.setForeground(Color.red);
-            UIObject.txtLog.append(logText + "\n");
+            log(logText, ex);
             successful = false;
         }
 
@@ -232,7 +252,8 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                 serialPort.close();
             }
         } catch (IOException ex) {
-            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+            String logText = "Disconnecting Sensor failed";
+            log(logText, ex);
         } finally {
             serialPort = null;
             packetReader = null;
@@ -241,9 +262,10 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
 
     void saveDataLocally() {
         pushToServer = false;
+        String logText = "Starting to save data";
         if (isSensorConnected) {
-            bar = new ProgressBar(100, "Starting to read data",UIObject);
-            UIObject.txtLog.append("Starting to save data. \n");
+            bar = new ProgressBar(100, "Starting to read data", UIObject);
+            log(logText);
             try {
                 Package pack = PackageList.getPackage(0);
                 if (pack != null) {
@@ -253,28 +275,30 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     file.deleteOnExit();
                     file.createNewFile();
                     datalog = new FileOutputStream(file);
+                    logSensorType = "";
                     packetReader.readPacket();
                     datalog.close();
-                    System.out.println("File length "+file.length()+" last modified "+ file.lastModified());
+                    System.out.println("File length " + file.length() + " last modified " + file.lastModified());
                     UIObject.handleError("Sensor data read successfully");
-                    UIObject.txtLog.append("Saved data successfully to "+file.toPath()+". \n");
+                    logText = "Saved data successfully to " + file.toPath();
+                    log(logText);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
                 UIObject.handleError("Problem with connecting to sensor.Try again");
-                UIObject.txtLog.append("Problem with connecting to sensor. Data not saved completely. \n");
-            }
-            catch (Exception ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                logText = "Problem with connecting to sensor. Data not saved completely";
+                log(logText, ex);
+            } catch (Exception ex) {
                 UIObject.handleError("Problem with connecting to sensor.Try again");
-                UIObject.txtLog.append("Problem with connecting to sensor. Data not saved completely. \n");
-            }
-            finally{
+                logText = "Problem with connecting to sensor. Data not saved completely";
+                log(logText, ex);
+            } finally {
                 bar.done();
+                logSensorType = "";
             }
         } else {
             UIObject.handleError("Connect the sensor and try again");
-            UIObject.txtLog.append("Connect the sensor and try again. Data not saved. \n");
+            logText = "Connect the sensor and try again. Data not saved";
+            log(logText);
         }
     }
 
@@ -315,66 +339,86 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     }
 
     void configureSensor(Package packs) {
+        String logText = "Starting to configure the sensor";
+        log(logText);
 
         try {
             if (!isSensorConnected || !packetReader.configure(packs)) {
-                UIObject.handleError("Cannot configure the sensor, try again");
+                logText = "Cannot configure the sensor, try again";
+                UIObject.handleError(logText);
+                log(logText);
             } else {
-                UIObject.handleError("Sensor configured Successfuly");
+                logText = "Sensor configured Successfuly";
+                UIObject.handleError(logText);
+                log(logText);
             }
         } catch (IOException ex) {
-            String logText = "Too many listeners. (" + ex.toString() + ")";
-            UIObject.txtLog.setForeground(Color.red);
-            UIObject.txtLog.append(logText + "\n");
-            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+            logText = "Too many listeners. (" + ex.toString() + ")";
+            log(logText, ex);
             UIObject.handleError("Cannot configure the sensor, try again");
         } catch (NullPointerException ex) {
-            String logText = "NUll Pointer Exception. (" + ex.toString() + ")";
-            UIObject.txtLog.setForeground(Color.red);
-            UIObject.txtLog.append(logText + "\n");
+            logText = "NUll Pointer Exception. (" + ex.toString() + ")";
+            log(logText, ex);
             UIObject.handleError("Cannot configure the sensor, try again");
         } catch (InterruptedException ex) {
-            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-            String logText = "NUll Pointer Exception. (" + ex.toString() + ")";
+            logText = "NUll Pointer Exception. (" + ex.toString() + ")";
+            log(logText, ex);
             UIObject.handleError("Cannot configure the sensor, try again");
         }
 
     }
 
     void clearSensorData() {
+        String logText = "Starting to clear sensor data";
+        log(logText);
         if (isSensorConnected) {
             try {
                 packetReader.clearData();
-                UIObject.handleError("Successfully cleared the data.");
+                logText = "Successfully cleared the data";
+                UIObject.handleError(logText);
+                log(logText);
             } catch (InterruptedException ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-                UIObject.handleError("Not able to clear the data. Try again");
+                logText = "Not able to clear the data. Try again";
+                UIObject.handleError(logText);
+                log(logText, ex);
             } catch (IOException ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-                UIObject.handleError("Not able to clear the data. Try again");
-            }
-            catch (Exception ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-                UIObject.handleError("Not able to clear the data. Try again");
+                logText = "Not able to clear the data. Try again";
+                UIObject.handleError(logText);
+                log(logText, ex);
+            } catch (Exception ex) {
+                logText = "Not able to clear the data. Try again";
+                UIObject.handleError(logText);
+                log(logText, ex);
             }
         } else {
-            UIObject.handleError("Failed to communicated with sensor. Try again");
+            logText = "Failed to communicated with sensor. Try again";
+            UIObject.handleError(logText);
+            log(logText);
         }
     }
 
     void restoreDefaultConfig() {
+        String logText = "Starting to clear the sensor data";
+        log(logText);
         if (isSensorConnected) {
             try {
                 packetReader.resetConfig();
+                logText = "Cleared Sensor data Successfully";
+                UIObject.handleError(logText);
+                log(logText);
             } catch (InterruptedException ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-                UIObject.handleError("Not able to clear the data. Try again");
+                logText = "Not able to clear the data. Try again";
+                log(logText, ex);
+                UIObject.handleError(logText);
             } catch (IOException ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-                UIObject.handleError("Not able to clear the data. Try again");
+                logText = "Not able to clear the data. Try again";
+                log(logText, ex);
+                UIObject.handleError(logText);
             }
         } else {
-            UIObject.handleError("Failed to communicated with sensor. Try again");
+            logText = "Failed to communicated with sensor. Try again";
+            log(logText);
+            UIObject.handleError(logText);
         }
     }
 
@@ -384,7 +428,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             FileInputStream inputStream = new FileInputStream(DATA_LOG_FILE);
             fw.writeCSV(inputStream, file);
         } catch (Exception ex) {
-            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+            log("Failed to create the csv", ex);
             throw ex;
         }
     }
@@ -399,24 +443,32 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     @Override
     public void handleNewPacket(Packet packet) {
         if (packet != null) {
-            
+
+            String logText;
             PackageInformation sensorInfo = packet.getBlackBoxMessage();
             String message = sensorInfo.getSensorId() + "," + sensorInfo.getTimeStamp() + ",";
             //UIObject.txtLog.append(message);
             for (PackageInformation.Sensor sensor : sensorInfo.getSensorsList()) {
+                if (!logSensorType.equalsIgnoreCase(sensor.getSensorType().name().substring(0, (sensor.getSensorType().name().length() - 1)))) {
+                    logText = "Reading " + sensor.getSensorType().name() + " data from sensor " + sensorInfo.getSensorId();
+                    log(logText);
+                    logSensorType = sensor.getSensorType().name().substring(0, (sensor.getSensorType().name().length() - 1));
+                }
 
                 message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
-                UIObject.txtLog.append(message + "\n");
+                //UIObject.txtLog.append(message + "\n");
             }
-            bar.setProgress(100, "Reading "+message);
+            bar.setProgress(100, "Reading " + message);
             try {
-                if(sensorClient.isIsServerAvaialable() && pushToServer)
+                if (sensorClient.isIsServerAvaialable() && pushToServer) {
                     sensorClient.send(sensorInfo);
-                else
+                } else {
                     sensorInfo.writeDelimitedTo(datalog);
-                
+                }
+
             } catch (IOException ex) {
-                Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                logText = "Problem whioe reading the data";
+                log(logText, ex);
             }
         }
     }
@@ -433,8 +485,9 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                 FileOutputStream configdatalog = new FileOutputStream(file);
                 pack.getConfigMessage(false).writeDelimitedTo(configdatalog);
                 configdatalog.close();
-                if(sensorClient.isIsServerAvaialable())
-                sensorClient.send(pack.getConfigMessage(false));
+                if (sensorClient.isIsServerAvaialable()) {
+                    sensorClient.send(pack.getConfigMessage(false));
+                }
             }
 
         } catch (IOException ex) {
@@ -466,10 +519,10 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     }
 
     void pushToServer() {
-        
+
         pushToServer = true;
         if (isSensorConnected) {
-            bar = new ProgressBar(100, "Starting to read data",UIObject);
+            bar = new ProgressBar(100, "Starting to read data", UIObject);
             try {
                 Package pack = PackageList.getPackage(0);
                 if (pack != null) {
@@ -479,133 +532,142 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     file.deleteOnExit();
                     file.createNewFile();
                     datalog = new FileOutputStream(file);
+                    logSensorType = "";
                     packetReader.readPacket();
                     datalog.close();
-                    System.out.println("File length "+file.length()+" last modified "+ file.lastModified());
-                    if(file.length()==0)
-                    {
+                    System.out.println("File length " + file.length() + " last modified " + file.lastModified());
+                    if (file.length() == 0) {
                         file.delete();
-                        Files.delete(Paths.get(CONFIG_FOLDER+pack.getUniqueId()));
+                        Files.delete(Paths.get(CONFIG_FOLDER + pack.getUniqueId()));
                     }
                     UIObject.handleError("Sensor data read successfully");
-                    
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
                 UIObject.handleError("Problem with connecting to sensor.Try again");
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
                 UIObject.handleError("Problem with connecting to sensor.Try again");
-            }
-            finally{
+            } finally {
                 bar.done();
+                logSensorType = "";
             }
         } else {
             UIObject.handleError("Connect the sensor and try again");
         }
-        }
+    }
 
     void pushLocalFilesToServer() {
-        ProgressBar bar1 = new ProgressBar(100, "Starting to send files",UIObject);
-         try {
-             
-             if(sensorClient.isIsServerAvaialable())
-             {
-            ArrayList<File> fileList = FileReader.listFilesForFolder(new File(FOLDER));
-            int length = 0;
-            int totalFiles = fileList.size();
-            int count = 1;
-            
-            for (File file : fileList) {
-                bar1.setProgress(100, "Sending "+count+"/"+totalFiles+" files");
-                count++;
-                String fileName = file.toString().substring(file.toString().indexOf("\\")+1);
-                File configFile = new File(CONFIG_FOLDER+fileName);
-                
-                FileInputStream fis = new FileInputStream(file);
-		DataInputStream dis = new DataInputStream(fis);
-                
-                for(;;){
-                    PackageInformation sensorInfo;
-                    sensorInfo = PackageInformation.parseDelimitedFrom(dis);
-                    
-                    if (sensorInfo == null) {
-                        break;
+        ProgressBar bar1 = new ProgressBar(100, "Starting to send files", UIObject);
+        try {
+
+            if (sensorClient.isIsServerAvaialable()) {
+                ArrayList<File> fileList = FileReader.listFilesForFolder(new File(FOLDER));
+                int length;
+                int totalFiles = fileList.size();
+                int count = 1;
+
+                for (File file : fileList) {
+                    bar1.setProgress(100, "Sending " + count + "/" + totalFiles + " files");
+                    count++;
+                    String fileName = file.toString().substring(file.toString().indexOf("\\") + 1);
+                    File configFile = new File(CONFIG_FOLDER + fileName);
+
+                    FileInputStream fis = new FileInputStream(file);
+                    DataInputStream dis = new DataInputStream(fis);
+
+                    for (;;) {
+                        PackageInformation sensorInfo;
+                        sensorInfo = PackageInformation.parseDelimitedFrom(dis);
+
+                        if (sensorInfo == null) {
+                            break;
+                        }
+
+                        sensorClient.send(sensorInfo);
+
                     }
-                    
-                    sensorClient.send(sensorInfo);
-            
-                }
-                length = dis.available();
-                fis.close();
-                dis.close();
-                if(length == 0)
-                    file.delete();
-                
-                FileInputStream configFis = new FileInputStream(configFile);
-                DataInputStream configDis = new DataInputStream(configFis);
-                
-                for(;;){
-                    PackageInformation sensorInfo;
-                    
-                    sensorInfo = PackageInformation.parseDelimitedFrom(configDis);
-                    if (sensorInfo == null) {
-                        break;
+                    length = dis.available();
+                    fis.close();
+                    dis.close();
+                    if (length == 0) {
+                        file.delete();
                     }
-                    
-                    sensorClient.send(sensorInfo);
-            
+
+                    FileInputStream configFis = new FileInputStream(configFile);
+                    DataInputStream configDis = new DataInputStream(configFis);
+
+                    for (;;) {
+                        PackageInformation sensorInfo;
+
+                        sensorInfo = PackageInformation.parseDelimitedFrom(configDis);
+                        if (sensorInfo == null) {
+                            break;
+                        }
+
+                        sensorClient.send(sensorInfo);
+
+                    }
+                    configDis.close();
+                    configFis.close();
+                    if (length == 0) {
+                        configFile.delete();
+                    }
+                    UIObject.clearLocalDataTable();
+                    populateLocalData();
+                    UIObject.jtblLocalData.repaint(UIObject.jtblLocalData.getBounds());
+
                 }
-                configDis.close();
-                configFis.close();
-                if(length == 0)
-                    configFile.delete();
-                UIObject.clearLocalDataTable();
-                populateLocalData();
-                UIObject.jtblLocalData.repaint(UIObject.jtblLocalData.getBounds());
-                
+
+            } else {
+                UIObject.handleError("Server not Connected.Try again");
             }
-            
-             }
-            else
-            {
-                    UIObject.handleError("Server not Connected.Try again");
-            }
-                
-                       
+
         } catch (Exception ex) {
             Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            bar1.done();
         }
-         finally{
-             bar1.done();
-         }
     }
 
     void saveAsCSV(String path) {
         try {
             ArrayList<File> fileList = FileReader.listFilesForFolder(new File(FOLDER));
             for (File file : fileList) {
-                String fileName = file.toString().substring(file.toString().indexOf("\\")+1);
-                String csvFile = path+"\\"+fileName+".csv";
+                String fileName = file.toString().substring(file.toString().indexOf("\\") + 1);
+                String csvFile = path + "\\" + fileName + ".csv";
                 System.out.println(csvFile);
-                 try {
-            FileWriter fw = new FileWriter();
-            FileInputStream inputStream = new FileInputStream(file);
-            fw.writeCSV(inputStream, new File(csvFile));
-        } catch (Exception ex) {
-            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        }
-                 UIObject.handleError("CSV created");
-               
+                try {
+                    FileWriter fw = new FileWriter();
+                    FileInputStream inputStream = new FileInputStream(file);
+                    fw.writeCSV(inputStream, new File(csvFile));
+                } catch (Exception ex) {
+                    Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    throw ex;
+                }
+                UIObject.handleError("CSV created");
+
             }
         } catch (Exception ex) {
             UIObject.handleError("CSV not created");
             Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
-    
+
+    private void log(String logText) {
+
+        UIObject.txtLog.append(logText + ".\n");
+        Logger.getLogger(UIEventHandler.class.getName()).log(Level.INFO, logText, (Throwable) null);
+
+    }
+
+    private void log(String logText, Exception ex) {
+
+        UIObject.txtLog.append(logText + ".\n");
+        Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, logText, ex);
+
+    }
+
 }
