@@ -30,7 +30,7 @@ angular.module('myServices')
 						errors.isError = true;
 						errors.errorMsg = "Empty array returned";
 
-						deferred.resolve([_mapData, errors]);
+						deferred.resolve([data, errors]);
 
 					} else {
 
@@ -38,7 +38,7 @@ angular.module('myServices')
 						//console.log("debug length " + len);
 						var locationObj={};
 
-						_mapData = [];						
+						/*_mapData = [];						
 
 						for(var i=0; i<len; i++){
 
@@ -47,10 +47,10 @@ angular.module('myServices')
 
 							_mapData.push(locationObj);
 
-			      		}//end for
+			      		}//end for*/
 			      		
 
-			      		deferred.resolve([_mapData, errors]);
+			      		deferred.resolve([data, errors]);
 					
 					} // end else
 

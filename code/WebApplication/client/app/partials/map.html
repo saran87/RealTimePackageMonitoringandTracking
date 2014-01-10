@@ -7,9 +7,10 @@
                   <div class="clearfix"></div>
                 </div>
                 <div class="widget-content">
-                <google-map center="center" zoom="zoom" markers="markers" refresh="!isMapElementHidden" style="height: 400px"></google-map>
+                <div id="map-canvas"></div>
                   <div class="widget-foot">
                     <!-- Footer goes here -->
+                    <button ng-click="updateWay()">Update</button>
                   </div>
                 </div>
               </div> 

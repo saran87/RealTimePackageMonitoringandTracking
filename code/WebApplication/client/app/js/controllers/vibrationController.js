@@ -179,7 +179,7 @@ angular.module('myModule')
       vibrationService.getPSDData(id)
       .then(function(data){         
       
-        for(var i=1; i<513;i++){
+        for(var i=3; i<513;i++){
 
             psdVals.push([
               (320/512)*i,
@@ -202,37 +202,9 @@ angular.module('myModule')
                 Math.abs((data.z[i]^2)/1600)
               ]); 
             }
-
-            /*psdVals.push([
-              (320/512)*i,
-              parseFloat((Math.log(((Math.abs(data.rms[i]))^2)/1600)/Math.LN10).toFixed(2))
-            ]);
-
-            psdValsX.push([
-              (320/512)*i,
-              parseFloat((Math.log(((Math.abs(data.x[i]))^2)/1600)/Math.LN10).toFixed(2))
-            ]);
-
-            psdValsY.push([
-              (320/512)*i,
-              parseFloat((Math.log(((Math.abs(data.y[i]))^2)/1600)/Math.LN10).toFixed(2))
-            ]);
-            
-            psdValsZ.push([
-              (320/512)*i,
-              parseFloat((Math.log(((Math.abs(data.z[i]))^2)/1600)/Math.LN10).toFixed(2))
-            ]);              
-*/
-
-
             
         } 
-
-        console.dir(psdVals);
-        console.dir(psdValsX);
-        console.dir(psdValsY);
-        console.dir(psdValsZ);
-
+        
         $scope.psdData = [
           {
             "key": "RMS Data",

@@ -69,6 +69,37 @@ angular.module('myModule')
 	  	temperatureService.getTemperatureDataOf(truck,pack)
 	  	.then(function(data){
 
+		  	dashBoardService.getConfigurationsOf(truck,pack)
+		  	.then(function(data){
+
+		  		if(!data[2].isError){
+		  			
+		  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
+		  			if(data[0].config.temperature.maxthreshold==0){
+			        	$scope.maxThreshold = 66;	
+
+			        } else {
+
+			        	$scope.maxThreshold = data[0].config.temperature.maxthreshold;
+
+			        }
+			        
+
+			        if(data[0].config.is_realtime){
+
+						$rootScope.rt=true;	        	
+
+			        } else {
+
+			        	$rootScope.rt=false;
+
+			        }
+
+
+			  		}
+
+		  	});
+
 	  		//check for error in the error object
 	  		if(!data[3].isError){
 

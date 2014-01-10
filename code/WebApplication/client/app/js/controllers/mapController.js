@@ -1,50 +1,87 @@
 angular.module('myModule')
-	.controller('mapController', ['$scope','mapService','$rootScope','$http',function($scope,mapService,$rootScope,$http){
+	.controller('mapController', ['$scope','mapService','$rootScope','$routeParams','$http',function($scope,mapService,$rootScope,$routeParams,$http){
 
-		var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
-    	var pack=$rootScope.pid; //package_id selected in the Dropdown me  
+		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
-        angular.extend($scope, {
-        center: {
-            latitude: 0, // initial map center latitude
-            longitude: 0, // initial map center longitude
-        },
-        markers: [], // an array of markers,
-        zoom: 8, // the zoom level
-    });  			
+            var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
+            var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+        } 
+        else if($routeParams.truck_id && $routeParams.package_id){
 
-        /*angular.extend($scope, {
+            $rootScope.tid=$routeParams.truck_id;
+            $rootScope.pid=$routeParams.package_id;
+
+            var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
+            var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+        } 
+        else {
+            console.log("Undefined truck and package");
+        }
+
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        var map;
+
+        var waypts=[];
+
+        function initialize() {
+          directionsDisplay = new google.maps.DirectionsRenderer();
+          var initLocation = new google.maps.LatLng(43.08498749, -77.63056059);
+          var mapOptions = {
+            zoom: 12,
+            center: initLocation
+          }
+          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+          directionsDisplay.setMap(map);
+        }
+
+        initialize();
+
+        mapService.getCordinatesOf(truck,pack)
+        .then(function(data){
             
-            paths: {
-                p1: {
-                    color: '#008000',
-                    weight: 8,
-                    latlngs: [
-                        { lat: 43.103069493, lng: -77.631136500914 },
-                        { lat: 43.10306949366, lng: -77.631136500914 },
-                        { lat: 43.085411630549, lng: -77.680327426728 },
-                        { lat: 43.085213365225, lng: -77.680295907749 },
-                        { lat: 43.085213365225, lng: -77.680295907749 },
-                        { lat: 43.085213365225, lng: 77.680295907749 },
-                        { lat: 43.07683425, lng: -77.64773069 }
+            var waypts=[
+                /*{
+                    location: new google.maps.LatLng(data[0][10].loc.lng, data[0][10].loc.lat),
+                    stopover: true
+                },
+                {
+                    location: new google.maps.LatLng(data[0][120].loc.lng, data[0][120].loc.lat),
+                    stopover: true
+                }*/
+
+            ];             
             
-                    ],
-                }
-            },
-            markers: {
-                first: {
-                    lat: 43.103069493, 
-                    lng: -77.631136500914,
-                    message: "This",
-                    focus: true,
-                    draggable: false
-                }
-            },
-            defaults: {
-                scrollWheelZoom: false
+            var start=new google.maps.LatLng(data[0][0].loc.lng, data[0][0].loc.lat);
+
+            var end=new google.maps.LatLng(data[0][data[0].length-1].loc.lng,data[0][data[0].length-1].loc.lat);        
+            
+
+            for(var i=1; i<data[0].length-2; i++){                
+
+                waypts.push({
+                    location: new google.maps.LatLng(data[0][i].loc.lng, data[0][i].loc.lat),
+                    stopover:true});
             }
-            });*/
+            
+            var request = {
+              origin: start,
+              destination: end,
+              waypoints: waypts,
+              optimizeWaypoints: true,
+              travelMode: google.maps.TravelMode.DRIVING
+            };
 
+             directionsService.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                  directionsDisplay.setDirections(response);
+                  var route = response.routes[0];                  
+                }
 
-	  	
-	  }])
+              });
+           
+        });
+
+        
+
+}])

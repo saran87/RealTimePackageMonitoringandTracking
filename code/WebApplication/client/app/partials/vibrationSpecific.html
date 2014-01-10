@@ -6,11 +6,10 @@
     <div class="widget-head">Vibration Graph - Time vs G-Value</div>
     <div class="widget-content">
 
-      <nvd3-line-with-focus-chart
+      <nvd3-line-chart
         data="exampleData"
         id="exampleId"      
-        height="400"
-        height2="50"
+        height="400"        
         showXAxis="true"
         showYAxis="true"
         tooltips="true"
@@ -19,14 +18,13 @@
         color="colorDefault()"
         legendcolor="colorDefault()"      
         margin="{left:100,top:100,bottom:100,right:50}"
-        xAxisTickFormat="xAxisTickFormatFunction()"
-        x2AxisTickFormat="xAxisTickFormatFunction2()"
+        xAxisTickFormat="xAxisTickFormatFunction()"        
         yAxisLabel="G-Value"
         xAxisLabel="Time"
         noData="Plotting Graph"          
         >
             <svg></svg>
-        </nvd3-line-with-focus-chart>
+        </nvd3-line-chart>
       
     </div>
   </div>
