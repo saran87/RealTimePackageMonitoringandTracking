@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-controller="mainCtrl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App - RTPMT</title>
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script> 
+  
+  <link rel="stylesheet" href="css/app.css"/>
+
+  <!-- Stylesheets -->
+  <link href="style/bootstrap.css" rel="stylesheet">
+  <!-- Font awesome icon -->
+  <link rel="stylesheet" href="style/font-awesome.css"> 
+  <!-- jQuery UI -->
+  <!--<link rel="stylesheet" href="style/jquery-ui.css"> -->
+  <link rel="stylesheet" href="style/jquery.jgrowl.min.css" />
+  <!-- Calendar -->
+  <link rel="stylesheet" href="style/fullcalendar.css">
+  <!-- prettyPhoto -->
+  <link rel="stylesheet" href="style/prettyPhoto.css">  
+  <!-- Star rating -->
+  <link rel="stylesheet" href="style/rateit.css">
+  <!-- Date picker -->
+  <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css">
+  <!-- CLEditor -->
+  <link rel="stylesheet" href="style/jquery.cleditor.css"> 
+  <!-- Uniform -->
+  <link rel="stylesheet" href="style/uniform.default.css"> 
+  <!-- Bootstrap toggle -->
+  <link rel="stylesheet" href="style/bootstrap-switch.css">
+  <!-- Main stylesheet -->
+  <link href="style/style.css" rel="stylesheet">
+  <!-- Widgets stylesheet -->
+  <link href="style/widgets.css" rel="stylesheet"> 
+
+  <link href="style/chosen.css" rel="stylesheet"> 
+
+  <link rel="stylesheet" href="style/nv.d3.css"/>  
+  
+  <!-- HTML5 Support for IE -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shim.js"></script>
+  <![endif]-->
+  <link rel="shortcut icon" href="img/favicon/favicon.ico">
+  <style>
+
+  #map-canvas {
+    width: 700px;
+    height: 650px;
+  } 
+ 
+  </style>
+
+</head>
+<body>
+  <div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+      
+        <div class="container">
+          <!-- Menu button for smallar screens -->
+          <div class="navbar-header">
+          <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+          <span>Menu</span>
+          </button>
+          <!-- Site name for smallar screens -->                   
+        </div>
+
+        <a ng-click="goHome()" ng-href="#/{{'dashboard'}}" class="navbar-brand"><i class="icon-home"></i> PacMak</a>
+
+          <!-- Navigation starts -->
+          <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">       
+
+            <ul class="nav navbar-nav">                              
+              <li>
+              </li>
+            </ul>
+            
+
+              <!--Notifications Dropdown-->   
+            
+            <!-- Links -->
+            <ul class="nav navbar-nav pull-right">
+              <li class="dropdown pull-right">            
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                  <i class="icon-user"></i> TestUser <b class="caret"></b>              
+                </a>
+                
+                <!-- Dropdown menu -->
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon-user"></i> Profile</a></li>
+                  <li><a href="#"><i class="icon-cogs"></i> Settings</a></li>
+                  <li><a href="login.html"><i class="icon-off"></i> Logout</a></li>
+                </ul>
+              </li>              
+            </ul>
+          </nav>
+
+        </div>
+  </div>
+<div ng-controller="selectMenuCtrl">
+  <!-- Header starts -->
+  <header>
+    <div class="container">
+      <div class="row">      
+        <div class="col-md-10 col-md-offset-2" id="select_menus">
+                <div class="row">                 
+
+                  <div class="col-md-3 text-center" id="truckSel">
+                    
+                        <select class="chosen-select form-control" ng-model="selected.id" ng-options="t.id for t in trucks">
+                          <option value="">-- Truck --</option>
+                        </select>
+
+                  </div>                 
+                  
+                  <div class="col-md-3 col-md-offset-1 text-center" id="packSel">
+                    
+                         <select ng-change="urlFunc()" class="chosen-select form-control" ng-model="selected.package" ng-options="p for p in selected.id.packages">
+                            <option value="">-- Package --</option>
+                        </select>
+
+                  </div>  
+
+                  <div id="inputTrack" class="col-md-4 pull-right">               
+                    <div class="input-group">                      
+                        <input type="text" class="form-control input-sm" id="txtPackageId" placeholder="Enter Package ID" ng-model="txtPackageid">
+                        <span class="input-group-btn">
+                          <button ng-click="packageUrl()" id="packageIdBtn" class="btn btn-info btn-sm" type="button"><i class="icon-chevron-right"></i></button>
+                        </span>
+                    </div>
+                                
+                  </div>
+
+                </div>    
+         </div> <!--/end select menus -->
+         </div>
+    </div>
+  </header>
+
+  <!-- Header ends -->
+
+<!-- Main content starts -->
+
+<div class="content">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-dropdown"><a href="#">Navigation</a></div>
+
+        <!--- Sidebar navigation -->
+        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+        <ul id="nav">
+          <!-- Main menu with font awesome icon -->
+          <li><a href="{{sideNavHrefs.dashboard}}" ng-click="setServiceType('dashboard')"><i class="icon-home"></i> Dashboard</a>
+            <!-- Sub menu markup 
+            <ul>
+              <li><a href="#">Submenu #1</a></li>
+              <li><a href="#">Submenu #2</a></li>
+              <li><a href="#">Submenu #3</a></li>
+            </ul>-->
+          </li>
+
+          <li><a href="{{sideNavHrefs.map}}" ng-click="setServiceType('map')"><i class="icon-map-marker"></i> Map</a></li>
+
+          <li><a href="{{sideNavHrefs.temperature}}" ng-click="setServiceType('temperature')"><i class="icon-sign-blank"></i> Temperature</a></li>
+          <li><a href="{{sideNavHrefs.humidity}}" ng-click="setServiceType('humidity')"><i class="icon-sign-blank"></i> Humidity</a></li>
+          <li><a href="{{sideNavHrefs.vibration}}" ng-click="setServiceType('vibration')"><i class="icon-sign-blank"></i> Vibration</a></li>
+
+
+           
+          
+          <li class="has_sub"><a href="{{sideNavHrefs.shock}}" ng-click="setServiceType('shock')"><i class="icon-file-alt"></i> Shock  <span class="pull-right"><i class="icon-sort-down"></i></span></a>
+            <ul>
+              <li><a href="#">Orientation</a></li>
+              <li><a href="#">Height-G</a></li>
+              <li><a href="#">Height Impact</a></li>              
+            </ul>
+          </li>                             
+          
+        </ul>        
+    </div><!-- Sidebar ends -->
+
+    <div class="mainbar">
+
+    <!-- Page heading -->
+      <div class="page-head">       
+        <div class="clearfix"></div>        
+      </div>
+      <!-- Page heading ends -->      
+
+      <div class="matter">
+        <div class="container">
+          <div class="row"> 
+
+              <div ng-view>Loading..</div>
+              
+            
+          <!-- mainData ends -->
+          </div>
+        
+        </div> <!--container ends-->
+
+      </div>
+      <!--Matter ends-->
+      
+    
+    </div><!-- Mainbar ends -->
+
+    
+    <div class="clearfix"></div>
+
+</div> 
+<!-- end content -->
+
+</div> <!-- end div that contains selectMenuCtrl -->
+
+
+<!--   <ul class="menu">
+    <li><a href="#/map">Map</a></li>
+    <li><a href="#/temperature">Temperature</a></li>
+    <li><a href="#/humidity">Humidity</a></li>
+    <li><a href="#/vibration">Vibration</a></li>
+  </ul>
+
+  <div ng-view>Loading..</div>
+   -->
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  -->
+
+  <!-- JS -->
+  
+  <script src="js/constants.js"></script>  
+  <script src="js/jquery.js"></script> <!-- jQuery -->
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+  <script src="js/bootstrap.js"></script> <!-- Bootstrap -->
+  <!--<script src="js/jquery-ui-1.9.2.custom.min.js"></script>--> <!-- jQuery UI -->
+  <script src="js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
+  <script src="js/jquery.rateit.min.js"></script> <!-- RateIt - Star rating -->
+  <script src="js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
+
+  <!-- Chosen Select -->
+  <script src="js/chosen.jquery.js"></script>
+
+  <!-- jQuery Flot -->
+  <script src="js/excanvas.min.js"></script>
+  <script src="js/jquery.flot.js"></script>
+  <script src="js/jquery.flot.categories.js"></script>
+  <script src="js/jquery.flot.resize.js"></script>
+  <script src="js/jquery.flot.pie.js"></script>
+  <script src="js/jquery.flot.stack.js"></script>
+
+
+  <script src="lib/angular/angular.js"></script>
+  <script src="js/angular-google-maps.js"></script>  
+  <script src="js/app.js"></script>
+  <script src="lib/angular/ui-bootstrap.js"></script>
+  <script src="js/d3.js"></script>
+  <script src="js/nv.d3.js"></script>
+  <script src="js/moment.js"></script>
+  <script src="js/angularjs-nvd3-directives.js"></script>
+  
+  
+  <script src="js/controllers/bootstrap.js"></script> <!-- Loading the module from controllers -->
+  <script src="js/controllers/selectMenuController.js"></script>
+  <script src="js/controllers/dashboardController.js"></script> 
+  <script src="js/controllers/dashBoardGeneralController.js"></script>
+  <script src="js/controllers/temperatureController.js"></script>
+  <script src="js/controllers/temperatureSpecificController.js"></script>
+  <script src="js/controllers/humidityController.js"></script>
+  <script src="js/controllers/humiditySpecificController.js"></script>
+  <script src="js/controllers/vibrationController.js"></script>
+  <script src="js/controllers/shockController.js"></script>
+  <script src="js/controllers/mapController.js"></script>
+  
+  <script src="js/controllers/modalController.js"></script>  
+
+  <script src="js/services/services.js"></script> <!-- Loading the module from services -->
+  <script src="js/services/selectMenuService.js"></script>
+  <script src="js/services/dashBoardService.js"></script>
+  <script src="js/services/dashBoardGeneralService.js"></script>
+  <script src="js/services/temperatureService.js"></script> <!-- Loading the module from services -->  
+  <script src="js/services/humidityService.js"></script>
+  <script src="js/services/vibrationService.js"></script>
+  <script src="js/services/shockService.js"></script>
+  <script src="js/services/mapService.js"></script>  
+
+  <script src="js/directives/directives.js"></script>
+  <script src="js/directives/temperatureGraph.js"></script>
+  <script src="js/directives/humidityGraph.js"></script>
+  <script src="js/directives/directiveModal.js"></script>
+
+  
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  
+  <span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span> 
+
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.js">
+ </script>
+  <script src="js/sparklines.js"></script> <!-- Sparklines -->
+  <script src="js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
+  <script src="js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
+  <script src="js/jquery.uniform.min.js"></script> <!-- jQuery Uniform -->
+  <script src="js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
+  <script src="js/filter.js"></script> <!-- Filter for support page -->
+  <script src="js/custom.js"></script> <!-- Custom codes -->
+  <script src="js/charts.js"></script> <!-- Charts & Graphs -->
+
+
+</body>
+</html>
+
