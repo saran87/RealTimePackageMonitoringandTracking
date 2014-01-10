@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/outerLayout"
+    android:orientation="vertical" >
+    
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayouttwo"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+     
+     <EditText
+        android:id="@+id/edit_sensorid"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_sensorid" />
+     
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutthree"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <EditText
+        android:id="@+id/edit_packageid"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_packageid" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutfour"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+     
+     <Button
+        android:id="@+id/addSensor"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_addSensorToList" 
+        android:onClick="addSensorToList" />
+    
+</LinearLayout>
+</LinearLayout>
+

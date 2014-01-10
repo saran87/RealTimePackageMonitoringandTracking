@@ -1,0 +1,288 @@
+<resources>
+
+    <string name="title_activity_global_settings">Global Settings</string>
+
+    <!-- Strings related to Settings -->
+
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_title_set_truck_id">Set Truck Id</string>
+    <string name="pref_default_set_truck_id">XXX123</string>
+      
+    <!-- Example settings for Shock -->
+    <string name="pref_header_Shock">Shock</string>
+    <string name="pref_title_set_shock_threshold">Threshold in Acceleration (G)</string>
+    <string name="pref_default_shock_threshold">0.98</string>
+
+    <!-- Example settings for Humidity -->
+    <string name="pref_header_Humidity">Humidity</string>
+    <string name="pref_title_set_humidity_threshold">Threshold in Percent (%)</string>
+    <string name="pref_default_humidity_threshold">22</string>
+    <string name="pref_title_notify_before_humidity">Notification before threshold</string>
+        
+    <string-array name="pref_notify_before_humidity_list">
+        <item>3 seconds</item>
+        <item>5 seconds</item>
+        <item>15 seconds</item>
+        <item>20 seconds</item>
+        <item>25 seconds</item>
+        <item>30 seconds</item>
+        <item>35 seconds</item>
+        <item>40 seconds</item>
+        <item>45 seconds</item>
+        <item>50 seconds</item>
+        <item>55 seconds</item>
+        <item>60 seconds</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_notify_before_humidity_values">
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+        <item>360</item>
+        <item>900</item>
+        <item>1800</item>
+        <item>2700</item>
+        <item>3600</item>
+        <item>-1</item>
+    </string-array>
+    
+    <string name="pref_title_notify_after_humidity">Notification after threshold</string>
+        
+    <string-array name="pref_notify_after_humidity_list">
+        <item>3 seconds</item>
+        <item>5 seconds</item>
+        <item>15 seconds</item>
+        <item>20 seconds</item>
+        <item>25 seconds</item>
+        <item>30 seconds</item>
+        <item>35 seconds</item>
+        <item>40 seconds</item>
+        <item>45 seconds</item>
+        <item>50 seconds</item>
+        <item>55 seconds</item>
+        <item>60 seconds</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_notify_after_humidity_values">
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+        <item>360</item>
+        <item>900</item>
+        <item>1800</item>
+        <item>2700</item>
+        <item>3600</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Temperature -->
+    <string name="pref_header_Temperature">Temperature</string>
+    <string name="pref_title_set_temperature_threshold">Threshold in Fahrenhiet (F)</string>
+    <string name="pref_default_temperature_threshold">67</string>
+    <string name="pref_title_notify_before_temperature">Notification before threshold</string>
+        
+    <string-array name="pref_notify_before_temperature_list">
+        <item>3 seconds</item>
+        <item>5 seconds</item>
+        <item>15 seconds</item>
+        <item>20 seconds</item>
+        <item>25 seconds</item>
+        <item>30 seconds</item>
+        <item>35 seconds</item>
+        <item>40 seconds</item>
+        <item>45 seconds</item>
+        <item>50 seconds</item>
+        <item>55 seconds</item>
+        <item>60 seconds</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_notify_before_temperature_values">
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+        <item>360</item>
+        <item>900</item>
+        <item>1800</item>
+        <item>2700</item>
+        <item>3600</item>
+        <item>-1</item>
+    </string-array>
+    
+    <string name="pref_title_notify_after_temperature">Notification after threshold</string>
+        
+    <string-array name="pref_notify_after_temperature_list">
+        <item>3 seconds</item>
+        <item>5 seconds</item>
+        <item>15 seconds</item>
+        <item>20 seconds</item>
+        <item>25 seconds</item>
+        <item>30 seconds</item>
+        <item>35 seconds</item>
+        <item>40 seconds</item>
+        <item>45 seconds</item>
+        <item>50 seconds</item>
+        <item>55 seconds</item>
+        <item>60 seconds</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_notify_after_temperature_values">
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+        <item>360</item>
+        <item>900</item>
+        <item>1800</item>
+        <item>2700</item>
+        <item>3600</item>
+        <item>-1</item>
+    </string-array>
+    
+    <!-- Example settings for Vibration -->
+    <string name="pref_header_Vibration">Vibration</string>
+    <string name="pref_title_set_vibration_threshold">Threshold in Acceleration (G)</string>
+    <string name="pref_default_vibration_threshold">0.68</string>
+    <string name="pref_title_notify_before_vibration">Notification before threshold</string>
+        
+    <string-array name="pref_notify_before_vibration_list">
+        <item>3 seconds</item>
+        <item>5 seconds</item>
+        <item>15 seconds</item>
+        <item>20 seconds</item>
+        <item>25 seconds</item>
+        <item>30 seconds</item>
+        <item>35 seconds</item>
+        <item>40 seconds</item>
+        <item>45 seconds</item>
+        <item>50 seconds</item>
+        <item>55 seconds</item>
+        <item>60 seconds</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_notify_before_vibration_values">
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+        <item>360</item>
+        <item>900</item>
+        <item>1800</item>
+        <item>2700</item>
+        <item>3600</item>
+        <item>-1</item>
+    </string-array>
+    
+    <string name="pref_title_notify_after_vibration">Notification after threshold</string>
+        
+    <string-array name="pref_notify_after_vibration_list">
+        <item>3 seconds</item>
+        <item>5 seconds</item>
+        <item>15 seconds</item>
+        <item>20 seconds</item>
+        <item>25 seconds</item>
+        <item>30 seconds</item>
+        <item>35 seconds</item>
+        <item>40 seconds</item>
+        <item>45 seconds</item>
+        <item>50 seconds</item>
+        <item>55 seconds</item>
+        <item>60 seconds</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_notify_after_vibration_values">
+        <item>3</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+        <item>360</item>
+        <item>900</item>
+        <item>1800</item>
+        <item>2700</item>
+        <item>3600</item>
+        <item>-1</item>
+    </string-array>
+
+</resources>

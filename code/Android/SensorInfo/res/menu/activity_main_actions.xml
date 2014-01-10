@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- AddSensor, should appear as action button -->
+    <item android:id="@+id/action_addSensor"
+          android:icon="@drawable/ic_action_attach"
+          android:title="@string/action_addSensor"
+          android:showAsAction="ifRoom|withText"  />
+    
+    <!-- Logs, should always be in the overflow -->
+    <item android:id="@+id/action_logs"
+          android:icon="@drawable/ic_action_view_as_list"
+          android:title="@string/action_logs"
+          android:showAsAction="never|withText" />
+    
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+          android:icon="@drawable/ic_action_settings"
+          android:title="@string/action_settings"
+          android:showAsAction="never|withText" />
+    
+    <!-- Help, should always be in the overflow -->
+    <item android:id="@+id/action_help"
+		  android:icon="@drawable/ic_action_help"
+          android:title="@string/action_help"
+          android:showAsAction="never|withText" />
+    
+
+</menu>

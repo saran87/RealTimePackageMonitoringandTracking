@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SensorData</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">No Data</string>
-
     <string name="title_activity_main">FTDI D2xx Demo</string>
     <string name="title_activity_ftdi_mode_fragment">Ftdi Mode Info</string>
     <string name="title_activity_ftdi_mode_control">Ftdi Mode Control</string>
@@ -21,96 +17,123 @@
     <string name="title_activity_device_bit_mode_service">Device BitMode Service</string>
     <string name="hex_digits_letter">0123456789abcdef</string>
     
-    <string-array name="baud_rate">        
-		<item>300</item>        
-		<item>600</item>        
-		<item>1200</item>        
-		<item>4800</item>        
-		<item>9600</item>        
-		<item>19200</item>        
-		<item>38400</item>        
-		<item>57600</item>
-		<item>115200</item>
-		<item>230400</item>    
-		<item>460800</item>
-		<item>921600</item>	
-	</string-array>
-	
-	<string-array name="stop_bits">        
-		<item>1</item>        
-		<item>2</item>        
-	</string-array>
-		
-	<string-array name="data_bits">        
-		<item>7</item>        
-		<item>8</item>        
-	</string-array>
-	
-	<string-array name="parity">        
-		<item>none</item>        
-		<item>odd</item>
-		<item>even</item>
-		<item >mark</item>
-		<item >space</item>
-	</string-array>
-	
-	<string-array name="flow_control">        
-		<item>none</item>        
-		<item>CTS/RTS</item>
-		<item>DTR/DSR</item>
-		<item>XOFF/XON</item>
-	</string-array>
-	
-	<string-array name="port_list_1">        
-		<item>1</item>
-	</string-array>
+    
+    <string name="app_name">Sensor Data</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="edit_truckid">Update Truck ID</string>
+    <string name="edit_sensorid">Enter Sensor ID</string>
+    <string name="edit_packageid">Enter Package ID</string>
+    <string name="edit_packageidupdate">Update Package ID</string>
+    
+    <string name="button_send">Send</string>
+    <string name="button_settruckid">Set Global Truck Id</string>
+    <string name="button_addSensorToList">Add Sensor</string>
+    <string name="button_refreshLogs">Refresh </string>
+    <string name="button_settingsForEach">Settings</string>
+    <string name="button_updateSensorToList">Update</string>
+    
+    <string name="title_activity_edit_sensor_details">Edit Sensor</string>
+    <string name="title_activity_add_sensor">Add New Sensor</string>
+    <string name="title_activity_display_message">DisplayMessage</string>
+    <string name="title_activity_logs">Logs</string>
+    
+    <string name="label_message">Hello world!</string>
+    
+    <string name="action_settings">Global Settings</string>
+    <string name="action_addSensor">Add New Sensor</string>
+    <string name="action_connection">Connection</string>
+    <string name="action_logs">Logs</string>
+    <string name="action_help">Help</string>
+    
+    <string name="hello_world">Hello world!</string>
+    <string name="text_sensorList">Sensor</string>
+    
+    
+    
 
-	<string-array name="port_list_2">        
-		<item>1</item>
-		<item>2</item>
-	</string-array>
-	
-	<string-array name="port_list_4">        
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-	</string-array>
-			
-	<string-array name="buffer_size">    
-	    <item>32768</item>    
-		<item>1M</item>        
-		<item>2M</item>
-		<item>3M</item>
-		<item>4M</item>
-		<item>5M</item>
-		<item>6M</item>
-		<item>7M</item>
-		<item>8M</item>
-		<item>9M</item>
-		<item>10M</item>
-	</string-array>
-	
-	<string-array name="max_transfer_size">
-	    <item>32768</item>   
-	    <item>16384</item>   
-	    <item>8192</item>   
-	    <item>4096</item>   
-	    <item>2048</item>        
-	    <item>1024</item>      
-		<item>512</item>        
-		<item>256</item>
-		<item>128</item>
-		<item>64</item>
-	</string-array>
-	
-	<string-array name="buffer_number">        
-		<item>12</item>        
-		<item>10</item>
-		<item>8</item>
-		<item>6</item>
-		<item>4</item>
-		<item>2</item>
-	</string-array>
-		<string name="temperatureIntervalText"></string>
+    <string-array name="baud_rate">
+        <item>300</item>
+        <item>600</item>
+        <item>1200</item>
+        <item>4800</item>
+        <item>9600</item>
+        <item>19200</item>
+        <item>38400</item>
+        <item>57600</item>
+        <item>115200</item>
+        <item>230400</item>
+        <item>460800</item>
+        <item>921600</item>
+    </string-array>
+    <string-array name="stop_bits">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="data_bits">
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="parity">
+        <item>none</item>
+        <item>odd</item>
+        <item>even</item>
+        <item>mark</item>
+        <item>space</item>
+    </string-array>
+    <string-array name="flow_control">
+        <item>none</item>
+        <item>CTS/RTS</item>
+        <item>DTR/DSR</item>
+        <item>XOFF/XON</item>
+    </string-array>
+    <string-array name="port_list_1">
+        <item>1</item>
+    </string-array>
+    <string-array name="port_list_2">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="port_list_4">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="buffer_size">
+        <item>32768</item>
+        <item>1M</item>
+        <item>2M</item>
+        <item>3M</item>
+        <item>4M</item>
+        <item>5M</item>
+        <item>6M</item>
+        <item>7M</item>
+        <item>8M</item>
+        <item>9M</item>
+        <item>10M</item>
+    </string-array>
+    <string-array name="max_transfer_size">
+        <item>32768</item>
+        <item>16384</item>
+        <item>8192</item>
+        <item>4096</item>
+        <item>2048</item>
+        <item>1024</item>
+        <item>512</item>
+        <item>256</item>
+        <item>128</item>
+        <item>64</item>
+    </string-array>
+    <string-array name="buffer_number">
+        <item>12</item>
+        <item>10</item>
+        <item>8</item>
+        <item>6</item>
+        <item>4</item>
+        <item>2</item>
+    </string-array>
+
+    <string name="temperatureIntervalText"></string>
+    
+
 </resources>

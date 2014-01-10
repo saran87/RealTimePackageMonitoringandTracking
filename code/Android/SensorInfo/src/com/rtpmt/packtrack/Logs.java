@@ -1,26 +1,61 @@
 package com.rtpmt.packtrack;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.TextView;
+
 import com.example.sensorinfo.R;
 
-import android.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 
-
-public class Logs extends Fragment {
+public class Logs extends Activity{
+	public TextView readText1;
+	public static int countLog = 0;
 	
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	// Set sensor threshold and frequency
-    	View selfView = inflater.inflate(R.layout.logs, container, false);
-    	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.logs);
 		
-        return selfView;
-    }
-    
+		countLog = LogStack.LogList.size();
+		
+		readText1 = (TextView) findViewById(R.id.readValues1);
+		readText1.setMovementMethod(new ScrollingMovementMethod());
+		
+		for (int index = 0; index < LogStack.LogList.size(); index++)
+		{
+			String log = LogStack.LogList.get(index);
+			readText1.setText(log + "\n\r" + readText1.getText());
+		}
+		if (LogStack.LogList.size() == 1000)
+		{
+			LogStack.LogList.clear();
+		}
+		
+        // get action bar  
+        ActionBar actionBar = getActionBar();
+ 
+        // Enabling Up / Back navigation
+        actionBar.setDisplayHomeAsUpEnabled(false);
+	}  
+	
+	public void refreshLogs(View view){
+		if (countLog < LogStack.LogList.size())
+		{
+			countLog = LogStack.LogList.size();
+			for (int index = countLog; index < LogStack.LogList.size(); index++)
+			{
+				String log = LogStack.LogList.get(index);
+				readText1.setText(log + "\n\r" + readText1.getText());
+			}
+			if (LogStack.LogList.size() == 1000)
+			{
+				LogStack.LogList.clear();
+			}
+		}
+	}
 }
 

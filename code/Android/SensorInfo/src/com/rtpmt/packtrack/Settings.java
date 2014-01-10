@@ -196,7 +196,7 @@ public class Settings extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				try {
+/*				try {
 					rtpmt.packages.Package pack = new rtpmt.packages.Package();
 					
 					StartActivity.sensorReader.configure(pack);
@@ -209,7 +209,7 @@ public class Settings extends Fragment {
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 			}
         	
         });

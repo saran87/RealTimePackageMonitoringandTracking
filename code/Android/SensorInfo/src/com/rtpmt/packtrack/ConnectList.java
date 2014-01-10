@@ -55,17 +55,17 @@ public class ConnectList extends Fragment {
         
         
         
-    	for(PackageInfo obj : StartActivity.packageList){
+    	/*for(PackageInfo obj : StartActivity.packageList){
         readSensorID = obj.sensorID;
         readPackageID =  obj.packageID;
         readTruckID=obj.truckID;
     	readStatus = "Not Connected";
-    	
+    	*/
     	/*getSensorText.setText(readSensorID+" "+"\n\r"+getSensorText.getText());
     	getPackageText.setText(readPackageID+" "+"\n\r"+getPackageText.getText());
     	getStatusText.setText(readStatus+" "+"\n\r"+getStatusText.getText());*/
     	//getTruckText.setText(readTruckID+" "+"\n\r"+getTruckText.getText());
-    	}
+    	//}
    
     	// ImageButton AddButton = (ImageButton) getSensorView.findViewById(R.id.addButton2);
          

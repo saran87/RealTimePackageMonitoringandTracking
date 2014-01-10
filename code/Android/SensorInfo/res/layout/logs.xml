@@ -5,12 +5,54 @@
     android:orientation="vertical"
     android:paddingLeft="30dp" >
     
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutfive"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/refreshLog"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="@string/button_refreshLogs"
+    	android:drawableLeft="@drawable/ic_action_refresh"
+    	android:onClick="refreshLogs"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutsix"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+    
     <TextView
         android:id="@+id/temperatureThresholdText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logged Values"
-        android:textSize="48sp" />
+        android:text=""/>
 
- 
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutseven"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+    
+	<TextView android:id="@+id/readValues1" 
+   		android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:layout_weight="0.0" 
+    	android:scrollbars="vertical" 
+    	android:text=" "/>
+    
+    </LinearLayout>
+    
+       
+
 </LinearLayout>

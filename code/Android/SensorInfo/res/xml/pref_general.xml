@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_set_truck_id"
+        android:inputType="text"
+        android:key="set_truck_id"
+        android:maxLength="25"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_set_truck_id" />
+    
+    <!-- <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="set_by_sensor_id"
+        android:summary="@string/pref_description_set_by_sensor_id"
+        android:title="@string/pref_title_set_by_sensor_id" />
+
+    
+         NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it.
+    -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. 
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/pref_sensor_list_titles"
+        android:entryValues="@array/pref_sensor_list_values"
+        android:dependency="set_by_sensor_id"
+        android:key="sensor_list"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_add_friends_to_messages" /> -->
+
+</PreferenceScreen>
