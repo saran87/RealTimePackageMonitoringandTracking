@@ -41,8 +41,12 @@ public class HTMLFormatter extends Formatter {
       
       buf.append("</td>");
       buf.append("<td>");
+      if(record.getThrown()!= null){
       buf.append(record.getThrown()).append("\n");
-      buf.append(formatStackTrace(record.getThrown().getStackTrace()));
+      buf.append(formatStackTrace(record.getThrown().getStackTrace()));}
+      else{
+          buf.append(formatMessage(record));
+      }
       buf.append("</td>");
       buf.append("</tr>");
       return buf.toString();

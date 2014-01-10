@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package rtpmt.location.tracker;
-import gnu.io.*;
+//import gnu.io.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,8 +13,8 @@ import java.util.LinkedList;
  *
  * @author kumar
  */
-public class LocationTracker implements SerialPortEventListener, Runnable{
-    
+public class LocationTracker implements  Runnable{
+   /* 
     //location stack to store the location collected over time
     @SuppressWarnings("unchecked")
     static LinkedList<Location>  locStack = new LinkedList<Location>();
@@ -170,7 +170,7 @@ public class LocationTracker implements SerialPortEventListener, Runnable{
             }
         }
     }
-
+*/
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet.");

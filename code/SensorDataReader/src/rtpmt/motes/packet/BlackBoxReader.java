@@ -247,7 +247,7 @@ public class BlackBoxReader extends AbstractSource {
 
                     payLoad = length;
                     isLength = true;
-                    Dump.dump("Recieved File Response", dummyPacket);
+                    Dump.dump("Recieved File Response", receiveBuffer);
                     break;
                 }
             }
@@ -255,6 +255,7 @@ public class BlackBoxReader extends AbstractSource {
         
         if(isLength){
             startProcessingData(payLoad);
+            //printData(payLoad);
         }
     }
     
@@ -402,6 +403,11 @@ public class BlackBoxReader extends AbstractSource {
 
                     payLoad = count + length;
                     isLength = true;
+                    if(payLoad >600)
+                    {
+                        Dump.dump(System.out, "Exceeded payload length", receiveBuffer);
+                    }
+                    System.out.println("Payload length :"+payLoad);
                     continue;
                 } else if (count < payLoad) {
                     b = (byte) (port.read() & 0xff);
@@ -568,7 +574,7 @@ public class BlackBoxReader extends AbstractSource {
             Dump.dump(System.err, "encoded", realPacket);
             System.err.println();
         }
-        Thread.sleep(100);
+        Thread.sleep(500);
         return write;
     }
     
@@ -685,6 +691,16 @@ public class BlackBoxReader extends AbstractSource {
        writeFramedPacket(Constants.FORMAT_SD_CARD, dummyPacket);
        writeFramedPacket(Constants.FORMAT_FLASH, dummyPacket);
        getSensorInformation(); 
+    }
+
+    private void printData(int payLoad) throws IOException{
+        byte[] data = new byte[payLoad];
+        int i=0;
+        while(i< payLoad){
+            data[i] = port.read();
+            i++;
+        }
+        Dump.dump("Data from SD :",data);
     }
 
 }

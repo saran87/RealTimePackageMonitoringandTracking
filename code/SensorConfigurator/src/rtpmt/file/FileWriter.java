@@ -14,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import rtpmt.network.packet.NetworkMessage.PackageInformation;
 
 
@@ -38,6 +40,7 @@ public class FileWriter {
     private BufferedWriter getWriter(File file) throws IOException{
         // if file doesnt exists, then create it
         boolean createNewFile = false;
+        Files.deleteIfExists(file.toPath());
         if (!file.exists()) {
              createNewFile = file.createNewFile();
         }if( createNewFile){
@@ -59,9 +62,12 @@ public class FileWriter {
                     break;
                 }
                 PackageInformation sensorInfo =  PackageInformation.parseDelimitedFrom(inputStream);
-                
                 if(sensorInfo != null){
-                    String line =  sensorInfo.getSensorId() + "," + sensorInfo.getTimeStamp() + ",";
+                Date date = new Date(sensorInfo.getTimeStamp());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy - HH:mm:ss");
+                String formattedDate = dateFormat.format(date);
+                
+                    String line =  sensorInfo.getSensorId() + "," + formattedDate+ ",";
                     for (PackageInformation.Sensor sensor : sensorInfo.getSensorsList()) {
 
                         line = line + sensor.getSensorType().name() + "," + sensor.getSensorValue().replace(' ', ',');

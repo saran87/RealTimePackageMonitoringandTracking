@@ -40,8 +40,24 @@ public class SerialPort implements SerialPortInterface {
     @Override
     public byte read() throws IOException {
         byte data = 0;
+        int tempData = 0;
+        int counter = 0;
+        tempData = input.read();
+        while(tempData == -1)
+        {
+            try {
+                Thread.sleep(10);
+                counter++;
+                if(counter > 100){
+                    throw new IOException();
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tempData = input.read();
+        }
 
-        data = (byte) (input.read() & 0xff);
+        data = (byte) (tempData & 0xff);
 
         return data;
     }
