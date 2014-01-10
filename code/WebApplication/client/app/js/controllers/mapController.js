@@ -56,13 +56,8 @@ angular.module('myModule')
 
             var end=new google.maps.LatLng(data[0][data[0].length-1].loc.lng,data[0][data[0].length-1].loc.lat);        
             
-
-            for(var i=1; i<data[0].length-2; i++){                
-
-                waypts.push({
-                    location: new google.maps.LatLng(data[0][i].loc.lng, data[0][i].loc.lat),
-                    stopover:true});
-            }
+            var markerArray=[];
+            
             
             var request = {
               origin: start,
@@ -79,6 +74,28 @@ angular.module('myModule')
                 }
 
               });
+
+             for(var i=1; i<data[0].length-2; i++){                
+
+                /*waypts.push({
+                    location: new google.maps.LatLng(data[0][i].loc.lng, data[0][i].loc.lat),
+                    stopover:true});*/                
+
+                markerArray.push( new google.maps.Marker
+                    (
+
+                        {
+                            position: new google.maps.LatLng(data[0][i].loc.lng, data[0][i].loc.lat),
+                            title: "Temperature",
+                            map: map,
+                            draggable: false,
+                            animation: google.maps.Animation.DROP
+
+                        }
+                    ) 
+                );
+            }
+            
            
         });
 
