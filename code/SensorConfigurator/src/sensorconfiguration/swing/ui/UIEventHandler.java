@@ -448,6 +448,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             PackageInformation sensorInfo = packet.getBlackBoxMessage();
             String message = sensorInfo.getSensorId() + "," + sensorInfo.getTimeStamp() + ",";
             //UIObject.txtLog.append(message);
+            
             for (PackageInformation.Sensor sensor : sensorInfo.getSensorsList()) {
                 if (!logSensorType.equalsIgnoreCase(sensor.getSensorType().name().substring(0, (sensor.getSensorType().name().length() - 1)))) {
                     logText = "Reading " + sensor.getSensorType().name() + " data from sensor " + sensorInfo.getSensorId();
@@ -458,8 +459,10 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                 message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
                 //UIObject.txtLog.append(message + "\n");
             }
-            bar.setProgress(100, "Reading " + message);
+           // bar.setProgress(100, "Reading " + message);
+            
             try {
+               
                 if (sensorClient.isIsServerAvaialable() && pushToServer) {
                     sensorClient.send(sensorInfo);
                 } else {

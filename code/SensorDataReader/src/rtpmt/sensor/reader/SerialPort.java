@@ -5,6 +5,8 @@
  */
 package rtpmt.sensor.reader;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,13 +19,13 @@ import java.util.logging.Logger;
  */
 public class SerialPort implements SerialPortInterface {
 
-    private final InputStream input;
-    private final OutputStream output;
+    private final BufferedInputStream input;
+    private final BufferedOutputStream output;
 
     public SerialPort(InputStream _input, OutputStream _output) {
 
-        this.input = _input;
-        this.output = _output;
+        this.input =  new BufferedInputStream(_input,4096);
+        this.output = new BufferedOutputStream(_output);
     }
 
     @Override
@@ -43,6 +45,7 @@ public class SerialPort implements SerialPortInterface {
         int tempData = 0;
         int counter = 0;
         tempData = input.read();
+        
         while(tempData == -1)
         {
             try {

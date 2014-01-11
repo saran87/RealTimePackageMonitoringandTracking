@@ -145,12 +145,16 @@ public class BlackBoxReader extends AbstractSource {
      * @throws InterruptedException
      */
     private void readSDCardData() throws IOException, InterruptedException, TimeoutException {
+        System.out.println("Reading Temperature");
         writeFramedPacket(Constants.GET_TEMPERATURE, dummyPacket);
         processSDCardPacket();
+        System.out.println("Reading Humididty");
         writeFramedPacket(Constants.GET_HUMIDITY, dummyPacket);
         processSDCardPacket();
+        System.out.println("Reading Vibration");
         writeFramedPacket(Constants.GET_VIBRATION, dummyPacket);
         processSDCardPacket();
+        System.out.println("Reading Shock");
         writeFramedPacket(Constants.GET_SHOCK, dummyPacket);
         processSDCardPacket();
     }
@@ -158,7 +162,6 @@ public class BlackBoxReader extends AbstractSource {
     private void sendTimeSyncPacket(int nodeId) throws IOException {
         try {
             long currentTime = System.currentTimeMillis()/1000;
-            
             System.out.println("SendTime: "+currentTime);
             byte timePacket[] = (new BigInteger(Long.toHexString(currentTime),16)).toByteArray();//ByteBuffer.allocate(8). array();
             writeFramedPacket(Constants.P_TIME_SYNC, nodeId, timePacket);
@@ -220,12 +223,11 @@ public class BlackBoxReader extends AbstractSource {
                 }
 
                 if (DEBUG) {
-                    Dump.printPacket(System.out, syncFrame);
+                   // Dump.printPacket(System.out, syncFrame);
                 }
 
                 if (Utils.compare(syncFrame, Constants.FRAME_SYNC)) {
                     inSync = true;
-                    System.out.println("IN SYNC");
                 } else if (notInSyncCount >= Constants.MTU) {
                     throw new TimeoutException("No data from sensor.Time out");
                 }
@@ -273,7 +275,9 @@ public class BlackBoxReader extends AbstractSource {
                 length = length - (rawPacket.length + 5);
                 Packet pack = new Packet(rawPacket);
                 if(DEBUG){
-                    System.err.println("Length "+ length+ " counter "+counter);
+                    if(counter >= 469){
+                        System.err.println("Length "+ length+ " counter "+counter);
+                    }
                 }
                 if(pack.isPartialPacket()){
                     handlePartialPackets(pack);
@@ -313,6 +317,7 @@ public class BlackBoxReader extends AbstractSource {
      * @param newPackage
      */
     private void publishNewPacket(Packet packet) {
+       
         if (eventListenerObjects != null) {
             for (SensorEventHandler iSensorEventHandler : eventListenerObjects) {
                 iSensorEventHandler.handleNewPacket(packet);
@@ -372,12 +377,11 @@ public class BlackBoxReader extends AbstractSource {
                 }
 
                 if (DEBUG) {
-                    Dump.printPacket(System.out, syncFrame);
+                    //Dump.printPacket(System.out, syncFrame);
                 }
 
                 if (Utils.compare(syncFrame, Constants.FRAME_SYNC)) {
                     inSync = true;
-                    System.out.println("IN SYNC");
                 } else if (notInSyncCount >= Constants.MTU) {
                     return null;
                 }
@@ -420,7 +424,6 @@ public class BlackBoxReader extends AbstractSource {
                     int computedCrc = Crc.calc(packet, packet.length);
 
                     if (DEBUG) {
-                        System.err.println("received: ");
                         Dump.printPacket(System.err, packet);
                         System.err.println(" rcrc: " + Integer.toHexString(readCrc)
                                 + " ccrc: " + Integer.toHexString(computedCrc));
@@ -511,8 +514,7 @@ public class BlackBoxReader extends AbstractSource {
                 Packet partialpacket = partialData.get(key);
                 if (partialpacket.isCompletePacket(packet)) {
                     partialpacket.combinePacket(packet);
-                    System.out.println("I am Combining the packets" + packet.getDataLength());
-                     publishNewPacket(partialData.remove(key));
+                    publishNewPacket(partialData.remove(key));
                 } else {
                     System.out.println("mismatch packet");
                     Dump.dump(packet);

@@ -5,7 +5,6 @@
  */
 package rtpmt.models;
 
-import rtpmt.database.access.DBConstants;
 import rtpmt.database.access.IDataStore;
 import rtpmt.network.packet.NetworkMessage;
 import rtpmt.network.packet.NetworkMessage.PackageInformation;
@@ -42,7 +41,7 @@ public final class DataStore {
 
     public static IDataStore getDataObject(PackageInformation packageInformation) {
 
-        IDataStore dataStore = null;
+        IDataStore dataStore;
 
         if (packageInformation.getMessageType() == PackageInformation.MessageType.CONFIG) {
             dataStore = new Config(packageInformation);
