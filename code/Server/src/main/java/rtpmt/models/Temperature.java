@@ -41,6 +41,15 @@ public class Temperature extends BaseInfo implements IDataStore {
 
     public void save() {
         DBCollection packageColl = db.getCollection(DBConstants.TEMPERATURE_COLLECTION);
-        packageColl.insert(this, WriteConcern.ACKNOWLEDGED);
+        
+        BasicDBObject query = new BasicDBObject();
+        query.put(DBConstants.SENSOR_ID, this.get(DBConstants.SENSOR_ID));
+        query.put(DBConstants.TRUCK_ID, this.get(DBConstants.TRUCK_ID));
+        query.put(DBConstants.PACKAGE_ID,this.get(DBConstants.PACKAGE_ID));
+        query.put(DBConstants.TIMESTAMP, this.get(DBConstants.TIMESTAMP));
+        BasicDBObject set = new BasicDBObject();
+        set.put("$set", this);
+        
+        packageColl.update(query, set, true, false);
     }
 }
