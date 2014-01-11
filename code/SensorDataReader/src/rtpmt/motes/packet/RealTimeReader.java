@@ -39,7 +39,6 @@
  * Intel Research Berkeley, 2150 Shattuck Avenue, Suite 1300, Berkeley, CA, 
  * 94704.  Attention:  Intel License Inquiry.
  */
-
 package rtpmt.motes.packet;
 
 import rtpmt.sensor.util.Constants;
@@ -62,11 +61,10 @@ import rtpmt.packages.PackageList;
 /**
  * The Packetizer class implements the new RTMPT protocol, using a ByteSource
  * for low-level I/O
- * 
+ *
  * @author Saravana Kumar
  * @version 1.0
  */
-
 public class RealTimeReader extends AbstractSource implements Runnable {
 
     final static boolean DEBUG = true;
@@ -77,10 +75,10 @@ public class RealTimeReader extends AbstractSource implements Runnable {
     private boolean isThreadRunning = false;
     private final LinkedList[] received;
     private final ConcurrentHashMap<String, Packet> partialData;
-    
 
     /**
      * Packetizers are built using the makeXXX methods in BuildSource
+     *
      * @param name
      * @param _inputPort
      */
@@ -94,7 +92,6 @@ public class RealTimeReader extends AbstractSource implements Runnable {
         received[Constants.P_UPDATE] = new LinkedList<Packet>();
         partialData = new ConcurrentHashMap<String, Packet>();
     }
-   
 
     @Override
     protected void openSource() throws IOException {
@@ -107,16 +104,16 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
     @Override
     protected void closeSource() throws IOException {
-          port.close();
-          isThreadRunning = false;
+        port.close();
+        isThreadRunning = false;
     }
-    
+
     /**
-     * 
+     *
      * @param packetType
      * @param deadline
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     protected Packet readProtocolPacket(int packetType, long deadline)
             throws IOException {
@@ -139,11 +136,13 @@ public class RealTimeReader extends AbstractSource implements Runnable {
             return (Packet) inPackets.removeFirst();
         }
     }
+
     /**
-     * Place a packet in its packet queue, or reject unknown packet
-     * types (which don't have a queue)
+     * Place a packet in its packet queue, or reject unknown packet types (which
+     * don't have a queue)
+     *
      * @param packetType
-     * @param packet 
+     * @param packet
      */
     @SuppressWarnings("unchecked")
     protected void pushProtocolPacket(int packetType, Packet packet) {
@@ -162,33 +161,32 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     + Integer.toHexString(packetType));
         }
     }
-    
+
     /**
-     *  TO-DO check the working of combining packets
-     * @param packet 
+     * TO-DO check the working of combining packets
+     *
+     * @param packet
      */
     private void handlePartialPackets(Packet packet) {
         if (packet.isPartialPacket()) {
             String key = packet.uniqueId();
-            System.out.println("Key:"+ key);
+            System.out.println("Key:" + key);
             if (partialData.containsKey(key)) {
                 Packet partialpacket = partialData.get(key);
-                if(partialpacket.isCompletePacket(packet)){
+                if (partialpacket.isCompletePacket(packet)) {
                     partialpacket.combinePacket(packet);
                     System.out.println("I am Combining the packets" + packet.getDataLength());
                     pushProtocolPacket(Constants.P_UPDATE, partialData.remove(key));
-                }else{
+                } else {
                     System.out.println("mismatch packet");
                     Dump.dump(packet);
                 }
-               
+
             } else {
                 partialData.put(key, packet);
             }
         }
     }
-
-   
 
     /**
      * gets the packet from the queue and return it
@@ -210,17 +208,16 @@ public class RealTimeReader extends AbstractSource implements Runnable {
         }
     }
 
-
     private static final byte dummyPacket[] = new byte[0];
-    
-    private void publishNewSensor(Package newPackage){
-        if(eventListenerObjects != null){
+
+    private void publishNewSensor(Package newPackage) {
+        if (eventListenerObjects != null) {
             for (SensorEventHandler iSensorEventHandler : eventListenerObjects) {
                 iSensorEventHandler.newSensorAdded(newPackage);
             }
         }
     }
-    
+
     @Override
     public void run() {
         try {
@@ -230,37 +227,37 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                 int nodeId = (packet[1] & 0xff) << 8 | (packet[2] & 0xff);
 
                 if (packetType == Constants.P_REGISTRATION) {
-                    StringBuilder macId  = new StringBuilder();
+                    StringBuilder macId = new StringBuilder();
                     for (int i = 5; i < packet.length; i++) {
                         macId.append(Integer.toHexString(packet[i] & 0xff));
                     }
-           
+
                     Integer shortId = nodeId;
                     PackageList.addPackage(shortId, macId.toString());
 
                     sendServiceRequest(nodeId); // Sending the Service Request
                     sendTimeSyncPacket(nodeId);
-                    
+
                     System.out.println("Service Request sent!");
                     publishNewSensor(PackageList.getPackage(shortId));
 
                 } else if (packetType == Constants.P_SERVICE_RESPONSE) {
-                    
+
                     System.out.println("Service Response Recieved Sent");
 
                 } else if (packetType == Constants.P_UPDATE || packetType == Constants.P_UPDATE_THRESHOLD) {
                     packetType = Constants.P_UPDATE;
                     Packet packetHelper = new Packet(packet);
-                    if(packetHelper.isPartialPacket()){
+                    if (packetHelper.isPartialPacket()) {
                         handlePartialPackets(packetHelper);
-                    }else{
+                    } else {
                         pushProtocolPacket(packetType, packetHelper);
                     }
                 }
             }
         } catch (IOException e) {
-        }catch(Exception e){
-           
+        } catch (Exception e) {
+
         }
     }
 
@@ -325,10 +322,10 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                 if (!isLength) {
                     byte command = port.read();
                     receiveBuffer[count++] = command;
-                    
+
                     receiveBuffer[count++] = port.read();
                     receiveBuffer[count++] = port.read();
-                    if(((int)command != Constants.P_BLACKBOX_RESPONSE)){
+                    if (((int) command != Constants.P_BLACKBOX_RESPONSE)) {
                         receiveBuffer[count++] = port.read();
                         receiveBuffer[count++] = port.read();
                     }
@@ -374,51 +371,46 @@ public class RealTimeReader extends AbstractSource implements Runnable {
         }
     }
 
-
     @Override
-    public boolean configure(Package pack) throws IOException, NullPointerException,InterruptedException{
+    public boolean configure(Package pack) throws IOException, NullPointerException, InterruptedException {
 
-        for (Package  connpack: PackageList.getPackages()) {
-            Integer shortId = connpack.getShortId();
-            String macId = connpack.getSensorId();
-            
-            if (shortId != 0) {
-                HashMap<Sensor,Config> configList = pack.getConfigs();
-                
-                for (Map.Entry<Sensor, Config> entry1 : configList.entrySet()) {
-                    Sensor sensor = entry1.getKey();
-                    Config config = entry1.getValue();
-                    int[] serviceIds  = getServiceIDs(sensor);
-                    
-                    if(!sensor.equals(Sensor.SHOCK)){
-                        sendReportRate(shortId, serviceIds[0], serviceIds[1],config.getTimePeriod());
-                    }
-                    sendThreshold(shortId, serviceIds[0], serviceIds[1],config.getAfterThresholdTimePeriod() , config.getMaxRawThreshold());
+        Integer shortId = pack.getShortId();
+        String macId = pack.getSensorId();
+
+        if (shortId != 0) {
+            HashMap<Sensor, Config> configList = pack.getConfigs();
+
+            for (Map.Entry<Sensor, Config> entry1 : configList.entrySet()) {
+                Sensor sensor = entry1.getKey();
+                Config config = entry1.getValue();
+                int[] serviceIds = getServiceIDs(sensor);
+
+                if (!sensor.equals(Sensor.SHOCK)) {
+                    sendReportRate(shortId, serviceIds[0], serviceIds[1], config.getTimePeriod());
                 }
+                sendThreshold(shortId, serviceIds[0], serviceIds[1], config.getAfterThresholdTimePeriod(), config.getMaxRawThreshold());
             }
         }
         return true;
     }
 
-    
-
     // Class to build a framed, escaped and crced packet byte stream
     private void sendTimeSyncPacket(int nodeId) throws IOException {
-        long currentTime = System.currentTimeMillis()/1000;
-		
-        System.out.println("SendTime: "+currentTime);
-        byte timePacket[] = (new BigInteger(Long.toHexString(currentTime),16)).toByteArray();//ByteBuffer.allocate(8). array();
+        long currentTime = System.currentTimeMillis() / 1000;
+
+        System.out.println("SendTime: " + currentTime);
+        byte timePacket[] = (new BigInteger(Long.toHexString(currentTime), 16)).toByteArray();//ByteBuffer.allocate(8). array();
         writeFramedPacket(Constants.P_TIME_SYNC, nodeId, timePacket);
     }
 
     private int[] getServiceIDs(Sensor sensor) {
         int[] serviceIds = new int[2];
-        
-        switch(sensor){
-           case TEMPERATURE:
-               serviceIds[0] = 0;
-               serviceIds[1] = 3;
-               break;
+
+        switch (sensor) {
+            case TEMPERATURE:
+                serviceIds[0] = 0;
+                serviceIds[1] = 3;
+                break;
             case HUMIDITY:
                 serviceIds[0] = 1;
                 serviceIds[1] = 1;
@@ -430,12 +422,12 @@ public class RealTimeReader extends AbstractSource implements Runnable {
             case SHOCK:
                 serviceIds[0] = 3;
                 serviceIds[1] = 255;
-               break;
-       }
-        
-       return serviceIds;
+                break;
+        }
+
+        return serviceIds;
     }
-    
+
     private synchronized void sendServiceRequest(int nodeId) throws IOException {
         // send ack
         writeFramedPacket(Constants.P_SERVICE_REQUEST, nodeId, dummyPacket);
