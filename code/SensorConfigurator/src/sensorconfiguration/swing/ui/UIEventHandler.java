@@ -65,7 +65,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     private SensorClient sensorClient;
 
     private ProgressBar bar;
-    private final static String address = "localhost";
+    private final static String address = "saranlap.student.rit.edu";//"54.204.32.227";//
     private boolean pushToServer = false;
     private static String logSensorType = "temperaur";
 
@@ -264,15 +264,19 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
         pushToServer = false;
         String logText = "Starting to save data";
         if (isSensorConnected) {
-            bar = new ProgressBar(100, "Starting to read data", UIObject);
+            
+            
             log(logText);
             try {
                 Package pack = PackageList.getPackage(0);
                 if (pack != null) {
+                    if(checkID(pack))
+                    {
+                    bar = new ProgressBar(100, "Starting to read data", UIObject);
                     writeConfigData();
                     DATA_LOG_FILE = FOLDER + pack.getUniqueId();
                     File file = new File(DATA_LOG_FILE);
-                    file.deleteOnExit();
+                    //file.deleteOnExit();
                     file.createNewFile();
                     datalog = new FileOutputStream(file);
                     logSensorType = "";
@@ -282,6 +286,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     UIObject.handleError("Sensor data read successfully");
                     logText = "Saved data successfully to " + file.toPath();
                     log(logText);
+                    }
                 }
             } catch (IOException ex) {
                 UIObject.handleError("Problem with connecting to sensor.Try again");
@@ -454,6 +459,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     logText = "Reading " + sensor.getSensorType().name() + " data from sensor " + sensorInfo.getSensorId();
                     log(logText);
                     logSensorType = sensor.getSensorType().name().substring(0, (sensor.getSensorType().name().length() - 1));
+                    bar.setProgress(100,logText);
                 }
 
                 message = sensor.getSensorType().name() + " : " + sensor.getSensorValue() + " " + sensor.getSensorUnit();
@@ -483,13 +489,14 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             if (pack != null) {
                 String CONFIG_LOG_FILE = CONFIG_FOLDER + pack.getUniqueId();
                 File file = new File(CONFIG_LOG_FILE);
-                file.deleteOnExit();
+                //file.deleteOnExit();
                 file.createNewFile();
                 FileOutputStream configdatalog = new FileOutputStream(file);
                 pack.getConfigMessage(false).writeDelimitedTo(configdatalog);
                 configdatalog.close();
-                if (sensorClient.isIsServerAvaialable()) {
+                if (sensorClient.isIsServerAvaialable() && pushToServer) {
                     sensorClient.send(pack.getConfigMessage(false));
+                    file.delete();
                 }
             }
 
@@ -532,7 +539,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     writeConfigData();
                     DATA_LOG_FILE = FOLDER + pack.getUniqueId();
                     File file = new File(DATA_LOG_FILE);
-                    file.deleteOnExit();
+                    //file.deleteOnExit();
                     file.createNewFile();
                     datalog = new FileOutputStream(file);
                     logSensorType = "";
@@ -542,8 +549,11 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     if (file.length() == 0) {
                         file.delete();
                         Files.delete(Paths.get(CONFIG_FOLDER + pack.getUniqueId()));
+                        UIObject.handleError("Sensor data pushed to server successfully");
                     }
-                    UIObject.handleError("Sensor data read successfully");
+                    else{
+                        UIObject.handleError("Server not connected. Files saved locally");
+                    }
 
                 }
             } catch (IOException ex) {
@@ -671,6 +681,17 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
         UIObject.txtLog.append(logText + ".\n");
         Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, logText, ex);
 
+    }
+    
+    private boolean checkID(Package pack){
+        String truckId = pack.getTruckId();
+        String packageID = pack.getPackageId();
+        if(truckId == null || packageID == null){
+            UIObject.jTabbedPane1.setSelectedIndex(0);
+            UIObject.handleError("Truck Id and/or PackageId cannot be null. Please configure it.");
+            return false;
+        }
+        return true;
     }
 
 }

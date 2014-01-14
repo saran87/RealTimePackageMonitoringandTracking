@@ -7,7 +7,6 @@ package sensorconfiguration.swing.ui;
 
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -18,10 +17,10 @@ import javax.swing.JProgressBar;
  */
 public class ProgressBar implements Runnable {
 
-    private JProgressBar progressBar;
-    private JLabel label;
-    private JDialog dialog;
-    private JPanel panel;
+    private final JProgressBar progressBar;
+    private final JLabel label;
+    private final JDialog dialog;
+    private final JPanel panel;
 
     public ProgressBar(int max, String message, SensorConfigurator UI) {
         label = new JLabel(message);
@@ -42,6 +41,7 @@ public class ProgressBar implements Runnable {
         dialog.setAlwaysOnTop(false);
         dialog.setVisible(true);
         dialog.getContentPane().paintAll(panel.getGraphics());
+        
     }
 
     @Override
