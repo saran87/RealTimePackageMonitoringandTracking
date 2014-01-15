@@ -1162,5 +1162,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jtxtComments.setText(comments);
         jlblComments.setText(comments);
     }
-
+    
+    
 }

@@ -45,14 +45,13 @@ public class SerialPort implements SerialPortInterface {
         int tempData = 0;
         int counter = 0;
         tempData = input.read();
-        
         while(tempData == -1)
         {
             try {
                 Thread.sleep(10);
                 counter++;
                 if(counter > 100){
-                    throw new IOException();
+                    return (byte)-1;
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(SerialPort.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,7 +60,6 @@ public class SerialPort implements SerialPortInterface {
         }
 
         data = (byte) (tempData & 0xff);
-
         return data;
     }
 

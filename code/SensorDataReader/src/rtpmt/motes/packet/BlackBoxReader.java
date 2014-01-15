@@ -5,6 +5,7 @@
  */
 package rtpmt.motes.packet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.LinkedList;
@@ -177,11 +178,11 @@ public class BlackBoxReader extends AbstractSource {
 
     /**
      *
-     * @return
      * @throws IOException
      * @throws java.util.concurrent.TimeoutException
+     * @throws java.lang.InterruptedException
      */
-    public void processSDCardPacket() throws IOException, TimeoutException {
+    public void processSDCardPacket() throws IOException, TimeoutException, InterruptedException {
         int count = 0;
         boolean isLength = false;
         int payLoad = 0;
@@ -189,18 +190,18 @@ public class BlackBoxReader extends AbstractSource {
         byte[] syncFrame = new byte[Constants.FRAME_SYNC.length];
         byte[] receiveBuffer = new byte[Constants.MTU];
         int notInSyncCount = 0;
-        long timeout = 100000;
+        //long timeout = 100000;
         for (;;) {
             if (!inSync) {
                 long now = System.currentTimeMillis();
                 int b = 0;
-                while (!port.isAvailable()) {
+                /*while (!port.isAvailable()) {
                     timeout = timeout - 10;
                     if (timeout <= 0) {
                         System.out.print("Timeout = "+timeout);
                         throw new TimeoutException("No data from sensor.Time out");
                     }
-                }
+                }*/
                 while (b != 170) {
                     b = port.read() & 0xff;
                     notInSyncCount++;
@@ -256,18 +257,27 @@ public class BlackBoxReader extends AbstractSource {
         }
         
         if(isLength){
-            startProcessingData(payLoad);
-            //printData(payLoad);
+            TestReading reader = new TestReading(port, payLoad);
+            reader.start();
+            
+            Thread.sleep(100);
+            startProcessingData(payLoad,reader);
+           // printData(reader);
         }
     }
     
-    private void startProcessingData(int length) throws IOException{
+    private void startProcessingData(int length,TestReading reader) throws IOException, InterruptedException{
          if(DEBUG){
                     System.err.println("Initial Length "+ length);
                 }
          int counter = 0;
+         
+         while(!reader.isComplete)
+            Thread.sleep(1000);
+        FileInputStream input = new FileInputStream(reader.dataFile);
+         
         while (length > 2){
-            byte[] rawPacket = readFramedPacket(false);
+            byte[] rawPacket = readFramedPacket(false,input);
             
             if(rawPacket!=null){
                 //Add plus 5 to normal packet, 5 is for adding Frame packet(3) and CRC(2)
@@ -279,6 +289,9 @@ public class BlackBoxReader extends AbstractSource {
                         System.err.println("Length "+ length+ " counter "+counter);
                     }
                 }
+                if(counter >= 468){
+                    System.out.println("counter : "+counter);
+                }
                 if(pack.isPartialPacket()){
                     handlePartialPackets(pack);
                 }else{
@@ -286,6 +299,8 @@ public class BlackBoxReader extends AbstractSource {
                 }
             }
         }
+        input.close();
+        reader.dataFile.delete();
     }
     
     /**
@@ -377,7 +392,7 @@ public class BlackBoxReader extends AbstractSource {
                 }
 
                 if (DEBUG) {
-                    //Dump.printPacket(System.out, syncFrame);
+                    Dump.dump(System.out,"Sync frame", syncFrame);
                 }
 
                 if (Utils.compare(syncFrame, Constants.FRAME_SYNC)) {
@@ -576,7 +591,7 @@ public class BlackBoxReader extends AbstractSource {
             Dump.dump(System.err, "encoded", realPacket);
             System.err.println();
         }
-        Thread.sleep(500);
+        Thread.sleep(100);
         return write;
     }
     
@@ -692,17 +707,138 @@ public class BlackBoxReader extends AbstractSource {
     public void clearData()throws InterruptedException,IOException {
        writeFramedPacket(Constants.FORMAT_SD_CARD, dummyPacket);
        writeFramedPacket(Constants.FORMAT_FLASH, dummyPacket);
+       Thread.sleep(10000);
        getSensorInformation(); 
     }
 
-    private void printData(int payLoad) throws IOException{
-        byte[] data = new byte[payLoad];
+    private void printData(TestReading reader) throws IOException, InterruptedException{
+       // byte[] data = new byte[payLoad];
         int i=0;
-        while(i< payLoad){
-            data[i] = port.read();
-            i++;
+        while(!reader.isComplete)
+            Thread.sleep(1000);
+        FileInputStream input = new FileInputStream(reader.dataFile);
+        int tempData = input.read();
+        while( tempData != -1 ){
+            
+            System.out.print(" "+Integer.toHexString((int)(tempData & 0xff)));
+            tempData = input.read();
         }
-        Dump.dump("Data from SD :",data);
+        System.out.println("");
+        input.close();
+        reader.dataFile.delete();
+        //Dump.dump(System.out,"Data from SD :",data);
+    }
+
+    
+    public byte[] readFramedPacket(boolean readSDCard,FileInputStream input) throws IOException, InterruptedException {
+
+        int count = 0;
+        boolean isLength = false;
+        int payLoad = 0;
+        inSync = false;
+        byte[] syncFrame = new byte[Constants.FRAME_SYNC.length];
+        byte[] receiveBuffer = new byte[Constants.MTU];
+        int notInSyncCount = 0;
+       
+        for (;;) {
+            if (!inSync) {
+                
+                int b = 0;
+
+                
+                while (b != 170) {
+                    b = input.read() & 0xff;
+                    notInSyncCount++;
+                    if(notInSyncCount > Constants.MTU){
+                        return null;
+                    }
+                }
+                if (count >= Constants.MTU) {
+                    // PacketHelper too long, give up and try to resync
+                    message(name + ": packet too long");
+                    inSync = false;
+                    count = 0;
+                    continue;
+                }
+                if (b == 170) {
+                    syncFrame[count++] = (byte) (b & 0xff);
+
+                    while (count < Constants.FRAME_SYNC.length && notInSyncCount < Constants.MTU) {
+                        b = input.read();
+                        syncFrame[count++] = (byte) (b & 0xff);
+                        notInSyncCount++;
+                    }
+                }
+
+                if (DEBUG) {
+                    Dump.dump(System.out,"Sync frame", syncFrame);
+                }
+
+                if (Utils.compare(syncFrame, Constants.FRAME_SYNC)) {
+                    inSync = true;
+                } else if (notInSyncCount >= Constants.MTU) {
+                    return null;
+                }
+                count = 0;
+            } else {
+                byte b;
+                if (!isLength) {
+                    byte command = (byte)input.read()  ;
+                    receiveBuffer[count++] = command;
+
+                    receiveBuffer[count++] = (byte)input.read();
+                    receiveBuffer[count++] = (byte)input.read();
+                    receiveBuffer[count++] = (byte)input.read();
+                    receiveBuffer[count++] = (byte)input.read();
+                    int length;
+                    if (!readSDCard) {
+                        length = (receiveBuffer[count - 1] & 0xff) | (receiveBuffer[count - 2] & 0xff) << 8;
+                    } else {
+
+                        length = (receiveBuffer[count - 1] & 0xff) | (receiveBuffer[count - 2] & 0xff) << 8
+                                | (receiveBuffer[count - 3] & 0xff) << 16 | (receiveBuffer[count - 4] & 0xff) << 24;
+                    }
+
+                    payLoad = count + length;
+                    isLength = true;
+                    if(payLoad >600)
+                    {
+                        Dump.dump(System.out, "Exceeded payload length", receiveBuffer);
+                    }
+                    System.out.println("Payload length :"+payLoad);
+                    continue;
+                } else if (count < payLoad) {
+                    b = (byte) (input.read() & 0xff);
+                } else {
+                    byte[] packet = new byte[count - 2];
+                    System.arraycopy(receiveBuffer, 0, packet, 0, count - 2);
+
+                    int readCrc = (receiveBuffer[count - 1] & 0xff)
+                            | (receiveBuffer[count - 2] & 0xff) << 8;
+                    int computedCrc = Crc.calc(packet, packet.length);
+
+                    if (DEBUG) {
+                        Dump.printPacket(System.err, packet);
+                        System.err.println(" rcrc: " + Integer.toHexString(readCrc)
+                                + " ccrc: " + Integer.toHexString(computedCrc));
+                    }
+
+                    //if (readCrc != computedCrc) {
+                    return packet;
+                    /* } else {
+                     message(name + ": bad packet");
+                     /*
+                     * We don't lose sync here. If we did, garbage on the line at startup
+                     * will cause loss of the first packet.
+                     *
+                     count = 0;
+                     inSync = false;
+                     continue;
+                     }*/
+                }
+                receiveBuffer[count++] = b;
+            }
+        }
     }
 
 }
