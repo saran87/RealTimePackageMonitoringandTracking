@@ -28,11 +28,13 @@ angular.module('myServices')
 			$http.get(datapath+'shock'+'/'+truck_id+'/'+package_id)
 				.success(function(data){
 
+					//No data returned for truck_id and package_id
+					//Handle it and send the errors object
 					if(data.length<0 || data.length==0){
 
 						errors.isError = true;
 						
-						errors.errorMsg = "Empty array returned";
+						errors.errorMsg = "No shock data available for package " + package_id + " in truck " + truck_id;
 
 						deferred.resolve([_shockData, latestTimestamp, errors]);
 
@@ -41,7 +43,8 @@ angular.module('myServices')
 						var max = data.length;
 						var d;
 						_shockData=[];
-						
+
+						//console.dir(data);
 						latestTimestamp=data[max-1].timestamp;
 
 						for(var i=0; i<max; i++){
@@ -79,9 +82,7 @@ angular.module('myServices')
 
 						        _shockData.push(highestVals);
 					        }				        
-				      	}
-
-				      	console.dir(_shockData);
+				      	}				      	
 
 				      	deferred.resolve([_shockData, latestTimestamp, errors]);
 					}			
@@ -90,8 +91,14 @@ angular.module('myServices')
 				})
 				.error(function(data, status){
 
-					console.log(data+" "+status);
+					//500 error - Bad url request
+					//handle the error and send the errors object in resolve
+					
+					errors.isError = true;
 
+					errors.errorMsg = "Could not complete request. Status: " + status;
+
+					deferred.resolve([ [], '', errors]);
 				});
 
 				return deferred.promise;
@@ -129,13 +136,115 @@ angular.module('myServices')
 
 		}
 
+
+		var _getLatestShockData = function(truck_id,package_id,timestamp,actionBy){
+
+			var path=datapath+'shockEntry/'+truck_id+'/'+package_id+'/'+timestamp;
+
+			if(actionBy==0){
+				var action='bg';
+				path=path+'?action='+action
+				console.log(path);
+			} else {
+				var action='usr';
+				path=path+'?action='+action
+				console.log(path);
+			}
+
+			var _newShockData=[];			
+
+			var errors ={
+				"isError": false,
+				"errorMsg": ""
+			};
+
+			var deferred = $q.defer();
+
+			$http.get(path)
+			.success(function(data){
+
+				if(data.length>0 || data.length!=0){
+
+					var len = data.length;
+
+					latestTimestamp = data[len-1].timestamp;
+
+					var d;
+
+					for(var i=0; i<len; i++){
+
+						if(data[i].value.x && data[i].value.y && data[i].value.z){
+
+							var newhighestVals=data[i];
+
+							var tmpx=getHighVal(newhighestVals.value.x.split(" "));
+					    	var tmpy=getHighVal(newhighestVals.value.y.split(" "));
+					    	var tmpz=getHighVal(newhighestVals.value.z.split(" "));
+
+					    	var maxVal=Math.max(tmpx[0],tmpy[0],tmpz[0]);
+					    	var maxIndex=Math.max(tmpx[1],tmpy[1],tmpz[1]);
+					    	var t = ((maxIndex * 1.25) + 70 * (1.25))/1000;
+					    	var height = 4.9 * Math.pow(t,2);
+
+					    	newhighestVals.value.x = tmpx[0];
+					        newhighestVals.value.xindex = tmpx[1];
+					        
+					        newhighestVals.value.y = tmpy[0];
+					        newhighestVals.value.yindex = tmpy[1];
+					        
+					        newhighestVals.value.z = tmpz[0];
+					        newhighestVals.value.zindex = tmpz[1];
+
+					        newhighestVals.value.maxvalue = maxVal;
+					        newhighestVals.value.maxindex = maxIndex;
+					        newhighestVals.value.t = t;
+					        newhighestVals.value.dropheight = height.toFixed(2);
+
+							_newShockData.push(newhighestVals);
+
+						    
+						}
+
+					}
+
+					deferred.resolve([_newShockData, latestTimestamp, errors]);
+
+
+				} else {
+
+					errors.isError = true;
+					errors.errorMsg = "Empty update i.e. no new data";
+					
+					console.log("No new shock data in service");
+
+					deferred.resolve([_newShockData,latestTimestamp, errors]);
+				}
+
+			})
+			.error(function(data,status){
+
+				//500 bad URL request
+				errors.isError = true;
+				
+				errors.errorMsg = "Invalid request. Status " + status;				
+
+				deferred.resolve([ [],'', errors]);			
+
+			});
+
+			return deferred.promise;
+
+		}
+
+
 		return{
 
 			shockData: _shockData,
 			getShockData: _getShockData,
-			getShockGraphData: _getShockGraphData
+			getShockGraphData: _getShockGraphData,
+			getLatestShockData: _getLatestShockData
 
 		};
 		
 
-	}]);
+}]);

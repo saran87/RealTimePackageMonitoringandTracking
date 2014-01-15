@@ -2,8 +2,8 @@
 
 // Declare app level module which depends on filters, and services
 
-angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','nvd3ChartDirectives','google-maps'])
-    .config(['$routeProvider', function($routeProvider) {
+angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','nvd3ChartDirectives'])    
+    .config(['$routeProvider','$httpProvider', function($routeProvider,$httpProvider) {
 
     /*
         Routes and Partials related to /
@@ -136,6 +136,112 @@ angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','
     {
         redirectTo: '/'
     });
-  
-  }]);
-    
+
+
+    /*$httpProvider.interceptors.push(function($q, $rootScope) {
+      return {
+        // optional method
+        'request': function(config) {
+          // do something on success
+          $rootScope.showSpinner=false;
+          return config || $q.when(config);
+        },
+     
+        // optional method
+       'requestError': function(rejection) {
+          // do something on error
+          if (canRecover(rejection)) {
+            return responseOrNewPromise
+          }
+          return $q.reject(rejection);
+        },
+     
+     
+     
+        // optional method
+        'response': function(response) {
+          // do something on success
+          $rootScope.showSpinner=false;
+          return response || $q.when(response);
+        }
+     
+        // optional method
+       /*'responseError': function(rejection) {
+          // do something on error
+          if (canRecover(rejection)) {
+            return responseOrNewPromise
+          }
+          return $q.reject(rejection);
+        }
+      };
+    });*/
+
+}]);
+
+     /*var $http,
+        interceptor = ['$q', '$injector', function ($q, $injector) {
+            var rootScope;
+
+            function success(response) {
+                // get $http via $injector because of circular dependency problem
+                $http = $http || $injector.get('$http');
+                // don't send notification until all requests are complete
+                if ($http.pendingRequests.length < 1) {
+                    // get $rootScope via $injector because of circular dependency problem
+                    rootScope = rootScope || $injector.get('$rootScope');
+                    // send a notification requests are complete
+
+                    rootScope.$broadcast(_END_REQUEST_);
+                    //request.url
+                    
+                } 
+                return response;
+            }
+
+            function error(response) {
+                // get $http via $injector because of circular dependency problem
+                $http = $http || $injector.get('$http');
+                // don't send notification until all requests are complete
+                if ($http.pendingRequests.length < 1) {
+                    // get $rootScope via $injector because of circular dependency problem
+                    rootScope = rootScope || $injector.get('$rootScope');
+                    // send a notification requests are complete
+                    rootScope.$broadcast(_END_REQUEST_);
+                    
+                }
+                return $q.reject(response);
+            }
+
+            return function (promise) {
+                // get $rootScope via $injector because of circular dependency problem
+                rootScope = rootScope || $injector.get('$rootScope');
+                // send notification a request has started
+                rootScope.$broadcast(_START_REQUEST_);                
+                
+                return promise.then(success, error);
+            }
+        }];*/
+
+
+        //$httpProvider.responseInterceptors.push(interceptor);
+
+//}])
+/*.directive('loadingWidget', ['_START_REQUEST_', '_END_REQUEST_', function (_START_REQUEST_, _END_REQUEST_) {
+    return {
+        restrict: "A",
+        link: function (scope, element) {
+            // hide the element initially
+            element.hide();
+
+            scope.$on(_START_REQUEST_, function () {
+                // got the request start notification, show the element
+                element.show();
+            });
+
+            scope.$on(_END_REQUEST_, function () {
+                // got the request end notification, hide the element
+                element.hide();
+            });
+        }
+    };
+}]);*/

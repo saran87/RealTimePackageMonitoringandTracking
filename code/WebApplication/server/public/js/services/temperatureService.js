@@ -57,15 +57,14 @@ angular.module('myServices')
 			$http.get(datapath+'temperature/'+truck_id+'/'+package_id)
 				.success(function(data){
 
-					//console.log("Debug");
-					//console.dir(data);
-
+					//No data returned for truck_id and package_id
+					//Handle it and send the errors object
 					if(data.length<0 || data.length==0){ //check for empty array
 
 						//console.log("Error in truck package");
 
 						errors.isError = true;
-						errors.errorMsg = "Empty array returned";
+						errors.errorMsg = "No Temperature data available for package " + package_id + " in truck " + truck_id;
 
 						deferred.resolve([_temperatureData, _temperatureGraphData, latestTimeStamp, errors]);
 
@@ -92,15 +91,15 @@ angular.module('myServices')
 
 			      			if(d.value>=0){
 						        _temperatureData.push(d);
-						        _temperatureGraphData.push([d.timestamp,d.value]);		         
+						        _temperatureGraphData.push([d.timestamp,parseFloat(d.value).toFixed(2)]);		         
 					    	}
 					        
 			      		}//end for
 
 			      		/*console.log("debug _temperatureData");
 			      		console.dir(_temperatureData);*/
-			      		console.log("debug _temperatureGraphData");
-			      		console.dir(_temperatureGraphData);
+			      		//console.log("debug _temperatureGraphData");
+			      		//console.dir(_temperatureGraphData);
 
 			      		deferred.resolve([_temperatureData, _temperatureGraphData, latestTimeStamp, errors]);
 					
@@ -109,14 +108,30 @@ angular.module('myServices')
 				})
 				.error(function(data, status){
 
-					console.log("Error no data fetched " + Status);
+					errors.isError = true;
+
+					errors.errorMsg = "Could not complete request. Status: " + status;
+
+					deferred.resolve([ [], [], '', errors]);
 
 				});
 
 				return deferred.promise;
 		}
 
-		var _getLatestTemperatureData = function(truck_id, package_id, timestamp){
+		var _getLatestTemperatureData = function(truck_id, package_id, timestamp,actionBy){
+
+			var path=datapath+'temperatureEntry/'+truck_id+'/'+package_id+'/'+timestamp;
+
+			if(actionBy==0){
+				var action='bg';
+				path=path+'?action='+action
+				console.log(path);
+			} else {
+				var action='usr';
+				path=path+'?action='+action
+				console.log(path);
+			}
 
 			var _newtemperatureData=[];
 			var _newtemperatureGraphData=[];
@@ -128,7 +143,7 @@ angular.module('myServices')
 
 			var deferred = $q.defer();
 
-			$http.get(datapath+'temperatureEntry/'+truck_id+'/'+package_id+'/'+timestamp)
+			$http.get(path)
 			.success(function(data){
 
 				if(data.length>0 || data.length!=0){
@@ -143,8 +158,10 @@ angular.module('myServices')
 
 						d=data[i];
 
-						_newtemperatureData.push(d);
-						_newtemperatureGraphData.push([d.timestamp,d.value]);
+						if(d.value>=0){
+							_newtemperatureData.push(d);
+							_newtemperatureGraphData.push([d.timestamp,d.value]);
+						}
 
 					}
 

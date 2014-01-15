@@ -27,10 +27,12 @@ angular.module('myServices')
 			$http.get(datapath+'vibration'+'/'+truck_id+'/'+package_id)
 				.success(function(data){
 
+					//No data returned for truck_id and package_id
+					//Handle it and send the errors object
 					if(data.length<0 || data.length==0){
 
 						errors.isError = true;
-						errors.errorMsg = "Empty array returned";
+						errors.errorMsg = "No Vibration data available for package " + package_id + " in truck " + truck_id;
 
 						deferred.resolve([_vibrationData, latestTimeStamp, errors]);
 
@@ -65,7 +67,14 @@ angular.module('myServices')
 				})
 				.error(function(data, status){
 
-					console.log(data+" "+status);
+					//500 error - Bad url request
+					//handle the error and send the errors object in resolve
+					
+					errors.isError = true;
+
+					errors.errorMsg = "Could not complete request. Status: " + status;
+
+					deferred.resolve([ [], '', errors]);
 
 				});	
 
@@ -73,7 +82,19 @@ angular.module('myServices')
 
 		}
 
-		var _getLatestVibrationData = function(truck_id,package_id,timestamp){
+		var _getLatestVibrationData = function(truck_id,package_id,timestamp,actionBy){
+
+			var path=datapath+'vibrationEntry/'+truck_id+'/'+package_id+'/'+timestamp;
+
+			if(actionBy==0){
+				var action='bg';
+				path=path+'?action='+action
+				console.log(path);
+			} else {
+				var action='usr';
+				path=path+'?action='+action
+				console.log(path);
+			}
 
 			var _newvibrationData=[];			
 
@@ -84,7 +105,7 @@ angular.module('myServices')
 
 			var deferred = $q.defer();
 
-			$http.get(datapath+'vibrationEntry/'+truck_id+'/'+package_id+'/'+timestamp)
+			$http.get(path)
 			.success(function(data){
 
 				if(data.length>0 || data.length!=0){
@@ -113,11 +134,12 @@ angular.module('myServices')
 					deferred.resolve([_newvibrationData, latestTimeStamp, errors]);
 
 
-				} else {
+				} else {					
 
 					errors.isError = true;
-					errors.errorMsg = "Empty update";
-					console.log("No new vibration data in service");
+					errors.errorMsg = "Empty update i.e. no new vibration data available";
+					
+					console.log("No new Vibration data in service");
 
 					deferred.resolve([_newvibrationData,latestTimeStamp, errors]);
 				}
@@ -125,7 +147,12 @@ angular.module('myServices')
 			})
 			.error(function(data,status){
 
-				console.log("no latest data from vibration " + status );
+				//500 bad URL request
+				errors.isError = true;
+				
+				errors.errorMsg = "Invalid request. Status " + status;				
+
+				deferred.resolve([ [],'', errors]);	
 
 			});
 

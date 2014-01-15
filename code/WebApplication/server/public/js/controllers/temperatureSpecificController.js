@@ -3,6 +3,7 @@ angular.module('myModule')
 
 		
 		var latestTimestamp; //holds the latestTimestamp for data received from a package
+		$scope.noData=false;
 		
 		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
@@ -33,46 +34,18 @@ angular.module('myModule')
 	  	*/
 
 	  	$scope.temperatureData=[];
+	  	$scope.noOfRecords=0;
 
+	  	
+	
 	  	dashBoardService.getConfigurationsOf(truck,pack)
-	  	.then(function(data){
-
-	  		if(!data[2].isError){
-
-	  			console.log("from thresh " + data[0].config.temperature.maxthreshold);
-	  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
-	  			if(data[0].config.temperature.maxthreshold==0){
-		        	$scope.maxThreshold = 66;	
-
-		        } else {
-
-		        	$scope.maxThreshold = data[0].config.temperature.maxthreshold;
-
-		        }
-		        
-
-		        if(data[0].config.is_realtime){
-
-					$rootScope.rt=true;	        	
-
-		        } else {
-
-		        	$rootScope.rt=false;
-
-		        }
-
-
-		  		}
-
-	  	});
-
-	  	temperatureService.getTemperatureDataOf(truck,pack)
-	  	.then(function(data){
-
-		  	dashBoardService.getConfigurationsOf(truck,pack)
 		  	.then(function(data){
 
+		  		console.log("inget conf")
+
 		  		if(!data[2].isError){
+
+		  			console.log("just near if");
 		  			
 		  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
 		  			if(data[0].config.temperature.maxthreshold==0){
@@ -81,11 +54,14 @@ angular.module('myModule')
 			        } else {
 
 			        	$scope.maxThreshold = data[0].config.temperature.maxthreshold;
+			        	console.log("inside else " + $scope.maxThreshold);
 
 			        }
+
+			        console.log("outside ifelse " + $scope.maxThreshold);
 			        
 
-			        if(data[0].config.is_realtime){
+			        if(data[0].is_realtime){
 
 						$rootScope.rt=true;	        	
 
@@ -96,17 +72,23 @@ angular.module('myModule')
 			        }
 
 
-			  		}
+			  	}
 
-		  	});
+		});
+	
+
+	
+
+		var thArr = [];
+	  	temperatureService.getTemperatureDataOf(truck,pack)
+	  	.then(function(data){
+	  		
 
 	  		//check for error in the error object
 	  		if(!data[3].isError){
 
-	  			var tArr = [];
-	  			var thArr = [];
-
-	  			//for(var i=2908; i<data[0].length-5;i++){
+	  			$scope.noData = false;
+	  			var tArr = [];	  			
 	  			for(var i=0; i<data[0].length;i++){
 
 	  				$scope.temperatureData.push(data[0][i]);
@@ -114,7 +96,7 @@ angular.module('myModule')
 	  				tArr.push(data[1][i]);
 	  				thArr.push([data[1][i][0], $scope.maxThreshold]);
 
-	  			}
+	  			}	  			
 
 	  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
 
@@ -142,7 +124,11 @@ angular.module('myModule')
 	    	} else {
 	    		//if the response is bad - Display the error message	    		
 
-	    		console.log("Error: " + data[3].errorMsg);
+	    		$scope.noData = true;
+
+          		$scope.errorMsg = data[3].errorMsg;
+
+          		console.log("Error: " + data[3].errorMsg);
 
 	    	}
 
@@ -173,6 +159,12 @@ angular.module('myModule')
 	        };
 	    }
 
+	    $scope.yAxisTickFormatFunction = function(){
+	        return function(d){
+    	        return d3.format('.02f')(d);
+            }
+        }
+
 
 
         /*
@@ -182,69 +174,96 @@ angular.module('myModule')
         */
     	
 
-    	var temperatureUpdater = function(){
+    var temperatureUpdater = function(action){
 
-    		if(truck!=undefined || pack!=undefined){
+    		if(!$scope.noData && $rootScope.rt){
 
-    			temperatureService.getLatestTemperatureData(truck,pack,latestTimestamp)
-    			.then(function(data){
+	    		if(action==undefined){
 
-    				if(!data[3].isError){
+		    		var actionBy=0;
+		    	} else {
+		    		var actionBy=action;
+		    	}
 
-    					console.log("latestTimestamp " + data[2]);
 
-    					for(var i=0; i<data[0].length; i++){
+	    		if(truck!=undefined || pack!=undefined || rt){
 
-    						$scope.temperatureData.push(data[0][i]);
+	    			temperatureService.getLatestTemperatureData(truck,pack,latestTimestamp,actionBy)
+	    			.then(function(data){
 
-    					}
+	    				if(!data[3].isError){
 
-    					console.log("new temperature update: " + $scope.temperatureData);
+	    					console.log("latestTimestamp " + data[2]);
 
-    					console.log("data[1] check");
+	    					for(var i=0; i<data[0].length; i++){
 
-    					console.dir(data[1]);
+	    						$scope.temperatureData.push(data[0][i]);    						
 
-    					for(var j=0; j<data[1].length; j++){
+	    					}
 
-    						console.log("into holder: " + data[1][j]);
-    						holder.push(data[1][j]);
+	    					console.log("new temperature update: " + $scope.temperatureData);
 
-    					}
+	    					//console.log("data[1] check");
 
-    					$scope.data=[
+	    					//console.dir(data[1]);
 
-					    	{
-					    		"key": "Temperature Graph",	    		
-					    		"values": holder
-					    	}
-				    
-				    	];
+	    					for(var j=0; j<data[1].length; j++){
+	    						
+	    						holder.push(data[1][j]);
+	    						thArr.push([data[1][j][0], $scope.maxThreshold]);
+	    					}
 
-    					
-    					console.dir("new temperaturegraph update: " + $scope.data);
+	    					$scope.data=[
 
-    					latestTimestamp=data[2];
+						    	{
+						    		"key": "Temperature Graph",	    		
+						    		"values": holder
+						    	},
 
-    				} else {
+						    	{
+						    		"key": "Threshold",
+						    		"values": thArr
+						    	}
+					    
+					    	];
 
-    					console.log("no new temperature data");
+	    					
+	    					console.dir("new temperaturegraph update: " + $scope.data);
 
-    				}
+	    					latestTimestamp=data[2];
 
-    			});    			
+	    				} else {
 
-    		}
+	    					console.log("no new temperature data");
 
-    		var timer = $timeout(temperatureUpdater, 10000);
+	    				}
+
+	    			});
+    		}  			
+
+    	
+
+    		var timer = $timeout(temperatureUpdater, 45000);
 
     		$scope.$on('$locationChangeStart', function() {
          		$timeout.cancel(timer);         		
      		});
+     	}
+
+    } //end updater
+
+    	$scope.refresh = function(){
+
+    		if($rootScope.rt){
+
+    			temperatureUpdater(1);
+
+    		}
 
     	}
 
-    	
+
+
     	
 
 	}]);

@@ -11,6 +11,8 @@ angular.module('myServices')
 			$http.get(datapath+'alltrucks')
 				.success(function(data){
 
+					console.dir(data);
+
 					deferred.resolve(data);
 
 				})
@@ -30,13 +32,13 @@ angular.module('myServices')
 			$http.get(datapath+'packages/'+truck_id)
 				.success(function(data){
 
-					var packs=[];
+					var packs=[];					
 
-					angular.forEach(data, function(value, key){
+					angular.forEach(data, function(value, key){						
 
-						packs.push(value.package_id);
+						packs.push(value.package_id);						
 						
-					});
+					});					
 					
 					deferred.resolve(packs);
 					
@@ -73,7 +75,19 @@ angular.module('myServices')
 
 		_pol();*/
 
-		var _getLatest = function(){
+		var _getLatest = function(actionBy){
+
+			var path = datapath+'latestEntry';
+
+			if(actionBy==0){
+				var action='bg';
+				path=path+'?action='+action
+				console.log(path);
+			} else {
+				var action='usr';
+				path=path+'?action='+action
+				console.log(path);
+			}
 
 			var errors = {
 
@@ -83,7 +97,7 @@ angular.module('myServices')
 
 			var deferred = $q.defer();	
 
-			$http.get(datapath+'latestEntry')
+			$http.get(path)
 				.success(function(data){
 
 					deferred.resolve(data);
@@ -105,4 +119,4 @@ angular.module('myServices')
 			getLatest: _getLatest		
 		};
 
-	}]);
+}]);

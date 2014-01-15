@@ -36,9 +36,11 @@ class ConfigController extends BaseController{
 
 
 	public function listAllTrucks(){
-
-		$allTrucksArr = Configurations::distinct()->get(array('truck_id'));
+		
+		$allTrucksArr = Configurations::orderBy('timestamp', 'asc')->distinct()->get(array('truck_id'));
+		
 		return $allTrucksArr;
+
 	}
 
 	/*
@@ -47,7 +49,7 @@ class ConfigController extends BaseController{
 
 	public function listPackagesInTruckWithtruck_id($truck_id){
 
-		$packagesInTruckArr = Configurations::where('truck_id', $truck_id)->select('package_id')->get();
+		$packagesInTruckArr = Configurations::where('truck_id', $truck_id)->get();
 
 		return $packagesInTruckArr;
 	}

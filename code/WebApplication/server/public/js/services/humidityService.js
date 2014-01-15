@@ -50,24 +50,21 @@ angular.module('myServices')
 			var deferred = $q.defer();
 
 			$http.get(datapath+'humidity/'+truck_id+'/'+package_id)
-				.success(function(data){
+				.success(function(data){					
 
-					//console.log("Debug");
-					//console.dir(data);
-
-					if(data.length<0 || data.length==0){ //check for empty array
-
-						//console.log("Error in truck package");
+					//No data returned for truck_id and package_id
+					//Handle it and send the errors object
+					if(data.length<0 || data.length==0){ //check for empty array						
 
 						errors.isError = true;
-						errors.errorMsg = "Empty array returned";
+						errors.errorMsg = "No Humidity data available for package " + package_id + " in truck " + truck_id;
 
 						deferred.resolve([_humidityData, _humidityGraphData, latestTimeStamp, errors]);
 
 					} else {
 
 						var len = data.length;
-						//console.log("debug length " + len);
+						
 						var d;
 
 						_humidityData = [];
@@ -105,14 +102,33 @@ angular.module('myServices')
 				})
 				.error(function(data, status){
 
-					console.log("Error no data fetched " + status);
+					//500 error - Bad url request
+					//handle the error and send the errors object in resolve
+					
+					errors.isError = true;
+
+					errors.errorMsg = "Could not complete request. Status: " + status;
+
+					deferred.resolve([ [], [], '', errors]);
 
 				});
 
 				return deferred.promise;
 		} //end function _getHumidityDataOf()
 
-		var _getLatestHumidityData = function(truck_id, package_id, timestamp){
+		var _getLatestHumidityData = function(truck_id, package_id, timestamp,actionBy){
+
+			var path = datapath+'humidityEntry/'+truck_id+'/'+package_id+'/'+timestamp;
+
+			if(actionBy==0){
+				var action='bg';
+				path=path+'?action='+action
+				console.log(path);
+			} else {
+				var action='usr';
+				path=path+'?action='+action
+				console.log(path);
+			}
 
 			var _newhumidityData=[];
 			var _newhumidityGraphData=[];
@@ -124,7 +140,7 @@ angular.module('myServices')
 
 			var deferred = $q.defer();
 
-			$http.get(datapath+'humidityEntry/'+truck_id+'/'+package_id+'/'+timestamp)
+			$http.get(path)
 			.success(function(data){
 
 				if(data.length>0 || data.length!=0){
@@ -139,8 +155,10 @@ angular.module('myServices')
 
 						d=data[i];
 
-						_newhumidityData.push(d);
-						_newhumidityGraphData.push([d.timestamp,d.value]);
+						if(d.value>=0 && d.value<=100){
+							_newhumidityData.push(d);
+							_newhumidityGraphData.push([d.timestamp,d.value]);
+						}
 
 					}
 
