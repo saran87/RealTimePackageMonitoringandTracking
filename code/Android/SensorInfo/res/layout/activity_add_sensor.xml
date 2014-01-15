@@ -21,6 +21,9 @@
         android:id="@+id/edit_sensorid"
         android:layout_weight="1"
         android:layout_width="0dp"
+        android:inputType="text"
+        android:maxLength="30"
+        android:singleLine="true"
         android:layout_height="wrap_content"
         android:hint="@string/edit_sensorid" />
      
@@ -41,6 +44,9 @@
         android:id="@+id/edit_packageid"
         android:layout_weight="1"
         android:layout_width="0dp"
+        android:inputType="text"
+        android:maxLength="30"
+        android:singleLine="true"
         android:layout_height="wrap_content"
         android:hint="@string/edit_packageid" />
 

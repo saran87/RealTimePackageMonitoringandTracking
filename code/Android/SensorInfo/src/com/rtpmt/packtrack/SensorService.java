@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -15,6 +16,7 @@ import rtpmt.location.tracker.PackageLocation;
 import rtpmt.network.packet.NetworkMessage;
 import rtpmt.network.packet.NetworkMessage.PackageInformation;
 import rtpmt.packages.Package;
+import rtpmt.packages.PackageList;
 import rtpmt.packages.SensorEventHandler;
 import rtpmt.sensor.reader.SensorReader;
 import rtpmt.sensor.util.Packet;
@@ -38,7 +40,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.rtpmt.android.network.tcp2.TCPClient;
 import com.rtpmt.serialport.SerialPortReader;
 
-public class SensorService implements SensorEventHandler{
+public class SensorService implements SensorEventHandler {
 
 	static Context DeviceUARTContext;
 	D2xxManager ftdid2xx;
@@ -47,7 +49,7 @@ public class SensorService implements SensorEventHandler{
 	int currentIndex = -1;
 	int openIndex = 0;
 	TextView readText;
-	
+
 	ArrayAdapter<CharSequence> portAdapter;
 
 	static int iEnableReadFlag = 1;
@@ -62,9 +64,8 @@ public class SensorService implements SensorEventHandler{
 	Spinner portSpinner;
 	ArrayList<CharSequence> portNumberList;
 
-	public boolean readingVibration = false;
-	public String readDataToTextForVibration = "";
-	private static DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	private static DateFormat format = new SimpleDateFormat(
+			"yyyy/MM/dd HH:mm:ss");
 
 	public static final int readLength = 512;
 	public int readcount = 0;
@@ -92,123 +93,113 @@ public class SensorService implements SensorEventHandler{
 	private Activity mainActivity;
 	private Context mainContext;
 	private final Handler mainHandler;
-	
-	public SensorService (Context _context, Activity _activity, String _folderName, boolean _isNetworkAvailable, Handler _mHandler){
+	private static final String SERVICE_TAG = "SensorService";
+
+	public SensorService(Context _context, Activity _activity,
+			String _folderName, boolean _isNetworkAvailable, Handler _mHandler) {
 		mainContext = _context;
 		mainActivity = _activity;
 		folderName = _folderName;
 		isNetworkAvailable = _isNetworkAvailable;
 		mainHandler = _mHandler;
+		Log.i(SERVICE_TAG,"Intialized");
+		
 	}
-	
-	public synchronized void start(){
-		//log = new Logs();
+
+	public synchronized void start() {
+		// log = new Logs();
+		Log.i(SERVICE_TAG,"Started");
+
 		packageLocation = new PackageLocation(mainActivity);
-		
-		Log.i("SensorDisplay", "Entered SensorDisplay");
-		
+
 		try {
 			ftdid2xx = D2xxManager.getInstance(mainContext);
 			DeviceUARTContext = mainContext;
-		} 
-		catch (D2xxException e) {
+		} catch (D2xxException e) {
 		}
 
 		readData = new byte[readLength];
 
-		//readText = (TextView) findViewById(R.id.readValues);
-		//readText.setMovementMethod(new ScrollingMovementMethod());
-		
-		
-		
-		Log.i("SensorDisplay", "readText set");
+		// readText = (TextView) findViewById(R.id.readValues);
+		// readText.setMovementMethod(new ScrollingMovementMethod());
+
+		Log.i(SERVICE_TAG, "readText set");
 
 		/*
 		 * Open Devices
 		 */
-		Log.i("SensorDisplay", "createDeviceList");
+		Log.i(SERVICE_TAG, "createDeviceList");
 		createDeviceList();
 
-		Log.i("SensorDisplay", "DevCount = " + DevCount);
+		Log.i(SERVICE_TAG, "DevCount = " + DevCount);
 
 		if (DevCount > 0) {
-			Log.i("SensorDisplay", "connectFunction");
+			Log.i(SERVICE_TAG, "connectFunction");
 			connectFunction();
 		}
 
 		// Configuration
 		if (DevCount <= 0 || ftDev == null) {
-			Log.i("SensorDisplay", "Device not open yet at config");
+			Log.i(SERVICE_TAG, "Device not open yet at config");
 			Toast.makeText(DeviceUARTContext, "Device not open yet...",
 					Toast.LENGTH_SHORT).show();
-		} 
-		else {
+		} else {
 			SetConfig(baudRate, dataBit, stopBit, parity, flowControl);
 		}
 
 		// Read
 		if (DevCount <= 0 || ftDev == null) {
-			Log.i("SensorDisplay", "Device not open yet at read");
+			Log.i(SERVICE_TAG, "Device not open yet at read");
 			Toast.makeText(DeviceUARTContext, "Device not open yet...",
 					Toast.LENGTH_SHORT).show();
-		} 
-		else if (uart_configured == false) {
-			Log.i("SensorDisplay", "UART not configure yet");
+		} else if (uart_configured == false) {
+			Log.i(SERVICE_TAG, "UART not configure yet");
 			Toast.makeText(DeviceUARTContext, "UART not configure yet...",
 					Toast.LENGTH_SHORT).show();
 			return;
-		} 
-		else {
-			Log.i("SensorDisplay", "Read started");
+		} else {
+			Log.i(SERVICE_TAG, "Read started");
 			EnableRead();
 		}
 	}
-	
-	public void EnableRead() {
-		Log.i("SensorDisplay", "inside EnableRead");
 
-		Log.i("SensorDisplay", "EnableReadFlag set: " + iEnableReadFlag);
+	public void EnableRead() {
+		Log.i(SERVICE_TAG, "inside EnableRead");
+
+		Log.i(SERVICE_TAG, "EnableReadFlag set: " + iEnableReadFlag);
 
 		if (iEnableReadFlag == 1) {
-			Log.i("SensorDisplay", "EnableReadFlag == 1");
+			Log.i(SERVICE_TAG, "EnableReadFlag == 1");
 			ftDev.purge((byte) (D2xxManager.FT_PURGE_TX));
 			ftDev.restartInTask();
 		} else {
-			Log.i("SensorDisplay", "EnableReadFlag != 1");
+			Log.i(SERVICE_TAG, "EnableReadFlag != 1");
 			ftDev.stopInTask();
 		}
 	}
-	
+
 	@SuppressLint("HandlerLeak")
 	final Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			Log.i("SensorDisplay", readDataToText);
-			if (readingVibration == true)
-			{
-				LogStack.LogList.add(readDataToTextForVibration + " - Network available: " + isNetworkAvailable);
-			}
-			else
-			{
-				LogStack.LogList.add(readDataToText + " - Network available: " + isNetworkAvailable);
-			}
+			Log.i(SERVICE_TAG, readDataToText);
+			LogStack.LogList.add(readDataToText + " - Network available: "+ isNetworkAvailable);
 			try {
 				Thread.currentThread().sleep(100);
-			} 
-			catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			/*log.readText1.setText(readDataToText + " " + isNetworkAvailable
-					+ "\n\r" + readText.getText());*/
-
 		}
 	};
-	
+
 	private class readThread extends Thread {
 		Handler mHandler;
 		SensorReader sensorPacketizer;
 		boolean connectionAvailable = true;
 		boolean serverAvailable;
+		File bufferFile;
+		FileOutputStream bufferOutput;
+		DataOutputStream bufferOutputStream;
 
 		readThread(final Handler h, final SensorReader sensorPacketizer) {
 			mHandler = h;
@@ -218,11 +209,11 @@ public class SensorService implements SensorEventHandler{
 
 		private boolean connectToServer() {
 			try {
-				Log.i("SensorDisplay", "Init TCP started");
+				Log.i(SERVICE_TAG, "Init TCP started");
 				tCPClient = new TCPClient();
 				tCPClient.connect(host, port);
 				serverAvailable = true;
-				Log.i("SensorDisplay", "TCPClient Initiated");
+				Log.i(SERVICE_TAG, "TCPClient Initiated");
 			} catch (Exception ex) {
 				serverAvailable = false;
 			} // TODO TCPClient configurable
@@ -230,221 +221,281 @@ public class SensorService implements SensorEventHandler{
 			return serverAvailable;
 		}
 
+		private void initDataBufferFile() {
+			Log.i(SERVICE_TAG, "Initalizing Data Buffer File");
+			bufferFile = new File(folderName + "/dataBuffer.proto");
+			try {
+				if (!bufferFile.exists()) {
+
+					bufferFile.createNewFile();
+					bufferOutput = new FileOutputStream(folderName
+							+ "/dataBuffer.proto", true);
+					bufferOutputStream = new DataOutputStream(bufferOutput);
+
+				} else {
+					bufferOutput = new FileOutputStream(folderName
+							+ "/dataBuffer.proto", true);
+					bufferOutputStream = new DataOutputStream(bufferOutput);
+				}
+			} catch (IOException e) {
+				Log.i(SERVICE_TAG, "Error While Initializing Data Buffer file");
+				e.printStackTrace();
+			}
+			Log.i(SERVICE_TAG, "Done Initalizing Data Buffer File");
+		}
+
+		private void writeToBuffer(PackageInformation sensorInfo) {
+			try {
+				sensorInfo.writeDelimitedTo(bufferOutputStream);
+			} catch (IOException e) {
+				Log.i(SERVICE_TAG, "Error while writing the data to buffer");
+				e.printStackTrace();
+			}
+		}
+
+		private boolean sendBufferData() {
+			// TODO Add code here to send data from file and
+			// then empty the file
+			connectionAvailable = true;
+			readDataToText = "";
+			boolean isSuccess = false;
+			FileInputStream fis;
+			try {
+				fis = new FileInputStream(folderName + "/dataBuffer.proto");
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return isSuccess;
+			}
+			DataInputStream dis = new DataInputStream(fis);
+			Log.i(SERVICE_TAG, "Started Sending Buffer data");
+			for (;;) {
+				PackageInformation sensorInfoReadByte;
+
+				try {
+					sensorInfoReadByte = PackageInformation
+							.parseDelimitedFrom(dis);
+
+					if (sensorInfoReadByte == null) {
+						Log.i(SERVICE_TAG,
+								"sensorInfoReadByte == null and done reading");
+
+						dis.close();
+						fis.close();
+						isSuccess = true;
+						break;
+					}
+
+					readDataToText += "Resending buffer data\n\r";
+					Message msg = mHandler.obtainMessage();
+					mHandler.sendMessage(msg);
+
+					tCPClient.sendData(sensorInfoReadByte);
+					// tCPClient.notify();
+
+				} catch (InvalidProtocolBufferException e) {
+					Log.i(SERVICE_TAG,
+							"Problem while reading Protocol message from the file stream");
+					e.printStackTrace();
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					isSuccess = true;
+					break;
+				}
+
+			}
+
+			bufferFile.delete();
+			return isSuccess;
+		}
+
+		private boolean tryServerConnection() {
+			boolean isSuccess = false;
+			if (connectToServer()) {
+				isSuccess = sendBufferData();
+				if (isSuccess) {
+					initDataBufferFile();
+				} else {
+					/*
+					 * There is problem with buffer data but connection is
+					 * working so set it to success Because now data can be sent
+					 * to server
+					 */
+					isSuccess = true;
+				}
+			}
+			return isSuccess;
+		}
+
 		@Override
 		public void run() {
-			Log.i("SensorDisplay", "readThread started");
-			Log.i("SensorDisplay", "Before TCP init");
+			Log.i("Sensor", "readThread started");
+			Log.i(SERVICE_TAG, "Before TCP init");
 
-			File file = new File(folderName + "/dataBuffer.proto");
-			if (!file.exists()) {
+			initDataBufferFile();
+
+			isNetworkAvailable = connectToServer();
+			Log.i(SERVICE_TAG, "After TCP init");
+			if (null == Looper.myLooper()) {
+				Looper.prepare();
+				Log.i(SERVICE_TAG, "looper prepared");
+			}
+
+			for (;;) {
+
+				Packet packet;
 				try {
-					file.createNewFile();
+					packet = sensorReader.readPacket();
+
+					if (packet != null) {
+
+						// TODO make getLocation function returns the location
+						// info object
+						// instead of mapping latitude and longitude
+						location = packageLocation.getLocation();
+						rtpmt.location.tracker.Location locationInfo = new rtpmt.location.tracker.Location();
+						if (location != null) {
+							locationInfo.setLatitude(location.getLatitude());
+							locationInfo.setLongitude(location.getLongitude());
+						} else {
+							locationInfo.setLatitude(45.00);
+							locationInfo.setLongitude(46.00);
+						}
+
+						NetworkMessage.PackageInformation sensorInfo = packet
+								.getRealTimeMessage(locationInfo);
+						if (sensorInfo != null) {
+							for (PackageInformation.Sensor sensor : sensorInfo
+									.getSensorsList()) {
+
+								String SensorName = ""
+										+ sensor.getSensorType().name();
+								if (SensorName.contains("VIBRATION")
+										|| SensorName.contains("SHOCK")) {
+
+									readDataToText = SensorName
+											+ ": "
+											+ timeStamp(sensorInfo
+													.getTimeStamp())
+											+ "    "
+											+ sensorInfo.getSensorId();;
+								} else {
+									readDataToText = sensor.getSensorType()
+											.name()
+											+ " : "
+											+ sensor.getSensorValue()
+											+ " "
+											+ sensor.getSensorUnit()
+											+ "   "
+											+ timeStamp(sensorInfo
+													.getTimeStamp())
+											+ "    "
+											+ sensorInfo.getSensorId();
+								}
+
+								Log.i("SensorValue:", readDataToText);
+								Message msg = mHandler.obtainMessage();
+								mHandler.sendMessage(msg);
+							}
+							// Sending data to server
+							if (isNetworkAvailable) {
+								try {
+									// If network exists send the data to the
+									// server
+									Log.i(SERVICE_TAG,
+											"Before sending server data");
+									tCPClient.sendData(sensorInfo);
+									// tCPClient.notify();
+									Log.i(SERVICE_TAG, "Sending Data to server");
+								} catch (Exception ex) {
+									isNetworkAvailable = false;
+									connectionAvailable = false;
+								}
+							} else {
+								// If network does not exist, store to a file
+								isNetworkAvailable = tryServerConnection();
+								if (!connectionAvailable) {
+									writeToBuffer(sensorInfo);
+								}
+							}
+						}
+					}
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}catch(Exception e){
 					e.printStackTrace();
 				}
 			}
-
-			connectToServer();
-			Log.i("SensorDisplay", "After TCP init");
-            if(null == Looper.myLooper())
-            {
-                    Looper.prepare();
-                    Log.i("SensorDisplay", "looper prepared");
-            }    
-		
-			try {
-				for (;;) {
-					Packet packet = sensorReader.readPacket();
-					//TODO make getLocation function returns the location info object 
-					// instead of mapping latitude and longitude
-					location = packageLocation.getLocation();
-					rtpmt.location.tracker.Location locationInfo = new rtpmt.location.tracker.Location();
-					if(location!=null){
-						locationInfo.setLatitude(location.getLatitude());
-						locationInfo.setLongitude(location.getLongitude());
-					}
-					else{
-						locationInfo.setLatitude(45.00);
-						locationInfo.setLongitude(46.00);
-					}
-					NetworkMessage.PackageInformation sensorInfo = packet
-							.getRealTimeMessage(locationInfo);
-					if (sensorInfo != null)
-						for (PackageInformation.Sensor sensor : sensorInfo
-								.getSensorsList()) {
-							readDataToText = sensor.getSensorType().name()
-									+ " : " + sensor.getSensorValue() + " "
-									+ sensor.getSensorUnit() + "   "
-									+ timeStamp(sensorInfo.getTimeStamp());
-
-							String SensorName = "" + sensor.getSensorType().name();
-							if (SensorName.equals("VIBRATIONX") || SensorName.equals("VIBRATIONY") || SensorName.equals("VIBRATIONZ"))
-							{
-								readingVibration = true;
-								readDataToTextForVibration = SensorName + ": " + timeStamp(sensorInfo.getTimeStamp());
-							}
-							else
-							{
-								readingVibration = false;
-							}
-							
-							Log.i("SensorValue:", readDataToText);
-							Message msg = mHandler.obtainMessage();
-							mHandler.sendMessage(msg);
-						}
-
-					System.out.println();
-					System.out.flush();
-
-					// Sending data to server
-
-					if (isNetworkAvailable) {
-						if (!connectionAvailable && connectToServer()) {
-							// TODO Add code here to send data from file and
-							// then empty the file
-							connectionAvailable = true;
-							readDataToText = "";
-
-							FileInputStream fis = new FileInputStream(
-									folderName + "/dataBuffer.proto");
-							DataInputStream dis = new DataInputStream(fis);
-
-							for (;;) {
-								PackageInformation sensorInfoReadByte;
-
-								try {
-									Log.i("SensorDisplay",
-											"Inside Read From File");
-									sensorInfoReadByte = PackageInformation
-											.parseDelimitedFrom(dis);
-
-									Log.i("SensorDisplay", "Delimited Parse");
-
-									if (sensorInfoReadByte == null) {
-										Log.i("SensorDisplay",
-												"sensorInfoReadByte == null");
-										break;
-									}
-
-									readDataToText += "Resending buffer data\n\r";
-									Message msg = mHandler.obtainMessage();
-									mHandler.sendMessage(msg);
-
-									tCPClient.sendData(sensorInfoReadByte);
-								} catch (InvalidProtocolBufferException e) {
-									System.out.println("Exception: "
-											+ e.toString());
-									break;
-								}
-
-							}
-
-							dis.close();
-							fis.close();
-							file.delete();
-						}
-
-						// If network exists send the data to the server
-						Log.i("SensorDisplay", "Before sending server data");
-						tCPClient.sendData(sensorInfo);
-						Log.i("SensorDisplay", "Sending Data to server");
-					} else {
-						// If network does not exist, store to a file
-						connectionAvailable = false;
-
-						Log.i("SensorDisplay",
-								"Before saving server data to file");
-						try {
-							// Write the new address book back to disk.
-
-							FileOutputStream output = new FileOutputStream(
-									folderName + "/dataBuffer.proto", true);
-							DataOutputStream dos = new DataOutputStream(output);
-							sensorInfo.writeDelimitedTo(dos);
-							// dos.close();
-							output.close();
-							Log.i("SensorDisplay",
-									"After saving server data to file");
-						} catch (Exception e) {
-							Log.i("SensorDisplay",
-									"Saving server data to file Exception: "
-											+ e);
-						}
-					}
-
-				}
-			} catch (IOException ex) {
-				System.out.println(ex.toString());
-			}
 		}
+
 	}
-	
-	public String timeStamp(long time){
+
+	public String timeStamp(long time) {
 		Date date = new Date(time);
 		String dateTime = format.format(date);
 		return dateTime;
 	}
-	
+
 	/*
 	 * Initialize TCP Client
 	 */
 	public void initalizeTCPClient(String ipAddress, int portNumber) {
 		try {
-			Log.i("SensorDisplay", "Init TCP started");
+			Log.i(SERVICE_TAG, "Init TCP started");
 			tCPClient = new TCPClient();
 			tCPClient.connect(ipAddress, portNumber);
-			Log.i("SensorDisplay", "TCPClient Initiated");
+			Log.i(SERVICE_TAG, "TCPClient Initiated");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public void createDeviceList() {
-		Log.i("SensorDisplay", "Inside createDeviceList");
+		Log.i(SERVICE_TAG, "Inside createDeviceList");
 		int tempDevCount = ftdid2xx.createDeviceInfoList(DeviceUARTContext);
 
-		Log.i("SensorDisplay", "tempDevCount set");
+		Log.i(SERVICE_TAG, "tempDevCount set");
 
 		if (tempDevCount > 0) {
-			Log.i("SensorDisplay", "tempDevCount > 0");
+			Log.i(SERVICE_TAG, "tempDevCount > 0");
 			if (DevCount != tempDevCount) {
-				Log.i("SensorDisplay", "DevCount != tempDevCount");
+				Log.i(SERVICE_TAG, "DevCount != tempDevCount");
 				DevCount = tempDevCount;
 			}
-		} 
-		else {
-			Log.i("SensorDisplay", "tempDevCount <= 0");
+		} else {
+			Log.i(SERVICE_TAG, "tempDevCount <= 0");
 			DevCount = -1;
 			currentIndex = -1;
 		}
 	}
-	
+
 	public void connectFunction() {
-		Log.i("SensorDisplay", "inside connectFunction");
+		Log.i(SERVICE_TAG, "inside connectFunction");
 		int tmpProtNumber = openIndex + 1;
 
-		Log.i("SensorDisplay", "tmpProtNumber set");
+		Log.i(SERVICE_TAG, "tmpProtNumber set");
 
 		if (currentIndex != openIndex) {
-			Log.i("SensorDisplay", "currentIndex != openIndex");
+			Log.i(SERVICE_TAG, "currentIndex != openIndex");
 			if (null == ftDev) {
-				Log.i("SensorDisplay", "null == ftDev");
+				Log.i(SERVICE_TAG, "null == ftDev");
 				ftDev = ftdid2xx.openByIndex(DeviceUARTContext, openIndex); // TODO
-				Log.i("SensorDisplay", "ftDev opened = " + ftDev + " is open: "
+				Log.i(SERVICE_TAG, "ftDev opened = " + ftDev + " is open: "
 						+ ftDev.isOpen());
-			} 
-			else {
-				Log.i("SensorDisplay", "null != ftDev");
+			} else {
+				Log.i(SERVICE_TAG, "null != ftDev");
 				synchronized (ftDev) {
-					Log.i("SensorDisplay", "synchronized(ftDev)");
+					Log.i(SERVICE_TAG, "synchronized(ftDev)");
 					ftDev = ftdid2xx.openByIndex(DeviceUARTContext, openIndex);
 				}
 			}
-			Log.i("SensorDisplay", "ftDev set");
+			Log.i(SERVICE_TAG, "ftDev set");
 			uart_configured = false;
-		} 
-		else {
-			Log.i("SensorDisplay", "currentIndex == openIndex");
+		} else {
+			Log.i(SERVICE_TAG, "currentIndex == openIndex");
 			Toast.makeText(DeviceUARTContext,
 					"Device port " + tmpProtNumber + " is already opened",
 					Toast.LENGTH_LONG).show();
@@ -452,7 +503,7 @@ public class SensorService implements SensorEventHandler{
 		}
 
 		if (ftDev == null) {
-			Log.i("SensorDisplay", "ftDev == null");
+			Log.i(SERVICE_TAG, "ftDev == null");
 			Toast.makeText(
 					DeviceUARTContext,
 					"open device port(" + tmpProtNumber + ") NG, ftDev == null",
@@ -461,19 +512,19 @@ public class SensorService implements SensorEventHandler{
 		}
 
 		if (true == ftDev.isOpen()) {
-			Log.i("SensorDisplay", "true == ftDev.isOpen()");
+			Log.i(SERVICE_TAG, "true == ftDev.isOpen()");
 			currentIndex = openIndex;
 			Toast.makeText(DeviceUARTContext,
 					"open device port(" + tmpProtNumber + ") OK",
 					Toast.LENGTH_SHORT).show();
 
-			Log.i("SensorDisplay", "Toast.makeText");
+			Log.i(SERVICE_TAG, "Toast.makeText");
 			if (false == bReadThreadGoing) {
-				Log.i("SensorDisplay", "false == bReadThreadGoing");
-				Log.i("SensorDisplay", "readThread started");
-				
+				Log.i(SERVICE_TAG, "false == bReadThreadGoing");
+				Log.i(SERVICE_TAG, "readThread started");
+
 				SerialPortReader serialPort = new SerialPortReader(ftDev);
-				sensorReader = new SensorReader(serialPort,IS_REALTIME );
+				sensorReader = new SensorReader(serialPort, IS_REALTIME);
 				sensorReader.addSensorEventHandler(this);
 				try {
 					sensorReader.open();
@@ -490,14 +541,14 @@ public class SensorService implements SensorEventHandler{
 			}
 
 		} else {
-			Log.i("SensorDisplay", "true != ftDev.isOpen()");
+			Log.i(SERVICE_TAG, "true != ftDev.isOpen()");
 			Toast.makeText(DeviceUARTContext,
 					"open device port(" + tmpProtNumber + ") NG",
 					Toast.LENGTH_LONG).show();
 		}
 
 	}
-	
+
 	public void SetConfig(int baud, byte dataBits, byte stopBits, byte parity,
 			byte flowControl) {
 		if (ftDev.isOpen() == false) {
@@ -583,13 +634,13 @@ public class SensorService implements SensorEventHandler{
 
 		uart_configured = true;
 		Toast.makeText(DeviceUARTContext, "Config done", Toast.LENGTH_SHORT)
-				.show();
+		.show();
 	}
 
 	@Override
 	public void handleNewPacket(Packet arg0) {
 		// TODO Auto-generated met
-		
+
 	}
 
 	@Override
@@ -597,12 +648,52 @@ public class SensorService implements SensorEventHandler{
 		// TODO Auto-generated method stub
 		final SensorCart listOfSensors = new SensorCart();
 		Log.i("NewSensorAdded", pack.getShortId() + pack.getSensorId());
-		
-		Sensors sensorObject = new Sensors(pack.getSensorId(), pack.getPackageId());
-		listOfSensors.setSensors(sensorObject);
-		
+
+		if (pack.getShortId() != 0) {
+			Sensors sensorObject = new Sensors(pack.getSensorId(),
+					pack.getPackageId());
+			listOfSensors.setSensors(sensorObject);
+			try {
+				sensorReader.configure(pack);
+				// sensorReader.notify();
+			} catch (NullPointerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		mainHandler.obtainMessage(StartActivity.SENSOR_ADDED).sendToTarget();
 	}
-	
-	
+
+	public void configure() {
+
+		for (Package pack : PackageList.getPackages()) {
+
+			try {
+
+				sensorReader.configure(pack);
+				// sensorReader.notify();
+
+				tCPClient.sendData(pack.getConfigMessage(true));
+				// tCPClient.notify();
+
+			} catch (NullPointerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
 }

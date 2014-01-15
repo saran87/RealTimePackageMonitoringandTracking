@@ -19,11 +19,11 @@
           android:title="@string/action_settings"
           android:showAsAction="never|withText" />
     
-    <!-- Help, should always be in the overflow -->
+    <!-- Help, should always be in the overflow 
     <item android:id="@+id/action_help"
 		  android:icon="@drawable/ic_action_help"
           android:title="@string/action_help"
-          android:showAsAction="never|withText" />
+          android:showAsAction="never|withText" /> -->
     
 
 </menu>

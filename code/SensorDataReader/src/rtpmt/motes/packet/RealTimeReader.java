@@ -51,6 +51,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import rtpmt.sensor.reader.SerialPortInterface;
 import rtpmt.packages.Package;
 import rtpmt.packages.Sensor;
@@ -220,8 +222,9 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
     @Override
     public void run() {
-        try {
+        
             while (isThreadRunning) {
+                try {
                 byte[] packet = readFramedPacket();
                 int packetType = packet[0] & 0xff;
                 int nodeId = (packet[1] & 0xff) << 8 | (packet[2] & 0xff);
@@ -229,7 +232,7 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                 if (packetType == Constants.P_REGISTRATION) {
                     StringBuilder macId = new StringBuilder();
                     for (int i = 5; i < packet.length; i++) {
-                        macId.append(Integer.toHexString(packet[i] & 0xff));
+                        macId.append(Integer.toHexString(packet[i] & 0xff).toUpperCase());
                     }
 
                     Integer shortId = nodeId;
@@ -253,12 +256,18 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     } else {
                         pushProtocolPacket(packetType, packetHelper);
                     }
+                    //pushProtocolPacket(packetType, packetHelper);
+                    
+                }
+            }   catch (IOException ex) {
+                    Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                catch (Exception e){
+                    Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-        } catch (IOException e) {
-        } catch (Exception e) {
-
-        }
+            
+  
     }
 
     /*
@@ -284,16 +293,16 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                 while (b != 170) {
 
                     b = port.read() & 0xff;
-                    System.out.println(b);
+                    //System.out.println("I am try reading frame:" + b);
                 }
-                System.out.println("count:" + count + "InSync:" + inSync);
+               /*System.out.println("count:" + count + "InSync:" + inSync);
                 if (count >= Constants.MTU) {
                     // PacketHelper too long, give up and try to resync
                     message(name + ": packet too long");
                     inSync = false;
                     count = 0;
                     continue;
-                }
+                }*/
                 syncFrame[count++] = (byte) (b & 0xff);
 
                 while (count < Constants.FRAME_SYNC.length) {
@@ -325,19 +334,23 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
                     receiveBuffer[count++] = port.read();
                     receiveBuffer[count++] = port.read();
-                    if (((int) command != Constants.P_BLACKBOX_RESPONSE)) {
-                        receiveBuffer[count++] = port.read();
-                        receiveBuffer[count++] = port.read();
-                    }
+                   
+                    receiveBuffer[count++] = port.read();
+                    receiveBuffer[count++] = port.read();
 
                     int length = (receiveBuffer[count - 1] & 0xff) | (receiveBuffer[count - 2] & 0xff) << 8;
                     payLoad = count + length;
-
+                    System.out.println("PayLoad Length: " + payLoad);
+                    if(payLoad < 15 || payLoad > 526 ){
+                       inSync = false;
+                       count = 0;
+                       continue;
+                    }
                     isLength = true;
                     continue;
                 } else if (count < payLoad) {
                     b = (byte) (port.read() & 0xff);
-                    System.out.print(b);
+                    //System.out.println("I read frame:" + b);
                 } else {
                     byte[] packet = new byte[count - 2];
                     System.arraycopy(receiveBuffer, 0, packet, 0, count - 2);

@@ -1,9 +1,12 @@
 package com.rtpmt.packtrack;
 
+import rtpmt.packages.Package;
+import rtpmt.packages.PackageList;
+
 public class Sensors {
 
     protected String sensorId;
-    private String packageId;
+    protected String packageId;
      
     public Sensors(String sensorId, String packageId)
     {
@@ -22,7 +25,8 @@ public class Sensors {
     }	
     
     public void setPackageId(String updatePackageId) {
-         
+    	Package pack = PackageList.getPackage(this.sensorId);
+    	pack.setPackageId(updatePackageId);
         this.packageId = updatePackageId;
     }
 }

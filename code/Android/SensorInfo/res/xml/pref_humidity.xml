@@ -17,7 +17,7 @@
         
         
     <ListPreference
-        android:defaultValue="-1"
+        android:defaultValue="60"
         android:entries="@array/pref_notify_before_humidity_list"
         android:entryValues="@array/pref_notify_before_humidity_values"
         android:key="before_threshold_humidity"
@@ -26,7 +26,7 @@
         android:title="@string/pref_title_notify_before_humidity" />
     
     <ListPreference
-        android:defaultValue="-1"
+        android:defaultValue="60"
         android:entries="@array/pref_notify_after_humidity_list"
         android:entryValues="@array/pref_notify_after_humidity_values"
         android:key="after_threshold_humidity"

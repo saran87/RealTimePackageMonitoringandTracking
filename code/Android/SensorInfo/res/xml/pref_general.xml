@@ -5,7 +5,7 @@
         android:defaultValue="@string/pref_default_set_truck_id"
         android:inputType="text"
         android:key="set_truck_id"
-        android:maxLength="25"
+        android:maxLength="30"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_set_truck_id" />

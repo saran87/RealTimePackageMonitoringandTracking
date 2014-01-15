@@ -21,18 +21,24 @@ public class Logs extends Activity{
 		setContentView(R.layout.logs);
 		
 		countLog = LogStack.LogList.size();
-		
+		if (countLog >= 100)
+		{
+			countLog = 100;
+		}
 		readText1 = (TextView) findViewById(R.id.readValues1);
 		readText1.setMovementMethod(new ScrollingMovementMethod());
 		
-		for (int index = 0; index < LogStack.LogList.size(); index++)
+		for (int index = 0; index < countLog; index++)
 		{
 			String log = LogStack.LogList.get(index);
 			readText1.setText(log + "\n\r" + readText1.getText());
 		}
-		if (LogStack.LogList.size() == 1000)
+		if (LogStack.LogList.size() >= 150)
 		{
-			LogStack.LogList.clear();
+			for (int index = LogStack.LogList.size()-1; index > 100; index--)
+			{
+				LogStack.LogList.remove(index);
+			}
 		}
 		
         // get action bar  

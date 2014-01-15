@@ -56,20 +56,13 @@ public class TCPClient {
         }
     }
     
-    public boolean sendData(PackageInformation data)
+    public boolean sendData(PackageInformation data) throws IOException
     {
-        try
-        {
+       
             data.writeDelimitedTo(outPutStream);
            // data.writeTo(outPutStream);
            
             return true;
-        }
-        catch(IOException ex)
-        {
-            System.out.println(ex.getMessage());
-            return false;
-        }
     }
     
     public boolean sendDelimitedData(PackageInformation data)

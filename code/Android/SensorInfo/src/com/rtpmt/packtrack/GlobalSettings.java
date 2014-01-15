@@ -3,7 +3,9 @@ package com.rtpmt.packtrack;
 import java.util.List;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,8 +15,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.NavUtils;
+import android.telephony.TelephonyManager;
 import android.view.MenuItem;
+
 import com.example.sensorinfo.R;
 
 /**
@@ -29,6 +34,7 @@ import com.example.sensorinfo.R;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class GlobalSettings extends PreferenceActivity {
+	private static String mac_id;
 	/**
 	 * Determines whether to always show the simplified settings UI, where
 	 * settings are presented in a single list. When false, settings are shown
@@ -40,6 +46,7 @@ public class GlobalSettings extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//mac_id = getTruckIdAsMacAddress();
 		setupActionBar();
 	}
 
@@ -89,6 +96,7 @@ public class GlobalSettings extends PreferenceActivity {
 		if (!isSimplePreferences(this)) {
 			return;
 		}
+		
 
 		// In the simplified UI, fragments are not used at all and we instead
 		// use the older PreferenceActivity APIs.
@@ -225,6 +233,11 @@ public class GlobalSettings extends PreferenceActivity {
 				PreferenceManager.getDefaultSharedPreferences(
 						preference.getContext()).getString(preference.getKey(),
 						""));
+/*	    String data = "added";
+	    Intent intent = new Intent();
+        intent.putExtra(EXTRA_MESSAGE1, data);
+	    setResult(Activity.RESULT_OK, intent);
+	    finish();*/
 	}
 
 
@@ -234,8 +247,7 @@ public class GlobalSettings extends PreferenceActivity {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_general);
-
-		
+			
 			bindPreferenceSummaryToValue(findPreference("set_truck_id"));
 		}
 	}
@@ -252,10 +264,6 @@ public class GlobalSettings extends PreferenceActivity {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_temperature);
 
-			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
-			// to their values. When their values change, their summaries are
-			// updated to reflect the new value, per the Android Design
-			// guidelines.
 			
 			bindPreferenceSummaryToValue(findPreference("set_temperature_threshold"));
 			bindPreferenceSummaryToValue(findPreference("before_threshold_temperature"));
@@ -276,10 +284,6 @@ public class GlobalSettings extends PreferenceActivity {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_humidity);
 
-			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
-			// to their values. When their values change, their summaries are
-			// updated to reflect the new value, per the Android Design
-			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("set_humidity_threshold"));
 			bindPreferenceSummaryToValue(findPreference("before_threshold_humidity"));
 			bindPreferenceSummaryToValue(findPreference("after_threshold_humidity"));
@@ -294,10 +298,6 @@ public class GlobalSettings extends PreferenceActivity {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_vibration);
 
-			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
-			// to their values. When their values change, their summaries are
-			// updated to reflect the new value, per the Android Design
-			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("set_vibration_threshold"));
 			bindPreferenceSummaryToValue(findPreference("before_threshold_vibration"));
 			bindPreferenceSummaryToValue(findPreference("after_threshold_vibration"));
@@ -312,11 +312,17 @@ public class GlobalSettings extends PreferenceActivity {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_shock);
 
-			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
-			// to their values. When their values change, their summaries are
-			// updated to reflect the new value, per the Android Design
-			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("set_shock_threshold"));
 		}
 	}
+	
+	public String getTruckIdAsMacAddress(){
+		
+		TelephonyManager tManager = (TelephonyManager)getSystemService(android.content.Context.TELEPHONY_SERVICE);
+		String IMEI = tManager.getDeviceId();
+		if (IMEI == null || IMEI .length() == 0)
+			IMEI = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
+		
+		return IMEI;
+	} 
 }

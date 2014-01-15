@@ -30,8 +30,9 @@ public class StartActivity extends ListActivity {
 
 	//Request Codes
 	public static final int SENSOR_ADDED = 1;
+	public static final int SETTINGS_UPDATED = 2;
 	
-	private SensorService sService = null;
+	private static SensorService sService = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -96,8 +97,6 @@ public class StartActivity extends ListActivity {
 		case R.id.action_logs:
 			checkLogs();
 			return true;
-		case R.id.action_help:
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -105,7 +104,7 @@ public class StartActivity extends ListActivity {
 
 	private void setSettings() {
 		Intent setSettings_intent = new Intent(StartActivity.this, GlobalSettings.class);
-		startActivity(setSettings_intent);	
+		startActivityForResult(setSettings_intent, SETTINGS_UPDATED);	
 	}
 
 	private void addSensor() {
@@ -156,10 +155,13 @@ public class StartActivity extends ListActivity {
 	
     public void onActivityResult(int requestCode, int resultCode, Intent data){
     	switch (requestCode) {
-        case SENSOR_ADDED:
-            if (resultCode == Activity.RESULT_OK) {
-                populateSensorList(data);
-            }
+        	case SENSOR_ADDED:
+        		if (resultCode == Activity.RESULT_OK) {
+        			populateSensorList(data);
+        		}
+        		break;
+            case SETTINGS_UPDATED:
+            		updateSettingsForAll(data);
     	}
     }
     
@@ -170,6 +172,13 @@ public class StartActivity extends ListActivity {
 		{
 			setListAdapter(new SensorAdapter(listOfSensors.sensorList));
 		}
+    }
+    
+    protected void updateSettingsForAll(Intent data){
+    	final SensorCart listOfSensors = (SensorCart) getApplicationContext();
+    	listOfSensors.updateSettings();
+        sService.configure();
+    	
     }
 
 	public String getFolderName(){

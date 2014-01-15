@@ -2,6 +2,8 @@ package com.rtpmt.serialport;
 
 import java.io.IOException;
 
+import android.util.Log;
+
 import com.ftdi.j2xx.FT_Device;
 
 import rtpmt.sensor.reader.*;
@@ -40,9 +42,13 @@ public class SerialPortReader implements SerialPortInterface {
 	}
 
 	@Override
-	public byte read() throws IOException {
+	public byte read() throws IOException, NullPointerException{
 		byte[] data = new byte[1];
-		ftDev.read(data, 1, wait_ms);
+		if(ftDev != null)
+			ftDev.read(data, 1, wait_ms);
+		else{
+			Log.i("SerialPort", "FTDEV is NULL");
+		}
 		return data[0];
 	}
 
