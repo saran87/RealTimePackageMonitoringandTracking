@@ -3,9 +3,7 @@ package com.rtpmt.packtrack;
 import java.util.List;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,7 +32,7 @@ import com.example.sensorinfo.R;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class GlobalSettings extends PreferenceActivity {
-	private static String mac_id;
+	
 	/**
 	 * Determines whether to always show the simplified settings UI, where
 	 * settings are presented in a single list. When false, settings are shown

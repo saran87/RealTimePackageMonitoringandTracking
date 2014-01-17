@@ -12,11 +12,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ public class StartActivity extends ListActivity {
 	//Request Codes
 	public static final int SENSOR_ADDED = 1;
 	public static final int SETTINGS_UPDATED = 2;
+	public static final int PACKAGE_ID_UPDATED = 3;
 	
 	private static SensorService sService = null;
 
@@ -74,7 +77,7 @@ public class StartActivity extends ListActivity {
     protected void onListItemClick(ListView lv, View v, int pos, long id) {
 		Intent editDetails_intent = new Intent(StartActivity.this, EditSensorDetails.class);
 		editDetails_intent.putExtra(POSITION, pos);
-		startActivity(editDetails_intent);
+		startActivityForResult(editDetails_intent, PACKAGE_ID_UPDATED);
     }
 	
 	@Override
@@ -146,8 +149,21 @@ public class StartActivity extends ListActivity {
                         parent, false);
                 convertView.setTag(convertView.findViewById(android.R.id.text1));
             }
+            AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, 120);
             TextView tv = (TextView) convertView.getTag();
-            tv.setText(mItems.get(position).sensorId);
+            tv.setLayoutParams(lp);
+            // Center the text vertically
+            tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            // Set the text starting position
+            tv.setPaddingRelative(36, 0, 0, 0);
+            if (mItems.get(position).packageId == null || mItems.get(position).packageId.equals(""))
+            {
+            	tv.setText(mItems.get(position).sensorId + "  ( Click here to update Package Id )");
+            }
+            else{
+            	tv.setText(mItems.get(position).sensorId + "  ( " + mItems.get(position).packageId + " )");
+            }
             return convertView;
         }
 
@@ -160,8 +176,13 @@ public class StartActivity extends ListActivity {
         			populateSensorList(data);
         		}
         		break;
+        	case PACKAGE_ID_UPDATED:
+        		if (resultCode == Activity.RESULT_OK) {
+        			populateSensorList(data);
+        		}
             case SETTINGS_UPDATED:
             		updateSettingsForAll(data);
+            	break;
     	}
     }
     
