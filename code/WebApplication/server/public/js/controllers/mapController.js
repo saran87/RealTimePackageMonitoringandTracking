@@ -38,25 +38,23 @@ angular.module('myModule')
 
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
-        var map;
+        var map;        
 
-        var waypts=[];
-
-        function initialize() {
+        function initialize(initLoc) {
           directionsDisplay = new google.maps.DirectionsRenderer();
-          var initLocation = new google.maps.LatLng(43.08498749, -77.63056059);
+          var initLocation = initLoc;
           var mapOptions = {
             zoom: 8,
             center: initLocation
           }
           map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
           directionsDisplay.setMap(map);
-        }
-
-        initialize();
+        }        
 
         mapService.getCordinatesOf(truck,pack)
         .then(function(data){
+
+          initialize(new google.maps.LatLng(data[0][0].loc.lng, data[0][0].loc.lat));
             
             var waypts=[
                 /*{
@@ -68,7 +66,8 @@ angular.module('myModule')
                     stopover: true
                 }*/
 
-            ];             
+            ];
+
 
             if(truck=="NO_ID" && pack=="NO_ID_realtime"){
 
@@ -97,7 +96,18 @@ angular.module('myModule')
 
             
 
-            for(var i=1; i<data[0].length-2; i++){                                           
+            for(var i=1; i<data[0].length-2; i++){
+
+              
+              
+              /*waypts.push(
+
+                    {
+                      location: ,
+                      stopover: true
+
+                    }
+              );*/
 
                 markerArray.push( new google.maps.Marker
                     (

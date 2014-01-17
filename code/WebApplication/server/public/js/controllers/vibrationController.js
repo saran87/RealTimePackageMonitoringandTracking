@@ -70,12 +70,10 @@ angular.module('myModule')
       }      
 
     });   //end then
-
-    $scope.idSelected='';
-    $scope.setSelected = function (idSelected) {
-      console.log(idSelected);
-      $scope.idSelected = idSelected;
-
+    
+    $scope.setSelected = function (indexSelected) {
+      
+      $scope.indexSelected = indexSelected;
     };
 
     var vibrationUpdater = function(action){

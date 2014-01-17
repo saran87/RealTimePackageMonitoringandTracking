@@ -8,35 +8,37 @@ class MapController extends BaseController{
 
 		$temp = Temperature::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();	
 
-		foreach ($temp as $key => $jsons) {
+		foreach ($temp as $key => $jsons) {			
 
-			$xArr["timestamp"]=$jsons->timestamp;
-			$xArr["loc"]["lat"]=$jsons->loc[0];
-			$xArr["loc"]["lng"]=$jsons->loc[1];
-			$xArr["temperature"]["value"]=$jsons->value;
-			$xArr["truck_id"]=$jsons->truck_id;
-			$xArr["package_id"]=$jsons->package_id;
 			
-			$newArr[]=$xArr;
+				$xArr["timestamp"]=$jsons->timestamp;
+				$xArr["loc"]["lat"]=$jsons->loc[0];
+				$xArr["loc"]["lng"]=$jsons->loc[1];
+				$xArr["temperature"]["value"]=$jsons->value;
+				$xArr["truck_id"]=$jsons->truck_id;
+				$xArr["package_id"]=$jsons->package_id;
 
-			# code...
+				$newArr[]=$xArr;
+						
 		}
 		
 
 		/*$hum = Humidity::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
+		
 
-		foreach ($hum as $key => $jsons) {
+		foreach ($hum as $key => $jsons) {			
 
-			$xArr1["loc"]["lat"]=$jsons->loc[0];
-			$xArr1["loc"]["lng"]=$jsons->loc[1];
-			$xArr1["humidity"]["value"]=$jsons->value;
-			$xArr1["truck_id"]=$jsons->truck_id;
-			$xArr1["package_id"]=$jsons->package_id;
+			if( !$jsons->value<0 || !$jsons->value>100 ){
+				$xArr1["loc"]["lat"]=$jsons->loc[0];
+				$xArr1["loc"]["lng"]=$jsons->loc[1];
+				$xArr1["humidity"]["value"]=$jsons->value;
+				$xArr1["truck_id"]=$jsons->truck_id;
+				$xArr1["package_id"]=$jsons->package_id;
+
+				$newArr[]=$xArr1;						
+			}
 			
-			$newArr[][$jsons->timestamp]=$xArr1;
-
-			# code...
 		}
 
 		$vib = Vibration::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
@@ -49,7 +51,7 @@ class MapController extends BaseController{
 			$xArr2["truck_id"]=$jsons->truck_id;
 			$xArr2["package_id"]=$jsons->package_id;
 			
-			$newArr[][$jsons->timestamp]=$xArr2;
+			$newArr[]=$xArr2;
 
 			# code...
 		}
@@ -58,13 +60,16 @@ class MapController extends BaseController{
 
 		foreach ($vib as $key => $jsons) {
 
-			$xArr3["loc"]["lat"]=$jsons->loc[0];
-			$xArr3["loc"]["lng"]=$jsons->loc[1];
-			$xArr3["shock"]["value"]="shock";
-			$xArr3["truck_id"]=$jsons->truck_id;
-			$xArr3["package_id"]=$jsons->package_id;
-			
-			$newArr[][$jsons->timestamp]=$xArr3;
+			if($jsons->value){
+
+				$xArr3["loc"]["lat"]=$jsons->loc[0];
+				$xArr3["loc"]["lng"]=$jsons->loc[1];
+				$xArr3["shock"]["value"]="shock";
+				$xArr3["truck_id"]=$jsons->truck_id;
+				$xArr3["package_id"]=$jsons->package_id;
+				
+				$newArr[]=$xArr3;
+			}
 
 			# code...
 		}*/

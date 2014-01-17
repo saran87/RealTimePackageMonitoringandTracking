@@ -1,7 +1,4 @@
-/* JS */
-
-
-/* Navigation */
+ /* Navigation */
 
 $(document).ready(function(){
 
@@ -96,7 +93,7 @@ $('.wclose').click(function(e){
     var m = date.getMonth();
     var y = date.getFullYear();
     
-    $('#calendar').fullCalendar({
+   /* $('#calendar').fullCalendar({
       header: {
         left: 'prev',
         center: 'title',
@@ -149,7 +146,7 @@ $('.wclose').click(function(e){
           url: 'http://google.com/'
         }
       ]
-    });
+    });*/
     
   });
 
@@ -301,7 +298,7 @@ $(document).ready(function() {
 
 /* Date picker */
 
-  $(function() {
+  /*$(function() {
     $('#datetimepicker1').datetimepicker({
       pickTime: false
     });
@@ -311,17 +308,17 @@ $(document).ready(function() {
     $('#datetimepicker2').datetimepicker({
       pickDate: false
     });
-  });
+  });*/
 
 
 
 
 /* CL Editor */
 
-$(".cleditor").cleditor({
+/*$(".cleditor").cleditor({
     width: "auto",
     height: "auto"
-});
+});*/
 
 /* Modal fix */
 
@@ -329,6 +326,6 @@ $('.modal').appendTo($('body'));
 
 /* Pretty Photo for Gallery*/
 
-jQuery("a[class^='prettyPhoto']").prettyPhoto({
+/*jQuery("a[class^='prettyPhoto']").prettyPhoto({
 overlay_gallery: false, social_tools: false
-});
+}); */

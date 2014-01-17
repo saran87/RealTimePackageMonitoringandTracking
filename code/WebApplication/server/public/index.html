@@ -4,36 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>App - RTPMT</title>
-  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script> 
-  
   <link rel="stylesheet" href="css/app.css"/>
-
   <!-- Stylesheets -->
-  <link href="style/bootstrap.css" rel="stylesheet">
-  <!-- Font awesome icon -->
+  <link href="style/jquery-ui.css" rel="stylesheet">
+  <link href="style/bootstrap.css" rel="stylesheet">  
   <link rel="stylesheet" href="style/font-awesome.css"> 
-  <!-- jQuery UI -->
-  <!--<link rel="stylesheet" href="style/jquery-ui.css"> -->
-  <link rel="stylesheet" href="style/jquery.jgrowl.min.css" />
-  <!-- Calendar -->
-  <link rel="stylesheet" href="style/fullcalendar.css">
-  <!-- prettyPhoto -->
-  <link rel="stylesheet" href="style/prettyPhoto.css">  
-  <!-- Star rating -->
-  <link rel="stylesheet" href="style/rateit.css">
-  <!-- Date picker -->
-  <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css">
-  <!-- CLEditor -->
-  <link rel="stylesheet" href="style/jquery.cleditor.css">   
+  <link rel="stylesheet" href="style/jquery.jgrowl.min.css" />      
   <!-- Bootstrap toggle -->
   <link rel="stylesheet" href="style/bootstrap-switch.css">
   <!-- Main stylesheet -->
   <link href="style/style.css" rel="stylesheet">
   <!-- Widgets stylesheet -->
   <link href="style/widgets.css" rel="stylesheet"> 
-
   <link href="style/chosen.css" rel="stylesheet"> 
-
   <link rel="stylesheet" href="style/nv.d3.css"/>  
   
   <!-- HTML5 Support for IE -->
@@ -77,20 +60,19 @@
               <!--Notifications Dropdown-->   
             
             <!-- Links -->
-            <ul class="nav navbar-nav pull-right">
+            <!--<ul class="nav navbar-nav pull-right">
               <li class="dropdown pull-right">            
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                   <i class="icon-user"></i> TestUser <b class="caret"></b>              
-                </a>
+                </a>               
                 
-                <!-- Dropdown menu -->
                 <ul class="dropdown-menu">
                   <li><a href="#"><i class="icon-user"></i> Profile</a></li>
                   <li><a href="#"><i class="icon-cogs"></i> Settings</a></li>
                   <li><a href="login.html"><i class="icon-off"></i> Logout</a></li>
                 </ul>
               </li>              
-            </ul>
+            </ul>-->
           </nav>
 
         </div>
@@ -213,49 +195,23 @@
 
 </div> <!-- end div that contains selectMenuCtrl -->
 
-
-<!--   <ul class="menu">
-    <li><a href="#/map">Map</a></li>
-    <li><a href="#/temperature">Temperature</a></li>
-    <li><a href="#/humidity">Humidity</a></li>
-    <li><a href="#/vibration">Vibration</a></li>
-  </ul>
-
-  <div ng-view>Loading..</div>
-   -->
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-  -->
-
   <!-- JS -->
   
   <script src="js/constants.js"></script>  
   <script src="js/jquery.js"></script> <!-- jQuery -->
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-  <script src="js/bootstrap.js"></script> <!-- Bootstrap -->
-  <!--<script src="js/jquery-ui-1.9.2.custom.min.js"></script>--> <!-- jQuery UI -->
-  <script src="js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
-  <script src="js/jquery.rateit.min.js"></script> <!-- RateIt - Star rating -->
-  <script src="js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
+  <script src="js/jquery-ui.js"></script>
+  
+   
+  <script src="js/bootstrap.js"></script> <!-- Bootstrap -->     
+  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.js"></script>
+  
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
 
-  <!-- Chosen Select -->
-  <script src="js/chosen.jquery.js"></script>
+  
 
-  <!-- jQuery Flot -->
-  <script src="js/excanvas.min.js"></script>
-  <script src="js/jquery.flot.js"></script>
-  <script src="js/jquery.flot.categories.js"></script>
-  <script src="js/jquery.flot.resize.js"></script>
-  <script src="js/jquery.flot.pie.js"></script>
-  <script src="js/jquery.flot.stack.js"></script>
-
-
-  <script src="lib/angular/angular.js"></script>
-  <script src="js/angular-google-maps.js"></script>  
-  <script src="js/app.js"></script>
-  <script src="lib/angular/ui-bootstrap.js"></script>
+  <script src="js/app.js"></script>  
   <script src="js/d3.js"></script>
   <script src="js/nv.d3.js"></script>
   <script src="js/moment.js"></script>
@@ -273,8 +229,6 @@
   <script src="js/controllers/vibrationController.js"></script>
   <script src="js/controllers/shockController.js"></script>
   <script src="js/controllers/mapController.js"></script>
-  
-  <script src="js/controllers/modalController.js"></script>  
 
   <script src="js/services/services.js"></script> <!-- Loading the module from services -->
   <script src="js/services/selectMenuService.js"></script>
@@ -290,7 +244,6 @@
   <script src="js/directives/temperatureGraph.js"></script>
   <script src="js/directives/humidityGraph.js"></script>
   <script src="js/directives/directiveModal.js"></script>
-
   
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
@@ -299,16 +252,11 @@
   
   <span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span> 
 
- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.js">
- </script>
-  <script src="js/sparklines.js"></script> <!-- Sparklines -->
-  <script src="js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
-  <script src="js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->  
+ <script src="js/jgrowl.min.js">
+ </script>  
   <script src="js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
   <script src="js/filter.js"></script> <!-- Filter for support page -->
   <script src="js/custom.js"></script> <!-- Custom codes -->
-  <script src="js/charts.js"></script> <!-- Charts & Graphs -->
-
 
 </body>
 </html>

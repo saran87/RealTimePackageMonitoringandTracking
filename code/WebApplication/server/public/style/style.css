@@ -1786,8 +1786,12 @@ footer .copy{
    display: block;
 }
 
-.selected {
-	background-color: green;
+.selected {	
+	border-left: 10px solid #27ae60;
+	border-right: 10px solid #27ae60;
+	font-weight: bolder;
+	font-size: 14px;
+	//#E3ECFF
 }
 
 
