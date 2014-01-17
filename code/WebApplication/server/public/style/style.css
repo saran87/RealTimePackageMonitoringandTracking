@@ -4,7 +4,7 @@ body{
 	color: #666;
 	border-top: 3px solid #eee;
 	background:#343434 url("../img/back.png") repeat;  
-	padding-top: 37px;
+	padding-top: 12px;
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -542,7 +542,7 @@ text-decoration:none;
 
 header{
 	border-top: 1px solid #ccc;
-	padding: 25px 0px 15px 0px;
+	padding: 12px 0px 12px 0px;
 	background: #fafafa url("../img/cream.png") repeat;
 	border-bottom: 1px solid #ddd;
 }

@@ -456,6 +456,14 @@ cite {
 	color: #34495e;
 }
 
+.text-warm {
+  color: #ED6D02;
+}
+
+.text-lukewarm{
+  color: #E58703;
+}
+
 h1,
 h2,
 h3,
