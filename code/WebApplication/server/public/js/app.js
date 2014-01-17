@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 
-angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','nvd3ChartDirectives'])    
+angular.module('myApp', ['myModule','myServices','myDirectives','nvd3ChartDirectives'])    
     .config(['$routeProvider','$httpProvider', function($routeProvider,$httpProvider) {
 
     /*
@@ -136,14 +136,19 @@ angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','
     {
         redirectTo: '/'
     });
+    
 
-
-    /*$httpProvider.interceptors.push(function($q, $rootScope) {
+    $httpProvider.interceptors.push(function($q, $rootScope) {
       return {
+        
         // optional method
         'request': function(config) {
           // do something on success
-          $rootScope.showSpinner=false;
+          
+          if(config.url.indexOf("bg")<0){
+            $rootScope.showSpinner=true;
+          } 
+          
           return config || $q.when(config);
         },
      
@@ -163,18 +168,19 @@ angular.module('myApp', ['ui.bootstrap','myModule','myServices','myDirectives','
           // do something on success
           $rootScope.showSpinner=false;
           return response || $q.when(response);
-        }
+        },
      
         // optional method
-       /*'responseError': function(rejection) {
+       'responseError': function(rejection) {
           // do something on error
           if (canRecover(rejection)) {
             return responseOrNewPromise
           }
           return $q.reject(rejection);
         }
+
       };
-    });*/
+    });
 
 }]);
 
