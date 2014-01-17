@@ -1287,6 +1287,13 @@ header .header-data .hdata em{
 	font-size: 12px;
 	padding: 0px 0px 0px 0px;
 	font-weight: bold;
+	color: red;
+}
+
+.today-datas li h4 {
+
+	font-weight: bold;
+
 }
 
 /* Profile */
@@ -1758,3 +1765,30 @@ footer .copy{
 .bluehead {
 	color: #34495e;
 }
+
+#loadingWidget {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   z-index: 1100;
+   background-color: white;
+   opacity: .6;
+}
+
+.loadingContent {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   margin-left: -32px; /* -1 * image width / 2 */
+   margin-top: -32px; /* -1 * image height / 2 */
+   display: block;
+}
+
+.selected {
+	background-color: green;
+}
+
+
+

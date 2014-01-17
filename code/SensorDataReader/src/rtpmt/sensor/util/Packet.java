@@ -160,7 +160,7 @@ public final class Packet extends Header {
         double temperature = (value / 32) - 50;
         temperature = (temperature * 1.8) + 32;
 
-        return temperature;
+        return truncate(temperature,4);
 
     }
 
@@ -177,7 +177,7 @@ public final class Packet extends Header {
                 | (PayLoad.get(0) & 0xff) << 8;
         double humdity = (value / 16) - 24;
 
-        return humdity;
+        return truncate(humdity,4);
     }
 
     public String getVibration() {
@@ -188,7 +188,7 @@ public final class Packet extends Header {
         for (int i = 0; i < PayLoad.size(); i++) {
             short value = PayLoad.get(i);
             g = (value * 15.6) / 1000;
-            vibration.append(String.valueOf(g)).append(" ");
+            vibration.append(String.valueOf(truncate(g,4))).append(" ");
         }
         vibration.deleteCharAt(vibration.length() - 1);
 
@@ -204,7 +204,7 @@ public final class Packet extends Header {
             //Unsigned integer value, note the 0xffff not 0xff
             short value = (short) (PayLoad.get(i) & 0xFF);
             g = (value - 128) / 0.64;
-            shock.append(String.valueOf(g)).append(" ");
+            shock.append(String.valueOf(truncate(g,4))).append(" ");
         }
 
         shock.deleteCharAt(shock.length() - 1);
@@ -514,5 +514,16 @@ public final class Packet extends Header {
         PackageInformation.Builder message= getNetworkMessage(isRealTime);
         return message.build();
     }
+    
+    public double truncate(double number, int precision)
+{
+    double prec = Math.pow(10, precision);
+    int integerPart = (int) number;
+    double fractionalPart = number - integerPart;
+    fractionalPart *= prec;
+    int fractPart = (int) fractionalPart;
+    fractionalPart = (double) (integerPart) + (double) (fractPart)/prec;
+    return fractionalPart;
+}
 
 }

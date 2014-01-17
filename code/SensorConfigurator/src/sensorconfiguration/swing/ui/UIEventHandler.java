@@ -65,7 +65,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     private SensorClient sensorClient;
 
     private ProgressBar bar;
-    private final static String address = "saranlap.student.rit.edu";//"54.204.32.227";//
+    private final static String address = "54.254.230.28";//"saranlap.student.rit.edu";//"54.204.32.227";//
     private boolean pushToServer = false;
     private static String logSensorType = "temperaur";
 
@@ -243,7 +243,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     /**
      * Disconnect the sensor
      */
-    private void disConnectSensor() {
+    public void disConnectSensor() {
         try {
             if (packetReader != null) {
                 packetReader.close();
@@ -496,8 +496,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                 configdatalog.close();
                 if (sensorClient.isIsServerAvaialable() && pushToServer) {
                     sensorClient.send(pack.getConfigMessage(false));
-                    file.delete();
-                }
+                     }
             }
 
         } catch (IOException ex) {
@@ -536,6 +535,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             try {
                 Package pack = PackageList.getPackage(0);
                 if (pack != null) {
+                    if(checkID(pack)){
                     writeConfigData();
                     DATA_LOG_FILE = FOLDER + pack.getUniqueId();
                     File file = new File(DATA_LOG_FILE);
@@ -554,7 +554,9 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     else{
                         UIObject.handleError("Server not connected. Files saved locally");
                     }
-
+                    
+                    }
+                    
                 }
             } catch (IOException ex) {
                 Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -604,8 +606,10 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     length = dis.available();
                     fis.close();
                     dis.close();
+                    boolean localFileDeleted = false;
                     if (length == 0) {
                         file.delete();
+                        localFileDeleted = true;
                     }
 
                     FileInputStream configFis = new FileInputStream(configFile);
@@ -624,7 +628,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     }
                     configDis.close();
                     configFis.close();
-                    if (length == 0) {
+                    if (length == 0 && localFileDeleted) {
                         configFile.delete();
                     }
                     UIObject.clearLocalDataTable();
@@ -659,11 +663,12 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
                     throw ex;
                 }
-                UIObject.handleError("CSV created");
+                
 
             }
+            UIObject.handleError("CSV created for all local files");
         } catch (Exception ex) {
-            UIObject.handleError("CSV not created");
+            UIObject.handleError("CSV not created for all local files");
             Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -5,7 +5,6 @@
 package sensorconfiguration.swing.ui;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,7 +20,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
 import rtpmt.logging.HTMLFormatter;
 import rtpmt.packages.Config;
@@ -147,6 +145,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         humTimeThreshold = new javax.swing.JSpinner();
         jLabel34 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jProgressBar2 = new javax.swing.JProgressBar();
         JbtnSaveToServer1 = new javax.swing.JButton();
@@ -275,13 +274,13 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel5)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel4))
-                .add(18, 18, 18)
+                .add(26, 26, 26)
                 .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(vibThreshold)
-                    .add(jLabel7)
+                    .add(jLabel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(temPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(vibTime)))
+                        .add(vibThreshold)
+                        .add(vibTime)
+                        .add(jLabel7)))
                 .add(18, 18, 18)
                 .add(jLabel31)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -393,7 +392,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, temPanel2Layout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jLabel16)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(21, 21, 21)
                 .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(shockThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel19, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -428,7 +427,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblSensorId.setForeground(new java.awt.Color(51, 0, 204));
         jlblSensorId.setText("xxxxxxxx");
 
-        jButton2.setText("Restore Deafult Configuration");
+        jButton2.setText("Restore Default Configuration");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -510,6 +509,14 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .add(15, 15, 15))
         );
 
+        jButton5.setText("Disconnect");
+        jButton5.setEnabled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -555,9 +562,11 @@ public class SensorConfigurator extends javax.swing.JFrame {
                         .add(8, 8, 8)
                         .add(jLabel28)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jlblSensorStatus)
+                        .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jbtnConnect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(18, 18, 18)
+                        .add(jButton5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 114, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(0, 0, Short.MAX_VALUE))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 421, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -589,7 +598,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel28)
                     .add(jbtnConnect)
-                    .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jButton5))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -600,7 +610,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                         .add(temPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(47, 47, 47)
-                        .add(temPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 97, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(temPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 120, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jbConfigure, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
@@ -877,6 +887,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private void jbtnClearDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearDataActionPerformed
         // TODO add your handling code here:
         eventHandler.clearSensorData();
+        updateSensorDetail(null);
     }//GEN-LAST:event_jbtnClearDataActionPerformed
 
     //Reset and Configure
@@ -975,6 +986,28 @@ public class SensorConfigurator extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        eventHandler.disConnectSensor();
+        jlblSensorStatus.setText("Not Connected");
+            jlblSensorStatus.setForeground(Color.RED);
+            jbtnConnect.setText("Connect");
+            jButton5.setEnabled(false);
+            jtxtPackageId.setText("");
+            jtxtTuckId.setText("");
+            jlblSensorId.setFont(new java.awt.Font("Lucida Grande", 1, 13)); 
+
+            jlblSensorId.setForeground(new java.awt.Color(51, 0, 204));
+
+            jlblSensorId.setText("xxxxxxxx");
+            jtxtComments.setText("");
+            jlblTruckId.setText("xxxxxx");
+            jlblPackageId.setText("xxxxxx");
+            jlblSensorId1.setText("xxxxxx");
+            jlblComments.setText("xxxxxx");
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
     
     public void clearLocalDataTable(){
         DefaultTableModel model = (DefaultTableModel) jtblLocalData.getModel();
@@ -1029,6 +1062,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1102,11 +1136,13 @@ public class SensorConfigurator extends javax.swing.JFrame {
             jlblSensorStatus.setText("Connected");
             jlblSensorStatus.setForeground(Color.getHSBColor((float)145.58823529411762, (float)78.16091954022988, (float)68.23529411764706));
             jbtnConnect.setText("Reconnect");
+            
         } else {
             jlblSensorStatus.setText("Not Connected");
             jlblSensorStatus.setForeground(Color.RED);
             jbtnConnect.setText("Connect");
         }
+        jButton5.setEnabled(isSensorConnected);
     }
 
     public final void handleError(String msg) {
@@ -1116,6 +1152,27 @@ public class SensorConfigurator extends javax.swing.JFrame {
     
     public void updateSensorDetail(Package pack){
         
+        if(pack == null){
+            updateTruckId("");
+            updatePackageId("");
+            updateComments(""); 
+        tempTime.setValue(0);
+        tempTimeThreshold.setValue(0);
+        tempThreshold.setValue(0);
+        
+        humTime.setValue(0);
+        humTimeThreshold.setValue(0);
+        humThreshold.setValue(0);
+        
+        vibTime.setValue(0);
+        vibTimeThreshold.setValue(0);
+        vibThreshold.setValue(0);
+       
+        shockThreshold.setValue(0);
+        
+            
+        }
+        else{
         if( pack.getTruckId() != null && !pack.getTruckId().isEmpty()){
             updateTruckId(pack.getTruckId());
             updatePackageId(pack.getPackageId());
@@ -1141,6 +1198,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
         shockThreshold.setValue(tempConfig.getMaxThreshold());
         
 
+        }
     }
     
     public void setSesnorId(String sensorId){

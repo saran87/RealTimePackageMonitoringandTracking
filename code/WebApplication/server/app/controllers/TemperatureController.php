@@ -39,7 +39,7 @@ class TemperatureController extends BaseController{
 		$ts = (float)$timestamp ;
 
 
-		$temperatureAfterTimestampArr = Temperature::where('truck_id',$truck_id)->where('package_id', $package_id)->where('timestamp','>',$ts)->get();
+		$temperatureAfterTimestampArr = Temperature::where('truck_id',$truck_id)->where('package_id', $package_id)->where('timestamp','>',$ts)->orderBy('timestamp', 'asc')->get();
 
 		return $temperatureAfterTimestampArr;
 

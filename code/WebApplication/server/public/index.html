@@ -24,9 +24,7 @@
   <!-- Date picker -->
   <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css">
   <!-- CLEditor -->
-  <link rel="stylesheet" href="style/jquery.cleditor.css"> 
-  <!-- Uniform -->
-  <link rel="stylesheet" href="style/uniform.default.css"> 
+  <link rel="stylesheet" href="style/jquery.cleditor.css">   
   <!-- Bootstrap toggle -->
   <link rel="stylesheet" href="style/bootstrap-switch.css">
   <!-- Main stylesheet -->
@@ -46,7 +44,7 @@
   <style>
 
   #map-canvas {
-    width: 700px;
+    width: 100%;
     height: 650px;
   } 
  
@@ -65,7 +63,7 @@
           <!-- Site name for smallar screens -->                   
         </div>
 
-        <a ng-click="goHome()" ng-href="#/{{'dashboard'}}" class="navbar-brand"><i class="icon-home"></i> PacMak</a>
+        <a href='' class="navbar-brand"><i class="icon-home"></i> PakMac</a>
 
           <!-- Navigation starts -->
           <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">       
@@ -118,10 +116,12 @@
                          <select ng-change="urlFunc()" class="chosen-select form-control" ng-model="selected.package" ng-options="p for p in selected.id.packages">
                             <option value="">-- Package --</option>
                         </select>
+                  </div>
+                  <div class="col-md-3">
+                    <button ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button>
+                  </div>
 
-                  </div>  
-
-                  <div id="inputTrack" class="col-md-4 pull-right">               
+                  <!-- <div id="inputTrack" class="col-md-4 pull-right">               
                     <div class="input-group">                      
                         <input type="text" class="form-control input-sm" id="txtPackageId" placeholder="Enter Package ID" ng-model="txtPackageid">
                         <span class="input-group-btn">
@@ -129,7 +129,7 @@
                         </span>
                     </div>
                                 
-                  </div>
+                  </div> -->
 
                 </div>    
          </div> <!--/end select menus -->
@@ -140,6 +140,13 @@
   <!-- Header ends -->
 
 <!-- Main content starts -->
+<div ng-show="showSpinner" id="loadingWidget">
+    <div class="loadingContent">
+        <p>
+            <img height="150" width="150" alt="Loading  Content" src="img/ajax-loader.gif" /> Loading Content
+        </p>
+    </div>
+</div>
 
 <div class="content">
 
@@ -151,31 +158,23 @@
         <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
         <ul id="nav">
           <!-- Main menu with font awesome icon -->
-          <li><a href="{{sideNavHrefs.dashboard}}" ng-click="setServiceType('dashboard')"><i class="icon-home"></i> Dashboard</a>
-            <!-- Sub menu markup 
-            <ul>
-              <li><a href="#">Submenu #1</a></li>
-              <li><a href="#">Submenu #2</a></li>
-              <li><a href="#">Submenu #3</a></li>
-            </ul>-->
+          <li><a href="{{sideNavHrefs.dashboard}}" ng-click="setServiceType('dashboard')"><i class="icon-dashboard"></i> Dashboard</a>
           </li>
 
           <li><a href="{{sideNavHrefs.map}}" ng-click="setServiceType('map')"><i class="icon-map-marker"></i> Map</a></li>
 
-          <li><a href="{{sideNavHrefs.temperature}}" ng-click="setServiceType('temperature')"><i class="icon-sign-blank"></i> Temperature</a></li>
-          <li><a href="{{sideNavHrefs.humidity}}" ng-click="setServiceType('humidity')"><i class="icon-sign-blank"></i> Humidity</a></li>
-          <li><a href="{{sideNavHrefs.vibration}}" ng-click="setServiceType('vibration')"><i class="icon-sign-blank"></i> Vibration</a></li>
-
-
-           
+          <li><a href="{{sideNavHrefs.temperature}}" ng-click="setServiceType('temperature')"><i class="icon-circle"></i> Temperature</a></li>
+          <li><a href="{{sideNavHrefs.humidity}}" ng-click="setServiceType('humidity')"><i class="icon-circle"></i> Humidity</a></li>
+          <li><a href="{{sideNavHrefs.vibration}}" ng-click="setServiceType('vibration')"><i class="icon-circle"></i> Vibration</a></li>
+          <li><a href="{{sideNavHrefs.shock}}" ng-click="setServiceType('shock')"><i class="icon-circle"></i> Shock</a></li>           
           
-          <li class="has_sub"><a href="{{sideNavHrefs.shock}}" ng-click="setServiceType('shock')"><i class="icon-file-alt"></i> Shock  <span class="pull-right"><i class="icon-sort-down"></i></span></a>
-            <ul>
-              <li><a href="#">Orientation</a></li>
-              <li><a href="#">Height-G</a></li>
-              <li><a href="#">Height Impact</a></li>              
-            </ul>
-          </li>                             
+         <!--  <li class="has_sub"><a href="{{sideNavHrefs.shock}}" ng-click="setServiceType('shock')"><i class="icon-file-alt"></i> Shock  <span class="pull-right"><i class="icon-sort-down"></i></span></a>
+                                     <ul>
+                                       <li><a href="#">Orientation</a></li>
+                                       <li><a href="#">Height-G</a></li>
+                                       <li><a href="#">Height Impact</a></li>              
+                                     </ul>
+                                   </li>    -->                          
           
         </ul>        
     </div><!-- Sidebar ends -->
@@ -304,8 +303,7 @@
  </script>
   <script src="js/sparklines.js"></script> <!-- Sparklines -->
   <script src="js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
-  <script src="js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
-  <script src="js/jquery.uniform.min.js"></script> <!-- jQuery Uniform -->
+  <script src="js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->  
   <script src="js/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
   <script src="js/filter.js"></script> <!-- Filter for support page -->
   <script src="js/custom.js"></script> <!-- Custom codes -->

@@ -84,6 +84,8 @@ Route::get('/shockgraph/{id}', 'ShockController@shockGraphData');
 
 Route::get('/shockLatestEntry', 'ShockController@latestEntry');
 
+Route::get('/shockEntry/{truck_id}/{package_id}/{timestamp}', 'ShockController@ShockAfterTimestamp');
+
 
 /*Routes to get Map Data*/
 

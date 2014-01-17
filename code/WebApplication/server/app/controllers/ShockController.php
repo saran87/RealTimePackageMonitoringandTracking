@@ -30,6 +30,17 @@ class ShockController extends BaseController{
 		return $shockGraphDataArr;
 
 	}
+
+	
+	public function ShockAfterTimestamp($truck_id, $package_id, $timestamp){
+
+		$ts = (float)$timestamp ;
+
+		$shockAfterTimestampArr = Shock::where('truck_id',$truck_id)->where('package_id', $package_id)->where('timestamp','>',$ts)->orderBy('timestamp', 'asc')->get();
+
+		return $shockAfterTimestampArr;
+
+	}
 	
 
 	private function intitalize($dataArray){

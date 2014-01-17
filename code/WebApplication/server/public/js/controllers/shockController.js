@@ -1,7 +1,9 @@
 angular.module('myModule')
-	.controller('shockController',['$scope','$rootScope','$routeParams','shockService','dashBoardService','$http', function($scope,$rootScope,$routeParams,shockService,dashBoardService,$http){
+	.controller('shockController',['$scope','$rootScope','$routeParams','shockService','dashBoardService','$http','$timeout', function($scope,$rootScope,$routeParams,shockService,dashBoardService,$http,$timeout){
 
 		var latestTimestamp; //holds the latestTimestamp for data received from a package
+
+		$scope.noData=false;
 
     	if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
@@ -23,7 +25,7 @@ angular.module('myModule')
     	dashBoardService.getConfigurationsOf(truck,pack)
     	.then(function(data){
 
-	      if(!data[2].isError){
+	      if(!data[2].isError){	      		      	
 
 	        //$scope.maxThreshold = data[0].config.shockx.maxthreshold;
 	        if(data[0].config.shockx.maxthreshold==0){
@@ -36,7 +38,7 @@ angular.module('myModule')
 	        }
 	        
 
-	        if(data[0].config.is_realtime){
+	        if(data[0].is_realtime){
 
 				$rootScope.rt=true;	        	
 
@@ -47,7 +49,7 @@ angular.module('myModule')
 	        }
 	        
 	        
-	      }
+	      } 
 
     	});
 
@@ -56,18 +58,79 @@ angular.module('myModule')
 
 	    	if(!data[2].isError){
 
+	    		$scope.noData=false;
+
 	    		latestTimestamp=data[1];
 	    		$scope.shockData=data[0];
 
 	    		$scope.discreteGraph();
 
-	    	} else {
+	    	} else {	    		
+
+	    		$scope.noData = true;
+
+	    		$scope.errorMsg = data[2].errorMsg;
 
 	    		console.log("Error: " + data[2].errorMsg);
 
 	    	}
 
 	    });
+
+	    var shockUpdater = function(action){	    	
+
+	    	if(!$scope.noData && $rootScope.rt){
+
+		    	if(action==undefined){
+
+		    		var actionBy=0;
+		    	} else {
+		    		var actionBy=action;
+		    	}
+
+		    	if(truck!=undefined || pack!=undefined){
+
+		    		shockService.getLatestShockData(truck,pack,latestTimestamp,actionBy)
+		    		.then(function(data){
+
+		    			if(!data[2].isError){
+
+		    				for(var i=0; i<data[0].length; i++){
+
+	                			$scope.shockData.push(data[0][i]);
+	            			}
+
+	            			latestTimestamp=data[1];
+
+	            			$scope.discreteGraph();
+
+		    			} else {
+
+		    				console.log("no new shock data");
+
+		    			}
+
+		    		});
+
+		    	}
+
+		    	var timer = $timeout(shockUpdater, 45000);
+
+		      	$scope.$on('$locationChangeStart', function() {
+		        	$timeout.cancel(timer);             
+		      	});
+
+		    }
+
+	    }
+
+	    $scope.refresh = function(){
+
+	    	if($rootScope.rt){
+	    		
+	    		shockUpdater(1);
+	    	}
+	    }
 
 	    $scope.discreteGraph = function(indexOf,id){	    	
 
@@ -105,7 +168,11 @@ angular.module('myModule')
 
 	    	];
 
+	    	
+
 	    }
+
+	    shockUpdater();
 
 	    $scope.xAxisTickFormatFunction = function(){
           return function(d){

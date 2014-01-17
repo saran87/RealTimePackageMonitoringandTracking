@@ -1,4 +1,5 @@
-<div  id="temperatureSection" ng-controller="temperatureSpecificCtrl">	
+<div  id="temperatureSection" ng-controller="temperatureSpecificCtrl">
+<div ng-show="!noData">
 	<div class="col-md-12">
 		<div class="row">
 			<div class="col-md-12">
@@ -17,8 +18,9 @@
 			            showLegend="true"
 			            interactive="true"
 			            tooltips="true"
-			            xAxisTickFormat="xAxisTickFormatFunction()"
-			            x2AxisTickFormat="xAxisTickFormatFunction2()"			            
+			            xAxisTickFormat="xAxisTickFormatFunction()"			            
+			            x2AxisTickFormat="xAxisTickFormatFunction2()"
+			            yAxisTickFormat="yAxisTickFormatFunction()"			            
 			            yAxisLabel="Temperature (F)"
 			            xAxisLabel="Time"
 			            margin="{left:100,top:100,bottom:100,right:50}"
@@ -43,16 +45,15 @@
 	  <div class="widget" id="temperatureTable">
 
 	    <div class="widget-head">
-	      <div class="pull-left">Temperature Table
-	        <a href="#" class="wminimize">
-	          <i class="icon-chevron-up"></i>
-	        </a>
+	      <div class="pull-left"><i class="icon-table"></i> Temperature Table	        
 	      </div>
-	      <div class="widget-icons pull-right">
+	      <div class="widget-icons pull-right"> 
+			<span class="text-darkblue">Showing {{temperatureData.length}} results</span> 
+			<button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
+			<button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>
 
-	        <button modaldir="" data-toggle="modal" data-target="#myModal" class="btn btn-info">
-	          <i class="icon-bar-chart"></i>Download CSV</button>
-
+	        <button class="btn btn-info"><i class="icon-download"></i> Download CSV</button>
+	        
 	      </div>
 	      <div class="clearfix"></div>
 	    </div>
@@ -63,7 +64,7 @@
 	        <thead>
 	          <tr>
 	            <th>Time</th>
-	            <th>Location</th>
+	            <th ng-show="rt">Location</th>
 	            <th>Temperature (F)</th>
 	          </tr>
 	        </thead>
@@ -71,10 +72,12 @@
 
 	          <tr ng-class="tdata.value > maxThreshold && 'danger' || '' " ng-repeat="tdata in temperatureData">
 	            <td>{{tdata.timestamp | date: 'medium'}}</td>
-	            <td>	            	
-	            	<a ng-href="http://maps.google.com/maps?q={{tdata.loc[1]}},{{tdata.loc[0]}}&ll={{tdata.loc[1]}},{{tdata.loc[0]}}&z=12" target="_blank">
+	            <td ng-show="rt">	            	
+	            	<span ng-show="rt"><a ng-href="http://maps.google.com/maps?q={{tdata.loc[1]}},{{tdata.loc[0]}}&ll={{tdata.loc[1]}},{{tdata.loc[0]}}&z=12" target="_blank">
 	            		<button class='btn btn-primary'>Show on map</button>
-	            	</a>	            	
+	            	</a>
+	            	</span>
+	            	<span class="text-mute" ng-show="!rt">No Location available for blackbox</span>	            	
 	            </td>
 	            <td>{{tdata.value}}</td>
 	          </tr>
@@ -83,8 +86,7 @@
 
 	      </table>     	           
 
-	      <div class="widget-foot">
-
+	      <div class="widget-foot">				
 
 	        <div class="clearfix"></div>
 
@@ -97,6 +99,15 @@
 
 	  
 	</div>
+</div>	
+<div class="well" ng-show="noData">
+
+	<h3 class="text-danger"><i class="icon-warning-sign"></i> Warning !</h3>
+	<div class="alert alert-danger">
+		<i class="icon-info-sign"></i> {{errorMsg}}
+	</div>
+	
+</div>
 
 </div>
   <!--/end temperatureSection-->

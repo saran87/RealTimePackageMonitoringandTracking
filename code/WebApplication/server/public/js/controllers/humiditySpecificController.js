@@ -3,6 +3,8 @@ angular.module('myModule')
 
   	var latestTimestamp; //holds the latestTimestamp for data received from a package
 
+    $scope.noData=false;
+
     if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
       var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
@@ -50,7 +52,7 @@ angular.module('myModule')
           }
           
 
-          if(data[0].config.is_realtime){
+          if(data[0].is_realtime){
 
             $rootScope.rt=true;           
 
@@ -59,22 +61,21 @@ angular.module('myModule')
             $rootScope.rt=false;
 
           }
-
-
-
       }
 
     });
 
+    var thArr=[];
+
   	humidityService.getHumidityDataOf(truck,pack)
 	  	.then(function(data){
 
-        var tArr=[];
-        var thArr=[];
+        var tArr=[];        
 
 	  		//check for error in the error object
 	  		if(!data[3].isError){
 
+          $scope.noData = false;
 	  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
 
           //for(var i=data[0].length-167;i<data[0].length;i++){
@@ -114,7 +115,12 @@ angular.module('myModule')
 	    	} else {
 	    		//if the response is bad - Display the error message	    		
 
-	    		console.log("Error: " + data[3].errorMsg);
+	    		$scope.noData = true;
+
+          $scope.errorMsg = data[3].errorMsg;
+
+          console.log("Error: " + data[3].errorMsg);
+
 
 	    	}
 
@@ -144,70 +150,95 @@ angular.module('myModule')
           };
       }
 
-        var humidityUpdater = function(){
+      var humidityUpdater = function(action){
 
-    		if(truck!=undefined || pack!=undefined){
+        if(!$scope.noData && $rootScope.rt){
 
-    			humidityService.getLatestHumidityData(truck,pack,latestTimestamp)
-    			.then(function(data){
+          if(action==undefined){
 
-    				if(!data[3].isError){
+            var actionBy=0;
 
-    					console.log("latestTimestamp " + data[2]);
+          } else {
 
-    					for(var i=0; i<data[0].length; i++){
+            var actionBy=action;
 
-    						$scope.humidityData.push(data[0][i]);
+          }
 
-    					}
+      		if(truck!=undefined || pack!=undefined){
 
-    					console.log("new humidity update: " + $scope.humidityData);
+      			humidityService.getLatestHumidityData(truck,pack,latestTimestamp,actionBy)
+      			.then(function(data){
 
-    					console.log("data[1] check");
+      				if(!data[3].isError){
 
-    					console.dir(data[1]);
+      					console.log("latestTimestamp " + data[2]);
 
-    					for(var j=0; j<data[1].length; j++){
+      					for(var i=0; i<data[0].length; i++){
 
-    						console.log("into holder: " + data[1][j]);
-    						holder.push(data[1][j]);
+      						$scope.humidityData.push(data[0][i]);
 
-    					}
+      					}
 
-    					$scope.data=[
+      					console.log("new humidity update: " + $scope.humidityData);
 
-					    	{
-					    		"key": "Humidity Graph",	    		
-					    		"values": holder
-					    	}
-				    
-				    	];
+      					//console.log("data[1] check");
 
-    					
-    					console.dir("new humiditygraph update: " + $scope.data);
+      					//console.dir(data[1]);
 
-    					latestTimestamp=data[2];
+      					for(var j=0; j<data[1].length; j++){
 
-    				} else {
+      						//console.log("into holder: " + data[1][j]);
+      						holder.push(data[1][j]);
+                  thArr.push([data[1][j][0], $scope.maxThreshold]);
 
-    					console.log("no new humidity data");
+      					}
 
-    				}
+      					$scope.data=[
 
-    			});    			
+  					    	{
+  					    		"key": "Humidity Graph",	    		
+  					    		"values": holder
+  					    	},
 
-    		}
+                  {
+                    "key": "Threshold",
+                    "values": thArr
+                  }
+  				    
+  				    	];
 
-    		var timer = $timeout(humidityUpdater, 10000);
+      					
+      					console.dir("new humiditygraph update: " + $scope.data);
+
+      					latestTimestamp=data[2];
+
+      				} else {
+
+      					console.log("no new humidity data");
+
+      				}
+
+      			});    			
+
+      	}
+
+      	var timer = $timeout(humidityUpdater, 45000);
 
     		$scope.$on('$locationChangeStart', function() {
          		$timeout.cancel(timer);         		
      		});
 
-    	}
-	
-	
+      }
 
-	
+    } //end updater
+
+      $scope.refresh = function(){
+
+        if($rootScope.rt){
+
+          humidityUpdater(1);
+        }
+
+      }
 
   }]);

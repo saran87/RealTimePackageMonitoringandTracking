@@ -35,5 +35,4 @@ angular.module("myModule")
 
 		});
 
-
 	}]);

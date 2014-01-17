@@ -2,6 +2,8 @@ angular.module('myModule')
   .controller('vibrationController',['$scope','$rootScope','$routeParams','vibrationService','dashBoardService','$http','$timeout',function($scope,$rootScope,$routeParams,vibrationService,dashBoardService,$http,$timeout){
 
     var latestTimestamp; //holds the latestTimestamp for data received from a package
+
+    $scope.noData=false;
     
     if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
@@ -18,11 +20,7 @@ angular.module('myModule')
     } 
     else {
       console.log("Undefined truck and package");
-    }
-
-    $scope.isVib=false;
-    $scope.isPsd=false;
-    $scope.isCl=false;
+    }    
 
     dashBoardService.getConfigurationsOf(truck,pack)
     .then(function(data){
@@ -37,22 +35,18 @@ angular.module('myModule')
 
             $scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
 
-          }
-          
+          }          
 
-          if(data[0].config.is_realtime){
+          if(data[0].is_realtime){
 
           $rootScope.rt=true;           
 
           } else {
 
-              $rootScope.rt=false;
+          $rootScope.rt=false;
 
           }
-
-
       }
-
 
     });
 
@@ -67,44 +61,74 @@ angular.module('myModule')
         //vibrationUpdater();
       } else {
 
+        $scope.noData = true;
+
+        $scope.errorMsg = data[2].errorMsg;
+
         console.log("Error: " + data[2].errorMsg);
 
       }      
 
     });   //end then
 
-    var vibrationUpdater = function(){
+    $scope.idSelected='';
+    $scope.setSelected = function (idSelected) {
+      console.log(idSelected);
+      $scope.idSelected = idSelected;
 
-      if(truck!=undefined || pack!=undefined){
+    };
 
-        vibrationService.getLatestVibrationData(truck,pack,latestTimestamp)
-        .then(function(data){
+    var vibrationUpdater = function(action){
 
-          if(!data[2].isError){
+      if(!$scope.noData && $rootScope.rt){
 
-            for(var i=0; i<data[0].length; i++){
+        if(action==undefined){
 
-                $scope.vibrationData.push(data[0][i]);
+          var actionBy=0;
+        } else {
+          var actionBy=action;
+        }
+
+        if(truck!=undefined || pack!=undefined){
+
+          vibrationService.getLatestVibrationData(truck,pack,latestTimestamp,actionBy)
+          .then(function(data){
+
+            if(!data[2].isError){
+
+              for(var i=0; i<data[0].length; i++){
+
+                  $scope.vibrationData.push(data[0][i]);
+
+              }
+
+              latestTimestamp=data[1];
+
+            } else {
+
+              console.log("no new vibration data");
 
             }
-
-            latestTimestamp=data[1];
-
-          } else {
-
-            console.log("no new vibration data");
-
-          }
- 
-        });
+   
+          });
+        }
 
       }
 
-      var timer = $timeout(vibrationUpdater, 10000);
+      var timer = $timeout(vibrationUpdater, 45000);
 
       $scope.$on('$locationChangeStart', function() {
           $timeout.cancel(timer);             
       });      
+
+    } //end vibrationUpdater
+
+    $scope.refresh = function(){
+
+      if($rootScope.rt){
+
+        vibrationUpdater(1);
+      }
 
     }
       
@@ -147,9 +171,8 @@ angular.module('myModule')
             type: "text/csv;charset=utf-8;",
           });
 
-          //navigator.msSaveBlob(blob, "filename.csv")
-  
-          //vibrationUpdater();
+          //navigator.msSaveBlob(blob, "filename.csv")  
+          
         } else {
 
           console.log("Error: " + data[2].errorMsg);
@@ -162,7 +185,6 @@ angular.module('myModule')
     
 
     $scope.psdGraph = function(indexOf,id){
-
 
       $scope.psdData=[];
 
@@ -317,6 +339,12 @@ angular.module('myModule')
     $scope.xAxisTickFormatFunction2 = function(){
           return function(d){
               return d3.time.format('%H:%M')(new Date(d));
+            }
+    }
+
+    $scope.yAxisTickFormatFunction = function(){
+          return function(d){
+              return d3.format('.02f')(d);
             }
     }
 

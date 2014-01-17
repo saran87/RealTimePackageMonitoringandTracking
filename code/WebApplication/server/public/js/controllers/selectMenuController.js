@@ -1,11 +1,61 @@
 angular.module('myModule')
-	.controller('selectMenuCtrl',['selectService','$scope','$rootScope','$location','$routeParams','$timeout',function(selectService,$scope,$rootScope,$location,$routeParams,$timeout){	
+	.controller('selectMenuCtrl',['selectService','$scope','$rootScope','$location','$routeParams','$timeout',function(selectService,$scope,$rootScope,$location,$routeParams,$timeout){
 
 		$rootScope.typeOfService = 'dashboard';
 
 		$scope.location=$location;
 
 		$scope.selected = {};
+
+
+		$scope.render = function(){
+
+			//console.log($location.path()+" "+$routeParams);
+			if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+					
+				$scope.sideNavHrefs = {
+
+					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
+				};
+
+			} else if($routeParams.truck_id && $routeParams.package_id) {
+				console.log("in rps");
+				$rootScope.tid = $routeParams.truck_id;
+				$rootScope.pid = $routeParams.package_id;				
+
+				$scope.sideNavHrefs = {
+
+					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
+					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
+				};
+
+
+			} else {
+
+
+					$scope.sideNavHrefs = {
+
+						"dashboard" : "#/dashboard",
+						"map" : "#/map",
+						"temperature" : "#/temperature",
+						"humidity" : "#/humidity",
+						"vibration" : "#/vibration",
+						"shock" : "#/shock"	
+
+					};
+			}
+		};		
+
+		$scope.render();		
 
 		$scope.setServiceType = function(service){
 
@@ -41,116 +91,16 @@ angular.module('myModule')
 	    		$rootScope.pid=$scope.txtpackage_id;
 	    		$scope.currentUrl=$location.path();
 	    		$location.path($scope.currentUrl+'/'+$scope.txtpackage_id);
-
-
 	    	}  	
 	    }; //end function packageUrl
 
-	    /*$scope.sideNavHrefs = {
-
-			"dashboard" : "#/dashboard",
-			"map" : "#/map",
-			"temperature" : "#/temperature",
-			"humidity" : "#/humidity",
-			"vibration" : "#/vibration",
-			"shock" : "#/shock"	
-
-		};*/
-
-		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
-console.log($rootScope.tid + " from top " + $rootScope.pid);
-				$scope.sideNavHrefs = {
-
-					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
-				};
-
-			} else if($routeParams.truck_id && $routeParams.package_id) {
-
-				$rootScope.tid = $routeParams.truck_id;
-				$rootScope.pid = $routeParams.package_id;
-console.log($rootScope.tid + " from center " + $rootScope.pid);
-				$scope.sideNavHrefs = {
-
-					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
-				};
-
-
-			} else {
-console.log($rootScope.tid + " from botoom " + $rootScope.pid);
-					$scope.sideNavHrefs = {
-
-						"dashboard" : "#/dashboard",
-						"map" : "#/map",
-						"temperature" : "#/temperature",
-						"humidity" : "#/humidity",
-						"vibration" : "#/vibration",
-						"shock" : "#/shock"	
-
-					};
-			}
-
-		$scope.render = function(){
-
-			//console.log($location.path()+" "+$routeParams);
-			if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
-					
-				$scope.sideNavHrefs = {
-
-					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
-				};
-
-			} else if($routeParams.truck_id && $routeParams.package_id) {
-
-				$rootScope.tid = $routeParams.truck_id;
-				$rootScope.pid = $routeParams.package_id;
-
-				
-
-				$scope.sideNavHrefs = {
-
-					"dashboard" : "#/dashboard"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"map" : "#/map"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"temperature" : "#/temperature"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"humidity" : "#/humidity"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"vibration" : "#/vibration"+"/"+$rootScope.tid+"/"+$rootScope.pid,
-					"shock" : "#/shock"+"/"+$rootScope.tid+"/"+$rootScope.pid
-				};
-
-
-			} else {
-
-
-					$scope.sideNavHrefs = {
-
-						"dashboard" : "#/dashboard",
-						"map" : "#/map",
-						"temperature" : "#/temperature",
-						"humidity" : "#/humidity",
-						"vibration" : "#/vibration",
-						"shock" : "#/shock"	
-
-					};
-			}
-		};
+		
 
 
 
-		/*Different Parts below*/
+		/*
+			Code below if for updating trucks list and packages list
+		*/
 
 
 		
@@ -189,7 +139,7 @@ console.log($rootScope.tid + " from botoom " + $rootScope.pid);
 		truckPromise.then(function(data){
 
 			//getting back a distinct array of trucks like [ ["1"],["2"],["3"] ] 
-			//looping over array to form an array of trucks list
+			//looping over array to form an array of trucks list			
 
 			angular.forEach(data, function(value, key){
 
@@ -224,13 +174,23 @@ console.log($rootScope.tid + " from botoom " + $rootScope.pid);
 				
 			}); //end outer forEach
 
-			//updater();
+			updater();
 
 		}); //end truckPromise.then
 
-		var updater = function(){			
+		var updater = function(action){			
 
-			selectService.getLatest()
+			if(action==undefined){
+
+          		var actionBy=0;
+
+        	} else {
+
+          		var actionBy=action;
+
+        	}
+
+			selectService.getLatest(actionBy)
 			.then(function(data){				
 
 				if(data.timestamp>latestTimestamp){
@@ -296,17 +256,24 @@ console.log($rootScope.tid + " from botoom " + $rootScope.pid);
 
 				} else {
 
-					//$.jGrowl("No new Data", { life: 10000 });					 
+					//$.jGrowl("No new Data", { life: 10000 });						
 				}
+
 
 
 			}); //end then
 
-			$timeout(updater, 10000);
+			
+			$timeout(updater, 45000);
 
-		} // end Updater
 
+		} // end Updater	
+
+		$scope.refresh = function(){
+
+			updater(1);
+
+		}
+
+}]);
 		
-
-		
-	}]);
