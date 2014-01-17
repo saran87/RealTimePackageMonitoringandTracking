@@ -24,6 +24,15 @@ public class Package {
     private String packageId;
     private String truckId;
     private String comments;
+    private boolean isFlashDataAvailable;
+
+    public void setIsFlashDataAvailable(int data) {
+        this.isFlashDataAvailable = data != 0;
+    }
+
+    public boolean isIsFlashDataAvailable() {
+        return isFlashDataAvailable;
+    }
     
     private final HashMap<Sensor, Config> sensorConfigs;
     

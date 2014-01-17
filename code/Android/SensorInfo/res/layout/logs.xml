@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingLeft="30dp" >
     
-  <!--   <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/innerLayoutfive"
@@ -20,7 +20,7 @@
     	android:drawableLeft="@drawable/ic_action_refresh"
     	android:onClick="refreshLogs"/>  
     
-    </LinearLayout> -->
+    </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"

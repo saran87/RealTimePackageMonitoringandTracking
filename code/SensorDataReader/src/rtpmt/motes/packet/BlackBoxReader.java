@@ -57,6 +57,9 @@ public class BlackBoxReader extends AbstractSource {
 
     @Override
     public boolean configure(Package configPack) throws IOException, NullPointerException, InterruptedException {
+        writeFramedPacket(Constants.FORMAT_SD_CARD, dummyPacket);
+        writeFramedPacket(Constants.FORMAT_FLASH, dummyPacket);
+        Thread.sleep(10000);
         writeFramedPacket(Constants.SET_ALL_CONFIG, configPack.getBlackBoxConfigPacket());
         writeFramedPacket(Constants.SAVE_ALL_CONFIG, dummyPacket);
         writeFramedPacket(Constants.SAVE_COMMENT, configPack.getNote().getBytes());
@@ -146,6 +149,12 @@ public class BlackBoxReader extends AbstractSource {
      * @throws InterruptedException
      */
     private void readSDCardData() throws IOException, InterruptedException, TimeoutException {
+        Package pack = PackageList.getPackage(0);
+        if(pack.isIsFlashDataAvailable()){
+            System.out.print("Reading flash data");
+            writeFramedPacket(Constants.GET_FLASH, dummyPacket);
+            processSDCardPacket();
+        }
         System.out.println("Reading Temperature");
         writeFramedPacket(Constants.GET_TEMPERATURE, dummyPacket);
         processSDCardPacket();
@@ -158,6 +167,7 @@ public class BlackBoxReader extends AbstractSource {
         System.out.println("Reading Shock");
         writeFramedPacket(Constants.GET_SHOCK, dummyPacket);
         processSDCardPacket();
+        writeFramedPacket(Constants.FORMAT_FLASH, dummyPacket);
     }
     // Class to build a framed, escaped and crced packet byte stream
     private void sendTimeSyncPacket(int nodeId) throws IOException {
@@ -682,6 +692,7 @@ public class BlackBoxReader extends AbstractSource {
         pack.setVibrationTimePeriod(time);
         pack.setVibrationAfterThresholdTimePeriod(overtime);
         pack.setMaxVibrationThreshold(rawThreshold);
+        pack.setIsFlashDataAvailable((packet.getData(Constants.DATA_IN_FLASH_INDEX) & 0xff));
         return pack;
     }
 

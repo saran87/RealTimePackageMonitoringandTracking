@@ -4,43 +4,53 @@
     <string name="title_activity_main">FTDI D2xx Demo</string>
     <string name="title_activity_ftdi_mode_fragment">Ftdi Mode Info</string>
     <string name="title_activity_ftdi_mode_control">Ftdi Mode Control</string>
+    
+    <string name="title_activity_edit_sensor_details">Edit Sensor</string>
+    <string name="title_activity_add_sensor">Add New Sensor</string>
+    <string name="title_activity_display_message">DisplayMessage</string>
+    <string name="title_activity_logs">Logs</string>
+    
+    <string name="button_settruckid">Set Global Truck Id</string>
+    <string name="button_addSensorToList">Add Sensor</string>
+    <string name="button_refreshLogs">Refresh </string>
+    <string name="button_settingsForEach">Settings</string>
+    <string name="button_updateSensorToList">Update</string>
+    
+	<string name="app_name">PakMac</string>
+    
+    <string name="edit_message">Enter a message</string>
+    <string name="edit_truckid">Update Truck ID</string>
+    <string name="edit_sensorid">Enter Sensor ID</string>
+    <string name="edit_packageid">Enter Package ID</string>
+    <string name="edit_packageidupdate">Update Package ID</string>
+    
+    <string name="action_settings">Global Settings</string>
+    <string name="action_addSensor">Add New Sensor</string>
+    <string name="action_connection">Connection</string>
+    <string name="action_logs">Logs</string>
+    <string name="action_help">Help</string>
+    
+    <string name="text_sensorList">Sensor</string>
+
+    <string name="temperatureIntervalText"></string>
+    
+        
+   <!--  <string name="title_activity_device_information">Device Information</string>
+    <string name="title_activity_device_configure">Device Configure</string>
+    <string name="title_activity_device_loopback">Device Loopback</string>
+    <string name="title_activity_device_bit_mode">Device BitMode</string>
+    <string name="title_activity_device_bit_mode_service">Device BitMode Service</string>
+    
     <string name="button_info">Information</string>
     <string name="button_configure">Device Configure</string>
     <string name="button_eeprom">Device EEPROM API</string>
     <string name="button_loopback">Loopback</string>
     <string name="button_bitmode">BitMode</string>
     <string name="button_bitmode_service">BitMode Service</string>
-    <string name="title_activity_device_information">Device Information</string>
-    <string name="title_activity_device_configure">Device Configure</string>
-    <string name="title_activity_device_loopback">Device Loopback</string>
-    <string name="title_activity_device_bit_mode">Device BitMode</string>
-    <string name="title_activity_device_bit_mode_service">Device BitMode Service</string>
-    <string name="hex_digits_letter">0123456789abcdef</string>
-    <string name="app_name">PakMac</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="edit_truckid">Update Truck ID</string>
-    <string name="edit_sensorid">Enter Sensor ID</string>
-    <string name="edit_packageid">Enter Package ID</string>
-    <string name="edit_packageidupdate">Update Package ID</string>
     <string name="button_send">Send</string>
-    <string name="button_settruckid">Set Global Truck Id</string>
-    <string name="button_addSensorToList">Add Sensor</string>
-    <string name="button_refreshLogs">Refresh </string>
-    <string name="button_settingsForEach">Settings</string>
-    <string name="button_updateSensorToList">Update</string>
-    <string name="title_activity_edit_sensor_details">Edit Sensor</string>
-    <string name="title_activity_add_sensor">Add New Sensor</string>
-    <string name="title_activity_display_message">DisplayMessage</string>
-    <string name="title_activity_logs">Logs</string>
-    <string name="label_message">Hello world!</string>
-    <string name="action_settings">Global Settings</string>
-    <string name="action_addSensor">Add New Sensor</string>
-    <string name="action_connection">Connection</string>
-    <string name="action_logs">Logs</string>
-    <string name="action_help">Help</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="text_sensorList">Sensor</string>
-
+    
+    <string name="hex_digits_letter">0123456789abcdef</string>
+    
     <string-array name="baud_rate">
         <item>300</item>
         <item>600</item>
@@ -121,9 +131,6 @@
         <item>6</item>
         <item>4</item>
         <item>2</item>
-    </string-array>
-
-    <string name="temperatureIntervalText"></string>
-    <string name="title_activity_settings_data_retrival">SettingsDataRetrival</string>
+    </string-array>  -->
 
 </resources>

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import rtpmt.location.tracker.PackageLocation;
@@ -102,13 +103,13 @@ public class SensorService implements SensorEventHandler {
 		folderName = _folderName;
 		isNetworkAvailable = _isNetworkAvailable;
 		mainHandler = _mHandler;
-		Log.i(SERVICE_TAG,"Intialized");
-		
+		Log.i(SERVICE_TAG, "Intialized");
+
 	}
 
 	public synchronized void start() {
 		// log = new Logs();
-		Log.i(SERVICE_TAG,"Started");
+		Log.i(SERVICE_TAG, "Started");
 
 		packageLocation = new PackageLocation(mainActivity);
 
@@ -183,7 +184,8 @@ public class SensorService implements SensorEventHandler {
 		@Override
 		public void handleMessage(Message msg) {
 			Log.i(SERVICE_TAG, readDataToText);
-			LogStack.LogList.add(readDataToText + " - Network available: "+ isNetworkAvailable);
+			LogStack.LogList.add(readDataToText + " - Network available: "
+					+ isNetworkAvailable);
 			try {
 				Thread.currentThread().sleep(100);
 			} catch (InterruptedException e) {
@@ -348,7 +350,8 @@ public class SensorService implements SensorEventHandler {
 				Packet packet;
 				try {
 					packet = sensorReader.readPacket();
-
+					Calendar calendar = Calendar.getInstance();
+					long currentDateAndTime = calendar.getTimeInMillis();
 					if (packet != null) {
 
 						// TODO make getLocation function returns the location
@@ -360,8 +363,8 @@ public class SensorService implements SensorEventHandler {
 							locationInfo.setLatitude(location.getLatitude());
 							locationInfo.setLongitude(location.getLongitude());
 						} else {
-							locationInfo.setLatitude(45.00);
-							locationInfo.setLongitude(46.00);
+							locationInfo.setLatitude(0.00);
+							locationInfo.setLongitude(0.00);
 						}
 
 						NetworkMessage.PackageInformation sensorInfo = packet
@@ -372,43 +375,60 @@ public class SensorService implements SensorEventHandler {
 
 								String SensorName = ""
 										+ sensor.getSensorType().name();
-								if (SensorName.contains("VIBRATION")
-										|| SensorName.contains("SHOCK")) {
+								if ((currentDateAndTime - 600000) <= sensorInfo
+										.getTimeStamp()
+										&& (currentDateAndTime + 600000) >= sensorInfo
+												.getTimeStamp()) {
+									if (!(sensorInfo.getPackageId()
+											.equals("NO_ID"))) {
+										if (SensorName.contains("VIBRATION")
+												|| SensorName.contains("SHOCK")) {
 
-									readDataToText = SensorName
-											+ ": "
-											+ timeStamp(sensorInfo
-													.getTimeStamp())
-											+ "    "
-											+ sensorInfo.getSensorId();;
-								} else {
-									readDataToText = sensor.getSensorType()
-											.name()
-											+ " : "
-											+ sensor.getSensorValue()
-											+ " "
-											+ sensor.getSensorUnit()
-											+ "   "
-											+ timeStamp(sensorInfo
-													.getTimeStamp())
-											+ "    "
-											+ sensorInfo.getSensorId();
+											readDataToText = SensorName
+													+ ": "
+													+ timeStamp(sensorInfo
+															.getTimeStamp())
+													+ "    "
+													+ sensorInfo.getSensorId();
+										} else {
+											readDataToText = sensor
+													.getSensorType().name()
+													+ " : "
+													+ sensor.getSensorValue()
+													+ " "
+													+ sensor.getSensorUnit()
+													+ "   "
+													+ timeStamp(sensorInfo
+															.getTimeStamp())
+													+ "    "
+													+ sensorInfo.getSensorId();
+										}
+									}
+
+									Log.i("SensorValue:", readDataToText);
+									Message msg = mHandler.obtainMessage();
+									mHandler.sendMessage(msg);
 								}
-
-								Log.i("SensorValue:", readDataToText);
-								Message msg = mHandler.obtainMessage();
-								mHandler.sendMessage(msg);
 							}
 							// Sending data to server
 							if (isNetworkAvailable) {
 								try {
 									// If network exists send the data to the
 									// server
-									Log.i(SERVICE_TAG,
-											"Before sending server data");
-									tCPClient.sendData(sensorInfo);
-									// tCPClient.notify();
-									Log.i(SERVICE_TAG, "Sending Data to server");
+									if ((currentDateAndTime - 600000) <= sensorInfo
+											.getTimeStamp()
+											&& (currentDateAndTime + 600000) >= sensorInfo
+													.getTimeStamp()) {
+										if (!(sensorInfo.getPackageId()
+												.equals("NO_ID"))) {
+											Log.i(SERVICE_TAG,
+													"Before sending server data");
+											tCPClient.sendData(sensorInfo);
+											Log.i(SERVICE_TAG,
+													"Sending Data to server");
+										}
+									}
+
 								} catch (Exception ex) {
 									isNetworkAvailable = false;
 									connectionAvailable = false;
@@ -417,7 +437,15 @@ public class SensorService implements SensorEventHandler {
 								// If network does not exist, store to a file
 								isNetworkAvailable = tryServerConnection();
 								if (!connectionAvailable) {
-									writeToBuffer(sensorInfo);
+									if ((currentDateAndTime - 600000) <= sensorInfo
+											.getTimeStamp()
+											&& (currentDateAndTime + 600000) >= sensorInfo
+													.getTimeStamp()) {
+										if (!(sensorInfo.getPackageId()
+												.equals("NO_ID"))) {
+											writeToBuffer(sensorInfo);
+										}
+									}
 								}
 							}
 						}
@@ -425,7 +453,7 @@ public class SensorService implements SensorEventHandler {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}catch(Exception e){
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -634,7 +662,7 @@ public class SensorService implements SensorEventHandler {
 
 		uart_configured = true;
 		Toast.makeText(DeviceUARTContext, "Config done", Toast.LENGTH_SHORT)
-		.show();
+				.show();
 	}
 
 	@Override

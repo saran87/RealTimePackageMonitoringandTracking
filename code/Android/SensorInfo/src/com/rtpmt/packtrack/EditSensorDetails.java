@@ -1,46 +1,57 @@
 package com.rtpmt.packtrack;
 
 import android.app.ActionBar;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sensorinfo.R;
 
 public class EditSensorDetails extends Activity {
+
+	public final static String EXTRA_MESSAGE1 = "com.example.sensordata.MESSAGE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_sensor_details);
 		final SensorCart listOfSensors = (SensorCart) getApplicationContext();
-	    Intent intent = getIntent();
-	    
-	    int sensorPosition = intent.getIntExtra(StartActivity.POSITION,0);
-	    String packageId = listOfSensors.getSensors(sensorPosition).getPackageId();
-	    EditText editText1 = (EditText) findViewById(R.id.edit_packageidupdate);
-	    editText1.setText(packageId);
-        // get action bar  
-        ActionBar actionBar = getActionBar();
- 
-        // Enabling Up / Back navigation
-        actionBar.setDisplayHomeAsUpEnabled(false);
+		Intent intent = getIntent();
+
+		int sensorPosition = intent.getIntExtra(StartActivity.POSITION, 0);
+		String packageId = listOfSensors.getSensors(sensorPosition)
+				.getPackageId();
+		EditText editText1 = (EditText) findViewById(R.id.edit_packageidupdate);
+		editText1.setText(packageId);
+		// get action bar
+		ActionBar actionBar = getActionBar();
+
+		// Enabling Up / Back navigation
+		actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 
-	public void UpdateSensorToList(View view){
+	public void UpdateSensorToList(View view) {
 		final SensorCart listOfSensors = (SensorCart) getApplicationContext();
-	    Intent intent = getIntent();
-		
-		int sensorPosition = intent.getIntExtra(StartActivity.POSITION,0);
-		
-	    EditText editText1 = (EditText) findViewById(R.id.edit_packageidupdate);
-	    String packageId = editText1.getText().toString();
+		Intent intent = getIntent();
 
-	    listOfSensors.getSensors(sensorPosition).setPackageId(packageId);
-	    finish();
+		int sensorPosition = intent.getIntExtra(StartActivity.POSITION, 0);
+
+		EditText editText1 = (EditText) findViewById(R.id.edit_packageidupdate);
+		String packageId = editText1.getText().toString().trim();
+		if (packageId.equals("") || packageId == null) {
+			Toast.makeText(this, "Invalid Package Id", Toast.LENGTH_LONG)
+					.show();
+		} else {
+			listOfSensors.getSensors(sensorPosition).setPackId(packageId);
+			String data = "updated";
+			Intent intent1 = new Intent();
+			intent.putExtra(EXTRA_MESSAGE1, data);
+			setResult(Activity.RESULT_OK, intent1);
+			finish();
+		}
 	}
 
 }
