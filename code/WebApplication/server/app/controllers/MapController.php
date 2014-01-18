@@ -8,8 +8,9 @@ class MapController extends BaseController{
 
 		$temp = Temperature::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();	
 
-		foreach ($temp as $key => $jsons) {			
+		foreach ($temp as $key => $jsons) {
 
+				if($jsons->value>0 && $jsons->loc[0]!=0 && $jsons->loc[0]!=46 && $jsons->loc[1]!=0 && $jsons->loc[1]!=46){
 			
 				$xArr["timestamp"]=$jsons->timestamp;
 				$xArr["loc"]["lat"]=$jsons->loc[0];
@@ -19,31 +20,38 @@ class MapController extends BaseController{
 				$xArr["package_id"]=$jsons->package_id;
 
 				$newArr[]=$xArr;
+				}
 						
 		}
 		
 
-		/*$hum = Humidity::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
+		$hum = Humidity::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
 		
 
 		foreach ($hum as $key => $jsons) {			
 
 			if( !$jsons->value<0 || !$jsons->value>100 ){
+				if($jsons->loc[0]!=0 && $jsons->loc[0]!=46 && $jsons->loc[1]!=0 && $jsons->loc[1]!=46){
 				$xArr1["loc"]["lat"]=$jsons->loc[0];
 				$xArr1["loc"]["lng"]=$jsons->loc[1];
 				$xArr1["humidity"]["value"]=$jsons->value;
 				$xArr1["truck_id"]=$jsons->truck_id;
 				$xArr1["package_id"]=$jsons->package_id;
 
-				$newArr[]=$xArr1;						
+				$newArr[]=$xArr1;		
+				}				
 			}
 			
 		}
 
+
+
 		$vib = Vibration::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
 		foreach ($vib as $key => $jsons) {
+
+			if($jsons->loc[0]!=0 && $jsons->loc[0]!=46 && $jsons->loc[1]!=0 && $jsons->loc[1]!=46){
 
 			$xArr2["loc"]["lat"]=$jsons->loc[0];
 			$xArr2["loc"]["lng"]=$jsons->loc[1];
@@ -52,15 +60,16 @@ class MapController extends BaseController{
 			$xArr2["package_id"]=$jsons->package_id;
 			
 			$newArr[]=$xArr2;
-
-			# code...
+			}
+		
 		}
+		
 
 		$shck = Shock::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
-		foreach ($vib as $key => $jsons) {
+		foreach ($shck as $key => $jsons) {
 
-			if($jsons->value){
+			if($jsons->loc[0]!=0 && $jsons->loc[0]!=46 && $jsons->loc[1]!=0 && $jsons->loc[1]!=46){
 
 				$xArr3["loc"]["lat"]=$jsons->loc[0];
 				$xArr3["loc"]["lng"]=$jsons->loc[1];
@@ -72,7 +81,7 @@ class MapController extends BaseController{
 			}
 
 			# code...
-		}*/
+		}
 
 		//array_multisort($newArr, SORT_ASC);
 
