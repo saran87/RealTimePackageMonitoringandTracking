@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 
-angular.module('myApp', ['myModule','ngRoute','myServices','myDirectives','nvd3ChartDirectives'])    
+angular.module('myApp', ['myModule','ngRoute','myServices','myDirectives','nvd3ChartDirectives','leaflet-directive'])    
     .config(['$routeProvider','$httpProvider', function($routeProvider,$httpProvider) {
 
     /*

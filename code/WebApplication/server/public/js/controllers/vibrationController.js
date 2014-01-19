@@ -27,7 +27,12 @@ angular.module('myModule')
 
       if(!data[2].isError){
 
-        //$scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
+        if(data[0].config.vibrationx.timeperiod!=0){
+          $scope.refreshRate = data[0].config.vibrationx.timeperiod;
+        } else {
+          $scope.refreshRate = 60;
+        }        
+
         if(data[0].config.vibrationx.maxthreshold==0){
             $scope.maxThreshold = 0.06; 
 
@@ -58,7 +63,7 @@ angular.module('myModule')
         latestTimestamp=data[1];
         $scope.vibrationData=data[0];
 
-        //vibrationUpdater();
+        vibrationUpdater();
       } else {
 
         $scope.noData = true;
@@ -113,7 +118,7 @@ angular.module('myModule')
 
       }
 
-      var timer = $timeout(vibrationUpdater, 45000);
+      var timer = $timeout(vibrationUpdater, $scope.refreshRate*1000);
 
       $scope.$on('$locationChangeStart', function() {
           $timeout.cancel(timer);             

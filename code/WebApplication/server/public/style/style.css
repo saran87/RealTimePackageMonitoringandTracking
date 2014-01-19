@@ -1257,8 +1257,7 @@ header .header-data .hdata em{
 /* Today datas */
 
 .today-datas{
-	list-style-type: none;
-	padding-left: 10px;
+	list-style-type: none;	
 	margin: 10px 0px;
 }
 

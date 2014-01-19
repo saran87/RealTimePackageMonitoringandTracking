@@ -3,15 +3,19 @@
 	<div class="col-md-12">
     <div class="widget">
       <div class="widget-head">
-        <div class="pull-left">Google Maps</div>                  
+        <div class="pull-left">Location Tracking</div>                  
+        <div class="pull-right"><button ng-click="refresh()" class="btn btn-success">Refresh</button> Updated every {{refreshRate}} secs</div>
         <div class="clearfix"></div>
       </div>
       <div class="widget-content">
+        <div class="padd">
       <div ng-show="rt" id="map-canvas"></div>
-      <div ng-show="!rt"><h2>No Location data available for blackbox devices (i.e. No real-time tracking)</h2></div>
+      <div ng-show="!rt"><h2>No Location data available for blackbox devices (i.e. No real-time tracking)</h2>
+      </div>      
         <div class="widget-foot">
           <!-- Footer goes here -->          
         </div>
+      </div>
       </div>
     </div> 
   </div>

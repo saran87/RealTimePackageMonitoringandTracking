@@ -41,7 +41,12 @@ angular.module('myModule')
 
       if(!data[2].isError){
 
-        //$scope.maxThreshold = data[0].config.humidity.maxthreshold;
+        if(data[0].config.humidity.timeperiod!=0){
+          $scope.refreshRate = data[0].config.humidity.timeperiod;
+        } else {
+          $scope.refreshRate = 60;
+        }
+        
         if(data[0].config.humidity.maxthreshold==0){
             $scope.maxThreshold = 72; 
 
@@ -110,7 +115,7 @@ angular.module('myModule')
 
 		    	holder=data[1]; //assign the same graph data into the temporary holder array
 
-		    //	humidityUpdater(); //call the updater function - Polling function
+		      humidityUpdater(); //call the updater function - Polling function
 
 	    	} else {
 	    		//if the response is bad - Display the error message	    		
@@ -222,7 +227,7 @@ angular.module('myModule')
 
       	}
 
-      	var timer = $timeout(humidityUpdater, 45000);
+      	var timer = $timeout(humidityUpdater, $scope.refreshRate*1000);
 
     		$scope.$on('$locationChangeStart', function() {
          		$timeout.cancel(timer);         		

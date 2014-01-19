@@ -2,8 +2,6 @@
 angular.module('myServices')
 	.factory('mapService',['$http','$q', function($http,$q){
 
-
-
 		var datapath = constants.ROOT;		
 
 		var _mapData = [];
@@ -30,27 +28,15 @@ angular.module('myServices')
 						errors.isError = true;
 						errors.errorMsg = "Empty array returned";
 
-						deferred.resolve([data, errors]);
+						deferred.resolve([data, latestTimeStamp, errors]);
 
 					} else {
 
 						var len = data.length;
-						//console.log("debug length " + len);
-						var locationObj={};
+						
+						latestTimeStamp=data[len-1].timestamp;						
 
-						/*_mapData = [];						
-
-						for(var i=0; i<len; i++){
-
-							locationObj.lat=data[i][1];
-							locationObj.lng=data[i][0];
-
-							_mapData.push(locationObj);
-
-			      		}//end for*/
-			      		
-
-			      		deferred.resolve([data, errors]);
+			      		deferred.resolve([data, latestTimeStamp, errors]);
 					
 					} // end else
 
@@ -62,13 +48,62 @@ angular.module('myServices')
 				});
 
 				return deferred.promise;
-		}		
+		}
+
+		var _getLatestCoordinatesof = function(truck_id, package_id, timestamp, actionBy){
+
+			var path=datapath+'mapsEntry/'+truck_id+'/'+package_id+'/'+timestamp;
+
+			if(actionBy==0){
+				var action='bg';
+				path=path+'?action='+action
+				console.log(path);
+			} else {
+				var action='usr';
+				path=path+'?action='+action
+				console.log(path);
+			}			
+
+			var errors ={
+				"isError": false,
+				"errorMsg": ""
+			};
+
+			var deferred = $q.defer();
+
+			$http.get(path)
+				.success(function(data){
+
+					if(data.length>0 || data.length!=0){
+
+						var len = data.length;
+
+						latestTimeStamp=data[len-1].timestamp;						
+
+			      		deferred.resolve([data, latestTimeStamp, errors]);
+
+					} else {
+
+						errors.isError = true;
+						errors.errorMsg = "Empty update";					
+					}
+
+				})
+				.error(function(data,status){
+
+					errors.isError = true;
+					errors.errorMsg = "Empty update";
+
+				});
+
+				return deferred.promise;
+		}
 
 
 		return{
 
 			getCordinatesOf: _getCordinatesOf,
-		
+			getLatestCoordinatesof: _getLatestCoordinatesof	
 			
 		};
 

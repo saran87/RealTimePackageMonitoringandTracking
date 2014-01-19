@@ -3,6 +3,12 @@
 <div class="col-md-12 sections"> 
 
 	<div class="widget">
+    <div class="widget-head">      
+      <div class="pull-left">Shock Graph</div>
+      <div class="pull-right"><small>Data received every {{refreshRate}} secs</small></div>
+      <div class="clearfix"></div>
+    </div>      
+    
 		<div class="widget-content" id="shockGraphSection">	
 
       <!--<nvd3-cumulative-line-chart        
@@ -53,9 +59,11 @@
   <div class="widget" id="shockTable">
 
     <div class="widget-head">
-      <div class="pull-left"><i class="icon-table"></i> Shock Table</div>
-      <div class="widget-icons pull-right">
-        <span class="text-darkblue">Showing {{shockData.length}} results</span> 
+      <div class="pull-left"><i class="icon-table"></i> Shock Table 
+        
+        <span class="text-darkblue"><small>(Showing {{shockData.length}} results)</small></span> 
+      </div>
+      <div class="widget-icons pull-right">        
         
         <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
         <button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>

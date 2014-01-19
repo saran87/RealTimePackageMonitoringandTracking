@@ -3,7 +3,15 @@
 	<div class="col-md-12">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="widget">      
+				<div class="widget"> 
+				<div class="widget-head">
+
+					<div class="pull-left">Temperature Graph</div>
+					<div class="pull-right"><small>Data received every {{refreshRate}} secs</small></div>
+
+					<div class="clearfix"></div>
+					
+				</div>     
 		      <!-- Widget content -->
 			      <div class="widget-content">
 
@@ -45,10 +53,14 @@
 	  <div class="widget" id="temperatureTable">
 
 	    <div class="widget-head">
-	      <div class="pull-left"><i class="icon-table"></i> Temperature Table	        
+	      <div class="pull-left"><i class="icon-table"></i> Temperature Table
+
+	      <span class="text-darkblue">
+	      	<small>(Showing {{temperatureData.length}} results)</small>
+	      </span>        
 	      </div>
-	      <div class="widget-icons pull-right"> 
-			<span class="text-darkblue">Showing {{temperatureData.length}} results</span> 
+	      <div class="widget-icons pull-right">
+
 			<button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
 			<button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>
 
