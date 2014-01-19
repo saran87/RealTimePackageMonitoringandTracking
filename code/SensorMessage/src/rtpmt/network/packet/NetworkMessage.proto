@@ -3,7 +3,7 @@
  *
  *  Contains the information from a sensor and configuration of a particular package
  *  Build Command
- *  protoc  --proto_path=src/rtpmt/network/packet/ --java_out=src/rtpmt/network/packet/ src/rtpmt/network/packet/SensorInformation.proto
+ *  protoc  --proto_path=src/rtpmt/network/packet/ --java_out=src/rtpmt/network/packet/ src/rtpmt/network/packet/NetworkMessage.proto
  *
  * @author      Saravana Kumar
  * @version     1.0
@@ -62,6 +62,7 @@ message PackageInformation {
         required bool isRealTime = 9;
         optional string comments   = 10;
         optional bool isAboveThreshold = 11;
+        optional bool isInstantaneous = 12;
         
 }
 

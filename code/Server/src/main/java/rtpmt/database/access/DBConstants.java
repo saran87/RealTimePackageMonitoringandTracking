@@ -30,9 +30,10 @@ public class DBConstants {
     public final static String UNIT = "unit";
     public final static String COMMENTS ="comments";
     public final static String DOT = ".";
-    public final static String DB_ADDRESS = "54.243.241.254";
+    public final static String DB_ADDRESS = "localhost";
     public final static String DB_NAME = "realTimeDataDb";
     public final static String LOCATION = "loc";
     public final static String IS_ABOVE_THRESHOLD = "is_above_threshold";
     public final static String IS_REALTIME = "is_realtime";
+    public final static String IS_INSTANTANEOUS = "is_instantaneous";
 }
