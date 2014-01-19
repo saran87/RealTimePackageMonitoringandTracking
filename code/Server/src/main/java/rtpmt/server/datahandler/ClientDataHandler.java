@@ -23,7 +23,7 @@ public class ClientDataHandler extends SimpleChannelInboundHandler<PackageInform
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("hello" + ctx.name());
+        System.out.println("Connected to :" + ctx.channel().remoteAddress());
     }
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
