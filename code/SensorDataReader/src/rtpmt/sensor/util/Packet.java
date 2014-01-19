@@ -291,6 +291,14 @@ public final class Packet extends Header {
         }
         return isTrue;
     }
+    
+    public boolean isInstanteaous(){
+        return this.isBitSet(PayLoad.get(0),2);
+    }
+    
+    public boolean isFreeFall(){
+        return this.isBitSet(PayLoad.get(0),3);
+    }
     /**
      * 
      * @return 
@@ -307,7 +315,7 @@ public final class Packet extends Header {
      */
     private boolean isBitSet(Byte byteValue, int N){
 
-        return (byteValue & (1<<N)) == 1;
+        return ((byteValue >> N) & 1) == 1;
 
     }
     private int getPacketNumber(){
@@ -322,12 +330,9 @@ public final class Packet extends Header {
      */
     public boolean isCompletePacket(Packet partialpacket) {
 
-        Byte value;
-        value = PayLoad.get(0);
         if(this.Service == partialpacket.Service  && this.ServiceId == partialpacket.ServiceId &&
                 this.date.equals(partialpacket.date)){
-
-            return !(this.isBitSet(value, 4) && partialpacket.isBitSet(value,4) );
+            return !(this.isBitSet(PayLoad.get(0), 5) && this.isBitSet(partialpacket.PayLoad.get(0),5));
         }
 
         return false;
@@ -443,7 +448,6 @@ public final class Packet extends Header {
                 sensor.setSensorUnit("F");
                 sensor.setSensorType(PackageInformation.SensorType.TEMPERATURE);
                 sensor.setSensorValue(String.valueOf(this.getValue()));
-                //sensor.setSensorValue("80");
                 message.addSensors(sensor);
             } else if (this.isHumidty()) {
                 sensor = PackageInformation.Sensor.newBuilder();
@@ -478,6 +482,7 @@ public final class Packet extends Header {
                 } else if (this.isZ()) {
                     sensor.setSensorType(PackageInformation.SensorType.SHOCKZ);
                 }
+                message.setIsInstantaneous(this.isInstanteaous());
                 System.out.println(this.getShock());
                 sensor.setSensorValue(String.valueOf((this.getShock())));
                 message.addSensors(sensor);
@@ -516,14 +521,14 @@ public final class Packet extends Header {
     }
     
     public double truncate(double number, int precision)
-{
-    double prec = Math.pow(10, precision);
-    int integerPart = (int) number;
-    double fractionalPart = number - integerPart;
-    fractionalPart *= prec;
-    int fractPart = (int) fractionalPart;
-    fractionalPart = (double) (integerPart) + (double) (fractPart)/prec;
-    return fractionalPart;
-}
+    {
+        double prec = Math.pow(10, precision);
+        int integerPart = (int) number;
+        double fractionalPart = number - integerPart;
+        fractionalPart *= prec;
+        int fractPart = (int) fractionalPart;
+        fractionalPart = (double) (integerPart) + (double) (fractPart)/prec;
+        return fractionalPart;
+    }
 
 }

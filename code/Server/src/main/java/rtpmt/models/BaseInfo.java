@@ -6,7 +6,6 @@
 package rtpmt.models;
 
 import com.mongodb.BasicDBList;
-import java.util.Date;
 import rtpmt.database.access.DBConstants;
 import rtpmt.database.access.DataAccess;
 import rtpmt.network.packet.NetworkMessage;
@@ -28,12 +27,16 @@ public abstract class BaseInfo extends DataAccess {
         this.put(DBConstants.TRUCK_ID, packageInformation.getTruckId());
         this.put(DBConstants.PACKAGE_ID, packageInformation.getPackageId());
         this.put(DBConstants.TIMESTAMP, packageInformation.getTimeStamp());
-        if (packageInformation.hasIsRealTime()){
+        if (packageInformation.hasIsAboveThreshold()){
             this.put(DBConstants.IS_ABOVE_THRESHOLD, packageInformation.getIsAboveThreshold());
         }
         if (packageInformation.hasComments()) {
             this.put(DBConstants.COMMENTS, packageInformation.getComments());
         }
+        if(packageInformation.hasIsInstantaneous()){
+            this.put(DBConstants.IS_INSTANTANEOUS, packageInformation.getIsInstantaneous());
+        }
+      
         if (packageInformation.hasLocation()) {
             BasicDBList loc = new BasicDBList();
             LocationInformation location = packageInformation.getLocation();
