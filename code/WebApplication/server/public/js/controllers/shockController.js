@@ -27,13 +27,20 @@ angular.module('myModule')
 
 	      if(!data[2].isError){	      		      	
 
-	        //$scope.maxThreshold = data[0].config.shockx.maxthreshold;
-	        if(data[0].config.shockx.maxthreshold==0){
-	        	$scope.maxThreshold = 12.0;	
+	        if(data[0].config.shockx.timeperiod!=0){
+  				$scope.refreshRate = data[0].config.shockx.timeperiod;
+  			} else {
+  				$scope.refreshRate = 60;
+  			}
+
+
+	        if(data[0].config.shockx.maxthreshold!=0){
+	        	
+	        	$scope.maxThreshold = data[0].config.shockx.maxthreshold;
 
 	        } else {
 
-	        	$scope.maxThreshold = data[0].config.shockx.maxthreshold;
+	        	$scope.maxThreshold = 2.0;	
 
 	        }
 	        
@@ -61,9 +68,12 @@ angular.module('myModule')
 	    		$scope.noData=false;
 
 	    		latestTimestamp=data[1];
+	    		
 	    		$scope.shockData=data[0];
 
 	    		$scope.discreteGraph();
+
+	    		shockUpdater();
 
 	    	} else {	    		
 
@@ -114,7 +124,7 @@ angular.module('myModule')
 
 		    	}
 
-		    	var timer = $timeout(shockUpdater, 45000);
+		    	var timer = $timeout(shockUpdater, $scope.refreshRate*1000);
 
 		      	$scope.$on('$locationChangeStart', function() {
 		        	$timeout.cancel(timer);             
@@ -166,13 +176,10 @@ angular.module('myModule')
 
 	    		}
 
-	    	];
-
-	    	
+	    	];    	
 
 	    }
-
-	    shockUpdater();
+	    
 
 	    $scope.xAxisTickFormatFunction = function(){
           return function(d){

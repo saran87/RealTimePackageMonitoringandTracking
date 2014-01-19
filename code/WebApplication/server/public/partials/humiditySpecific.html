@@ -4,6 +4,16 @@
 
 		<div class="widget">      
       <!-- Widget content -->
+      	<div class="widget-head">
+
+      		<div class="pull-left">Humidity Graph</div>
+			<div class="pull-right">
+				<small>Data received every {{refreshRate}} secs</small>
+			</div>
+
+			<div class="clearfix"></div>
+      		
+      	</div>
 	      <div class="widget-content">
 	        <div class="padd">	       
 
@@ -42,9 +52,13 @@
 	<div class="widget" id="humidityTable">
 
 		<div class="widget-head">
-	      <div class="pull-left"><i class="icon-table"></i> Humidity Table</div>
-	      <div class="widget-icons pull-right">
-			<span class="text-darkblue">Showing {{humidityData.length}} results</span>
+	      <div class="pull-left"><i class="icon-table"></i> Humidity Table
+
+	      <span class="text-darkblue">
+	      	<small>(Showing {{humidityData.length}} results)</small>
+	      </span>
+	      </div>
+	      <div class="widget-icons pull-right">		
 	        
 	        <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
 			<button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>

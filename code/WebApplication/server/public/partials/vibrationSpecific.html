@@ -2,8 +2,13 @@
 <div ng-show="!noData">
 <div class="col-md-12 sections">
 
-  <div class="widget" ng-show="isVib">
-    <div class="widget-head">Vibration Graph - Time vs G-Value</div>
+  <div class="widget" ng-show="isVib">    
+    <div class="widget-head">
+      <div class="pull-left">Vibration Graph - Time vs G-Value</div>
+      <div class="pull-right"><small>Data received every {{refreshRate}} secs</small></div>
+
+      <div class="clearfix"></div>
+    </div>  
     <div class="widget-content">
 
       <nvd3-line-chart
@@ -31,7 +36,12 @@
   </div>
 
   <div class="widget" ng-show="isPsd">
-    <div class="widget-head">Cumalative PSD Graph</div>
+    <div class="widget-head">
+      <div class="pull-left">PSD Graph</div>
+      <div class="pull-right"><small>Data received every {{refreshRate}} secs</small></div>
+
+      <div class="clearfix"></div>
+    </div>
     <div class="widget-content" id="psdholder">
 
       <nvd3-line-chart        
@@ -62,9 +72,10 @@
   <div class="widget" id="vibrationTable">
 
     <div class="widget-head">
-      <div class="pull-left"><i class="icon-table"></i> Vibration Table</div>
-      <div class="widget-icons pull-right"> 
-        <span class="text-darkblue">Showing {{vibrationData.length}} results</span>        
+      <div class="pull-left"><i class="icon-table"></i> Vibration Table 
+        <span class="text-darkblue"><small>(Showing {{vibrationData.length}} results)</small></span>
+      </div>
+      <div class="widget-icons pull-right">                 
 
         <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
         <button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>

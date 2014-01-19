@@ -55,7 +55,7 @@ public class FileWriter {
     public void writeCSV(FileInputStream inputStream, File file) throws IOException, Exception {
         
         BufferedWriter writer = getWriter(file);
-        if( writer != null &&  inputStream.available()>0){
+        if( writer != null){
             for(;;){
                 if (inputStream.available() < 1){
                     writer.close();

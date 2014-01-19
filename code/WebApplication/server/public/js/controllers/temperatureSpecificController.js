@@ -34,31 +34,29 @@ angular.module('myModule')
 	  	*/
 
 	  	$scope.temperatureData=[];
-	  	$scope.noOfRecords=0;
-
 	  	
+	  	$scope.noOfRecords=0;	  	
 	
 	  	dashBoardService.getConfigurationsOf(truck,pack)
-		  	.then(function(data){
+		  	.then(function(data){		  		
 
-		  		console.log("inget conf")
-
-		  		if(!data[2].isError){
-
-		  			console.log("just near if");
+		  		if(!data[2].isError){		  			
 		  			
 		  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
+		  			if(data[0].config.temperature.timeperiod!=0){
+		  				$scope.refreshRate = data[0].config.temperature.timeperiod;
+		  			} else {
+		  				$scope.refreshRate = 60;
+		  			}
+
 		  			if(data[0].config.temperature.maxthreshold==0){
 			        	$scope.maxThreshold = 66;	
 
 			        } else {
 
 			        	$scope.maxThreshold = data[0].config.temperature.maxthreshold;
-			        	console.log("inside else " + $scope.maxThreshold);
-
-			        }
-
-			        console.log("outside ifelse " + $scope.maxThreshold);
+			        	
+			        }			        
 			        
 
 			        if(data[0].is_realtime){
@@ -74,15 +72,11 @@ angular.module('myModule')
 
 			  	}
 
-		});
-	
-
-	
+		});	
 
 		var thArr = [];
 	  	temperatureService.getTemperatureDataOf(truck,pack)
-	  	.then(function(data){
-	  		
+	  	.then(function(data){  		
 
 	  		//check for error in the error object
 	  		if(!data[3].isError){
@@ -119,7 +113,8 @@ angular.module('myModule')
 
 		    	holder=data[1]; //assign the same graph data into the temporary holder array
 
-		    	//temperatureUpdater(); //call the updater function - Polling function
+		    	temperatureUpdater(); //call the updater function - Polling function
+		    	
 
 	    	} else {
 	    		//if the response is bad - Display the error message	    		
@@ -166,7 +161,6 @@ angular.module('myModule')
         }
 
 
-
         /*
         	This is a polling function that calls itself every 10 seconds
         	to check for latest updates in the temperature data and thereby
@@ -186,7 +180,7 @@ angular.module('myModule')
 		    	}
 
 
-	    		if(truck!=undefined || pack!=undefined || rt){
+	    		if(truck!=undefined || pack!=undefined){
 
 	    			temperatureService.getLatestTemperatureData(truck,pack,latestTimestamp,actionBy)
 	    			.then(function(data){
@@ -243,7 +237,7 @@ angular.module('myModule')
 
     	
 
-    		var timer = $timeout(temperatureUpdater, 45000);
+    		var timer = $timeout(temperatureUpdater, $scope.refreshRate*1000);
 
     		$scope.$on('$locationChangeStart', function() {
          		$timeout.cancel(timer);         		
@@ -252,18 +246,14 @@ angular.module('myModule')
 
     } //end updater
 
-    	$scope.refresh = function(){
+	$scope.refresh = function(){
 
-    		if($rootScope.rt){
+		if($rootScope.rt){
 
-    			temperatureUpdater(1);
+			temperatureUpdater(1);
 
-    		}
-
-    	}
-
-
-
+		}
+	}    	   	
     	
 
 	}]);
