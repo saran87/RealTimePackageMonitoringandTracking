@@ -403,20 +403,20 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     }
 
     void restoreDefaultConfig() {
-        String logText = "Starting to clear the sensor data";
+        String logText = "Starting to Configure the sensor data";
         log(logText);
         if (isSensorConnected) {
             try {
                 packetReader.resetConfig();
-                logText = "Cleared Sensor data Successfully";
+                logText = "Configured Sensor Successfully";
                 UIObject.handleError(logText);
                 log(logText);
             } catch (InterruptedException ex) {
-                logText = "Not able to clear the data. Try again";
+                logText = "Not able to Configre the data. Try again";
                 log(logText, ex);
                 UIObject.handleError(logText);
             } catch (IOException ex) {
-                logText = "Not able to clear the data. Try again";
+                logText = "Not able to Configure the data. Try again";
                 log(logText, ex);
                 UIObject.handleError(logText);
             }

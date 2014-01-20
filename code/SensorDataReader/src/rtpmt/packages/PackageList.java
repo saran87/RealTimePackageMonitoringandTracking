@@ -83,6 +83,24 @@ public class PackageList {
 
         return packageTable.containsKey(shortId) ? packageTable.get(shortId) : null;
     }
+    /**
+     *
+     * @param shortId 
+     * @param sensorId
+     * @return Package
+     */
+    public static Package updateSensorId(int shortId, String sensorId) {
+
+        ConcurrentHashMap<Integer, Package> packageTable = getInstance();
+         Package pack = null;
+        if(packageTable.containsKey(shortId)){
+            pack = packageTable.get(shortId);
+            pack.setSensorId(sensorId);
+            packageTable.replace(shortId, pack);
+        }
+        
+        return pack;
+    }
 
     /**
      *

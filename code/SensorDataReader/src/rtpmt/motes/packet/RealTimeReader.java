@@ -237,12 +237,11 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
                     Integer shortId = nodeId;
                     PackageList.addPackage(shortId, macId.toString());
-
-                    sendServiceRequest(nodeId); // Sending the Service Request
+                    
+                    //sendServiceRequest(nodeId); // Sending the Service Request
                     sendTimeSyncPacket(nodeId);
-
+                    sendGetBoardId(nodeId);
                     System.out.println("Service Request sent!");
-                    publishNewSensor(PackageList.getPackage(shortId));
 
                 } else if (packetType == Constants.P_SERVICE_RESPONSE) {
 
@@ -256,8 +255,10 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     } else {
                         pushProtocolPacket(packetType, packetHelper);
                     }
-                    //pushProtocolPacket(packetType, packetHelper);
-                    
+                }else if(packetType ==  Constants.P_BLACKBOX_RESPONSE){
+                      Packet packetHelper = new Packet(packet);
+                      String sensorId = packetHelper.sensorId();
+                      publishNewSensor(PackageList.updateSensorId(nodeId, sensorId));
                 }
             }   catch (IOException ex) {
                     Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,8 +267,7 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-            
-  
+ 
     }
 
     /*
@@ -468,6 +468,20 @@ public class RealTimeReader extends AbstractSource implements Runnable {
         payload[5] = (byte) (threshold & 0xff);
 
         writeFramedPacket(Constants.P_SERVICE_UPDATE_THRESHOLD, nodeId, payload);
+    }
+    
+    /**
+     *
+     * @return @throws IOException
+     * @throws InterruptedException
+     */
+    private void sendGetBoardId(int nodeId) throws IOException, InterruptedException {
+         
+        byte[] data = new byte[4];
+        data[0] = Constants.GET_BOARD_ID[0];
+        data[1] = Constants.GET_BOARD_ID[1];
+        writeFramedPacket(Constants.P_BLACKBOX_REQUEST,nodeId, data);
+
     }
     // Write a packet of type 'packetType', first byte 'firstByte'
     // and bytes 2..'count'+1 in 'packet'
