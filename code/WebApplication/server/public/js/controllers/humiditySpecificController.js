@@ -48,7 +48,7 @@ angular.module('myModule')
         }
         
         if(data[0].config.humidity.maxthreshold==0){
-            $scope.maxThreshold = 72; 
+            $scope.maxThreshold = 50; 
 
           } else {
 
@@ -72,6 +72,9 @@ angular.module('myModule')
 
     var thArr=[];
 
+    $scope.itemfilter = {};
+    $scope.itemfilter.is_above_threshold = "all";
+
   	humidityService.getHumidityDataOf(truck,pack)
 	  	.then(function(data){
 
@@ -83,6 +86,8 @@ angular.module('myModule')
           $scope.noData = false;
 	  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
 
+          $scope.ts=latestTimestamp;
+
           //for(var i=data[0].length-167;i<data[0].length;i++){
           for(var i=0;i<data[0].length;i++){
 
@@ -93,9 +98,7 @@ angular.module('myModule')
             thArr.push([data[1][i][0], $scope.maxThreshold]);
 
           }
-
-          console.dir(tArr);
-
+          
 		  		//$scope.humidityData=data[0]; //assign the humidity data to be displayed in table
 
 		  		//data to be shown in the graph formatted in the second element of data array
@@ -216,6 +219,7 @@ angular.module('myModule')
       					console.dir("new humiditygraph update: " + $scope.data);
 
       					latestTimestamp=data[2];
+                $scope.ts=latestTimestamp;
 
       				} else {
 
@@ -246,4 +250,22 @@ angular.module('myModule')
 
       }
 
-  }]);
+  }])
+  .filter('hiddenFilter', function(){
+    return function(humidityData, show_or_hide, attribute){
+      var shownItems = [];
+          if (show_or_hide === 'all'){
+
+            shownItems=humidityData;
+
+            return shownItems;
+
+          } 
+          angular.forEach(humidityData, function (item) {
+              if (show_or_hide === 'shown') {
+                  if (item[attribute] === true) shownItems.push(item);
+              }
+          });
+          return shownItems;
+    }
+  });

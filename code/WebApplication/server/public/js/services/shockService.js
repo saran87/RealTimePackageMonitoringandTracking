@@ -62,10 +62,6 @@ angular.module('myServices')
 						    	var t = ((maxIndex * 1.25) + 70 * (1.25))/1000;
 						    	var height = 4.9 * Math.pow(t,2);
 
-						    	//console.log(tmpx[0], tmpy[0],tmpz[0]);
-
-						    	//console.log(maxVal + "---" + maxIndex + "----" + t + "----" + height);
-
 						        highestVals.value.x = tmpx[0];
 						        highestVals.value.xindex = tmpx[1];
 						        
@@ -79,6 +75,14 @@ angular.module('myServices')
 						        highestVals.value.maxindex = maxIndex;
 						        highestVals.value.t = t;
 						        highestVals.value.dropheight = height.toFixed(2);
+
+						        if(data[i].is_instantaneous){
+
+						        	highestVals.is_instantaneous=true;
+						        } else {
+
+						        	highestVals.is_instantaneous=false;
+						        }
 
 						        _shockData.push(highestVals);
 					        }				        
@@ -186,6 +190,8 @@ angular.module('myServices')
 					    	var t = ((maxIndex * 1.25) + 70 * (1.25))/1000;
 					    	var height = 4.9 * Math.pow(t,2);
 
+
+
 					    	newhighestVals.value.x = tmpx[0];
 					        newhighestVals.value.xindex = tmpx[1];
 					        
@@ -199,6 +205,14 @@ angular.module('myServices')
 					        newhighestVals.value.maxindex = maxIndex;
 					        newhighestVals.value.t = t;
 					        newhighestVals.value.dropheight = height.toFixed(2);
+
+					        if(data[i].is_instantaneous){
+
+					        	newhighestVals.is_instantaneous=true;
+					        } else {
+
+					        	newhighestVals.is_instantaneous=false;
+					        }
 
 							_newShockData.push(newhighestVals);
 

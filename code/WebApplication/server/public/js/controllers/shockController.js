@@ -40,7 +40,7 @@ angular.module('myModule')
 
 	        } else {
 
-	        	$scope.maxThreshold = 2.0;	
+	        	$scope.maxThreshold = 2;	
 
 	        }
 	        
@@ -68,6 +68,8 @@ angular.module('myModule')
 	    		$scope.noData=false;
 
 	    		latestTimestamp=data[1];
+
+	    		$scope.ts=latestTimestamp;
 	    		
 	    		$scope.shockData=data[0];
 
@@ -111,6 +113,8 @@ angular.module('myModule')
 	            			}
 
 	            			latestTimestamp=data[1];
+
+	            			$scope.ts=latestTimestamp;
 
 	            			$scope.discreteGraph();
 

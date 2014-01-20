@@ -79,28 +79,17 @@ angular.module('myServices')
 						
 						latestTimeStamp=data[len-1].timestamp;
 
-						for(var i=0; i<len; i++){
-
-							//console.log("debug data[i]");
-			      			//console.dir(data[i]);
+						for(var i=0; i<len; i++){							
 							
 						    d=data[i];
-
-						    //console.log("debug d");
-			      			//console.dir(d);
-
+						    
 			      			if(d.value>=0){
 						        _temperatureData.push(d);
 						        _temperatureGraphData.push([d.timestamp,parseFloat(d.value).toFixed(2)]);		         
 					    	}
 					        
 			      		}//end for
-
-			      		/*console.log("debug _temperatureData");
-			      		console.dir(_temperatureData);*/
-			      		//console.log("debug _temperatureGraphData");
-			      		//console.dir(_temperatureGraphData);
-
+			      		
 			      		deferred.resolve([_temperatureData, _temperatureGraphData, latestTimeStamp, errors]);
 					
 					} // end else

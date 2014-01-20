@@ -74,6 +74,9 @@ angular.module('myModule')
 
 		});	
 
+		$scope.itemfilter = {};
+    	$scope.itemfilter.is_above_threshold = "all";
+
 		var thArr = [];
 	  	temperatureService.getTemperatureDataOf(truck,pack)
 	  	.then(function(data){  		
@@ -93,6 +96,7 @@ angular.module('myModule')
 	  			}	  			
 
 	  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
+	  			$scope.ts=latestTimestamp;
 
 		  		 //assign the temperature data to be displayed in table
 
@@ -225,6 +229,7 @@ angular.module('myModule')
 	    					console.dir("new temperaturegraph update: " + $scope.data);
 
 	    					latestTimestamp=data[2];
+	    					$scope.ts=latestTimestamp;
 
 	    				} else {
 
@@ -256,4 +261,22 @@ angular.module('myModule')
 	}    	   	
     	
 
-	}]);
+	}])
+	.filter('hiddenFilter', function(){
+		return function(temperatureData, show_or_hide, attribute){
+			var shownItems = [];
+	        if (show_or_hide === 'all'){
+
+	        	shownItems=temperatureData;
+
+	        	return shownItems;
+
+	        } 
+	        angular.forEach(temperatureData, function (item) {
+	            if (show_or_hide === 'shown') {
+	                if (item[attribute] === true) shownItems.push(item);
+	            }
+	        });
+	        return shownItems;
+		}
+	});

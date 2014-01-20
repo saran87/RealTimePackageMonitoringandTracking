@@ -8,7 +8,12 @@
 
       		<div class="pull-left">Humidity Graph</div>
 			<div class="pull-right">
-				<small>Data received every {{refreshRate}} secs</small>
+				<small ng-show="rt">
+					<i class="icon-time"></i> Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}
+				</small>
+				<small class="text-mute" ng-show="!rt">
+					No real-time updates
+				</small>
 			</div>
 
 			<div class="clearfix"></div>
@@ -58,12 +63,14 @@
 	      	<small>(Showing {{humidityData.length}} results)</small>
 	      </span>
 	      </div>
-	      <div class="widget-icons pull-right">		
+	      <div class="widget-icons pull-right">
+	      	
+	      	<input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="all"> All  	             		
+    		<input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="shown"> Above
+    			
 	        
 	        <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
 			<button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>
-
-	        <button class="btn btn-info"><i class="icon-download"></i> Download CSV</button>
 
 	      </div>
 	      <div class="clearfix"></div>
@@ -79,7 +86,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-class="hdata.value > maxThreshold && 'danger' || '' " ng-repeat="hdata in humidityData">						
+					<tr ng-class="{danger: hdata.is_above_threshold}" ng-repeat="hdata in humidityData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold'">						
 						<td>{{hdata.timestamp | date: 'medium'}}</td>
 						<td ng-show="rt">
 							<a ng-href="http://maps.google.com/maps?q={{hdata.loc[1]}},{{hdata.loc[0]}}&ll={{hdata.loc[1]}},{{hdata.loc[0]}}&z=12" target="_blank">

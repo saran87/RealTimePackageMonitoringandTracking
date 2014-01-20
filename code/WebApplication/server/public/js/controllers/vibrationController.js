@@ -55,12 +55,16 @@ angular.module('myModule')
 
     });
 
+    $scope.itemfilter = {};
+    $scope.itemfilter.is_above_threshold = "all";
+
     vibrationService.getVibrationData(truck,pack)
     .then(function(data){
 
       if(!data[2].isError){
 
         latestTimestamp=data[1];
+        $scope.ts=latestTimestamp;
         $scope.vibrationData=data[0];
 
         vibrationUpdater();
@@ -106,6 +110,7 @@ angular.module('myModule')
               }
 
               latestTimestamp=data[1];
+              $scope.ts=latestTimestamp;
 
             } else {
 
@@ -368,4 +373,22 @@ angular.module('myModule')
     }
 
 
-   }]);
+   }])
+    .filter('hiddenFilter', function(){
+      return function(vibrationData, show_or_hide, attribute){
+        var shownItems = [];
+            if (show_or_hide === 'all'){
+
+              shownItems=vibrationData;
+
+              return shownItems;
+
+            } 
+            angular.forEach(vibrationData, function (item) {
+                if (show_or_hide === 'shown') {
+                    if (item[attribute] === true) shownItems.push(item);
+                }
+            });
+            return shownItems;
+      }
+    });

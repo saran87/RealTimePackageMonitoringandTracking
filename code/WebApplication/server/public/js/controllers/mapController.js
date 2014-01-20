@@ -65,7 +65,8 @@ angular.module('myModule')
           var marker = new google.maps.Marker({
             position:latLng,
             title: '#',
-            map: map        
+            map: map,
+            animation: google.maps.Animation.DROP        
           });
       
           //Add an info window to the position
@@ -147,7 +148,7 @@ angular.module('myModule')
 
             contentStr+=
               "<div>" + 
-                "Temperature of " + inObj.humidity.value + " %RH at " + new Date(inObj.timestamp) + "<div>Address: " + inObj.inObj.loc.lat + "," + inObj.loc.lng  + " <button ng-click='getAddress("+inObj.loc.lat+","+inObj.loc.lng+")' class='btn btn-sm'>Addr</button>" + "</div>" + 
+                "Humidity of " + inObj.humidity.value + " %RH at " + new Date(inObj.timestamp) + "<div>Address: " + inObj.inObj.loc.lat + "," + inObj.loc.lng  + " <button ng-click='getAddress("+inObj.loc.lat+","+inObj.loc.lng+")' class='btn btn-sm'>Addr</button>" + "</div>" + 
               "</div>";
 
           } else if(inObj.vibration){
@@ -164,7 +165,7 @@ angular.module('myModule')
 
             contentStr+=
               "<div>" + 
-                "Vibration occured at" + new Date(inObj.timestamp) + " at " + inObj.loc.lat + " " + inObj.loc.lng + 
+                "Vibration occured at " + new Date(inObj.timestamp) + " at " + inObj.loc.lat + " " + inObj.loc.lng + 
               "</div>";
 
           } else if(inObj.shock){
@@ -200,6 +201,7 @@ angular.module('myModule')
           if(!data[2].isError){
 
             latestTimestamp=data[1];
+            $scope.ts=latestTimestamp;
             
             var waypts=[
                 /*{
@@ -321,6 +323,7 @@ angular.module('myModule')
         if(!data[2].isError){
 
           latestTimestamp=data[1];
+          $scope.ts=latestTimestamp;
 
           if(truck=="NO_ID" && pack=="NO_ID_realtime"){
 
@@ -366,7 +369,7 @@ angular.module('myModule')
 
   }
 
-  $scope.refresh=function (){
+  $scope.refresh=function(){
 
     mapUpdater(1);
 

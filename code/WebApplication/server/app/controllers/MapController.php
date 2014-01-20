@@ -5,6 +5,7 @@ class MapController extends BaseController{
 
 	public function coords($truck_id,$package_id){
 
+		$newArr=[];
 
 		$temp = Temperature::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();	
 
@@ -90,12 +91,14 @@ class MapController extends BaseController{
 
 		//array_multisort($newArr, SORT_ASC);
 
-		foreach ($newArr as $key => $node) {
-   			$timestamps[$key]    = $node["timestamp"];
-		}
-		array_multisort($timestamps, SORT_ASC, $newArr);
+		if($newArr){
+			foreach ($newArr as $key => $node) {
+	   			$timestamps[$key]    = $node["timestamp"];
+			}
+			array_multisort($timestamps, SORT_ASC, $newArr);
 
-		return $newArr;
+			return $newArr;
+		}	
 
 	}
 
@@ -196,10 +199,7 @@ class MapController extends BaseController{
 			array_multisort($timestamps, SORT_ASC, $newArr);
 
 			return $newArr;
-		} else {
-			return [];
 		}
-
 	}
 	
 
