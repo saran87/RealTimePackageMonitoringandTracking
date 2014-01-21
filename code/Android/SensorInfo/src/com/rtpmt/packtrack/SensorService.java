@@ -85,7 +85,7 @@ public class SensorService implements SensorEventHandler {
 
 	// private String host = "saranlap.student.rit.edu";
 	// private String host = "apurv.student.rit.edu";
-	private String host = "54.204.32.227";
+	private String host = "54.254.230.28";
 	private int port = 8080;
 	private static final boolean IS_REALTIME = true;
 	private PackageLocation packageLocation;
@@ -184,6 +184,13 @@ public class SensorService implements SensorEventHandler {
 		@Override
 		public void handleMessage(Message msg) {
 			Log.i(SERVICE_TAG, readDataToText);
+			if (LogStack.LogList.size() >= 150)
+			{
+				for (int index = 0; index < 50; index++)
+				{
+					LogStack.LogList.remove(index);
+				}
+			}
 			LogStack.LogList.add(readDataToText + " - Network available: "
 					+ isNetworkAvailable);
 			try {
