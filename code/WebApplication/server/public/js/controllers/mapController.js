@@ -139,9 +139,7 @@ angular.module('myModule')
 
             contentStr+=
               "<div>" + 
-                "<strong>Temperature</strong> of <strong>" + inObj.temperature.value + " F</strong> at <strong>" + new Date(inObj.timestamp) + "</strong><div>Latitude, Longitude: " + inObj.loc.lat + ", " + inObj.loc.lng  + "</div>";
-
-
+                "<strong>Temperature</strong> of <strong>" + inObj.temperature.value + " F</strong> at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
           
           } else if (inObj.humidity){
 
@@ -157,7 +155,7 @@ angular.module('myModule')
 
             contentStr+=
               "<div>" + 
-                "<strong>Humidity</strong> of <strong>" + inObj.humidity.value + " %RH</strong> at <strong>" + new Date(inObj.timestamp) + "</strong><div>Latitude, Longitude: " + inObj.loc.lat + ", " + inObj.loc.lng + "</div>";
+                "<strong>Humidity</strong> of <strong>" + inObj.humidity.value + " %RH</strong> at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
 
           } else if(inObj.vibration){
 
@@ -173,8 +171,7 @@ angular.module('myModule')
 
             contentStr+=
               "<div>" + 
-                "<strong>Vibration</strong> occured at <strong>" + new Date(inObj.timestamp) + "</strong> <br/> Latitude, Longitude: " + inObj.loc.lat + ", " + inObj.loc.lng + 
-              "</div>";
+                "<strong>Vibration</strong> occured at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
 
           } else if(inObj.shock){            
 
@@ -182,8 +179,7 @@ angular.module('myModule')
 
             contentStr+=
               "<div>" + 
-                "<strong>Shock</strong> experienced at <strong>" + new Date(inObj.timestamp) + "</strong> <br/> Latitude, Longitude: " + inObj.loc.lat + ", " + inObj.loc.lng + 
-              "</div>";
+                "<strong>Shock</strong> experienced at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
 
           } else {
 

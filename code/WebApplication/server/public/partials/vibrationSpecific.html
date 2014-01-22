@@ -73,8 +73,8 @@
       </div>
       <div class="widget-icons pull-right">
 
-        <input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="all"> All                   
-        <input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="shown"> Above                 
+        <input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="all"> All values |                  
+        <input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="shown"> Above threshold           
 
         <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
         <small ng-show="rt">
@@ -112,9 +112,9 @@
               
             </td>
             <td>
-            	<span class="label label-danger">X</span> <strong>{{vdata.value.x}}</strong><br/>
-            	<span class="label label-danger">Y</span> <strong>{{vdata.value.y}}</strong><br />
-            	<span class="label label-danger">Z</span> <strong>{{vdata.value.z}}</strong><br />
+            	<span class="label label-danger">X</span> <strong>{{vdata.value.x}} g</strong><br/>
+            	<span class="label label-danger">Y</span> <strong>{{vdata.value.y}} g</strong><br />
+            	<span class="label label-danger">Z</span> <strong>{{vdata.value.z}} g</strong><br />
             </td>
             <td >              
             	<button ng-click="setSelected($index);vibrationGraph($index,vdata._id)" class="btn btn-info btn-sm">View Graph</button>            	            
