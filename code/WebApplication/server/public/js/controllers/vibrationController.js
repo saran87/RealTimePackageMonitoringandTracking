@@ -1,5 +1,5 @@
 angular.module('myModule')
-  .controller('vibrationController',['$scope','$rootScope','$routeParams','vibrationService','dashBoardService','$http','$timeout',function($scope,$rootScope,$routeParams,vibrationService,dashBoardService,$http,$timeout){
+  .controller('vibrationController',['$scope','$rootScope','$routeParams','vibrationService','dashBoardService','$http','$timeout', '$q',function($scope,$rootScope,$routeParams,vibrationService,dashBoardService,$http,$timeout, $q){
 
     var latestTimestamp; //holds the latestTimestamp for data received from a package
 
@@ -22,63 +22,83 @@ angular.module('myModule')
       console.log("Undefined truck and package");
     }    
 
-    dashBoardService.getConfigurationsOf(truck,pack)
-    .then(function(data){
+    function initData(){
 
-      if(!data[2].isError){
+      var deferred=$q.defer();
 
-        if(data[0].config.vibrationx.timeperiod!=0){
-          $scope.refreshRate = data[0].config.vibrationx.timeperiod;
-        } else {
-          $scope.refreshRate = 60;
+      dashBoardService.getConfigurationsOf(truck,pack)
+      .then(function(data){
+
+        if(!data[2].isError){
+
+          if(data[0].config.vibrationx.timeperiod!=0){
+            $scope.refreshRate = data[0].config.vibrationx.timeperiod;
+          } else {
+            $scope.refreshRate = 60;
+          }        
+
+          if(data[0].config.vibrationx.maxthreshold==0){
+              $scope.maxThreshold = 0.06; 
+
+            } else {
+
+              $scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
+
+            }          
+
+            if(data[0].is_realtime){
+
+            $rootScope.rt=true;           
+
+            } else {
+
+            $rootScope.rt=false;
+
+            }
+
+            deferred.resolve();
         }        
 
-        if(data[0].config.vibrationx.maxthreshold==0){
-            $scope.maxThreshold = 0.06; 
+      });
 
-          } else {
-
-            $scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
-
-          }          
-
-          if(data[0].is_realtime){
-
-          $rootScope.rt=true;           
-
-          } else {
-
-          $rootScope.rt=false;
-
-          }
-      }
-
-    });
+      return deferred.promise;
+    }
 
     $scope.itemfilter = {};
     $scope.itemfilter.is_above_threshold = "all";
 
-    vibrationService.getVibrationData(truck,pack)
-    .then(function(data){
+    initData().then(function(){
 
-      if(!data[2].isError){
+      vibrationService.getVibrationData(truck,pack)
+      .then(function(data){
 
-        latestTimestamp=data[1];
-        $scope.ts=latestTimestamp;
-        $scope.vibrationData=data[0];
+        if(!data[2].isError){
 
-        vibrationUpdater();
-      } else {
+          latestTimestamp=data[1];
 
-        $scope.noData = true;
+          $scope.ts=latestTimestamp;
 
-        $scope.errorMsg = data[2].errorMsg;
+          $scope.loaded=true;
+          
+          $scope.vibrationData=data[0];
 
-        console.log("Error: " + data[2].errorMsg);
+          vibrationUpdater();
+          
+        } else {
 
-      }      
+          $scope.noData = true;
 
-    });   //end then
+          $scope.errorMsg = data[2].errorMsg;
+
+          console.log("Error: " + data[2].errorMsg);
+
+        }      
+
+      });   //end then
+
+    });
+
+    
     
     $scope.setSelected = function (indexSelected) {
       
@@ -110,6 +130,7 @@ angular.module('myModule')
               }
 
               latestTimestamp=data[1];
+
               $scope.ts=latestTimestamp;
 
             } else {

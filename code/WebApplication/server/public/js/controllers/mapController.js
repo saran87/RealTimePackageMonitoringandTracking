@@ -199,14 +199,16 @@ angular.module('myModule')
           if(!data[2].isError){            
 
             $scope.noData=false;
-            latestTimestamp=data[1];
-            $scope.ts=latestTimestamp;  
-
             
+            latestTimestamp=data[1];
+
+            $scope.ts=latestTimestamp;
+
+            $scope.loaded=true;
 
             var waypts=[];
 
-           /* if(data[0].length>1){
+            if(data[0].length>1){
           
               var waypts=[
                   {
@@ -231,7 +233,7 @@ angular.module('myModule')
                   }
 
               ];
-            } */
+            } 
 
             initialize(new google.maps.LatLng(data[0][0].loc.lat, data[0][0].loc.lng));
 

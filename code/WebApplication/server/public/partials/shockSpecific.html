@@ -7,12 +7,12 @@
       <div class="pull-left">Shock Graph (Time vs Max-G value)</div>
       <div class="pull-right">
         <small ng-show="rt">
-          <i class="icon-time"></i> Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}
+          <i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
         </small>
         <small class="text-mute" ng-show="!rt">
           No real-time updates
         </small>
-  </div>
+      </div>
       <div class="clearfix"></div>
     </div>      
     

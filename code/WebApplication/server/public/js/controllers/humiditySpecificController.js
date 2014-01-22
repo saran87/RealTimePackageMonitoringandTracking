@@ -1,5 +1,5 @@
 angular.module('myModule')
-  .controller('humiditySpecificCtrl',['$scope','$rootScope','$routeParams','$location','$timeout','humidityService', 'dashBoardService',function($scope,$rootScope,$routeParams,$location,$timeout,humidityService,dashBoardService){
+  .controller('humiditySpecificCtrl',['$scope','$rootScope','$routeParams','$location','$timeout','humidityService', 'dashBoardService','$q',function($scope,$rootScope,$routeParams,$location,$timeout,humidityService,dashBoardService,$q){
 
   	var latestTimestamp; //holds the latestTimestamp for data received from a package
 
@@ -36,59 +36,71 @@ angular.module('myModule')
 
     $scope.humidityData=[];
 
-    dashBoardService.getConfigurationsOf(truck,pack)
-    .then(function(data){
+    function initData(){
 
-      if(!data[2].isError){
+      var deferred = $q.defer();
 
-        if(data[0].config.humidity.timeperiod!=0){
-          $scope.refreshRate = data[0].config.humidity.timeperiod;
-        } else {
-          $scope.refreshRate = 60;
-        }
-        
-        if(data[0].config.humidity.maxthreshold==0){
-            $scope.maxThreshold = 50; 
+      dashBoardService.getConfigurationsOf(truck,pack)
+      .then(function(data){
 
+        if(!data[2].isError){
+
+          if(data[0].config.humidity.timeperiod!=0){
+            $scope.refreshRate = data[0].config.humidity.timeperiod;
           } else {
-
-            $scope.maxThreshold = data[0].config.humidity.maxthreshold;
-
+            $scope.refreshRate = 60;
           }
           
+          if(data[0].config.humidity.maxthreshold==0){
+              $scope.maxThreshold = 50; 
 
-          if(data[0].is_realtime){
+            } else {
 
-            $rootScope.rt=true;           
+              $scope.maxThreshold = data[0].config.humidity.maxthreshold;
 
-          } else {
+            }
+            
 
-            $rootScope.rt=false;
+            if(data[0].is_realtime){
 
-          }
-      }
+              $rootScope.rt=true;           
 
-    });
+            } else {
+
+              $rootScope.rt=false;
+
+            }
+
+            deferred.resolve();
+        }
+
+      });
+
+        return deferred.promise;
+    }
 
     var thArr=[];
 
     $scope.itemfilter = {};
     $scope.itemfilter.is_above_threshold = "all";
 
-  	humidityService.getHumidityDataOf(truck,pack)
-	  	.then(function(data){
+    initData().then(function(){
+
+      humidityService.getHumidityDataOf(truck,pack)
+      .then(function(data){
 
         var tArr=[];        
 
-	  		//check for error in the error object
-	  		if(!data[3].isError){
+        //check for error in the error object
+        if(!data[3].isError){
 
           $scope.noData = false;
-	  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
+          latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
 
           $scope.ts=latestTimestamp;
 
-          //for(var i=data[0].length-167;i<data[0].length;i++){
+          $scope.loaded=true;
+          
           for(var i=0;i<data[0].length;i++){
 
             $scope.humidityData.push(data[0][i]);
@@ -99,40 +111,42 @@ angular.module('myModule')
 
           }
           
-		  		//$scope.humidityData=data[0]; //assign the humidity data to be displayed in table
+          //$scope.humidityData=data[0]; //assign the humidity data to be displayed in table
 
-		  		//data to be shown in the graph formatted in the second element of data array
-		  		$scope.data=[
+          //data to be shown in the graph formatted in the second element of data array
+          $scope.data=[
 
-			    	{
-			    		"key": "Humidity Graph",	    		
-			    		"values": tArr
-			    	}, 
+            {
+              "key": "Humidity Graph",          
+              "values": tArr
+            }, 
 
             {
               "key": "Threshold",
               "values": thArr
             }
-		    
-		    	];
+        
+          ];
 
-		    	holder=data[1]; //assign the same graph data into the temporary holder array
+          holder=data[1]; //assign the same graph data into the temporary holder array
 
-		      humidityUpdater(); //call the updater function - Polling function
+          humidityUpdater(); //call the updater function - Polling function
 
-	    	} else {
-	    		//if the response is bad - Display the error message	    		
+        } else {
+          //if the response is bad - Display the error message          
 
-	    		$scope.noData = true;
+          $scope.noData = true;
 
           $scope.errorMsg = data[3].errorMsg;
 
           console.log("Error: " + data[3].errorMsg);
 
 
-	    	}
+        }
 
-	  	}); //end then
+      }); //end then
+
+    });  	
 
 	  	/*
 	  		This function formats the Ticks on x-axis of the graph

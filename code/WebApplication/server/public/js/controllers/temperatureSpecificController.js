@@ -1,5 +1,5 @@
 angular.module('myModule')
-	.controller('temperatureSpecificCtrl',['$rootScope','$scope','$location','$routeParams','temperatureService','dashBoardService','$timeout',function($rootScope,$scope,$location,$routeParams,temperatureService, dashBoardService, $timeout){
+	.controller('temperatureSpecificCtrl',['$rootScope','$scope','$location','$routeParams','temperatureService','dashBoardService','$timeout','$q',function($rootScope,$scope,$location,$routeParams,temperatureService, dashBoardService, $timeout, $q){
 
 		
 		var latestTimestamp; //holds the latestTimestamp for data received from a package
@@ -34,104 +34,118 @@ angular.module('myModule')
 	  	*/
 
 	  	$scope.temperatureData=[];
-	  	
-	  	$scope.noOfRecords=0;	  	
+
+	  	function initData(){
+
+	  		var deferred = $q.defer();
 	
-	  	dashBoardService.getConfigurationsOf(truck,pack)
-		  	.then(function(data){		  		
+		  	dashBoardService.getConfigurationsOf(truck,pack)
+			  	.then(function(data){		  		
 
-		  		if(!data[2].isError){		  			
-		  			
-		  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
-		  			if(data[0].config.temperature.timeperiod!=0){
-		  				$scope.refreshRate = data[0].config.temperature.timeperiod;
-		  			} else {
-		  				$scope.refreshRate = 60;
-		  			}
+			  		if(!data[2].isError){		  			
+			  			
+			  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
+			  			if(data[0].config.temperature.timeperiod!=0){
+			  				$scope.refreshRate = data[0].config.temperature.timeperiod;
+			  			} else {
+			  				$scope.refreshRate = 60;
+			  			}
 
-		  			if(data[0].config.temperature.maxthreshold==0){
-			        	$scope.maxThreshold = 66;	
+			  			if(data[0].config.temperature.maxthreshold==0){
+				        	$scope.maxThreshold = 66;	
 
-			        } else {
+				        } else {
 
-			        	$scope.maxThreshold = data[0].config.temperature.maxthreshold;
-			        	
-			        }			        
-			        
+				        	$scope.maxThreshold = data[0].config.temperature.maxthreshold;
+				        	
+				        }			        
+				        
 
-			        if(data[0].is_realtime){
+				        if(data[0].is_realtime){
 
-						$rootScope.rt=true;	        	
+							$rootScope.rt=true;	        	
 
-			        } else {
+				        } else {
 
-			        	$rootScope.rt=false;
+				        	$rootScope.rt=false;
 
-			        }
+				        }
 
+				        deferred.resolve();
 
-			  	}
+				  	}		  	
 
-		});	
+			});	
+
+		  	return deferred.promise;
+		}
 
 		$scope.itemfilter = {};
     	$scope.itemfilter.is_above_threshold = "all";
 
 		var thArr = [];
-	  	temperatureService.getTemperatureDataOf(truck,pack)
-	  	.then(function(data){  		
+
+		initData().then(function(){
+
+			temperatureService.getTemperatureDataOf(truck,pack)
+	  		.then(function(data){  		
 
 	  		//check for error in the error object
-	  		if(!data[3].isError){
+		  		if(!data[3].isError){
 
-	  			$scope.noData = false;
-	  			var tArr = [];	  			
-	  			for(var i=0; i<data[0].length;i++){
+		  			$scope.noData = false;
+		  			var tArr = [];	  			
+		  			for(var i=0; i<data[0].length;i++){
 
-	  				$scope.temperatureData.push(data[0][i]);
+		  				$scope.temperatureData.push(data[0][i]);
 
-	  				tArr.push(data[1][i]);
-	  				thArr.push([data[1][i][0], $scope.maxThreshold]);
+		  				tArr.push(data[1][i]);
+		  				thArr.push([data[1][i][0], $scope.maxThreshold]);
 
-	  			}	  			
+		  			}	  			
 
-	  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
-	  			$scope.ts=latestTimestamp;
+		  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
+		  			$scope.ts=latestTimestamp;
 
-		  		 //assign the temperature data to be displayed in table
+		  			$scope.loaded=true;
 
-		  		//data to be shown in the graph formatted in the second element of data array
-		  		$scope.data=[
+			  		 //assign the temperature data to be displayed in table
 
-			    	{
-			    		"key": "Temperature Graph",	    		
-			    		"values": tArr
-			    	},
+			  		//data to be shown in the graph formatted in the second element of data array
+			  		$scope.data=[
 
-			    	{
-			    		"key": "Threshold",
-			    		"values": thArr
-			    	}
-		    
-		    	];
+				    	{
+				    		"key": "Temperature Graph",	    		
+				    		"values": tArr
+				    	},
 
-		    	holder=data[1]; //assign the same graph data into the temporary holder array
+				    	{
+				    		"key": "Threshold",
+				    		"values": thArr
+				    	}
+			    
+			    	];
 
-		    	temperatureUpdater(); //call the updater function - Polling function
-		    	
+			    	holder=data[1]; //assign the same graph data into the temporary holder array
 
-	    	} else {
-	    		//if the response is bad - Display the error message	    		
+			    	temperatureUpdater(); //call the updater function - Polling function
+			    	
 
-	    		$scope.noData = true;
+		    	} else {
+		    		//if the response is bad - Display the error message	    		
 
-          		$scope.errorMsg = data[3].errorMsg;
+		    		$scope.noData = true;
 
-          		console.log("Error: " + data[3].errorMsg);
+	          		$scope.errorMsg = data[3].errorMsg;
 
-	    	}
+	          		console.log("Error: " + data[3].errorMsg);
 
-	  	}); //end then
+		    	}
+
+	  		}); //end then
+
+		});
+	  	
 
 	  	/*
 	  		This function formats the Ticks on x-axis of the graph

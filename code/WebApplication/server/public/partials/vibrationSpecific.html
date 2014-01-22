@@ -78,7 +78,7 @@
 
         <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
         <small ng-show="rt">
-          <i class="icon-time"></i> Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}
+          <i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
         </small>           
 
         <button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button> 

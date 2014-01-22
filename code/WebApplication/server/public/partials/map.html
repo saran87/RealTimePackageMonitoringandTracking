@@ -7,7 +7,7 @@
           <button ng-click="refresh()" class="btn btn-success">Refresh</button> 
 
           <small ng-show="rt">
-            <i class="icon-time"></i> Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}
+            <i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
           </small>
           <small class="text-mute" ng-show="!rt">
             No real-time updates
