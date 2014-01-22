@@ -36,8 +36,8 @@ angular.module('myApp', ['myModule','ngRoute','myServices','myDirectives','nvd3C
 
     $routeProvider.when('/map',
     {
-        templateUrl: 'partials/map.html',
-        controller: 'mapController'
+        templateUrl: 'partials/mapGeneral.html'
+        
     });
 
     $routeProvider.when('/map/:truck_id/:package_id',

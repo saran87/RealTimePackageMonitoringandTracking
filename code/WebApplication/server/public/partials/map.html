@@ -1,6 +1,5 @@
-<div>
 <div class="row">
-	<div class="col-md-12">
+	<div ng-show="!noData" class="col-md-12">
     <div class="widget">
       <div class="widget-head">
         <div class="pull-left">Location Tracking</div>                  
@@ -18,15 +17,38 @@
       </div>
       <div class="widget-content">
         <div class="padd">
-      <div ng-show="rt" id="map-canvas"></div>
-      <div ng-show="!rt"><h2>No Location data available for blackbox devices (i.e. No real-time tracking)</h2>
-      </div>      
-        <div class="widget-foot">
-          <!-- Footer goes here -->          
-        </div>
+
+      <div class="text-center">
+        <button ng-click="makeMap()" class="btn btn-lg btn-primary">Load Map</button>
       </div>
+
+      <div ng-show="!noData" id="map-canvas"></div>
+      </div>
+      </div>
+      <div class="widget-foot">
+        <!-- Footer goes here -->   
+        <strong>Disclaimer: </strong>       
       </div>
     </div> 
   </div>
-</div>
-</div>
+</div>  
+  <div class="well" ng-show="noData">
+
+    <h3 class="text-danger"><i class="icon-warning-sign"></i> Warning !</h3>
+    <div class="alert alert-danger">
+      
+      <i class="icon-info-sign"></i> {{errorMsg}}
+    
+    </div>
+  
+  </div>
+  <div class="well" ng-show="!rt">
+
+    <h3 class="text-info"><i class="icon-warning-sign"></i> No real time updates available</h3>
+    <div class="alert alert-info">
+      <i class="icon-info-sign"></i> No location data available for non-real time tracking
+    </div>
+    
+  </div>
+
+
