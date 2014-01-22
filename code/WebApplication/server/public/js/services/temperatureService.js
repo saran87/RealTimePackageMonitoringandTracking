@@ -1,4 +1,3 @@
-
 angular.module('myServices')
 	.factory('temperatureService',['$http','$q', function($http,$q){
 
