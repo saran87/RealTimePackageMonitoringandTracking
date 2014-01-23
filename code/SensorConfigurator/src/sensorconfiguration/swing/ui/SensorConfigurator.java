@@ -559,7 +559,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                             .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 73, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 45, Short.MAX_VALUE)
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jPanel1Layout.createSequentialGroup()
                                         .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -568,17 +568,17 @@ public class SensorConfigurator extends javax.swing.JFrame {
                                     .add(jPanel1Layout.createSequentialGroup()
                                         .add(jLabel17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jlblSensorId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 367, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(jPanel1Layout.createSequentialGroup()
-                                        .add(66, 66, 66)
-                                        .add(jlblBatteryLevel)
-                                        .add(18, 18, 18)
-                                        .add(jlblBatteryLevelValue)
-                                        .add(18, 18, 18)
-                                        .add(jLabel18))))
+                                        .add(jlblSensorId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 367, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(48, 48, 48)
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .add(jlblBatteryLevel)
+                                        .add(18, 18, 18)
+                                        .add(jlblBatteryLevelValue)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                        .add(jLabel18)
+                                        .add(0, 0, Short.MAX_VALUE))
                                     .add(temPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .add(humidtyPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .add(jPanel1Layout.createSequentialGroup()
@@ -587,9 +587,9 @@ public class SensorConfigurator extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jbtnConnect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jbtnConnect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 114, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jButton5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(0, 0, Short.MAX_VALUE))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 421, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -624,8 +624,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
                     .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jButton5)
                     .add(jlblBatteryLevel)
-                    .add(jlblBatteryLevelValue)
-                    .add(jLabel18))
+                    .add(jLabel18)
+                    .add(jlblBatteryLevelValue))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -763,7 +763,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "SensorID", "PackageID", "Truck ID", "Time Stamp"
+                "SensorID", "Truck ID", "Package ID", "Time Stamp"
             }
         ));
         jScrollPane2.setViewportView(jtblLocalData);
@@ -1031,7 +1031,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblPackageId.setText("xxxxxx");
         jlblSensorId1.setText("xxxxxx");
         jlblComments.setText("xxxxxx");
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public void clearLocalDataTable() {
