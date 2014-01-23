@@ -1553,17 +1553,19 @@ table th[class*="col-"] {
 .table>thead>tr.danger>th,
 .table>tbody>tr.danger>th,
 .table>tfoot>tr.danger>th {
-  background-color:#FCF;
+  background-color: #C9D7F0;
   border-color:#eed3d7;
   color:#e74c3c;
+  font-weight: bold;
 }
 
 .table-hover>tbody>tr>td.danger:hover,
 .table-hover>tbody>tr>th.danger:hover,
 .table-hover>tbody>tr.danger:hover>td {
-  background-color:#c0392b;
+  background-color:#CEDCF5;
   border-color:#e6c1c7;
-  color:#ecf0f1;
+  color:#e74c3c;
+  font-weight: bold;
 }
 
 .table>thead>tr>td.warning,

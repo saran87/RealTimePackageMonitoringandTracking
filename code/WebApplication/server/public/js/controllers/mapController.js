@@ -51,7 +51,11 @@ angular.module('myModule')
         var directionsDisplay;
         var directionsService = new google.maps.DirectionsService();
         var map;
-        var geocoder;  
+        var geocoder;
+
+        directionsDisplay = new google.maps.DirectionsRenderer();
+         
+        geocoder = new google.maps.Geocoder();
 
         /**
        * Add the latitude and longitude to polyline and a marker and info window
@@ -65,8 +69,14 @@ angular.module('myModule')
             title: 'Click for location information',
             map: map,
             animation: google.maps.Animation.DROP,
-            icon: "../img/icon-package.png"        
+            icon: {
+                
+                url: "../img/icon-package.png",
+                size: new google.maps.Size(24,24)
+            }       
           });
+
+          console.dir(marker.icon);
           
           //Add an info window to the position
           var infowindow = new google.maps.InfoWindow({});
@@ -112,9 +122,9 @@ angular.module('myModule')
         }
 
         function initialize(initLoc) {
-          directionsDisplay = new google.maps.DirectionsRenderer();
+          //directionsDisplay = new google.maps.DirectionsRenderer();
           var initLocation = initLoc;
-          geocoder = new google.maps.Geocoder();
+          //geocoder = new google.maps.Geocoder();
           var mapOptions = {
             zoom: 8,
             center: initLoc
@@ -247,7 +257,7 @@ angular.module('myModule')
               origin: start,
               destination: end,
               waypoints: waypts,
-              optimizeWaypoints: false,
+              optimizeWaypoints: true,
               travelMode: google.maps.TravelMode.DRIVING
             };
 
