@@ -31,6 +31,7 @@ import rtpmt.packages.Sensor;
  * @author Kumar
  */
 public class SensorConfigurator extends javax.swing.JFrame {
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -51,7 +52,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException e) {
-             // If Nimbus is not available, you can set the GUI to another look and feel.
+            // If Nimbus is not available, you can set the GUI to another look and feel.
 
         } catch (IllegalAccessException e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
@@ -72,19 +73,20 @@ public class SensorConfigurator extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SensorConfigurator.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
     // Create a FileHandler and attach it to the root logger.
-   // Create a MyHtmlFormatter and attach to the FileHandler.
-   public static void setupLogger() throws IOException {
-      Logger rootLogger = Logger.getLogger("");
-      Handler htmlFileHandler = new FileHandler("log.html");
-      HTMLFormatter htmlFormatter = new HTMLFormatter();
-      rootLogger.addHandler(htmlFileHandler);
-      htmlFileHandler.setFormatter(htmlFormatter);
-      FileInputStream fis =  new FileInputStream("logging.properties");
+    // Create a MyHtmlFormatter and attach to the FileHandler.
+    public static void setupLogger() throws IOException {
+        Logger rootLogger = Logger.getLogger("");
+        Handler htmlFileHandler = new FileHandler("log.html");
+        HTMLFormatter htmlFormatter = new HTMLFormatter();
+        rootLogger.addHandler(htmlFileHandler);
+        htmlFileHandler.setFormatter(htmlFormatter);
+        FileInputStream fis = new FileInputStream("logging.properties");
         LogManager.getLogManager().readConfiguration(fis);
-   }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,6 +148,9 @@ public class SensorConfigurator extends javax.swing.JFrame {
         humTimeThreshold = new javax.swing.JSpinner();
         jLabel34 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jlblBatteryLevel = new javax.swing.JLabel();
+        jlblBatteryLevelValue = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jProgressBar2 = new javax.swing.JProgressBar();
         JbtnSaveToServer1 = new javax.swing.JButton();
@@ -517,6 +522,17 @@ public class SensorConfigurator extends javax.swing.JFrame {
             }
         });
 
+        jlblBatteryLevel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jlblBatteryLevel.setText("Battery Level :");
+
+        jlblBatteryLevelValue.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jlblBatteryLevelValue.setForeground(new java.awt.Color(255, 51, 51));
+        jlblBatteryLevelValue.setText("0");
+
+        jLabel18.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel18.setText("%");
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -543,16 +559,23 @@ public class SensorConfigurator extends javax.swing.JFrame {
                             .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 41, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 73, Short.MAX_VALUE)
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jPanel1Layout.createSequentialGroup()
-                                        .add(jLabel17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                        .add(jlblSensorId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 367, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                     .add(jPanel1Layout.createSequentialGroup()
                                         .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jtxtPackageId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 358, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                                        .add(jtxtPackageId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 358, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .add(jLabel17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jlblSensorId, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 367, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .add(66, 66, 66)
+                                        .add(jlblBatteryLevel)
+                                        .add(18, 18, 18)
+                                        .add(jlblBatteryLevelValue)
+                                        .add(18, 18, 18)
+                                        .add(jLabel18))))
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(48, 48, 48)
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -565,7 +588,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                         .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jbtnConnect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(18, 18, 18)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 114, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(0, 0, Short.MAX_VALUE))
                     .add(jPanel1Layout.createSequentialGroup()
@@ -599,7 +622,10 @@ public class SensorConfigurator extends javax.swing.JFrame {
                     .add(jLabel28)
                     .add(jbtnConnect)
                     .add(jlblSensorStatus, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jButton5))
+                    .add(jButton5)
+                    .add(jlblBatteryLevel)
+                    .add(jlblBatteryLevelValue)
+                    .add(jLabel18))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -855,19 +881,19 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
     private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTabbedPane1FocusGained
 
     private void jPanel3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel3FocusGained
         // TODO add your handling code here:
-        
-     
+
+
     }//GEN-LAST:event_jPanel3FocusGained
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         // TODO add your handling code here:
         JTabbedPane panel = (JTabbedPane) evt.getSource();
-        if(panel.getSelectedIndex() == 2){
+        if (panel.getSelectedIndex() == 2) {
             clearLocalDataTable();
             eventHandler.populateLocalData();
         }
@@ -904,23 +930,23 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
     private void jbConfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfigureActionPerformed
         // TODO add your handling code here:
-        try{
+        try {
             Package pack = new Package();
             System.out.println(jlblSensorId.getText());
 
             String sensorId = jlblSensorId.getText();
             pack.setSensorId(sensorId);
-            if(!jtxtPackageId.getText().equals("") && !jtxtTuckId.getText().equals("") && !jtxtComments.getText().equals("")){
+            if (!jtxtPackageId.getText().equals("") && !jtxtTuckId.getText().equals("") && !jtxtComments.getText().equals("")) {
 
-                if(jtxtPackageId.getText().length() > 20){
+                if (jtxtPackageId.getText().length() > 20) {
                     handleError("Length of package Id should be below 20");
                     return;
                 }
-                if(jtxtTuckId.getText().length() > 20){
+                if (jtxtTuckId.getText().length() > 20) {
                     handleError("Length of truck Id should be below 20");
                     return;
                 }
-                if(jtxtComments.getText().length() > 80){
+                if (jtxtComments.getText().length() > 80) {
                     handleError("Length of comments should be below 80");
                     return;
                 }
@@ -929,27 +955,27 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 pack.setComments(jtxtComments.getText());
                 //temperature
                 pack.setTemperatureTimePeriod((Integer) tempTime.getValue());
-                pack.setMaxTemperatureThreshold((Double)tempThreshold.getValue());
-                pack.setTemperatureAfterThresholdTimePeriod((Integer)tempTimeThreshold.getValue());
+                pack.setMaxTemperatureThreshold((Double) tempThreshold.getValue());
+                pack.setTemperatureAfterThresholdTimePeriod((Integer) tempTimeThreshold.getValue());
 
                 //Humidity
                 pack.setHumididtyTimePeriod((Integer) humTime.getValue());
-                pack.setMaxHumidtyThreshold((Double)humThreshold.getValue());
-                pack.setHumididtyAfterThresholdTimePeriod((Integer)humTimeThreshold.getValue());
+                pack.setMaxHumidtyThreshold((Double) humThreshold.getValue());
+                pack.setHumididtyAfterThresholdTimePeriod((Integer) humTimeThreshold.getValue());
 
                 //Vibration
                 pack.setVibrationTimePeriod((Integer) vibTime.getValue());
-                pack.setMaxVibrationThreshold((Double)vibThreshold.getValue());
-                pack.setVibrationAfterThresholdTimePeriod((Integer)vibTimeThreshold.getValue());
+                pack.setMaxVibrationThreshold((Double) vibThreshold.getValue());
+                pack.setVibrationAfterThresholdTimePeriod((Integer) vibTimeThreshold.getValue());
 
                 //shock
-                pack.setMaxShockThreshold((Double)shockThreshold.getValue());
+                pack.setMaxShockThreshold((Double) shockThreshold.getValue());
                 eventHandler.configureSensor(pack);
-               
-            }else{
+
+            } else {
                 handleError("Make sure, you have Package Id, Truck Id and comments are Configured");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             String logText = "Error :" + ex.toString() + "";
             Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
             handleError("Not able to configure the sensor, try again");
@@ -972,50 +998,50 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         final JFileChooser fc;
-        
+
         fc = new JFileChooser();
         fc.setDialogTitle("Select a folder");
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = fc.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            
+
             eventHandler.saveAsCSV(fc.getSelectedFile().getAbsolutePath());
-        }
-        else{
+        } else {
             handleError("Please select a folder");
         }
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         eventHandler.disConnectSensor();
         jlblSensorStatus.setText("Not Connected");
-            jlblSensorStatus.setForeground(Color.RED);
-            jbtnConnect.setText("Connect");
-            jButton5.setEnabled(false);
-            jtxtPackageId.setText("");
-            jtxtTuckId.setText("");
-            jlblSensorId.setFont(new java.awt.Font("Lucida Grande", 1, 13)); 
+        jlblSensorStatus.setForeground(Color.RED);
+        jbtnConnect.setText("Connect");
+        jButton5.setEnabled(false);
+        jtxtPackageId.setText("");
+        jtxtTuckId.setText("");
+        jlblSensorId.setFont(new java.awt.Font("Lucida Grande", 1, 13));
 
-            jlblSensorId.setForeground(new java.awt.Color(51, 0, 204));
+        jlblSensorId.setForeground(new java.awt.Color(51, 0, 204));
 
-            jlblSensorId.setText("xxxxxxxx");
-            jtxtComments.setText("");
-            jlblTruckId.setText("xxxxxx");
-            jlblPackageId.setText("xxxxxx");
-            jlblSensorId1.setText("xxxxxx");
-            jlblComments.setText("xxxxxx");
-        
+        jlblSensorId.setText("xxxxxxxx");
+        jtxtComments.setText("");
+        jlblTruckId.setText("xxxxxx");
+        jlblPackageId.setText("xxxxxx");
+        jlblSensorId1.setText("xxxxxx");
+        jlblComments.setText("xxxxxx");
+
     }//GEN-LAST:event_jButton5ActionPerformed
-    
-    public void clearLocalDataTable(){
+
+    public void clearLocalDataTable() {
         DefaultTableModel model = (DefaultTableModel) jtblLocalData.getModel();
-         int rowCount =   model.getRowCount();
-         for (int i = rowCount-1; i > 0 ; i--) {
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i > 0; i--) {
             model.removeRow(i);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -1072,6 +1098,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
@@ -1106,6 +1133,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JButton jbConfigure;
     private javax.swing.JButton jbtnClearData;
     private javax.swing.JButton jbtnConnect;
+    private javax.swing.JLabel jlblBatteryLevel;
+    private javax.swing.JLabel jlblBatteryLevelValue;
     private javax.swing.JLabel jlblComments;
     private javax.swing.JLabel jlblPackageId;
     private javax.swing.JLabel jlblSensorId;
@@ -1134,9 +1163,9 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
         if (isSensorConnected) {
             jlblSensorStatus.setText("Connected");
-            jlblSensorStatus.setForeground(Color.getHSBColor((float)145.58823529411762, (float)78.16091954022988, (float)68.23529411764706));
+            jlblSensorStatus.setForeground(Color.getHSBColor((float) 145.58823529411762, (float) 78.16091954022988, (float) 68.23529411764706));
             jbtnConnect.setText("Reconnect");
-            
+
         } else {
             jlblSensorStatus.setText("Not Connected");
             jlblSensorStatus.setForeground(Color.RED);
@@ -1148,60 +1177,57 @@ public class SensorConfigurator extends javax.swing.JFrame {
     public final void handleError(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
-    
-    
-    public void updateSensorDetail(Package pack){
-        
-        if(pack == null){
+
+    public void updateSensorDetail(Package pack) {
+
+        if (pack == null) {
             updateTruckId("");
             updatePackageId("");
-            updateComments(""); 
-        tempTime.setValue(0);
-        tempTimeThreshold.setValue(0);
-        tempThreshold.setValue(0);
-        
-        humTime.setValue(0);
-        humTimeThreshold.setValue(0);
-        humThreshold.setValue(0);
-        
-        vibTime.setValue(0);
-        vibTimeThreshold.setValue(0);
-        vibThreshold.setValue(0);
-       
-        shockThreshold.setValue(0);
-        
-            
-        }
-        else{
-        if( pack.getTruckId() != null && !pack.getTruckId().isEmpty()){
-            updateTruckId(pack.getTruckId());
-            updatePackageId(pack.getPackageId());
-            updateComments(pack.getComments());            
-        }
-        HashMap<Sensor, Config> configList = pack.getConfigs();
-        Config tempConfig = configList.get(Sensor.TEMPERATURE);
-        tempTime.setValue(tempConfig.getTimePeriod());
-        tempTimeThreshold.setValue(tempConfig.getAfterThresholdTimePeriod());
-        tempThreshold.setValue(tempConfig.getMaxThreshold());
-        
-        tempConfig = configList.get(Sensor.HUMIDITY);
-        humTime.setValue(tempConfig.getTimePeriod());
-        humTimeThreshold.setValue(tempConfig.getAfterThresholdTimePeriod());
-        humThreshold.setValue(tempConfig.getMaxThreshold());
-        
-        tempConfig = configList.get(Sensor.VIBRATION);
-        vibTime.setValue(tempConfig.getTimePeriod());
-        vibTimeThreshold.setValue(tempConfig.getAfterThresholdTimePeriod());
-        vibThreshold.setValue(tempConfig.getMaxThreshold());
-       
-        tempConfig = configList.get(Sensor.SHOCK);
-        shockThreshold.setValue(tempConfig.getMaxThreshold());
-        
+            updateComments("");
+            tempTime.setValue(0);
+            tempTimeThreshold.setValue(0);
+            tempThreshold.setValue(0);
 
+            humTime.setValue(0);
+            humTimeThreshold.setValue(0);
+            humThreshold.setValue(0);
+
+            vibTime.setValue(0);
+            vibTimeThreshold.setValue(0);
+            vibThreshold.setValue(0);
+
+            shockThreshold.setValue(0);
+
+        } else {
+            if (pack.getTruckId() != null && !pack.getTruckId().isEmpty()) {
+                updateTruckId(pack.getTruckId());
+                updatePackageId(pack.getPackageId());
+                updateComments(pack.getComments());
+            }
+            HashMap<Sensor, Config> configList = pack.getConfigs();
+            Config tempConfig = configList.get(Sensor.TEMPERATURE);
+            tempTime.setValue(tempConfig.getTimePeriod());
+            tempTimeThreshold.setValue(tempConfig.getAfterThresholdTimePeriod());
+            tempThreshold.setValue(tempConfig.getMaxThreshold());
+
+            tempConfig = configList.get(Sensor.HUMIDITY);
+            humTime.setValue(tempConfig.getTimePeriod());
+            humTimeThreshold.setValue(tempConfig.getAfterThresholdTimePeriod());
+            humThreshold.setValue(tempConfig.getMaxThreshold());
+
+            tempConfig = configList.get(Sensor.VIBRATION);
+            vibTime.setValue(tempConfig.getTimePeriod());
+            vibTimeThreshold.setValue(tempConfig.getAfterThresholdTimePeriod());
+            vibThreshold.setValue(tempConfig.getMaxThreshold());
+
+            tempConfig = configList.get(Sensor.SHOCK);
+            shockThreshold.setValue(tempConfig.getMaxThreshold());
+            
+            jlblBatteryLevelValue.setText(Integer.toString(pack.getBatteryLevel()));
         }
     }
-    
-    public void setSesnorId(String sensorId){
+
+    public void setSesnorId(String sensorId) {
         jlblSensorId.setText(sensorId);
         jlblSensorId1.setText(sensorId);
     }
@@ -1220,6 +1246,5 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jtxtComments.setText(comments);
         jlblComments.setText(comments);
     }
-    
-    
+
 }

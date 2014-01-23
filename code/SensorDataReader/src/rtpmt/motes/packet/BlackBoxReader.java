@@ -70,7 +70,7 @@ public class BlackBoxReader extends AbstractSource {
 
     /**
      * Reads the SD Card Data
-     *  
+     *
      * @return Packet object
      * @throws IOException
      */
@@ -85,6 +85,37 @@ public class BlackBoxReader extends AbstractSource {
         }
         return null;
     }
+    
+    @Override
+    protected void closeSource() throws IOException {
+        port.close();
+    }
+
+     @Override
+    public void reset() throws InterruptedException, IOException {
+        writeFramedPacket(Constants.RESET_BOARD, dummyPacket);
+        getSensorInformation();
+    }
+
+    @Override
+    public void resetConfig() throws InterruptedException, IOException {
+        writeFramedPacket(Constants.RESET_CONFIG, dummyPacket);
+        getSensorInformation();
+    }
+
+    @Override
+    public void resetRadio() throws InterruptedException, IOException {
+        writeFramedPacket(Constants.RESET_RADIO, dummyPacket);
+        getSensorInformation();
+    }
+
+    @Override
+    public void clearData() throws InterruptedException, IOException {
+        writeFramedPacket(Constants.FORMAT_SD_CARD, dummyPacket);
+        writeFramedPacket(Constants.FORMAT_FLASH, dummyPacket);
+        Thread.sleep(10000);
+        getSensorInformation();
+    }
 
     /**
      *
@@ -96,7 +127,8 @@ public class BlackBoxReader extends AbstractSource {
         sensorId = getBoardId();
         Packet packet = getConfiguration();
         String note = getNote();
-        Package pack = getPackage(sensorId, packet, note);
+        int batteryLevel =  getBatteryLevel();
+        Package pack = getPackage(sensorId, packet, note,batteryLevel);
         //for blackbox only one sensor is used;
         PackageList.addPackage(0, pack);
         publishNewSensor(pack);
@@ -110,7 +142,7 @@ public class BlackBoxReader extends AbstractSource {
      */
     private Packet getConfiguration() throws IOException, InterruptedException {
         writeFramedPacket(Constants.GET_ALL_CONFIG, dummyPacket);
-        Packet packet = getSerailPacket(false);
+        Packet packet = getSerialPacket(false);
         return packet;
     }
 
@@ -122,7 +154,7 @@ public class BlackBoxReader extends AbstractSource {
     private String getBoardId() throws IOException, InterruptedException {
 
         writeFramedPacket(Constants.GET_BOARD_ID, dummyPacket);
-        Packet packet = getSerailPacket(false);
+        Packet packet = getSerialPacket(false);
         return packet.sensorId();
     }
 
@@ -133,7 +165,7 @@ public class BlackBoxReader extends AbstractSource {
      */
     private String getNote() throws IOException, InterruptedException {
         writeFramedPacket(Constants.GET_NOTE, dummyPacket);
-        Packet packet = getSerailPacket(true);
+        Packet packet = getSerialPacket(true);
         Byte[] byteArray = packet.getData();
         char[] charArray = new char[byteArray.length];
         for (int i = 0; i < charArray.length; i++) {
@@ -142,6 +174,19 @@ public class BlackBoxReader extends AbstractSource {
 
         return String.valueOf(charArray);
     }
+    
+   
+    /**
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    private int getBatteryLevel() throws IOException, InterruptedException  {
+         writeFramedPacket(Constants.GET_BATTERY_LEVEL, dummyPacket);
+         Packet packet =  getSerialPacket(true);
+         return packet.getBatteryLevel();
+    }
+
 
     /**
      *
@@ -150,7 +195,7 @@ public class BlackBoxReader extends AbstractSource {
      */
     private void readSDCardData() throws IOException, InterruptedException, TimeoutException {
         Package pack = PackageList.getPackage(0);
-        if(pack.isIsFlashDataAvailable()){
+        if (pack.isFlashDataAvailable()) {
             System.out.print("Reading flash data");
             writeFramedPacket(Constants.GET_FLASH, dummyPacket);
             processSDCardPacket();
@@ -169,23 +214,20 @@ public class BlackBoxReader extends AbstractSource {
         processSDCardPacket();
         writeFramedPacket(Constants.FORMAT_FLASH, dummyPacket);
     }
+
     // Class to build a framed, escaped and crced packet byte stream
     private void sendTimeSyncPacket(int nodeId) throws IOException {
         try {
-            long currentTime = System.currentTimeMillis()/1000;
-            System.out.println("SendTime: "+currentTime);
-            byte timePacket[] = (new BigInteger(Long.toHexString(currentTime),16)).toByteArray();//ByteBuffer.allocate(8). array();
+            long currentTime = System.currentTimeMillis() / 1000;
+            System.out.println("SendTime: " + currentTime);
+            byte timePacket[] = (new BigInteger(Long.toHexString(currentTime), 16)).toByteArray();//ByteBuffer.allocate(8). array();
             writeFramedPacket(Constants.P_TIME_SYNC, nodeId, timePacket);
         } catch (InterruptedException ex) {
             Logger.getLogger(BlackBoxReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override
-    protected void closeSource() throws IOException {
-        port.close();
-    }
-
+    
     /**
      *
      * @throws IOException
@@ -206,12 +248,12 @@ public class BlackBoxReader extends AbstractSource {
                 long now = System.currentTimeMillis();
                 int b = 0;
                 /*while (!port.isAvailable()) {
-                    timeout = timeout - 10;
-                    if (timeout <= 0) {
-                        System.out.print("Timeout = "+timeout);
-                        throw new TimeoutException("No data from sensor.Time out");
-                    }
-                }*/
+                 timeout = timeout - 10;
+                 if (timeout <= 0) {
+                 System.out.print("Timeout = "+timeout);
+                 throw new TimeoutException("No data from sensor.Time out");
+                 }
+                 }*/
                 while (b != 170) {
                     b = port.read() & 0xff;
                     notInSyncCount++;
@@ -234,7 +276,7 @@ public class BlackBoxReader extends AbstractSource {
                 }
 
                 if (DEBUG) {
-                   // Dump.printPacket(System.out, syncFrame);
+                    // Dump.printPacket(System.out, syncFrame);
                 }
 
                 if (Utils.compare(syncFrame, Constants.FRAME_SYNC)) {
@@ -265,46 +307,47 @@ public class BlackBoxReader extends AbstractSource {
                 }
             }
         }
-        
-        if(isLength){
+
+        if (isLength) {
             TestReading reader = new TestReading(port, payLoad);
             reader.start();
-            
+
             Thread.sleep(100);
-            startProcessingData(payLoad,reader);
-           // printData(reader);
+            startProcessingData(payLoad, reader);
+            // printData(reader);
         }
     }
-    
-    private void startProcessingData(int length,TestReading reader) throws IOException, InterruptedException{
-         if(DEBUG){
-                    System.err.println("Initial Length "+ length);
-                }
-         int counter = 0;
-         
-         while(!reader.isComplete)
+
+    private void startProcessingData(int length, TestReading reader) throws IOException, InterruptedException {
+        if (DEBUG) {
+            System.err.println("Initial Length " + length);
+        }
+        int counter = 0;
+
+        while (!reader.isComplete) {
             Thread.sleep(1000);
+        }
         FileInputStream input = new FileInputStream(reader.dataFile);
-         
-        while (length > 2){
-            byte[] rawPacket = readFramedPacket(false,input);
-            
-            if(rawPacket!=null){
+
+        while (length > 2) {
+            byte[] rawPacket = readFramedPacket(false, input);
+
+            if (rawPacket != null) {
                 //Add plus 5 to normal packet, 5 is for adding Frame packet(3) and CRC(2)
                 counter++;
                 length = length - (rawPacket.length + 5);
                 Packet pack = new Packet(rawPacket);
-                if(DEBUG){
-                    if(counter >= 469){
-                        System.err.println("Length "+ length+ " counter "+counter);
+                if (DEBUG) {
+                    if (counter >= 469) {
+                        System.err.println("Length " + length + " counter " + counter);
                     }
                 }
-                if(counter >= 468){
-                    System.out.println("counter : "+counter);
+                if (counter >= 468) {
+                    System.out.println("counter : " + counter);
                 }
-                if(pack.isPartialPacket()){
+                if (pack.isPartialPacket()) {
                     handlePartialPackets(pack);
-                }else{
+                } else {
                     publishNewPacket(pack);
                 }
             }
@@ -312,21 +355,21 @@ public class BlackBoxReader extends AbstractSource {
         input.close();
         reader.dataFile.delete();
     }
-    
+
     /**
      *
      * @param isSDCardData
      * @return
      * @throws IOException
      */
-    public Packet getSerailPacket(boolean isSDCardData) throws IOException {
+    public Packet getSerialPacket(boolean isSDCardData) throws IOException {
         byte[] packet = readFramedPacket(isSDCardData);
         Packet packetHelper = new Packet(packet);
 
         return packetHelper;
     }
-    
-     /**
+
+    /**
      *
      * @param newPackage
      */
@@ -337,12 +380,13 @@ public class BlackBoxReader extends AbstractSource {
             }
         }
     }
-     /**
+
+    /**
      *
      * @param newPackage
      */
     private void publishNewPacket(Packet packet) {
-       
+
         if (eventListenerObjects != null) {
             for (SensorEventHandler iSensorEventHandler : eventListenerObjects) {
                 iSensorEventHandler.handleNewPacket(packet);
@@ -352,6 +396,7 @@ public class BlackBoxReader extends AbstractSource {
     /*
      * Packet Reader
      */
+
     // Read system-level packet. If inSync is false, we currently don't
     // have sync
     public byte[] readFramedPacket(boolean readSDCard) throws IOException {
@@ -380,7 +425,7 @@ public class BlackBoxReader extends AbstractSource {
                 while (b != 170) {
                     b = port.read() & 0xff;
                     notInSyncCount++;
-                    if(notInSyncCount > Constants.MTU){
+                    if (notInSyncCount > Constants.MTU) {
                         return null;
                     }
                 }
@@ -402,7 +447,7 @@ public class BlackBoxReader extends AbstractSource {
                 }
 
                 if (DEBUG) {
-                    Dump.dump(System.out,"Sync frame", syncFrame);
+                    Dump.dump(System.out, "Sync frame", syncFrame);
                 }
 
                 if (Utils.compare(syncFrame, Constants.FRAME_SYNC)) {
@@ -432,11 +477,10 @@ public class BlackBoxReader extends AbstractSource {
 
                     payLoad = count + length;
                     isLength = true;
-                    if(payLoad >600)
-                    {
+                    if (payLoad > 600) {
                         Dump.dump(System.out, "Exceeded payload length", receiveBuffer);
                     }
-                    System.out.println("Payload length :"+payLoad);
+                    System.out.println("Payload length :" + payLoad);
                     continue;
                 } else if (count < payLoad) {
                     b = (byte) (port.read() & 0xff);
@@ -588,24 +632,12 @@ public class BlackBoxReader extends AbstractSource {
         }
 
         buffer.terminate();
-
-        byte[] realPacket = new byte[buffer.escapePtr];
-        System.arraycopy(buffer.escaped, 0, realPacket, 0, buffer.escapePtr);
-
-        port.flush();
-        boolean write = port.write(realPacket);
-        port.flush();
-        if (DEBUG) {
-            System.err.println("sending: ");
-            Dump.printByte(System.err, packetType);
-            Dump.dump(System.err, "encoded", realPacket);
-            System.err.println();
-        }
-        Thread.sleep(100);
-        return write;
+        
+        return _write(buffer);
+        
     }
-    
-      private synchronized boolean writeFramedPacket(int packetType, int nodeId,
+
+    private synchronized boolean writeFramedPacket(int packetType, int nodeId,
             byte[] packet) throws IOException, InterruptedException {
 
         SensorPacket buffer = new SensorPacket(packet.length + 7);
@@ -628,27 +660,28 @@ public class BlackBoxReader extends AbstractSource {
         }
 
         buffer.terminate();
-
+        
+        return _write(buffer);
+    }
+    
+    private boolean _write(SensorPacket buffer) throws IOException, InterruptedException{
+        
         byte[] realPacket = new byte[buffer.escapePtr];
         System.arraycopy(buffer.escaped, 0, realPacket, 0, buffer.escapePtr);
 
         port.flush();
-        boolean write =  port.write(realPacket);
+        boolean write = port.write(realPacket);
         port.flush();
         if (DEBUG) {
-            System.err.println("Data written: ");
-            System.err.println("sending: ");
-            Dump.printByte(System.err, packetType);
-            Dump.printByte(System.err, packet.length);
-            Dump.dump("encoded", realPacket);
+            Dump.dump(System.err, "Sending :", realPacket);
             System.err.println();
         }
-        Thread.sleep(100);
+        Thread.sleep(50);
         return write;
     }
-
-    private Package getPackage(String sensorId, Packet packet, String note) {
-        Package pack = new Package(0, sensorId);        
+    
+    private Package getPackage(String sensorId, Packet packet, String note,int batteryLevel) {
+        Package pack = new Package(0, sensorId);
         pack.setNote(note);
         int i = -1;
         int rawThreshold = (packet.getData(++i) & 0xff) | (packet.getData(++i) & 0xff) << 8;
@@ -693,45 +726,21 @@ public class BlackBoxReader extends AbstractSource {
         pack.setVibrationAfterThresholdTimePeriod(overtime);
         pack.setMaxVibrationThreshold(rawThreshold);
         pack.setIsFlashDataAvailable((packet.getData(Constants.DATA_IN_FLASH_INDEX) & 0xff));
+        pack.setBatteryLevel(batteryLevel);
         return pack;
     }
 
-    @Override
-    public void reset() throws InterruptedException,IOException {
-        writeFramedPacket(Constants.RESET_BOARD, dummyPacket);
-        getSensorInformation(); 
-    }
-
-    @Override
-    public void resetConfig() throws InterruptedException,IOException {
-        writeFramedPacket(Constants.RESET_CONFIG, dummyPacket);
-        getSensorInformation(); 
-    }
-
-    @Override
-    public void resetRadio() throws InterruptedException,IOException  {
-         writeFramedPacket(Constants.RESET_RADIO, dummyPacket);
-         getSensorInformation(); 
-    }
-
-    @Override
-    public void clearData()throws InterruptedException,IOException {
-       writeFramedPacket(Constants.FORMAT_SD_CARD, dummyPacket);
-       writeFramedPacket(Constants.FORMAT_FLASH, dummyPacket);
-       Thread.sleep(10000);
-       getSensorInformation(); 
-    }
-
-    private void printData(TestReading reader) throws IOException, InterruptedException{
-       // byte[] data = new byte[payLoad];
-        int i=0;
-        while(!reader.isComplete)
+    private void printData(TestReading reader) throws IOException, InterruptedException {
+        // byte[] data = new byte[payLoad];
+        int i = 0;
+        while (!reader.isComplete) {
             Thread.sleep(1000);
+        }
         FileInputStream input = new FileInputStream(reader.dataFile);
         int tempData = input.read();
-        while( tempData != -1 ){
-            
-            System.out.print(" "+Integer.toHexString((int)(tempData & 0xff)));
+        while (tempData != -1) {
+
+            System.out.print(" " + Integer.toHexString(tempData & 0xff));
             tempData = input.read();
         }
         System.out.println("");
@@ -740,8 +749,7 @@ public class BlackBoxReader extends AbstractSource {
         //Dump.dump(System.out,"Data from SD :",data);
     }
 
-    
-    public byte[] readFramedPacket(boolean readSDCard,FileInputStream input) throws IOException, InterruptedException {
+    public byte[] readFramedPacket(boolean readSDCard, FileInputStream input) throws IOException, InterruptedException {
 
         int count = 0;
         boolean isLength = false;
@@ -750,17 +758,16 @@ public class BlackBoxReader extends AbstractSource {
         byte[] syncFrame = new byte[Constants.FRAME_SYNC.length];
         byte[] receiveBuffer = new byte[Constants.MTU];
         int notInSyncCount = 0;
-       
+
         for (;;) {
             if (!inSync) {
-                
+
                 int b = 0;
 
-                
                 while (b != 170) {
                     b = input.read() & 0xff;
                     notInSyncCount++;
-                    if(notInSyncCount > Constants.MTU){
+                    if (notInSyncCount > Constants.MTU) {
                         return null;
                     }
                 }
@@ -782,7 +789,7 @@ public class BlackBoxReader extends AbstractSource {
                 }
 
                 if (DEBUG) {
-                    Dump.dump(System.out,"Sync frame", syncFrame);
+                    Dump.dump(System.out, "Sync frame", syncFrame);
                 }
 
                 if (Utils.compare(syncFrame, Constants.FRAME_SYNC)) {
@@ -794,13 +801,13 @@ public class BlackBoxReader extends AbstractSource {
             } else {
                 byte b;
                 if (!isLength) {
-                    byte command = (byte)input.read()  ;
+                    byte command = (byte) input.read();
                     receiveBuffer[count++] = command;
 
-                    receiveBuffer[count++] = (byte)input.read();
-                    receiveBuffer[count++] = (byte)input.read();
-                    receiveBuffer[count++] = (byte)input.read();
-                    receiveBuffer[count++] = (byte)input.read();
+                    receiveBuffer[count++] = (byte) input.read();
+                    receiveBuffer[count++] = (byte) input.read();
+                    receiveBuffer[count++] = (byte) input.read();
+                    receiveBuffer[count++] = (byte) input.read();
                     int length;
                     if (!readSDCard) {
                         length = (receiveBuffer[count - 1] & 0xff) | (receiveBuffer[count - 2] & 0xff) << 8;
@@ -812,11 +819,10 @@ public class BlackBoxReader extends AbstractSource {
 
                     payLoad = count + length;
                     isLength = true;
-                    if(payLoad >600)
-                    {
+                    if (payLoad > 600) {
                         Dump.dump(System.out, "Exceeded payload length", receiveBuffer);
                     }
-                    System.out.println("Payload length :"+payLoad);
+                    System.out.println("Payload length :" + payLoad);
                     continue;
                 } else if (count < payLoad) {
                     b = (byte) (input.read() & 0xff);
@@ -851,5 +857,4 @@ public class BlackBoxReader extends AbstractSource {
             }
         }
     }
-
 }

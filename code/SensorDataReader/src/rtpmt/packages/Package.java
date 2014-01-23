@@ -8,8 +8,6 @@ package rtpmt.packages;
 
 import java.util.Date;
 import java.util.HashMap;
-import rtpmt.location.tracker.Location;
-import rtpmt.location.tracker.LocationTracker;
 import rtpmt.network.packet.NetworkMessage;
 import rtpmt.sensor.util.Constants;
 
@@ -25,12 +23,14 @@ public class Package {
     private String truckId;
     private String comments;
     private boolean isFlashDataAvailable;
+    private int batteryLevel;
+    private int batteryHealth;
 
     public void setIsFlashDataAvailable(int data) {
         this.isFlashDataAvailable = data != 0;
     }
 
-    public boolean isIsFlashDataAvailable() {
+    public boolean isFlashDataAvailable() {
         return isFlashDataAvailable;
     }
     
@@ -83,6 +83,23 @@ public class Package {
          }
       }
     }
+    
+    public void setBatteryLevel(int batteryLevel){
+        this.batteryLevel = batteryLevel;
+    }
+    
+    public int getBatteryLevel(){
+        return this.batteryLevel;
+    }
+    
+    public void setBatteryHealth(int batteryHealth){
+        this.batteryHealth = batteryHealth;
+    }
+    
+    public int getBatteryHealth(){
+        return this.batteryHealth;
+    }
+   
     
     public String getUniqueId() {
         return  this.sensorId + Constants.SEPERATOR + this.truckId + Constants.SEPERATOR + this.packageId;
