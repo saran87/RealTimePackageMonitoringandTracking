@@ -376,6 +376,21 @@ public final class Packet extends Header {
            return "00";
        }
     }
+    
+    /**
+     * 
+     * @return 
+     */
+     public int getBatteryLevel(){
+         
+         int batteryLevel = 0;
+         if(this.PayLoad != null && this.PayLoad.size() > 1){
+             batteryLevel =   (PayLoad.get(0) & 0xff)
+                | (PayLoad.get(1) & 0xff) << 8;
+         }
+         return batteryLevel;
+     }
+    
     /**
      *
      * @return

@@ -57,6 +57,8 @@ public class Constants {
    
    public final static byte[] FORMAT_SD_CARD = {18,00};
    public final static byte[] FORMAT_FLASH = {34,00};
+    
+   public final static byte[] GET_BATTERY_LEVEL = {96,00};
    
    
    /**
