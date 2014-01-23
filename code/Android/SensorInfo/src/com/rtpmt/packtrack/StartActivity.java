@@ -179,6 +179,7 @@ public class StartActivity extends ListActivity {
         	case PACKAGE_ID_UPDATED:
         		if (resultCode == Activity.RESULT_OK) {
         			populateSensorList(data);
+        			updateSettingsForAll(data);
         		}
             case SETTINGS_UPDATED:
             		updateSettingsForAll(data);

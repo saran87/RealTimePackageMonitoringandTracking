@@ -4,8 +4,15 @@
 
 	<div class="widget">
     <div class="widget-head">      
-      <div class="pull-left">Shock Graph</div>
-      <div class="pull-right"><small>Data received every {{refreshRate}} secs</small></div>
+      <div class="pull-left">Shock Graph (Time vs Max-G value)</div>
+      <div class="pull-right">
+        <small ng-show="rt">
+          <i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
+        </small>
+        <small class="text-mute" ng-show="!rt">
+          No real-time updates
+        </small>
+      </div>
       <div class="clearfix"></div>
     </div>      
     
@@ -66,9 +73,7 @@
       <div class="widget-icons pull-right">        
         
         <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
-        <button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>
-
-        <button class="btn btn-info"><i class="icon-download"></i> Download CSV</button>
+        <button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>       
 
       </div>
       <div class="clearfix"></div>
@@ -87,7 +92,7 @@
         </thead>
         <tbody>
 
-          <tr ng-class="sdata.value.x > maxThreshold && 'danger' || '' " ng-repeat="sdata in shockData">
+          <tr ng-repeat="sdata in shockData">
             <td>{{sdata.timestamp | date: 'medium'}}</td>
             <td ng-show="rt">
               <a ng-href="http://maps.google.com/maps?q={{sdata.loc[1]}},{{sdata.loc[0]}}&ll={{sdata.loc[1]}},{{sdata.loc[0]}}&z=12" target="_blank">
@@ -95,12 +100,13 @@
               </a>
              </td>
             <td>
-            	<span class="label label-danger">X</span> <strong> {{sdata.value.x}}</strong><br/>
-              <span class="label label-danger">Y</span> <strong> {{sdata.value.y}}</strong><br />
-              <span class="label label-danger">Z</span> <strong> {{sdata.value.z}}</strong><br />
+            	<span class="label label-danger">X</span> <strong> {{sdata.value.x}}</strong> g<br/>
+              <span class="label label-danger">Y</span> <strong> {{sdata.value.y}}</strong> g<br />
+              <span class="label label-danger">Z</span> <strong> {{sdata.value.z}}</strong> g<br />
             </td>
             <td>
-            	{{sdata.value.dropheight}} m
+            	<span ng-show="!sdata.is_instantaneous">{{sdata.value.dropheight}} m</span>
+              <span class="text-danger" ng-show="sdata.is_instantaneous">Instantaneous Shock</span>
             </td>
           </tr>
 

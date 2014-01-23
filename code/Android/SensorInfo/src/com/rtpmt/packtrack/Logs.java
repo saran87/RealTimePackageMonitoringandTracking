@@ -20,26 +20,30 @@ public class Logs extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.logs);
 		
-		countLog = LogStack.LogList.size();
-		if (countLog >= 100)
-		{
-			countLog = 100;
-		}
+		
 		readText1 = (TextView) findViewById(R.id.readValues1);
 		readText1.setMovementMethod(new ScrollingMovementMethod());
 		
+		if (LogStack.LogList.size() >= 150)
+		{
+			for (int index = 0; index < 50; index++)
+			{
+				LogStack.LogList.remove(index);
+			}
+		}
+		countLog = LogStack.LogList.size();
 		for (int index = 0; index < countLog; index++)
 		{
 			String log = LogStack.LogList.get(index);
 			readText1.setText(log + "\n\r" + readText1.getText());
 		}
-		if (LogStack.LogList.size() >= 150)
+	/*	if (LogStack.LogList.size() >= 150)
 		{
-			for (int index = 0; index > 50; index--)
+			for (int index = 0; index < 50; index++)
 			{
 				LogStack.LogList.remove(index);
 			}
-		}
+		}*/
 		
         // get action bar  
         ActionBar actionBar = getActionBar();
@@ -51,6 +55,13 @@ public class Logs extends Activity{
 	public void refreshLogs(View view){
 		if (countLog < LogStack.LogList.size())
 		{
+			if (LogStack.LogList.size() >= 150)
+			{
+				for (int index = 0; index < 50; index++)
+				{
+					LogStack.LogList.remove(index);
+				}
+			}
 			countLog = LogStack.LogList.size();
 			readText1.setText("");
 			for (int index = 0; index < countLog; index++)
@@ -58,13 +69,13 @@ public class Logs extends Activity{
 				String log = LogStack.LogList.get(index);
 				readText1.setText(log + "\n\r" + readText1.getText());
 			}
-			if (LogStack.LogList.size() >= 150)
+			/*if (LogStack.LogList.size() >= 150)
 			{
-				for (int index = 0; index > 50; index--)
+				for (int index = 0; index < 50; index++)
 				{
 					LogStack.LogList.remove(index);
 				}
-			}
+			}*/
 		}
 	}
 }

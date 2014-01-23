@@ -1,4 +1,3 @@
-
 angular.module('myServices')
 	.factory('mapService',['$http','$q', function($http,$q){
 
@@ -26,7 +25,7 @@ angular.module('myServices')
 						//console.log("Error in truck package");
 
 						errors.isError = true;
-						errors.errorMsg = "Empty array returned";
+						errors.errorMsg = "No location data(GPS) available for package " + package_id + " in truck " + truck_id;
 
 						deferred.resolve([data, latestTimeStamp, errors]);
 
@@ -43,7 +42,11 @@ angular.module('myServices')
 				})
 				.error(function(data, status){
 
-					console.log("Error no data fetched " + status);
+					errors.isError = true;
+
+					errors.errorMsg = "Could not complete request. Status: " + status;
+
+					deferred.resolve([data, '', errors]);
 
 				});
 
@@ -99,11 +102,41 @@ angular.module('myServices')
 				return deferred.promise;
 		}
 
+		var _getAddress = function(lat,lng){
+
+			var deferred=$q.defer();
+
+			var geocoder;
+
+			geocoder = new google.maps.Geocoder();
+
+			var latlng = new google.maps.LatLng(lat, lng);          
+
+	          geocoder.geocode({'latLng': latlng}, function(results, status) {
+	            
+	            if (status == google.maps.GeocoderStatus.OK) {
+	              if (results[1]) {
+	                results[1].formatted_address;
+	                deferred.resolve(results[1].formatted_address);
+	              } else {
+	                
+	                deferred.resolve("Error");
+	              }
+	            } else {
+	              deferred.resolve("Error in maps");
+	            }
+	          });
+
+	          return deferred.promise
+
+		}
+
 
 		return{
 
 			getCordinatesOf: _getCordinatesOf,
-			getLatestCoordinatesof: _getLatestCoordinatesof	
+			getLatestCoordinatesof: _getLatestCoordinatesof,
+			getAddress: _getAddress	
 			
 		};
 

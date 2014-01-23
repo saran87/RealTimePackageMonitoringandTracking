@@ -21,11 +21,11 @@ Route::get('/configs/{truck_id}/{package_id}', 'ConfigController@configurationsO
  
 Route::get('/maxthreshold/{truck_id}/{package_id}', 'ConfigController@maxThresholdOf');
 
+
 //returns all packages having in specified truck_id
 Route::get('/packages/{truck_id}', 'ConfigController@listPackagesInTruckWithtruck_id'); 
 
 Route::get('/latestEntry', 'ConfigController@latestEntry');
-
 
 Route::get('truck/{truck_id}/package/{package_id}', 'ConfigController@configsPackageInTruck');
 

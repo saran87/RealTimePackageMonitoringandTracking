@@ -7,7 +7,15 @@
 				<div class="widget-head">
 
 					<div class="pull-left">Temperature Graph</div>
-					<div class="pull-right"><small>Data received every {{refreshRate}} secs</small></div>
+					<div class="pull-right">
+						<small ng-show="rt">
+						<i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
+						</small>
+						<small class="text-mute" ng-show="!rt">
+							No real-time updates
+						</small>
+
+					</div>
 
 					<div class="clearfix"></div>
 					
@@ -56,15 +64,17 @@
 	      <div class="pull-left"><i class="icon-table"></i> Temperature Table
 
 	      <span class="text-darkblue">
-	      	<small>(Showing {{temperatureData.length}} results)</small>
+	      	<small>(Showing {{tdata.length}} results)</small>
 	      </span>        
 	      </div>
 	      <div class="widget-icons pull-right">
 
-			<button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
-			<button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>
+	      	<input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="all">All values |
 
-	        <button class="btn btn-info"><i class="icon-download"></i> Download CSV</button>
+    		<input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="shown"> Above threshold 
+
+			<button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
+			<button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>        
 	        
 	      </div>
 	      <div class="clearfix"></div>
@@ -82,7 +92,7 @@
 	        </thead>
 	        <tbody>
 
-	          <tr ng-class="tdata.value > maxThreshold && 'danger' || '' " ng-repeat="tdata in temperatureData">
+	          <tr ng-class="{danger: tdata.is_above_threshold}" ng-repeat="tdata in temperatureData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold'">
 	            <td>{{tdata.timestamp | date: 'medium'}}</td>
 	            <td ng-show="rt">	            	
 	            	<span ng-show="rt"><a ng-href="http://maps.google.com/maps?q={{tdata.loc[1]}},{{tdata.loc[0]}}&ll={{tdata.loc[1]}},{{tdata.loc[0]}}&z=12" target="_blank">
@@ -91,7 +101,7 @@
 	            	</span>
 	            	<span class="text-mute" ng-show="!rt">No Location available for blackbox</span>	            	
 	            </td>
-	            <td>{{tdata.value}}</td>
+	            <td>{{tdata.value}} {{tdata.length}}</td>
 	          </tr>
 
 	        </tbody>

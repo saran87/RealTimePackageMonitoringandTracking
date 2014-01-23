@@ -1,5 +1,5 @@
 angular.module('myModule')
-  .controller('vibrationController',['$scope','$rootScope','$routeParams','vibrationService','dashBoardService','$http','$timeout',function($scope,$rootScope,$routeParams,vibrationService,dashBoardService,$http,$timeout){
+  .controller('vibrationController',['$scope','$rootScope','$routeParams','vibrationService','dashBoardService','$http','$timeout', '$q',function($scope,$rootScope,$routeParams,vibrationService,dashBoardService,$http,$timeout, $q){
 
     var latestTimestamp; //holds the latestTimestamp for data received from a package
 
@@ -22,59 +22,83 @@ angular.module('myModule')
       console.log("Undefined truck and package");
     }    
 
-    dashBoardService.getConfigurationsOf(truck,pack)
-    .then(function(data){
+    function initData(){
 
-      if(!data[2].isError){
+      var deferred=$q.defer();
 
-        if(data[0].config.vibrationx.timeperiod!=0){
-          $scope.refreshRate = data[0].config.vibrationx.timeperiod;
-        } else {
-          $scope.refreshRate = 60;
+      dashBoardService.getConfigurationsOf(truck,pack)
+      .then(function(data){
+
+        if(!data[2].isError){
+
+          if(data[0].config.vibrationx.timeperiod!=0){
+            $scope.refreshRate = data[0].config.vibrationx.timeperiod;
+          } else {
+            $scope.refreshRate = 60;
+          }        
+
+          if(data[0].config.vibrationx.maxthreshold==0){
+              $scope.maxThreshold = 0.06; 
+
+            } else {
+
+              $scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
+
+            }          
+
+            if(data[0].is_realtime){
+
+            $rootScope.rt=true;           
+
+            } else {
+
+            $rootScope.rt=false;
+
+            }
+
+            deferred.resolve();
         }        
 
-        if(data[0].config.vibrationx.maxthreshold==0){
-            $scope.maxThreshold = 0.06; 
+      });
 
-          } else {
+      return deferred.promise;
+    }
 
-            $scope.maxThreshold = data[0].config.vibrationx.maxthreshold;
+    $scope.itemfilter = {};
+    $scope.itemfilter.is_above_threshold = "all";
 
-          }          
+    initData().then(function(){
 
-          if(data[0].is_realtime){
+      vibrationService.getVibrationData(truck,pack)
+      .then(function(data){
 
-          $rootScope.rt=true;           
+        if(!data[2].isError){
 
-          } else {
+          latestTimestamp=data[1];
 
-          $rootScope.rt=false;
+          $scope.ts=latestTimestamp;
 
-          }
-      }
+          $scope.loaded=true;
+          
+          $scope.vibrationData=data[0];
+
+          vibrationUpdater();
+          
+        } else {
+
+          $scope.noData = true;
+
+          $scope.errorMsg = data[2].errorMsg;
+
+          console.log("Error: " + data[2].errorMsg);
+
+        }      
+
+      });   //end then
 
     });
 
-    vibrationService.getVibrationData(truck,pack)
-    .then(function(data){
-
-      if(!data[2].isError){
-
-        latestTimestamp=data[1];
-        $scope.vibrationData=data[0];
-
-        vibrationUpdater();
-      } else {
-
-        $scope.noData = true;
-
-        $scope.errorMsg = data[2].errorMsg;
-
-        console.log("Error: " + data[2].errorMsg);
-
-      }      
-
-    });   //end then
+    
     
     $scope.setSelected = function (indexSelected) {
       
@@ -106,6 +130,8 @@ angular.module('myModule')
               }
 
               latestTimestamp=data[1];
+
+              $scope.ts=latestTimestamp;
 
             } else {
 
@@ -368,4 +394,22 @@ angular.module('myModule')
     }
 
 
-   }]);
+   }])
+    .filter('hiddenFilter', function(){
+      return function(vibrationData, show_or_hide, attribute){
+        var shownItems = [];
+            if (show_or_hide === 'all'){
+
+              shownItems=vibrationData;
+
+              return shownItems;
+
+            } 
+            angular.forEach(vibrationData, function (item) {
+                if (show_or_hide === 'shown') {
+                    if (item[attribute] === true) shownItems.push(item);
+                }
+            });
+            return shownItems;
+      }
+    });

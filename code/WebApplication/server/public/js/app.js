@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 
-angular.module('myApp', ['myModule','ngRoute','myServices','myDirectives','nvd3ChartDirectives','leaflet-directive'])    
+angular.module('myApp', ['myModule','ngRoute','myServices','myDirectives','nvd3ChartDirectives','myApp.filters'])    
     .config(['$routeProvider','$httpProvider', function($routeProvider,$httpProvider) {
 
     /*
@@ -36,8 +36,8 @@ angular.module('myApp', ['myModule','ngRoute','myServices','myDirectives','nvd3C
 
     $routeProvider.when('/map',
     {
-        templateUrl: 'partials/map.html',
-        controller: 'mapController'
+        templateUrl: 'partials/mapGeneral.html'
+        
     });
 
     $routeProvider.when('/map/:truck_id/:package_id',

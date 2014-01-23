@@ -9,8 +9,7 @@ angular.module('myModule')
 
 
 		$scope.render = function(){
-
-			//console.log($location.path()+" "+$routeParams);
+			
 			if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 					
 				$scope.sideNavHrefs = {
@@ -49,8 +48,7 @@ angular.module('myModule')
 						"temperature" : "#/temperature",
 						"humidity" : "#/humidity",
 						"vibration" : "#/vibration",
-						"shock" : "#/shock"	
-
+						"shock" : "#/shock"
 					};
 			}
 		};		
@@ -61,15 +59,7 @@ angular.module('myModule')
 
 			$rootScope.typeOfService = service;
 		}		
-
-		$scope.goHome = function(){			
-
-			$rootScope.typeOfService = constants.DEFAULTSERVICETYPE;		
-			$rootScope.tid=undefined;
-	  		$rootScope.pid=undefined;
-	  		$scope.render();
-	  		$location.path("#/dashboard");
-		}
+		
 
 	  	$scope.urlFunc = function(){	  			  		
 
@@ -92,9 +82,7 @@ angular.module('myModule')
 	    		$scope.currentUrl=$location.path();
 	    		$location.path($scope.currentUrl+'/'+$scope.txtpackage_id);
 	    	}  	
-	    }; //end function packageUrl
-
-		
+	    }; //end function packageUrl	
 
 
 
@@ -220,11 +208,11 @@ angular.module('myModule')
 
 						}
 
-						var mesg = "New truck added. Truck_id: "+data.truck_id + " Packages: " +packmsg + " SensorId: " + data.sensor_id ;
+						var mesg = "New truck added with Truck_id: "+data.truck_id + " Packages: " +packmsg + " SensorId: " + data.sensor_id ;
 
 						var options = {
-							header: "Truck Update",
-							life: 5000
+							header: "New Truck Update",
+							life: 8000
 						};
 
 						
@@ -242,12 +230,9 @@ angular.module('myModule')
 
 							if($scope.trucks[i].id == data.truck_id){
 
-								$scope.trucks[i].packages = packagesList(data.truck_id);
+								$scope.trucks[i].packages = packagesList(data.truck_id);								
 
-								/*console.log("packages updated ");
-								console.dir($scope.trucks[i]);*/
-
-								$.jGrowl("Packages Updated in truck_id"+data.truck_id, {life: 5000});
+								$.jGrowl("Packages Updated in truck_id "+data.truck_id, {life: 8000});
 							}
 						}
 
@@ -255,8 +240,7 @@ angular.module('myModule')
 					} //inner else
 
 				} else {
-
-					//$.jGrowl("No new Data", { life: 10000 });						
+										
 				}
 
 
@@ -264,7 +248,7 @@ angular.module('myModule')
 			}); //end then
 
 			
-			$timeout(updater, 45000);
+			$timeout(updater, 60000);
 
 
 		} // end Updater	

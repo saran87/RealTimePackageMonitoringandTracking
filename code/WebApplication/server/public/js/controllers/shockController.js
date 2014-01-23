@@ -1,5 +1,5 @@
 angular.module('myModule')
-	.controller('shockController',['$scope','$rootScope','$routeParams','shockService','dashBoardService','$http','$timeout', function($scope,$rootScope,$routeParams,shockService,dashBoardService,$http,$timeout){
+	.controller('shockController',['$scope','$rootScope','$routeParams','shockService','dashBoardService','$http','$timeout','$q', function($scope,$rootScope,$routeParams,shockService,dashBoardService,$http,$timeout,$q){
 
 		var latestTimestamp; //holds the latestTimestamp for data received from a package
 
@@ -22,70 +22,90 @@ angular.module('myModule')
 			console.log("Undefined truck and package");
 		}
 
-    	dashBoardService.getConfigurationsOf(truck,pack)
-    	.then(function(data){
+		function initData(){
 
-	      if(!data[2].isError){	      		      	
+    		var deferred = $q.defer();
 
-	        if(data[0].config.shockx.timeperiod!=0){
-  				$scope.refreshRate = data[0].config.shockx.timeperiod;
-  			} else {
-  				$scope.refreshRate = 60;
-  			}
+	    	dashBoardService.getConfigurationsOf(truck,pack)
+	    	.then(function(data){
+
+		      if(!data[2].isError){	      		      	
+
+		        if(data[0].config.shockx.timeperiod!=0){
+
+	  				$scope.refreshRate = data[0].config.shockx.timeperiod;
+
+	  			} else {
+	  				
+	  				$scope.refreshRate = 60;
+	  			}
 
 
-	        if(data[0].config.shockx.maxthreshold!=0){
-	        	
-	        	$scope.maxThreshold = data[0].config.shockx.maxthreshold;
+		        if(data[0].config.shockx.maxthreshold!=0){
+		        	
+		        	$scope.maxThreshold = data[0].config.shockx.maxthreshold;
 
-	        } else {
+		        } else {
 
-	        	$scope.maxThreshold = 2.0;	
+		        	$scope.maxThreshold = 2;	
 
-	        }
-	        
+		        }
+		        
 
-	        if(data[0].is_realtime){
+		        if(data[0].is_realtime){
 
-				$rootScope.rt=true;	        	
+					$rootScope.rt=true;	        	
 
-	        } else {
+		        } else {
 
-	        	$rootScope.rt=false;
+		        	$rootScope.rt=false;
 
-	        }
-	        
-	        
-	      } 
+		        }
 
-    	});
+		        deferred.resolve();		        
+		        
+		      } 
 
-	    shockService.getShockData(truck,pack)
-	    .then(function(data){
+	    	});
 
-	    	if(!data[2].isError){
+	    	return deferred.promise;
+    	}
 
-	    		$scope.noData=false;
+    	initData().then(function(){
 
-	    		latestTimestamp=data[1];
-	    		
-	    		$scope.shockData=data[0];
+    		shockService.getShockData(truck,pack)
+		    .then(function(data){
 
-	    		$scope.discreteGraph();
+		    	if(!data[2].isError){
 
-	    		shockUpdater();
+		    		$scope.noData=false;
 
-	    	} else {	    		
+		    		latestTimestamp=data[1];
 
-	    		$scope.noData = true;
+		    		$scope.ts=latestTimestamp;
 
-	    		$scope.errorMsg = data[2].errorMsg;
+		    		$scope.loaded=true;
+		    		
+		    		$scope.shockData=data[0];
 
-	    		console.log("Error: " + data[2].errorMsg);
+		    		$scope.discreteGraph();
 
-	    	}
+		    		shockUpdater();
 
-	    });
+		    	} else {	    		
+
+		    		$scope.noData = true;
+
+		    		$scope.errorMsg = data[2].errorMsg;
+
+		    		console.log("Error: " + data[2].errorMsg);
+
+		    	}
+
+		    });
+
+    	});		    
+		
 
 	    var shockUpdater = function(action){	    	
 
@@ -111,6 +131,8 @@ angular.module('myModule')
 	            			}
 
 	            			latestTimestamp=data[1];
+
+	            			$scope.ts=latestTimestamp;
 
 	            			$scope.discreteGraph();
 

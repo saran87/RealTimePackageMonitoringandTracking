@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App - RTPMT</title>
+  <title>PakMac - Package Monitoring and Communication</title>
   <link rel="stylesheet" href="css/app.css"/>
   <!-- Stylesheets -->
   <link href="style/jquery-ui.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 
   #map-canvas {
     width: 100%;
-    height: 650px;
+    height: 450px;
     padding: 100px;
   } 
  
@@ -51,15 +51,15 @@
                   <div class="col-md-3 text-center" id="truckSel">
                     
                         <select class="chosen-select form-control" ng-model="selected.id" ng-options="t.id for t in trucks">
-                          <option value="">-- Truck --</option>
+                          <option disabled="disabled" value=""> Select Truck </option>
                         </select>
 
-                  </div>                 
+                  </div>                  
                   
                   <div class="col-md-3 col-md-offset-1 text-center" id="packSel">
                     
                          <select ng-change="urlFunc()" class="chosen-select form-control" ng-model="selected.package" ng-options="p for p in selected.id.packages">
-                            <option value="">-- Package --</option>
+                            <option disabled="disabled" value=""> Select Package </option>
                         </select>
                   </div>
                   <div class="col-md-3">
@@ -176,8 +176,6 @@
   <script src="js/nv.d3.js"></script>
   <script src="js/moment.js"></script>
   <script src="js/angularjs-nvd3-directives.js"></script>
-  <script src="js/angular-leaflet-directive.min.js"></script>
-  
   
   <script src="js/controllers/bootstrap.js"></script> <!-- Loading the module from controllers -->
   <script src="js/controllers/selectMenuController.js"></script>
