@@ -1031,6 +1031,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblPackageId.setText("xxxxxx");
         jlblSensorId1.setText("xxxxxx");
         jlblComments.setText("xxxxxx");
+        jlblBatteryLevelValue.setText("0");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public void clearLocalDataTable() {
