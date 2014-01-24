@@ -11,6 +11,8 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,17 +67,31 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     private SensorClient sensorClient;
 
     private ProgressBar bar;
-    private final static String address = "54.254.230.28";//"saranlap.student.rit.edu";//"54.204.32.227";//
+    private  static String serverAddress = "54.254.230.28";//"saranlap.student.rit.edu";//"54.204.32.227";//
+    private  static int serverPort = 8080; 
     private boolean pushToServer = false;
     private static String logSensorType = "temperaur";
 
-    public UIEventHandler(SensorConfigurator object) throws FileNotFoundException {
+    public UIEventHandler(SensorConfigurator object) throws FileNotFoundException, IOException {
 
         UIObject = object;
         File f = new File(FOLDER);
         File cf = new File(CONFIG_FOLDER);
         String logText = "Creating data and config folder";
         log(logText);
+        BufferedReader br = new BufferedReader(new java.io.FileReader("server.properties"));
+        try {
+            String server = br.readLine();
+            serverAddress = server.substring(0,server.indexOf(':'));
+            serverPort = Integer.parseInt(server.substring(server.indexOf(':')+1));
+            UIObject.ipTextField.setText(serverAddress);
+            UIObject.portTextField.setText(Integer.toString(serverPort));
+        } catch (IOException ex) {
+            Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            br.close();
+        }
         try {
             if (f.mkdir() && cf.mkdir()) {
                 logText = "Data and Config Folder Created";
@@ -93,15 +109,24 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             log(logText, e);
         }
         //connect to server
-        initServer(false);
+        //initServer(false);
     }
 
     public void initServer(boolean ui) {
         String logText = "Connecting to server";
         log(logText);
+        serverAddress = UIObject.ipTextField.getText().trim();
+        try
+        {
+            serverPort = Integer.parseInt(UIObject.portTextField.getText().trim());
+        
         try {
-            sensorClient = new SensorClient(address, 8080);
+            BufferedWriter bw = new BufferedWriter(new java.io.FileWriter("server.properties"));
+            bw.write(serverAddress+":"+serverPort);
+            bw.close();
+            sensorClient = new SensorClient(serverAddress, serverPort);
             sensorClient.connect();
+            
             if (sensorClient.isIsServerAvaialable()) {
                 logText = "Connected to Server";
                 UIObject.jLabel27.setText("Connected");
@@ -114,6 +139,10 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             if (ui) {
                 UIObject.handleError("Cannot connect to the server");
             }
+        }
+        }
+        catch(NumberFormatException e){
+            UIObject.handleError("Please Enter valid IP and Port");
         }
     }
 
