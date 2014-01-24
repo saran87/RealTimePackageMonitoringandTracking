@@ -7,199 +7,229 @@ angular.module('myModule')
 
 		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
-            var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
-            var pack=$rootScope.pid; //package_id selected in the Dropdown menu
-        } 
-        else if($routeParams.truck_id && $routeParams.package_id){
+        var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
+        var pack=$rootScope.pid; //package_id selected in the Dropdown menu
+    } 
+    else if($routeParams.truck_id && $routeParams.package_id){
 
-            $rootScope.tid=$routeParams.truck_id;
-            $rootScope.pid=$routeParams.package_id;
+        $rootScope.tid=$routeParams.truck_id;
+        $rootScope.pid=$routeParams.package_id;
 
-            var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
-            var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
-        } 
-        else {
-            console.log("Undefined truck and package");
-        }  
+        var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
+        var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+    } 
+    else {
+        console.log("Undefined truck and package");
+    }  
 
-        dashBoardService.getConfigurationsOf(truck,pack)
-        .then(function(data){
+    dashBoardService.getConfigurationsOf(truck,pack)
+    .then(function(data){
 
-          if(!data[2].isError){
+      if(!data[2].isError){
 
-            if(data[0].config.temperature.timeperiod!=0 && data[0].config.humidity.timeperiod!=0 &&data[0].config.vibrationx.timeperiod!=0){              
+        if(data[0].config.temperature.timeperiod!=0 && data[0].config.humidity.timeperiod!=0 &&data[0].config.vibrationx.timeperiod!=0){              
 
-              $scope.refreshRate=Math.min.apply( Math, [data[0].config.temperature.timeperiod,data[0].config.humidity.timeperiod,data[0].config.vibrationx.timeperiod] );
+          $scope.refreshRate=Math.min.apply( Math, [data[0].config.temperature.timeperiod,data[0].config.humidity.timeperiod,data[0].config.vibrationx.timeperiod] );
 
-            } else {
+        } else {
 
-              $scope.refreshRate=60;
-
-            }
-              if(data[0].is_realtime){
-
-                $rootScope.rt=true;           
-
-              } else {
-
-                $rootScope.rt=false;
-              }
-          }
-
-        });
-
-        var directionsDisplay;
-        var directionsService = new google.maps.DirectionsService();
-        var map;
-        var geocoder;
-
-        directionsDisplay = new google.maps.DirectionsRenderer();
-         
-        geocoder = new google.maps.Geocoder();
-
-        /**
-       * Add the latitude and longitude to polyline and a marker and info window
-       * @param {google.maps.LatLng(} latitude , longitude
-       */
-      function addLatLng(latLng,message) {
-         
-          // Add a new marker at the new plotted point on the polyline.
-          var marker = new google.maps.Marker({
-            position:latLng,
-            title: 'Click for location information',
-            map: map,
-            animation: google.maps.Animation.DROP,
-            icon: {
-                
-                url: "../img/icon-package.png",
-                size: new google.maps.Size(24,24)
-            }       
-          });
-
-          console.dir(marker.icon);
-          
-          //Add an info window to the position
-          var infowindow = new google.maps.InfoWindow({});
-
-          google.maps.event.addListener(marker, 'click', function() {
-              infowindow.open(map,marker);
-              
-              getAddress(latLng,function(addr){
-
-                message+="</h6><strong>Address</strong>: " + addr + "</h6>";
-
-                infowindow.setContent(message);
-              
-              });
-                          
-          });
-       
-        }
-
-        function getAddress(latlng,callback) {
-
-          var addr = '';          
-
-          geocoder.geocode({'latLng': latlng}, function(results, status) {
-            //console.log(results[1].formatted_address);
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (results[1]) {
-
-                addr=results[1].formatted_address;                                
-
-                callback(addr);
-                
-              } else {
-                //return 'No results found';
-                callback('No results found');
-              }
-            } else {
-              //return 'Geocoder failed due to: ' + status;
-              callback('Geocoder failed due to: ' + status);
-            }
-          });          
+          $scope.refreshRate=60;
 
         }
+          if(data[0].is_realtime){
 
-        function initialize(initLoc) {
-          //directionsDisplay = new google.maps.DirectionsRenderer();
-          var initLocation = initLoc;
-          //geocoder = new google.maps.Geocoder();
-          var mapOptions = {
-            zoom: 8,
-            center: initLoc
-          }
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-          directionsDisplay.setMap(map);
-        }
-
-        function markerContent(inObj){
-          var contentStr = '<strong>Truck ID</strong>: ' + inObj.truck_id + ' <strong>Package ID</strong>: ' + inObj.package_id;
-
-          if(inObj.temperature){
-            if(inObj.is_above_threshold){
-
-              contentStr+="<h6 class='text-danger'>Temperature <small>(Above Threshold)</small></h6>";
-
-            } else {
-
-              contentStr+="<h6 class='text-info'>Temperature</h6>";
-
-            }
-
-            contentStr+=
-              "<div>" + 
-                "<strong>Temperature</strong> of <strong>" + inObj.temperature.value + " F</strong> at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
-          
-          } else if (inObj.humidity){
-
-            if(inObj.is_above_threshold){
-
-              contentStr+="<h6 class='text-danger'>Humidity <small>(Above Threshold)</small></h6>";
-
-            } else {
-
-              contentStr+="<h6 class='text-info'>Humidity</h6>";
-
-            }            
-
-            contentStr+=
-              "<div>" + 
-                "<strong>Humidity</strong> of <strong>" + inObj.humidity.value + " %RH</strong> at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
-
-          } else if(inObj.vibration){
-
-            if(inObj.is_above_threshold){
-
-              contentStr+="<h6 class='text-danger'>Vibration <small>(Above Threshold)</small></h6>";
-
-            } else {
-
-              contentStr+="<h6 class='text-info'>Vibration</h6>";
-
-            }
-
-            contentStr+=
-              "<div>" + 
-                "<strong>Vibration</strong> occured at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
-
-          } else if(inObj.shock){            
-
-            contentStr+="<h6 class='text-danger'>Shock</h6>";
-
-            contentStr+=
-              "<div>" + 
-                "<strong>Shock</strong> experienced at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
+            $rootScope.rt=true;           
 
           } else {
 
-            contentStr+="<strong>No data available</strong>";
+            $rootScope.rt=false;
+          }
+      }
+
+    });
+
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
+    var geocoder;
+
+    directionsDisplay = new google.maps.DirectionsRenderer();
+     
+    geocoder = new google.maps.Geocoder();
+
+      /**
+     * Add the latitude and longitude to polyline and a marker and info window
+     * @param {google.maps.LatLng(} latitude , longitude
+     */
+    function addLatLng(latLng,message,type) {
+
+      var iconType = 'default';
+
+      if(type){
+        iconType = type;
+      }
+       
+        // Add a new marker at the new plotted point on the polyline.
+        var marker = new google.maps.Marker({
+          position:latLng,
+          title: 'Click for location information',
+          map: map,
+          animation: google.maps.Animation.DROP,
+          icon: {
+              
+              url: "../img/"+iconType+"-pin.png",
+              size: new google.maps.Size(24,24)
+          }       
+        });
+
+        //Add an info window to the position
+        var infowindow = new google.maps.InfoWindow({});
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+            
+            getAddress(latLng,function(addr){
+
+              message+="</h6><strong>Address</strong>: " + addr + "</h6>";
+
+              infowindow.setContent(message);
+            
+            });
+                        
+        });
+     
+      }
+
+      function getAddress(latlng,callback) {
+
+        var addr = '';          
+
+        geocoder.geocode({'latLng': latlng}, function(results, status) {
+          //console.log(results[1].formatted_address);
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+
+              addr=results[1].formatted_address;                                
+
+              callback(addr);
+              
+            } else {
+              
+              callback('No results found');
+            }
+          } else {
+            
+            callback('Geocoder failed due to: ' + status);
+          }
+        });          
+
+      }
+
+      function initialize(initLoc) {
+        //directionsDisplay = new google.maps.DirectionsRenderer();
+        var initLocation = initLoc;
+        //geocoder = new google.maps.Geocoder();
+        var mapOptions = {
+          zoom: 8,
+          center: initLoc
+        }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        directionsDisplay.setMap(map);
+      }
+
+      function markerContent(inObj){
+        var contentStr = '<strong>Truck ID</strong>: ' + inObj.truck_id + ' <strong>Package ID</strong>: ' + inObj.package_id;
+
+        if(inObj.temperature){
+          if(inObj.is_above_threshold){
+
+            contentStr+="<h6 class='text-danger'>Temperature <small>(Above Threshold)</small></h6>";
+
+          } else {
+
+            contentStr+="<h6 class='text-info'>Temperature</h6>";
 
           }
 
-          return contentStr;
+          contentStr+=
+            "<div>" + 
+              "<strong>Temperature</strong> of <strong>" + inObj.temperature.value + " F</strong> at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
+        
+        } else if (inObj.humidity){
+
+          if(inObj.is_above_threshold){
+
+            contentStr+="<h6 class='text-danger'>Humidity <small>(Above Threshold)</small></h6>";
+
+          } else {
+
+            contentStr+="<h6 class='text-info'>Humidity</h6>";
+
+          }            
+
+          contentStr+=
+            "<div>" + 
+              "<strong>Humidity</strong> of <strong>" + inObj.humidity.value + " %RH</strong> at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
+
+        } else if(inObj.vibration){
+
+          if(inObj.is_above_threshold){
+
+            contentStr+="<h6 class='text-danger'>Vibration <small>(Above Threshold)</small></h6>";
+
+          } else {
+
+            contentStr+="<h6 class='text-info'>Vibration</h6>";
+
+          }
+
+          contentStr+=
+            "<div>" + 
+              "<strong>Vibration</strong> occured at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
+
+        } else if(inObj.shock){            
+
+          contentStr+="<h6 class='text-danger'>Shock</h6>";
+
+          contentStr+=
+            "<div>" + 
+              "<strong>Shock</strong> experienced at <strong>" + new Date(inObj.timestamp) + "</strong></div>";
+
+        } else {
+
+          contentStr+="<strong>No data available</strong>";
 
         }
+
+        return contentStr;
+
+      }
+
+      function getType(inObj){
+
+        if(inObj.temperature){
+
+          return 'temperature';
+
+        }
+        else if(inObj.humidity){
+
+          return 'humidity';
+
+        }
+        else if(inObj.vibration){
+
+          return 'vibration';
+
+        } 
+        else if(inObj.shock){
+
+          return 'shock';
+
+        }
+
+
+      }
 
       $scope.makeMap=function(){
 
@@ -216,42 +246,57 @@ angular.module('myModule')
 
             $scope.loaded=true;
 
-            var waypts=[];
+            var waypts=[];            
+
 
             if(data[0].length>1){
           
               var waypts=[
                   {
-                      location: new google.maps.LatLng(data[0][2].loc.lat, data[0][2].loc.lng),
-                      stopover: false
+                      location: new google.maps.LatLng(data[0][Math.floor(data[0].length/2)].loc.lat, data[0][Math.floor(data[0].length/2)].loc.lng),
+                      stopover: true
                   },
                   {
-                      location: new google.maps.LatLng(data[0][3].loc.lat, data[0][3].loc.lng),
-                      stopover: false
+                      location: new google.maps.LatLng(data[0][Math.floor((data[0].length/2)/2)].loc.lat, data[0][Math.floor((data[0].length/2)/2)].loc.lng),
+                      stopover: true
                   },
                   {
-                      location: new google.maps.LatLng(data[0][4].loc.lat, data[0][4].loc.lng),
-                      stopover: false
+                      location: new google.maps.LatLng(data[0][Math.floor(((data[0].length/2)/2)/2)].loc.lat, data[0][Math.floor(((data[0].length/2)/2)/2)].loc.lng),
+                      stopover: true
                   },
                   {
-                      location: new google.maps.LatLng(data[0][5].loc.lat, data[0][5].loc.lng),
-                      stopover: false
+                      location: new google.maps.LatLng(data[0][Math.floor((((data[0].length/2)/2)/2)/2)].loc.lat, data[0][Math.floor((((data[0].length/2)/2)/2)/2)].loc.lng),
+                      stopover: true
                   },
                   {
-                      location: new google.maps.LatLng(data[0][6].loc.lat, data[0][6].loc.lng),
-                      stopover: false
+                      location: new google.maps.LatLng(data[0][Math.floor(((((data[0].length/2)/2)/2)/2)/2)].loc.lat, data[0][Math.floor(((((data[0].length/2)/2)/2)/2)/2)].loc.lng),
+                      stopover: true
                   }
 
               ];
-            } 
+            }
+
+            console.dir(data[0][Math.floor(data[0].length/2)]);
+
+
+
+            console.dir(waypts);
+
+            var arr=[1,2,3];
+
+            if(arr[arr.length+1]){
+              console.log("za");
+            } else {
+              console.log("zu");
+            }
+
+            
 
             initialize(new google.maps.LatLng(data[0][0].loc.lat, data[0][0].loc.lng));
 
             var start=new google.maps.LatLng(data[0][0].loc.lat, data[0][0].loc.lng);
 
-            var end=new google.maps.LatLng(data[0][data[0].length-1].loc.lat,data[0][data[0].length-1].loc.lng);
-
-            console.log(start + " " + end);
+            var end=new google.maps.LatLng(data[0][data[0].length-1].loc.lat,data[0][data[0].length-1].loc.lng);         
             
             var request = {
               origin: start,
@@ -276,12 +321,13 @@ angular.module('myModule')
 
               var msg = markerContent(data[0][i]);
 
-              addLatLng(latLng, msg);
+              var type=getType(data[0][i]);
+
+              addLatLng(latLng, msg,type);
 
               if(i==data.length-1){
 
                 mapUpdater();           
-
               }
             }
 
@@ -326,7 +372,9 @@ angular.module('myModule')
 
               var msg = markerContent(data[0][i]);
 
-              addLatLng(latLng, msg);
+              var type=getType(data[0][i]);
+
+              addLatLng(latLng, msg, type);
 
             }          
         

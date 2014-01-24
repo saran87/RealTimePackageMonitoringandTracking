@@ -86,7 +86,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-class="{danger: hdata.is_above_threshold}" ng-repeat="hdata in humidityData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold'">						
+					<tr ng-class="{danger: hdata.is_above_threshold}" ng-repeat="hdata in humidityData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold' | orderBy:'-timestamp' ">						
 						<td>{{hdata.timestamp | date: 'medium'}}</td>
 						<td ng-show="rt">
 							<a ng-href="http://maps.google.com/maps?q={{hdata.loc[1]}},{{hdata.loc[0]}}&ll={{hdata.loc[1]}},{{hdata.loc[0]}}&z=12" target="_blank">

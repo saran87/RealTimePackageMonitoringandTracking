@@ -238,9 +238,8 @@ angular.module('myModule')
 						    	}
 					    
 					    	];
-
 	    					
-	    					console.dir("new temperaturegraph update: " + $scope.data);
+	    					//console.dir("new temperaturegraph update: " + $scope.data);
 
 	    					latestTimestamp=data[2];
 	    					$scope.ts=latestTimestamp;

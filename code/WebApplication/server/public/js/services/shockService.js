@@ -59,7 +59,11 @@ angular.module('myServices')
 
 						    	var maxVal=Math.max(tmpx[0],tmpy[0],tmpz[0]);
 						    	var maxIndex=Math.max(tmpx[1],tmpy[1],tmpz[1]);
+						    	
 						    	var t = ((maxIndex * 1.25) + 70 * (1.25))/1000;
+
+						    	//var t = (maxIndex * 0.00625) + 70;
+
 						    	var height = 4.9 * Math.pow(t,2);
 
 						        highestVals.value.x = tmpx[0];

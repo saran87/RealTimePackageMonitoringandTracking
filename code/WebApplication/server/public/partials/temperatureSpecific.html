@@ -64,7 +64,7 @@
 	      <div class="pull-left"><i class="icon-table"></i> Temperature Table
 
 	      <span class="text-darkblue">
-	      	<small>(Showing {{tdata.length}} results)</small>
+	      	<small>(Showing {{temperatureData.length}} results)</small>
 	      </span>        
 	      </div>
 	      <div class="widget-icons pull-right">
@@ -92,7 +92,7 @@
 	        </thead>
 	        <tbody>
 
-	          <tr ng-class="{danger: tdata.is_above_threshold}" ng-repeat="tdata in temperatureData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold'">
+	          <tr ng-class="{danger: tdata.is_above_threshold}" ng-repeat="tdata in temperatureData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold' | orderBy:'-timestamp' ">
 	            <td>{{tdata.timestamp | date: 'medium'}}</td>
 	            <td ng-show="rt">	            	
 	            	<span ng-show="rt"><a ng-href="http://maps.google.com/maps?q={{tdata.loc[1]}},{{tdata.loc[0]}}&ll={{tdata.loc[1]}},{{tdata.loc[0]}}&z=12" target="_blank">

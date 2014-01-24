@@ -103,7 +103,7 @@
             <th>Analysis</th>
           </tr>
 
-          <tr ng-class="{danger: vdata.is_above_threshold, selected: $index == indexSelected}" ng-repeat="vdata in vibrationData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold'">
+          <tr ng-class="{danger: vdata.is_above_threshold, selected: $index == indexSelected}" ng-repeat="vdata in vibrationData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold' | orderBy:'-timestamp' ">
             <td>{{vdata.timestamp | date: 'medium'}}</td>
             <td ng-show="rt">
               <a ng-href="http://maps.google.com/maps?q={{vdata.loc[1]}},{{vdata.loc[0]}}&ll={{vdata.loc[1]}},{{vdata.loc[0]}}&z=12" target="_blank">

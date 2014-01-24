@@ -88,6 +88,8 @@ angular.module('myServices')
 					    	}
 					        
 			      		}//end for
+
+			      		//_temperatureData=_temperatureData.reverse();
 			      		
 			      		deferred.resolve([_temperatureData, _temperatureGraphData, latestTimeStamp, errors]);
 					
@@ -152,6 +154,8 @@ angular.module('myServices')
 						}
 
 					}
+
+					//_newtemperatureData=_newtemperatureData.reverse();
 
 				deferred.resolve([_newtemperatureData, _newtemperatureGraphData, latestTimeStamp, errors]);
 

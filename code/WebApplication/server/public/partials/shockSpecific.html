@@ -92,7 +92,7 @@
         </thead>
         <tbody>
 
-          <tr ng-repeat="sdata in shockData">
+          <tr ng-repeat="sdata in shockData | orderBy:'-timestamp' ">
             <td>{{sdata.timestamp | date: 'medium'}}</td>
             <td ng-show="rt">
               <a ng-href="http://maps.google.com/maps?q={{sdata.loc[1]}},{{sdata.loc[0]}}&ll={{sdata.loc[1]}},{{sdata.loc[0]}}&z=12" target="_blank">
