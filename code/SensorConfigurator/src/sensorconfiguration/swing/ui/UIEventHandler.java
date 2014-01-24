@@ -344,10 +344,13 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
     }
 
     void configureSensor(Package packs) {
+        
         String logText = "Starting to configure the sensor";
+        bar = new ProgressBar(100,logText, UIObject);
         log(logText);
 
         try {
+           bar.setProgress(10, "Configuring the Sensor. Please wait");
             if (!isSensorConnected || !packetReader.configure(packs)) {
                 logText = "Cannot configure the sensor, try again";
                 UIObject.handleError(logText);
@@ -357,6 +360,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                 UIObject.handleError(logText);
                 log(logText);
             }
+             
         } catch (IOException ex) {
             logText = "Too many listeners. (" + ex.toString() + ")";
             log(logText, ex);
@@ -369,6 +373,9 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             logText = "NUll Pointer Exception. (" + ex.toString() + ")";
             log(logText, ex);
             UIObject.handleError("Cannot configure the sensor, try again");
+        }
+        finally{
+            bar.done();
         }
 
     }
