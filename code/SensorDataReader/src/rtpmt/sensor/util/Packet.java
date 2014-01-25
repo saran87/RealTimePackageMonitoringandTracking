@@ -48,7 +48,9 @@ public final class Packet extends Header {
             
             this.Service = byteArray[5];
             this.ServiceId = byteArray[6];
+            //start from 7th position
             i = 7;
+            //now payloadlength is -4 used for timestamp
             payLoadLength =  byteArray.length-4;
         }
         
@@ -185,7 +187,7 @@ public final class Packet extends Header {
         StringBuilder vibration = new StringBuilder();
         double g;
 
-        for (int i = 0; i < PayLoad.size(); i++) {
+        for (int i = 1; i < PayLoad.size(); i++) {
             short value = PayLoad.get(i);
             g = (value * 15.6) / 1000;
             vibration.append(String.valueOf(truncate(g,4))).append(" ");
@@ -200,7 +202,7 @@ public final class Packet extends Header {
         StringBuilder shock = new StringBuilder();
         double g;
         
-        for (int i=0; i < PayLoad.size(); i++) {
+        for (int i=1; i < PayLoad.size(); i++) {
             //Unsigned integer value, note the 0xffff not 0xff
             short value = (short) (PayLoad.get(i) & 0xFF);
             g = (value - 128) / 0.64;
@@ -341,7 +343,7 @@ public final class Packet extends Header {
     public void combinePacket(Packet partialpacket) {
        //remove the first information byte
         partialpacket.PayLoad.remove(0);
-        this.PayLoad.remove(0);
+        //this.PayLoad.remove(0); we need it to check for instanteaousshock
         this.PayLoad.addAll( partialpacket.PayLoad);
     }
     
@@ -468,23 +470,18 @@ public final class Packet extends Header {
                 sensor = PackageInformation.Sensor.newBuilder();
                 sensor.setSensorUnit("%RH");
                 sensor.setSensorType(PackageInformation.SensorType.HUMIDITY);
-                System.out.println(this.getHumidity());
                 sensor.setSensorValue(String.valueOf((this.getHumidity())));
                 message.addSensors(sensor);
             } else if (this.isVibration()) {
                 sensor = PackageInformation.Sensor.newBuilder();
                 sensor.setSensorUnit("g");
                 if (this.isX()) {
-                    System.out.println("X=");
                     sensor.setSensorType(PackageInformation.SensorType.VIBRATIONX);
                 } else if (this.isY()) {
-                    System.out.println("Y=");
                     sensor.setSensorType(PackageInformation.SensorType.VIBRATIONY);
                 } else if (this.isZ()) {
-                    System.out.println("Z=");
                     sensor.setSensorType(PackageInformation.SensorType.VIBRATIONZ);
                 }
-                System.out.print(this.getVibration());
                 sensor.setSensorValue(String.valueOf((this.getVibration())));
                 message.addSensors(sensor);
             } else if (this.isShock()) {
@@ -497,8 +494,8 @@ public final class Packet extends Header {
                 } else if (this.isZ()) {
                     sensor.setSensorType(PackageInformation.SensorType.SHOCKZ);
                 }
+             
                 message.setIsInstantaneous(this.isInstanteaous());
-                System.out.println(this.getShock());
                 sensor.setSensorValue(String.valueOf((this.getShock())));
                 message.addSensors(sensor);
             }

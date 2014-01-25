@@ -32,11 +32,151 @@
      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutFourForEdit"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <TextView
+        android:id="@+id/text_temperatureThreshold"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_temperatureThreshold" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutFiveForEdit"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <TextView
+        android:id="@+id/text_temperatureThresholdTime"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_temperatureThresholdTime" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutSixForEdit"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <TextView
+        android:id="@+id/text_humidityThreshold"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_humidityThreshold" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutSevenForEdit"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <TextView
+        android:id="@+id/text_humidityThresholdTime"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_humidityThresholdTime" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutEightForEdit"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <TextView
+        android:id="@+id/text_vibrationThreshold"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_vibrationThreshold" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutNineForEdit"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <TextView
+        android:id="@+id/text_vibrationThresholdTime"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_vibrationThresholdTime" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/innerLayoutTenForEdit"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+     <TextView
+        android:id="@+id/text_shockThreshold"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/text_shockThreshold" />
+
+     </LinearLayout>
+     
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/innerLayoutfourForEdit"
+        android:id="@+id/innerLayoutElevenForEdit"
         android:baselineAligned="false"
         android:orientation="horizontal" >
      

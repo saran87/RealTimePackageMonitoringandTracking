@@ -35,7 +35,7 @@ public class AddSensor extends Activity {
 			Toast.makeText(this, "Invalid Sensor Id", Toast.LENGTH_LONG).show();
 		} else {
 			EditText editText1 = (EditText) findViewById(R.id.edit_packageid);
-			String packageId = editText1.getText().toString().trim();
+			String packageId = editText1.getText().toString().trim().toUpperCase();
 
 			Sensors sensorObject = new Sensors(sensorId, packageId);
 

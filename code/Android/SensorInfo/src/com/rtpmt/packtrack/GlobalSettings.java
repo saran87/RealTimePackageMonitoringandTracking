@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -32,7 +33,8 @@ import com.example.sensorinfo.R;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class GlobalSettings extends PreferenceActivity {
-	
+	//final SensorCart listOfSensors = (SensorCart) getApplicationContext();
+	public static String[] sensor_list_arr;
 	/**
 	 * Determines whether to always show the simplified settings UI, where
 	 * settings are presented in a single list. When false, settings are shown
@@ -105,12 +107,19 @@ public class GlobalSettings extends PreferenceActivity {
 		getPreferenceScreen().addPreference(fakeHeader);*/
 		addPreferencesFromResource(R.xml.pref_general);
 
+		sensor_list_arr = SensorCart.sensorIdList.toArray(new String[SensorCart.sensorIdList.size()]);
+		
+		ListPreference sensorList = (ListPreference) findPreference("sensor_list");
+		sensorList.setEntries(sensor_list_arr);
+		sensorList.setEntryValues(sensor_list_arr);
+		//sensorList.setValue(sensor_list_arr[0]);
+		
 		// Add 'notifications' preferences, and a corresponding header.
 		PreferenceCategory fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(R.string.pref_header_Temperature);
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_temperature);
-
+		
 		// Add 'data and sync' preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(R.string.pref_header_Humidity);
@@ -132,6 +141,7 @@ public class GlobalSettings extends PreferenceActivity {
 		// to reflect the new value, per the Android Design guidelines.
 		//bindPreferenceSummaryToValue(findPreference("example_text"));
 		bindPreferenceSummaryToValue(findPreference("set_truck_id"));
+		bindPreferenceSummaryToValue(findPreference("sensor_list"));
 		bindPreferenceSummaryToValue(findPreference("set_temperature_threshold"));
 		bindPreferenceSummaryToValue(findPreference("before_threshold_temperature"));
 		bindPreferenceSummaryToValue(findPreference("after_threshold_temperature"));
@@ -231,11 +241,6 @@ public class GlobalSettings extends PreferenceActivity {
 				PreferenceManager.getDefaultSharedPreferences(
 						preference.getContext()).getString(preference.getKey(),
 						""));
-/*	    String data = "added";
-	    Intent intent = new Intent();
-        intent.putExtra(EXTRA_MESSAGE1, data);
-	    setResult(Activity.RESULT_OK, intent);
-	    finish();*/
 	}
 
 
@@ -247,6 +252,7 @@ public class GlobalSettings extends PreferenceActivity {
 			addPreferencesFromResource(R.xml.pref_general);
 			
 			bindPreferenceSummaryToValue(findPreference("set_truck_id"));
+			bindPreferenceSummaryToValue(findPreference("sensor_list"));
 		}
 	}
 
@@ -262,7 +268,6 @@ public class GlobalSettings extends PreferenceActivity {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.pref_temperature);
 
-			
 			bindPreferenceSummaryToValue(findPreference("set_temperature_threshold"));
 			bindPreferenceSummaryToValue(findPreference("before_threshold_temperature"));
 			bindPreferenceSummaryToValue(findPreference("after_threshold_temperature"));

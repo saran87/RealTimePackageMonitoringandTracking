@@ -179,7 +179,6 @@ public class StartActivity extends ListActivity {
         	case PACKAGE_ID_UPDATED:
         		if (resultCode == Activity.RESULT_OK) {
         			populateSensorList(data);
-        			updateSettingsForAll(data);
         		}
             case SETTINGS_UPDATED:
             		updateSettingsForAll(data);
@@ -190,7 +189,7 @@ public class StartActivity extends ListActivity {
     protected void populateSensorList(Intent data){
     	final SensorCart listOfSensors = (SensorCart) getApplicationContext();
     	final int listSize = listOfSensors.getListSize();
-		if (listSize > 0)
+    	if (listSize > 0)
 		{
 			setListAdapter(new SensorAdapter(listOfSensors.sensorList));
 		}

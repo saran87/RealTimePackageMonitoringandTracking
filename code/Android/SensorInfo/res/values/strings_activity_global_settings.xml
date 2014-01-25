@@ -9,6 +9,10 @@
     <string name="pref_header_general">General</string>
     <string name="pref_title_set_truck_id">Set Truck Id</string>
     <string name="pref_default_set_truck_id">International</string>
+    <string name="pref_title_set_by_sensor_id">Settings for Individual Sensors</string>
+    <string name="pref_description_set_by_sensor_id">Allows to set the settings for individual Sensor</string>
+    <string name="pref_title_select_sensor_id">Select Sensor</string>
+    
       
     <!-- Example settings for Shock -->
     <string name="pref_header_Shock">Shock</string>
