@@ -8,13 +8,6 @@
             <file>file:/home/prit/rfid_RA_project/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/motes/packet/Crc.java</file>
             <file>file:/home/prit/rfid_RA_project/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/sensor/reader/SensorReader.java</file>
         </group>
-        <group>
-            <file>file:/Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/motes/packet/RealTimeReader.java</file>
-            <file>file:/Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/sensor/util/Packet.java</file>
-            <file>file:/Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/motes/packet/BlackBoxReader.java</file>
-            <file>file:/Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/sensor/util/Utils.java</file>
-            <file>file:/Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/packages/Sensor.java</file>
-            <file>file:/Users/Kumar/Documents/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/packages/PackageList.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
