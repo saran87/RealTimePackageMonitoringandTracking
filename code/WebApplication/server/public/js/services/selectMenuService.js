@@ -9,11 +9,11 @@ angular.module('myServices')
 			var deferred = $q.defer();
 
 			$http.get(datapath+'alltrucks')
-				.success(function(data){
+				.success(function(data){	
 
-					console.dir(data);
+					_latestTimestamp=data[data.length-1].timestamp;				
 
-					deferred.resolve(data);
+					deferred.resolve([data, _latestTimestamp]);
 
 				})
 				.error(function(data){
@@ -52,32 +52,11 @@ angular.module('myServices')
 
 				return deferred.promise;
 		}
+				
 
-		/*var _pol = function(){
+		var _getLatest = function(timestamp, actionBy){
 
-			$http.get('http://localhost/master/RealTimePackageMonitoringandTracking/code/api/public/index.php/alltrucks')
-				.success(function(data){
-
-					console.log("timeout");
-
-					console.dir(data);
-
-				})
-				.error(function(data){
-
-					console.log("ERROR:Nothing here");
-
-				});
-
-			$timeout(_pol, 5000);
-
-		}
-
-		_pol();*/
-
-		var _getLatest = function(actionBy){
-
-			var path = datapath+'latestEntry';
+			var path = datapath+'alltrucksAfter/'+timestamp;
 
 			if(actionBy==0){
 				var action='bg';
@@ -100,7 +79,13 @@ angular.module('myServices')
 			$http.get(path)
 				.success(function(data){
 
-					deferred.resolve(data);
+					if(data.length>0){
+
+						_latestTimestamp=data[data.length-1].timestamp;
+
+						deferred.resolve([data, _latestTimestamp]);
+
+					}
 
 				})
 				.error(function(data){
