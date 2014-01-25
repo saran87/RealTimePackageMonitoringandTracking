@@ -38,8 +38,14 @@ public class PackageLocation {
 		
 		Log.i("PackageLocation", "LocationListener created");
 		
+		String locationProvider = LocationManager.GPS_PROVIDER;
+		if (locationProvider == null)
+		{
+			locationProvider = LocationManager.NETWORK_PROVIDER;
+		}
+		
 		// Register the listener with the Location Manager to receive location updates
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);	
+		locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);	
 		
 		Log.i("PackageLocation", "requestLocationUpdates");
 				
@@ -53,15 +59,15 @@ public class PackageLocation {
 		{
 			Log.i("PackageLocation", "null == locationListener.getLocation()");
 			if(null != locationManager
-					.getLastKnownLocation(LocationManager.GPS_PROVIDER))
+					.getLastKnownLocation(locationProvider))
 			{
-				Log.i("PackageLocation", "null != locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)");
+				Log.i("PackageLocation", "null != locationManager.getLastKnownLocation(locationProvider)");
 				this.location = locationManager
-						.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+						.getLastKnownLocation(locationProvider);
 			}
 			else
 			{
-				Log.i("PackageLocation", "null == locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)");
+				Log.i("PackageLocation", "null == locationManager.getLastKnownLocation(locationProvider)");
 				location = null;
 //				this.location.setLatitude(43.084603);
 //				this.location.setLongitude(-77.680312);

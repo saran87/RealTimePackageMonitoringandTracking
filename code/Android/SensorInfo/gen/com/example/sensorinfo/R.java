@@ -55,27 +55,41 @@ public final class R {
         public static final int layout_shape=0x7f020008;
     }
     public static final class id {
-        public static final int action_addSensor=0x7f0d0012;
-        public static final int action_logs=0x7f0d0013;
-        public static final int action_settings=0x7f0d0014;
+        public static final int action_addSensor=0x7f0d0020;
+        public static final int action_logs=0x7f0d0021;
+        public static final int action_settings=0x7f0d0022;
         public static final int addSensor=0x7f0d0006;
         public static final int edit_packageid=0x7f0d0004;
         public static final int edit_packageidupdate=0x7f0d0009;
         public static final int edit_sensorid=0x7f0d0002;
-        public static final int innerLayoutfive=0x7f0d000c;
+        public static final int innerLayoutEightForEdit=0x7f0d0012;
+        public static final int innerLayoutElevenForEdit=0x7f0d0018;
+        public static final int innerLayoutFiveForEdit=0x7f0d000c;
+        public static final int innerLayoutFourForEdit=0x7f0d000a;
+        public static final int innerLayoutNineForEdit=0x7f0d0014;
+        public static final int innerLayoutSevenForEdit=0x7f0d0010;
+        public static final int innerLayoutSixForEdit=0x7f0d000e;
+        public static final int innerLayoutTenForEdit=0x7f0d0016;
+        public static final int innerLayoutfive=0x7f0d001a;
         public static final int innerLayoutfour=0x7f0d0005;
-        public static final int innerLayoutfourForEdit=0x7f0d000a;
-        public static final int innerLayoutseven=0x7f0d0010;
-        public static final int innerLayoutsix=0x7f0d000e;
+        public static final int innerLayoutseven=0x7f0d001e;
+        public static final int innerLayoutsix=0x7f0d001c;
         public static final int innerLayoutthree=0x7f0d0003;
         public static final int innerLayoutthreeForEdit=0x7f0d0008;
         public static final int innerLayouttwo=0x7f0d0001;
         public static final int outerLayout=0x7f0d0000;
         public static final int outerLayoutForEdit=0x7f0d0007;
-        public static final int readValues1=0x7f0d0011;
-        public static final int refreshLog=0x7f0d000d;
-        public static final int temperatureThresholdText=0x7f0d000f;
-        public static final int updateSensorToList=0x7f0d000b;
+        public static final int readValues1=0x7f0d001f;
+        public static final int refreshLog=0x7f0d001b;
+        public static final int temperatureThresholdText=0x7f0d001d;
+        public static final int text_humidityThreshold=0x7f0d000f;
+        public static final int text_humidityThresholdTime=0x7f0d0011;
+        public static final int text_shockThreshold=0x7f0d0017;
+        public static final int text_temperatureThreshold=0x7f0d000b;
+        public static final int text_temperatureThresholdTime=0x7f0d000d;
+        public static final int text_vibrationThreshold=0x7f0d0013;
+        public static final int text_vibrationThresholdTime=0x7f0d0015;
+        public static final int updateSensorToList=0x7f0d0019;
     }
     public static final class integer {
         public static final int maxLines=0x7f080000;
@@ -106,46 +120,56 @@ public final class R {
         public static final int edit_packageidupdate=0x7f090011;
         public static final int edit_sensorid=0x7f09000f;
         public static final int edit_truckid=0x7f09000e;
-        public static final int pref_default_humidity_threshold=0x7f090022;
-        public static final int pref_default_set_truck_id=0x7f09001c;
-        public static final int pref_default_shock_threshold=0x7f09001f;
-        public static final int pref_default_temperature_threshold=0x7f090027;
-        public static final int pref_default_vibration_threshold=0x7f09002c;
+        public static final int pref_default_humidity_threshold=0x7f09002c;
+        public static final int pref_default_set_truck_id=0x7f090023;
+        public static final int pref_default_shock_threshold=0x7f090029;
+        public static final int pref_default_temperature_threshold=0x7f090031;
+        public static final int pref_default_vibration_threshold=0x7f090036;
+        public static final int pref_description_set_by_sensor_id=0x7f090025;
         /**  Example settings for Humidity 
          */
-        public static final int pref_header_Humidity=0x7f090020;
+        public static final int pref_header_Humidity=0x7f09002a;
         /**  Example settings for Shock 
          */
-        public static final int pref_header_Shock=0x7f09001d;
+        public static final int pref_header_Shock=0x7f090027;
         /**  Example settings for Temperature 
          */
-        public static final int pref_header_Temperature=0x7f090025;
+        public static final int pref_header_Temperature=0x7f09002f;
         /**  Example settings for Vibration 
          */
-        public static final int pref_header_Vibration=0x7f09002a;
+        public static final int pref_header_Vibration=0x7f090034;
         /**  Strings related to Settings 
  Example General settings 
          */
-        public static final int pref_header_general=0x7f09001a;
-        public static final int pref_title_notify_after_humidity=0x7f090024;
-        public static final int pref_title_notify_after_temperature=0x7f090029;
-        public static final int pref_title_notify_after_vibration=0x7f09002e;
-        public static final int pref_title_notify_before_humidity=0x7f090023;
-        public static final int pref_title_notify_before_temperature=0x7f090028;
-        public static final int pref_title_notify_before_vibration=0x7f09002d;
-        public static final int pref_title_set_humidity_threshold=0x7f090021;
-        public static final int pref_title_set_shock_threshold=0x7f09001e;
-        public static final int pref_title_set_temperature_threshold=0x7f090026;
-        public static final int pref_title_set_truck_id=0x7f09001b;
-        public static final int pref_title_set_vibration_threshold=0x7f09002b;
-        public static final int temperatureIntervalText=0x7f090018;
+        public static final int pref_header_general=0x7f090021;
+        public static final int pref_title_notify_after_humidity=0x7f09002e;
+        public static final int pref_title_notify_after_temperature=0x7f090033;
+        public static final int pref_title_notify_after_vibration=0x7f090038;
+        public static final int pref_title_notify_before_humidity=0x7f09002d;
+        public static final int pref_title_notify_before_temperature=0x7f090032;
+        public static final int pref_title_notify_before_vibration=0x7f090037;
+        public static final int pref_title_select_sensor_id=0x7f090026;
+        public static final int pref_title_set_by_sensor_id=0x7f090024;
+        public static final int pref_title_set_humidity_threshold=0x7f09002b;
+        public static final int pref_title_set_shock_threshold=0x7f090028;
+        public static final int pref_title_set_temperature_threshold=0x7f090030;
+        public static final int pref_title_set_truck_id=0x7f090022;
+        public static final int pref_title_set_vibration_threshold=0x7f090035;
+        public static final int temperatureIntervalText=0x7f09001f;
+        public static final int text_humidityThreshold=0x7f09001a;
+        public static final int text_humidityThresholdTime=0x7f09001b;
         public static final int text_sensorList=0x7f090017;
+        public static final int text_shockThreshold=0x7f09001e;
+        public static final int text_temperatureThreshold=0x7f090018;
+        public static final int text_temperatureThresholdTime=0x7f090019;
+        public static final int text_vibrationThreshold=0x7f09001c;
+        public static final int text_vibrationThresholdTime=0x7f09001d;
         public static final int title_activity_add_sensor=0x7f090004;
         public static final int title_activity_display_message=0x7f090005;
         public static final int title_activity_edit_sensor_details=0x7f090003;
         public static final int title_activity_ftdi_mode_control=0x7f090002;
         public static final int title_activity_ftdi_mode_fragment=0x7f090001;
-        public static final int title_activity_global_settings=0x7f090019;
+        public static final int title_activity_global_settings=0x7f090020;
         public static final int title_activity_logs=0x7f090006;
         public static final int title_activity_main=0x7f090000;
     }
