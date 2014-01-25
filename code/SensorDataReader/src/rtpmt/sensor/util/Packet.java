@@ -468,6 +468,7 @@ public final class Packet extends Header {
                 message.addSensors(sensor);
             } else if (this.isHumidty()) {
                 sensor = PackageInformation.Sensor.newBuilder();
+                sensor.setSensorUnit("%RH");
                 sensor.setSensorType(PackageInformation.SensorType.HUMIDITY);
                 sensor.setSensorValue(String.valueOf((this.getHumidity())));
                 message.addSensors(sensor);
