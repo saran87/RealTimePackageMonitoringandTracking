@@ -4,27 +4,6 @@ angular.module('myServices')
 		var datapath = constants.ROOT;		
 		var _latestTimestamp='';
 
-		var _getTrucks = function(){
-
-			var deferred = $q.defer();
-
-			$http.get(datapath+'alltrucks')
-				.success(function(data){	
-
-					_latestTimestamp=data[data.length-1].timestamp;				
-
-					deferred.resolve([data, _latestTimestamp]);
-
-				})
-				.error(function(data){
-
-					console.log("ERROR:Nothing here");
-
-				});
-
-				return deferred.promise;
-		}
-
 		var _getPackages = function(truck_id){
 
 			var deferred = $q.defer();			
@@ -52,7 +31,28 @@ angular.module('myServices')
 
 				return deferred.promise;
 		}
-				
+
+		var _getTrucks = function(){
+
+			var deferred = $q.defer();
+
+			$http.get(datapath+'alltrucks')
+				.success(function(data){	
+
+					_latestTimestamp=data[data.length-1].timestamp;		
+							
+					deferred.resolve([data, _latestTimestamp]);
+
+				})
+				.error(function(data){
+
+					console.log("ERROR:Nothing here");
+
+				});
+
+				return deferred.promise;
+		}		
+
 
 		var _getLatest = function(timestamp, actionBy){
 
@@ -82,6 +82,8 @@ angular.module('myServices')
 					if(data.length>0){
 
 						_latestTimestamp=data[data.length-1].timestamp;
+
+						console.log(_latestTimestamp);
 
 						deferred.resolve([data, _latestTimestamp]);
 

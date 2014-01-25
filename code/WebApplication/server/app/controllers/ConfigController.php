@@ -39,8 +39,7 @@ class ConfigController extends BaseController{
 		
 		//$allTrucksArr = Configurations::orderBy('timestamp', 'asc')->distinct()->get(array('truck_id'));
 
-		$allTrucksArr = Configurations::orderBy('timestamp', 'asc')->groupBy('truck_id')->distinct()->get(array('truck_id', 'timestamp', 'package_id'));
-		
+		$allTrucksArr = Configurations::orderBy('timestamp', 'asc')->groupBy('truck_id')->distinct()->get(array('truck_id', 'timestamp', 'package_id'));		
 		return $allTrucksArr;
 
 	}
