@@ -1,5 +1,5 @@
 angular.module('myModule')
-	.controller('mapController', ['$scope','mapService','dashBoardService','$rootScope','$routeParams','$http','$timeout',function($scope,mapService,dashBoardService,$rootScope,$routeParams,$http, $timeout){
+	.controller('mapController', ['$scope','mapService','dashBoardService','$rootScope','$routeParams','$http','$timeout','$q',function($scope,mapService,dashBoardService,$rootScope,$routeParams,$http, $timeout,$q){
 
     var latestTimestamp='';
 
@@ -20,33 +20,43 @@ angular.module('myModule')
     } 
     else {
         console.log("Undefined truck and package");
-    }  
+    }
 
-    dashBoardService.getConfigurationsOf(truck,pack)
-    .then(function(data){
+    function initData(){
 
-      if(!data[2].isError){
+      var deferred = $q.defer();
 
-        if(data[0].config.temperature.timeperiod!=0 && data[0].config.humidity.timeperiod!=0 &&data[0].config.vibrationx.timeperiod!=0){              
+      dashBoardService.getConfigurationsOf(truck,pack)
+      .then(function(data){
 
-          $scope.refreshRate=Math.min.apply( Math, [data[0].config.temperature.timeperiod,data[0].config.humidity.timeperiod,data[0].config.vibrationx.timeperiod] );
+        if(!data[2].isError){
 
-        } else {
+          if(data[0].config.temperature.timeperiod!=0 && data[0].config.humidity.timeperiod!=0 &&data[0].config.vibrationx.timeperiod!=0){              
 
-          $scope.refreshRate=60;
-
-        }
-          if(data[0].is_realtime){
-
-            $rootScope.rt=true;           
+            $scope.refreshRate=Math.min.apply( Math, [data[0].config.temperature.timeperiod,data[0].config.humidity.timeperiod,data[0].config.vibrationx.timeperiod] );
 
           } else {
 
-            $rootScope.rt=false;
-          }
-      }
+            $scope.refreshRate=60;
 
-    });
+          }
+            if(data[0].is_realtime){
+
+              $rootScope.rt=true;           
+
+            } else {
+
+              $rootScope.rt=false;
+            }
+
+            deferred.resolve();
+        }
+
+      });
+
+      return deferred.promise;
+
+    }
 
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
@@ -75,11 +85,7 @@ angular.module('myModule')
           title: 'Click for location information',
           map: map,
           animation: google.maps.Animation.DROP,
-          icon: {
-              
-              url: "../img/"+iconType+"-pin.png",
-              size: new google.maps.Size(24,24)
-          }       
+          icon: "../img/"+iconType+"-pin.png"
         });
 
         //Add an info window to the position
@@ -231,7 +237,7 @@ angular.module('myModule')
 
       }
 
-      $scope.makeMap=function(){
+      initData().then(function(){
 
         mapService.getCordinatesOf(truck,pack)
         .then(function(data){ 
@@ -244,53 +250,28 @@ angular.module('myModule')
 
             $scope.ts=latestTimestamp;
 
-            $scope.loaded=true;
+            $scope.loaded=true;            
 
-            var waypts=[];            
+            var waypts=[];
 
+            var len = data[0].length;
 
-            if(data[0].length>1){
-          
-              var waypts=[
-                  {
-                      location: new google.maps.LatLng(data[0][Math.floor(data[0].length/2)].loc.lat, data[0][Math.floor(data[0].length/2)].loc.lng),
-                      stopover: true
-                  },
-                  {
-                      location: new google.maps.LatLng(data[0][Math.floor((data[0].length/2)/2)].loc.lat, data[0][Math.floor((data[0].length/2)/2)].loc.lng),
-                      stopover: true
-                  },
-                  {
-                      location: new google.maps.LatLng(data[0][Math.floor(((data[0].length/2)/2)/2)].loc.lat, data[0][Math.floor(((data[0].length/2)/2)/2)].loc.lng),
-                      stopover: true
-                  },
-                  {
-                      location: new google.maps.LatLng(data[0][Math.floor((((data[0].length/2)/2)/2)/2)].loc.lat, data[0][Math.floor((((data[0].length/2)/2)/2)/2)].loc.lng),
-                      stopover: true
-                  },
-                  {
-                      location: new google.maps.LatLng(data[0][Math.floor(((((data[0].length/2)/2)/2)/2)/2)].loc.lat, data[0][Math.floor(((((data[0].length/2)/2)/2)/2)/2)].loc.lng),
-                      stopover: true
-                  }
+            if(len>2){
 
-              ];
+              var diff=Math.ceil(len/8);
+
+              for(var i=diff; i<=len-diff;){
+
+                var wayptObj = {
+                  location: new google.maps.LatLng(data[0][i].loc.lat, data[0][i].loc.lng),
+                  stopover: true
+                };
+
+                waypts.push(wayptObj);
+
+                i=i+diff;
+              }
             }
-
-            console.dir(data[0][Math.floor(data[0].length/2)]);
-
-
-
-            console.dir(waypts);
-
-            var arr=[1,2,3];
-
-            if(arr[arr.length+1]){
-              console.log("za");
-            } else {
-              console.log("zu");
-            }
-
-            
 
             initialize(new google.maps.LatLng(data[0][0].loc.lat, data[0][0].loc.lng));
 
@@ -329,9 +310,7 @@ angular.module('myModule')
 
                 mapUpdater();           
               }
-            }
-
-            
+            }            
 
           } else {
 
@@ -344,7 +323,9 @@ angular.module('myModule')
           }
 
         });
-      }
+
+      });
+      
 
 
   var mapUpdater = function(action){

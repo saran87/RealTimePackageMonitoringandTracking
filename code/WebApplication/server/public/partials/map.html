@@ -16,18 +16,29 @@
         <div class="clearfix"></div>
       </div>
       <div class="widget-content">
-        <div class="padd">
+        <div class="padd">     
 
-      <div class="text-center">
-        <button ng-click="makeMap()" class="btn btn-lg btn-primary">Load Map</button>
-      </div>
-
-      <div ng-show="!noData" id="map-canvas"></div>
-      </div>
+        <div ng-show="!noData" id="map-canvas"></div>
+        </div>
       </div>
       <div class="widget-foot">
-        <!-- Footer goes here -->   
-        <strong>Disclaimer: </strong>       
+        <div class="pull-left">
+
+          <img src="../img/temperature-pin.png" alt="Temperature Marker"> Temperature
+          <img src="../img/humidity-pin.png" alt="Humidity Marker"> Humidity
+          <img src="../img/vibration-pin.png" alt="Vibration Marker"> Vibration
+          <img src="../img/shock-pin.png" alt="Shock Marker"> Shock
+          
+          <div class="pull-left">
+            <br /><strong>Disclaimer: </strong>         
+          </div>
+        </div>
+        <div class="pull-right">
+          <img src="../img/waypoint-pin.png" alt="Waypoint Marker"> Waypoints <img src="../img/waypoint-end-pin.png" alt="Waypoint-End Marker">          
+        </div>
+        
+        <div class="clearfix"></div>
+                
       </div>
     </div> 
   </div>
