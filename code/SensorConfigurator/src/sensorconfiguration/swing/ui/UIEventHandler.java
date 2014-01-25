@@ -109,7 +109,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             log(logText, e);
         }
         //connect to server
-        //initServer(false);
+        initServer(false);
     }
 
     public void initServer(boolean ui) {
