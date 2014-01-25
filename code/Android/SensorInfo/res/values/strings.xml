@@ -24,13 +24,20 @@
     <string name="edit_packageid">Enter Package ID</string>
     <string name="edit_packageidupdate">Update Package ID</string>
     
-    <string name="action_settings">Global Settings</string>
+    <string name="action_settings">Settings</string>
     <string name="action_addSensor">Add New Sensor</string>
     <string name="action_connection">Connection</string>
     <string name="action_logs">Logs</string>
     <string name="action_help">Help</string>
     
     <string name="text_sensorList">Sensor</string>
+    <string name="text_temperatureThreshold"></string>
+    <string name="text_temperatureThresholdTime"></string>
+    <string name="text_humidityThreshold"></string>
+    <string name="text_humidityThresholdTime"></string>
+    <string name="text_vibrationThreshold"></string>
+    <string name="text_vibrationThresholdTime"></string>
+    <string name="text_shockThreshold"></string>
 
     <string name="temperatureIntervalText"></string>
     
