@@ -17,6 +17,7 @@ angular.module('myModule')
 
 			var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
 			var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+			
 		} 
 		else {
 			console.log("Undefined truck and package");

@@ -168,7 +168,7 @@ angular.module('myModule')
 				
 			});
 
-			updater();
+			
 
 			/*angular.forEach(data, function(value, key){
 
@@ -201,7 +201,9 @@ angular.module('myModule')
 					
 				}); //end inner forEach
 				
-			}); //end outer forEach*/			
+			}); //end outer forEach*/
+
+			updater();			
 
 		}); //end truckPromise.then
 
