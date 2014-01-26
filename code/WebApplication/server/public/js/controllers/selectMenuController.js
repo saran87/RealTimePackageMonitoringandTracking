@@ -225,9 +225,26 @@ angular.module('myModule')
 							var options = {
 								header: "New Package Update",
 								life: 8000
-							};	
+							};
 
-							//$.jGrowl("New packages updated in Truck Id: " + newtruck, options);	
+							var i=$scope.truckList.indexOf(newtruck);
+
+							var newpacks=[];
+
+							selectService.getPackages(newtruck)
+							.then(function(packdata){
+
+								angular.forEach(packdata, function(v, k){
+									
+									newpacks.push(v);
+									
+								});
+
+							});
+
+							$scope.trucks[i].packages=newpacks;
+
+							$.jGrowl("New packages updated in Truck Id: " + newtruck, options);	
 										
 						}
 						
