@@ -151,7 +151,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getTemperatureTimePeriod() {
-		return globalPrefs.getString("before_threshold_temperature", "60");
+		return globalPrefs.getString("before_threshold_temperature", "360");
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getHumidityTimePeriod() {
-		return globalPrefs.getString("before_threshold_humidity", "60");
+		return globalPrefs.getString("before_threshold_humidity", "360");
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getVibrationAfterThreshold() {
-		return globalPrefs.getString("after_threshold_vibration", "360");
+		return globalPrefs.getString("after_threshold_vibration", "60");
 	}
 
 	/**
