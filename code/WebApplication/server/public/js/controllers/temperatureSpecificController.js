@@ -43,8 +43,8 @@ angular.module('myModule')
 		  	dashBoardService.getConfigurationsOf(truck,pack)
 			  	.then(function(data){		  		
 
-			  		if(!data[2].isError){		  			
-			  			
+			  		if(!data[2].isError){
+
 			  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
 			  			if(data[0].config.temperature.timeperiod!=0){
 			  				$scope.refreshRate = data[0].config.temperature.timeperiod;
@@ -73,8 +73,7 @@ angular.module('myModule')
 				        }
 
 				        deferred.resolve();
-
-				  	}		  	
+				  	}	  	
 
 			});	
 

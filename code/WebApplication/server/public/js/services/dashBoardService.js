@@ -16,7 +16,7 @@ angular.module('myServices')
 			$http.get(datapath+'configs/'+truck_id+'/'+package_id)
 				.success(function(data){
 
-					if(data.length<0 || data.length==0){ //check for empty array
+					if(data.length<0 || data.length==0 || !data.config){ //check for empty array
 
 						errors.isError = true;
 						errors.errorMsg = "Empty array returned";

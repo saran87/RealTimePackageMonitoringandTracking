@@ -143,28 +143,32 @@ angular.module('myModule')
 		var truckPromise = selectService.getTrucks();
 
 		truckPromise.then(function(data){
-			
+
 			//getting back a distinct array of trucks like [ ["1"],["2"],["3"] ] 
-			//looping over array to form an array of trucks list			
+			//looping over array to form an array of trucks list
 
-			latestTimestamp=data[1];			
+			if(data[0].length>0){			
 
-			angular.forEach(data[0], function(value, key){
+				latestTimestamp=data[1];			
 
-				var newtruck=value.truck_id;
+				angular.forEach(data[0], function(value, key){
 
-				var packs=[];
+					var newtruck=value.truck_id;
 
-				$scope.truckList.push(newtruck);				
+					var packs=[];
 
-				var truckObj = {
-					"id": newtruck,
-					"packages": []
-				};
+					$scope.truckList.push(newtruck);				
 
-				$scope.trucks.push(truckObj);
-				
-			});		
+					var truckObj = {
+						"id": newtruck,
+						"packages": []
+					};
+
+					$scope.trucks.push(truckObj);
+					
+				});
+
+			}	
 
 			updater();			
 
@@ -223,7 +227,7 @@ angular.module('myModule')
 								life: 8000
 							};	
 
-							$.jGrowl("New packages updated in Truck Id: " + newtruck, options);	
+							//$.jGrowl("New packages updated in Truck Id: " + newtruck, options);	
 										
 						}
 						

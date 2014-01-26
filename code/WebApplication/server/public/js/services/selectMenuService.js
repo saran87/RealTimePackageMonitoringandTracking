@@ -37,16 +37,23 @@ angular.module('myServices')
 			var deferred = $q.defer();
 
 			$http.get(datapath+'alltrucks')
-				.success(function(data){	
+				.success(function(data){
 
-					_latestTimestamp=data[data.length-1].timestamp;		
-							
-					deferred.resolve([data, _latestTimestamp]);
+					if(data.length>0){
+
+						_latestTimestamp=data[data.length-1].timestamp;		
+								
+						deferred.resolve([data, _latestTimestamp]);
+					} else {
+
+						deferred.resolve([ [], '']);
+					}					
 
 				})
-				.error(function(data){
+				.error(function(data, status){
 
-					console.log("ERROR:Nothing here");
+					deferred.resolve([ [], '']);
+					console.log("ERROR: " + status);
 
 				});
 
@@ -66,13 +73,7 @@ angular.module('myServices')
 				var action='usr';
 				path=path+'?action='+action
 				console.log(path);
-			}
-
-			var errors = {
-
-				"isError": false,
-				"errorMsg": ""
-			}
+			}			
 
 			var deferred = $q.defer();	
 
@@ -87,12 +88,16 @@ angular.module('myServices')
 
 						deferred.resolve([data, _latestTimestamp]);
 
+					} else {
+
+						deferred.resolve([ [], '']);
 					}
 
 				})
-				.error(function(data){
+				.error(function(data, status){
 
-					console.log("No data");
+					console.log("ERROR: " + status);
+					deferred.resolve([ [], '']);
 
 				});
 
