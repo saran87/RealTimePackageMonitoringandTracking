@@ -17,6 +17,7 @@ angular.module('myModule')
 
 			var truck=$routeParams.truck_id; //truck_id selected in the Dropdown menu
 			var pack=$routeParams.package_id; //package_id selected in the Dropdown menu
+			
 		} 
 		else {
 			console.log("Undefined truck and package");
@@ -42,8 +43,8 @@ angular.module('myModule')
 		  	dashBoardService.getConfigurationsOf(truck,pack)
 			  	.then(function(data){		  		
 
-			  		if(!data[2].isError){		  			
-			  			
+			  		if(!data[2].isError){
+
 			  			//$scope.maxThreshold = data[0].config.temperature.maxthreshold;
 			  			if(data[0].config.temperature.timeperiod!=0){
 			  				$scope.refreshRate = data[0].config.temperature.timeperiod;
@@ -72,8 +73,7 @@ angular.module('myModule')
 				        }
 
 				        deferred.resolve();
-
-				  	}		  	
+				  	}	  	
 
 			});	
 

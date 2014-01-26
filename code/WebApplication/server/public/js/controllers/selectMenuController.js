@@ -61,9 +61,8 @@ angular.module('myModule')
 		}		
 		
 
-	  	$scope.urlFunc = function(){	  			  		
+	  	$scope.urlFunc = function(){
 
-	  		//console.log($scope.currentUrl+$scope.selected.id.id+'/'+$scope.selected.package);
 	  		$rootScope.tid=$scope.selected.id.id;
 	  		$rootScope.pid=$scope.selected.package;	  		
 
@@ -94,31 +93,50 @@ angular.module('myModule')
 		
 		$scope.trucks=[]; //holds the object for trucks list and packages list
 
-		$scope.truckList =[];
+		$scope.truckList =[];		
 
-		var latestTimestamp='';
+		var latestTimestamp='';		
 
-		selectService.getLatest()
-			.then(function(data){
-				latestTimestamp = data.timestamp;
-		});		
+		var packagesList = function(truck_id, isGrowl){
 
-		var packagesList = function(truck_id){					;
-
-			var packages=[];
+			var packages=[];					
 
 			selectService.getPackages(truck_id)
 			.then(function(data){				
 
 				angular.forEach(data, function(value, key){
 
-					packages.push(value);
+					packages.push(value);										
 					
-				});
-
+				});				
+				
 			});			
 
 			return packages;
+		}
+
+
+		$scope.populatePackages = function(truck){
+
+			var _packagesOf=[];
+
+			if($scope.truckList.indexOf(truck)!=-1){
+
+				var i=$scope.truckList.indexOf(truck);
+
+				selectService.getPackages(truck)
+				.then(function(packdata){
+
+					angular.forEach(packdata, function(v, k){
+						
+						_packagesOf.push(v);
+						
+					});
+
+				});
+
+				$scope.trucks[i].packages=_packagesOf;
+			}
 
 		}		
 
@@ -127,42 +145,32 @@ angular.module('myModule')
 		truckPromise.then(function(data){
 
 			//getting back a distinct array of trucks like [ ["1"],["2"],["3"] ] 
-			//looping over array to form an array of trucks list			
+			//looping over array to form an array of trucks list
 
-			angular.forEach(data, function(value, key){
+			if(data[0].length>0){			
 
-				angular.forEach(value, function(value, key){
+				latestTimestamp=data[1];			
 
-					var packs=[]; //initialize empty array of packages
+				angular.forEach(data[0], function(value, key){
 
-					$scope.truckList.push(value);
+					var newtruck=value.truck_id;
 
-					var packsPromise = 	selectService.getPackages(value);
-					
-					packsPromise.then(function(packdata){
+					var packs=[];
 
-						angular.forEach(packdata, function(v,k){
-
-							//push the packages for the mentioned truck_id
-							packs.push(v); 
-							
-						}); //end forEach
-						
-
-					}); //end packsPromise.then
+					$scope.truckList.push(newtruck);				
 
 					var truckObj = {
-						"id": value,
-						"packages": packs
+						"id": newtruck,
+						"packages": []
 					};
 
 					$scope.trucks.push(truckObj);
 					
-				}); //end inner forEach
-				
-			}); //end outer forEach
+				});
 
-			updater();
+			}	
+
+			updater();			
 
 		}); //end truckPromise.then
 
@@ -178,72 +186,54 @@ angular.module('myModule')
 
         	}
 
-			selectService.getLatest(actionBy)
-			.then(function(data){				
+			selectService.getLatest(latestTimestamp, actionBy)
+			.then(function(data){	
 
-				if(data.timestamp>latestTimestamp){
+				if(data[0].length>0){
 
-					//if a new truck is added
-					if($scope.truckList.indexOf(data.truck_id) < 0){						
+					latestTimestamp=data[1];
 
-						var newTruckObj = {
+					angular.forEach(data[0], function(value, key){
 
-							"id": data.truck_id,
-							"packages": packagesList(data.truck_id)
+						var newtruck=value.truck_id;
 
-						}
+						if($scope.truckList.indexOf(newtruck) < 0){
 
-						/*console.log("new truck added");
-						console.dir(newTruckObj);*/
+							//var newPacks = packagesList(newtruck);
 
-						$scope.trucks.push(newTruckObj); //update truck object
+							var newTruckObj = {
 
-						$scope.truckList.push(data.truck_id); //update trucklist
-
-						var packmsg='';
-
-						for(var j=0; j<packagesList.length;j++){
-
-							packmsg+=' '+packagesList[j];
-
-						}
-
-						var mesg = "New truck added with Truck_id: "+data.truck_id + " Packages: " +packmsg + " SensorId: " + data.sensor_id ;
-
-						var options = {
-							header: "New Truck Update",
-							life: 8000
-						};
-
-						
-						$.jGrowl(mesg, options);
-
-						latestTimestamp=data.timestamp; //update the latestTimestamp
-
-					} else {
-
-					// else a new package in an existing truck is added					
-
-						var len = $scope.trucks.length;
-
-						for(var i=0; i<len; i++){							
-
-							if($scope.trucks[i].id == data.truck_id){
-
-								$scope.trucks[i].packages = packagesList(data.truck_id);								
-
-								$.jGrowl("Packages Updated in truck_id "+data.truck_id, {life: 8000});
+								"id": newtruck,
+								"packages": []
 							}
-						}
 
-						latestTimestamp=data.timestamp //update to latest timestamp
-					} //inner else
+							$scope.truckList.push(newtruck); //update trucklist
 
-				} else {
+							$scope.trucks.push(newTruckObj); //update truck object
+
+							var mesg = "New truck added with Truck_id: "+newtruck;
+
+							var options = {
+								header: "New Truck Update",
+								life: 8000
+							};
+							
+							$.jGrowl(mesg, options);							
+
+						} else {
+
+							var options = {
+								header: "New Package Update",
+								life: 8000
+							};	
+
+							//$.jGrowl("New packages updated in Truck Id: " + newtruck, options);	
 										
+						}
+						
+					});
+				
 				}
-
-
 
 			}); //end then
 
@@ -256,7 +246,6 @@ angular.module('myModule')
 		$scope.refresh = function(){
 
 			updater(1);
-
 		}
 
 }]);

@@ -50,7 +50,7 @@
 
                   <div class="col-md-3 text-center" id="truckSel">
                     
-                        <select class="chosen-select form-control" ng-model="selected.id" ng-options="t.id for t in trucks">
+                        <select ng-change="populatePackages(selected.id.id)" class="chosen-select form-control" ng-model="selected.id" ng-options="t.id for t in trucks">
                           <option disabled="disabled" value=""> Select Truck </option>
                         </select>
 

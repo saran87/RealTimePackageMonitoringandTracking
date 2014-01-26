@@ -4,27 +4,6 @@ angular.module('myServices')
 		var datapath = constants.ROOT;		
 		var _latestTimestamp='';
 
-		var _getTrucks = function(){
-
-			var deferred = $q.defer();
-
-			$http.get(datapath+'alltrucks')
-				.success(function(data){
-
-					console.dir(data);
-
-					deferred.resolve(data);
-
-				})
-				.error(function(data){
-
-					console.log("ERROR:Nothing here");
-
-				});
-
-				return deferred.promise;
-		}
-
 		var _getPackages = function(truck_id){
 
 			var deferred = $q.defer();			
@@ -53,31 +32,38 @@ angular.module('myServices')
 				return deferred.promise;
 		}
 
-		/*var _pol = function(){
+		var _getTrucks = function(){
 
-			$http.get('http://localhost/master/RealTimePackageMonitoringandTracking/code/api/public/index.php/alltrucks')
+			var deferred = $q.defer();
+
+			$http.get(datapath+'alltrucks')
 				.success(function(data){
 
-					console.log("timeout");
+					if(data.length>0){
 
-					console.dir(data);
+						_latestTimestamp=data[data.length-1].timestamp;		
+								
+						deferred.resolve([data, _latestTimestamp]);
+					} else {
+
+						deferred.resolve([ [], '']);
+					}					
 
 				})
-				.error(function(data){
+				.error(function(data, status){
 
-					console.log("ERROR:Nothing here");
+					deferred.resolve([ [], '']);
+					console.log("ERROR: " + status);
 
 				});
 
-			$timeout(_pol, 5000);
+				return deferred.promise;
+		}		
 
-		}
 
-		_pol();*/
+		var _getLatest = function(timestamp, actionBy){
 
-		var _getLatest = function(actionBy){
-
-			var path = datapath+'latestEntry';
+			var path = datapath+'alltrucksAfter/'+timestamp;
 
 			if(actionBy==0){
 				var action='bg';
@@ -87,25 +73,31 @@ angular.module('myServices')
 				var action='usr';
 				path=path+'?action='+action
 				console.log(path);
-			}
-
-			var errors = {
-
-				"isError": false,
-				"errorMsg": ""
-			}
+			}			
 
 			var deferred = $q.defer();	
 
 			$http.get(path)
 				.success(function(data){
 
-					deferred.resolve(data);
+					if(data.length>0){
+
+						_latestTimestamp=data[data.length-1].timestamp;
+
+						console.log(_latestTimestamp);
+
+						deferred.resolve([data, _latestTimestamp]);
+
+					} else {
+
+						deferred.resolve([ [], '']);
+					}
 
 				})
-				.error(function(data){
+				.error(function(data, status){
 
-					console.log("No data");
+					console.log("ERROR: " + status);
+					deferred.resolve([ [], '']);
 
 				});
 
