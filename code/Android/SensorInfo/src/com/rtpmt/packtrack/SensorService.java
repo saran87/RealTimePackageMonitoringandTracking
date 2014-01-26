@@ -410,11 +410,10 @@ public class SensorService implements SensorEventHandler {
 													+ "    "
 													+ sensorInfo.getSensorId();
 										}
+										Log.i("SensorValue:", readDataToText);
+										Message msg = mHandler.obtainMessage();
+										mHandler.sendMessage(msg);
 									}
-
-									Log.i("SensorValue:", readDataToText);
-									Message msg = mHandler.obtainMessage();
-									mHandler.sendMessage(msg);
 								}
 							}
 							// Sending data to server
@@ -682,12 +681,11 @@ public class SensorService implements SensorEventHandler {
 	public void newSensorAdded(Package pack) {
 		// TODO Auto-generated method stub
 		final SensorCart listOfSensors = new SensorCart();
-		Log.i("NewSensorAdded", pack.getShortId() + pack.getSensorId());
+		Log.i(SERVICE_TAG,"NewSensorAdded:" + pack.getShortId() + ":"+ pack.getSensorId());
 
 		if (pack.getShortId() != 0) {
-			Sensors sensorObject = new Sensors(pack.getSensorId(),
-					pack.getPackageId());
-			listOfSensors.setSensors(sensorObject);
+			
+			listOfSensors.addSensor(pack);
 			try {
 				sensorReader.configure(pack);
 				// sensorReader.notify();
@@ -705,6 +703,21 @@ public class SensorService implements SensorEventHandler {
 		mainHandler.obtainMessage(StartActivity.SENSOR_ADDED).sendToTarget();
 	}
 
+	public void configure(Package pack){
+		try {
+			sensorReader.configure(pack);
+			tCPClient.sendData(pack.getConfigMessage(true));
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void configure() {
 
 		for (Package pack : PackageList.getPackages()) {

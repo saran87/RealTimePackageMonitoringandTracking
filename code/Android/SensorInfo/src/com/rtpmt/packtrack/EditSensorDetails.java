@@ -15,7 +15,8 @@ import com.example.sensorinfo.R;
 public class EditSensorDetails extends Activity {
 
 	public final static String EXTRA_MESSAGE1 = "com.example.sensordata.MESSAGE";
-
+	public final static String SHORT_ID = "short_id";
+	private int selectedShortId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,6 +27,8 @@ public class EditSensorDetails extends Activity {
 		int sensorPosition = intent.getIntExtra(StartActivity.POSITION, 0);
 		String packageId = listOfSensors.getSensors(sensorPosition)
 				.getPackageId();
+		selectedShortId = listOfSensors.getSensors(sensorPosition)
+				.getShortId();
 		EditText editText1 = (EditText) findViewById(R.id.edit_packageidupdate);
 		editText1.setText(packageId);
 
@@ -80,10 +83,11 @@ public class EditSensorDetails extends Activity {
 			Toast.makeText(this, "Invalid Package Id", Toast.LENGTH_LONG)
 					.show();
 		} else {
-			listOfSensors.getSensors(sensorPosition).setPackId(packageId);
+			listOfSensors.updatePackageId(sensorPosition,packageId);
 			String data = "updated";
 			Intent intent1 = new Intent();
 			intent1.putExtra(EXTRA_MESSAGE1, data);
+			intent1.putExtra(SHORT_ID, selectedShortId);
 			setResult(Activity.RESULT_OK, intent1);
 			finish();
 		}

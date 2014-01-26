@@ -9,6 +9,7 @@ import android.widget.Toast;
 import android.app.Activity;
 import android.content.Intent;
 import com.example.sensorinfo.R;
+import rtpmt.packages.Package;
 
 @SuppressLint("DefaultLocale")
 public class AddSensor extends Activity {
@@ -36,10 +37,11 @@ public class AddSensor extends Activity {
 		} else {
 			EditText editText1 = (EditText) findViewById(R.id.edit_packageid);
 			String packageId = editText1.getText().toString().trim().toUpperCase();
+			
+			rtpmt.packages.Package pack = new rtpmt.packages.Package(-1,sensorId);
+			pack.setPackageId(packageId);
 
-			Sensors sensorObject = new Sensors(sensorId, packageId);
-
-			listOfSensors.setSensors(sensorObject);
+			listOfSensors.addSensor(pack);
 			String data = "added";
 			Intent intent = new Intent();
 			intent.putExtra(EXTRA_MESSAGE1, data);
