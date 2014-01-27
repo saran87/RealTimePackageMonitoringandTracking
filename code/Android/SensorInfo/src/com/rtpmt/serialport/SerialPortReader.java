@@ -12,6 +12,7 @@ public class SerialPortReader implements SerialPortInterface {
 
 	private final FT_Device ftDev;
 	private static final int wait_ms = 10;
+	private static final String SERIAL_PORT = "SerialPort";
 	
 	public SerialPortReader(FT_Device _ftDev){
 		this.ftDev = _ftDev;
@@ -43,11 +44,18 @@ public class SerialPortReader implements SerialPortInterface {
 
 	@Override
 	public byte read() throws IOException, NullPointerException{
-		byte[] data = new byte[1];
-		if(ftDev != null)
-			ftDev.read(data, 1, wait_ms);
-		else{
-			Log.i("SerialPort", "FTDEV is NULL");
+		byte[] data = {-1};
+		synchronized(ftDev)
+		{
+			if(ftDev != null){
+				//Log.i(SERIAL_PORT, "Data Avaialable -" + ftDev.getQueueStatus() );
+				if(ftDev.getQueueStatus() > 0){
+					ftDev.read(data, 1, wait_ms);
+				}
+			}
+			else{
+				Log.i(SERIAL_PORT, "FTDEV is NULL");
+			}
 		}
 		return data[0];
 	}

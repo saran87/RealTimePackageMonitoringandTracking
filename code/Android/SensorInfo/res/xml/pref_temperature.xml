@@ -17,7 +17,7 @@
         
         
     <ListPreference
-        android:defaultValue="60"
+        android:defaultValue="360"
         android:entries="@array/pref_notify_before_temperature_list"
         android:entryValues="@array/pref_notify_before_temperature_values"
         android:key="before_threshold_temperature"

@@ -42,7 +42,7 @@ public class Humidity extends BaseInfo implements IDataStore {
 
     public void save() {
         DBCollection packageColl = db.getCollection(DBConstants.HUMIDITY_COLLECTION);
-        
+        /*
         BasicDBObject query = new BasicDBObject();
         query.put(DBConstants.SENSOR_ID, this.get(DBConstants.SENSOR_ID));
         query.put(DBConstants.TRUCK_ID, this.get(DBConstants.TRUCK_ID));
@@ -51,6 +51,7 @@ public class Humidity extends BaseInfo implements IDataStore {
         BasicDBObject set = new BasicDBObject();
         set.put("$set", this);
         
-        packageColl.update(query, set, true, false);
+        packageColl.update(query, set, true, false);*/
+        packageColl.insert(this, WriteConcern.ACKNOWLEDGED);
     }
 }

@@ -292,16 +292,8 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                 while (b != 170) {
 
                     b = port.read() & 0xff;
-                    //System.out.println("I am try reading frame:" + b);
                 }
-               /*System.out.println("count:" + count + "InSync:" + inSync);
-                if (count >= Constants.MTU) {
-                    // PacketHelper too long, give up and try to resync
-                    message(name + ": packet too long");
-                    inSync = false;
-                    count = 0;
-                    continue;
-                }*/
+    
                 syncFrame[count++] = (byte) (b & 0xff);
 
                 while (count < Constants.FRAME_SYNC.length) {
@@ -348,7 +340,12 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     isLength = true;
                     continue;
                 } else if (count < payLoad) {
-                    b = (byte) (port.read() & 0xff);
+                    int value = port.read();
+                    if(value != -1){
+                        b = (byte) ( value & 0xff);
+                    }else{
+                        continue;
+                    }
                     //System.out.println("I read frame:" + b);
                 } else {
                     byte[] packet = new byte[count - 2];
@@ -361,21 +358,23 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     if (DEBUG) {
                         System.err.println("received: ");
                         Dump.printPacket(System.err, packet);
-                        System.err.println(" rcrc: " + Integer.toHexString(readCrc)
+                        System.err.println(" rcrc: "+ Integer.toHexString(readCrc)
                                 + " ccrc: " + Integer.toHexString(computedCrc));
                     }
-
-                    //if (readCrc != computedCrc) {
                     return packet;
-                    /* } else {
-                     message(name + ": bad packet");
-                     /*
-                     * We don't lose sync here. If we did, garbage on the line at startup
-                     * will cause loss of the first packet.
-                     *
-                     count = 0;
-                     inSync = false;
-                     continue;
+                    /*
+                    if (readCrc != computedCrc) {
+                        return packet;
+                    } else {
+                        message(name + ": bad packet");
+                        System.err.println("Bad Packet");
+                        /*
+                        * We don't lose sync here. If we did, garbage on the line at startup
+                        * will cause loss of the first packet.
+                        
+                        count = 0;
+                        inSync = false;
+                        continue;
                      }*/
                 }
                 receiveBuffer[count++] = b;

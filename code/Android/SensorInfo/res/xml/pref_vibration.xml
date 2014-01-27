@@ -26,7 +26,7 @@
         android:title="@string/pref_title_notify_before_vibration" />
     
     <ListPreference
-        android:defaultValue="360"
+        android:defaultValue="60"
         android:entries="@array/pref_notify_after_vibration_list"
         android:entryValues="@array/pref_notify_after_vibration_values"
         android:key="after_threshold_vibration"

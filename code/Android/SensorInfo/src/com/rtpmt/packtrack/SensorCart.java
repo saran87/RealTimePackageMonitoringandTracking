@@ -14,9 +14,12 @@
 package com.rtpmt.packtrack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import rtpmt.packages.Config;
 import rtpmt.packages.Package;
 import rtpmt.packages.PackageList;
+import rtpmt.packages.Sensor;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -53,7 +56,7 @@ public class SensorCart extends Application {
 	 * ArrayList to store the sensors as they are automatically detected or
 	 * manually added.
 	 */
-	protected static ArrayList<Sensors> sensorList = new ArrayList<Sensors>();
+	protected static ArrayList<Package> sensorList = new ArrayList<Package>();
 	protected static ArrayList<String> sensorIdList = new ArrayList<String>();
 	// Create a SharedPreferences reference to get the settings data.
 	private static SharedPreferences globalPrefs;
@@ -75,7 +78,7 @@ public class SensorCart extends Application {
 	 * @param sensorPosition
 	 * @return Sensors
 	 */
-	public Sensors getSensors(int sensorPosition) {
+	public Package getSensors(int sensorPosition) {
 		return sensorList.get(sensorPosition);
 	}
 
@@ -85,17 +88,15 @@ public class SensorCart extends Application {
 	 * 
 	 * @param sensors
 	 */
-	public void setSensors(Sensors sensors) {
+	public void addSensor(Package pack) {
 		boolean alreadyPresent = false;
-		alreadyPresent = checkSensorInList(sensors);
-		if (alreadyPresent == false) {
-			sensorList.add(sensors);
-			sensorIdList.add(sensors.sensorId);
-			if(getListSize() == 1)
-			{
-				getGlobalSettings();
-			}
-			updateIndividualSettings();
+		alreadyPresent = checkSensorInList(pack);
+		if (!alreadyPresent) {
+			
+			populateGlobalSettings();
+			updatePackageSettings(pack);
+			sensorList.add(pack);
+			sensorIdList.add(pack.getSensorId());
 		}
 	}
 
@@ -115,10 +116,10 @@ public class SensorCart extends Application {
 	 * @param aSensor
 	 * @return boolean
 	 */
-	public boolean checkSensorInList(Sensors aSensor) {
+	public boolean checkSensorInList(Package pack) {
 		boolean sensorPresent = false;
 		for (int index = 0; index < sensorList.size(); index++) {
-			if (sensorList.get(index).sensorId.equals(aSensor.sensorId)) {
+			if (sensorList.get(index).getSensorId().equals(pack.getSensorId())) {
 				sensorPresent = true;
 			}
 		}
@@ -150,7 +151,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getTemperatureTimePeriod() {
-		return globalPrefs.getString("before_threshold_temperature", "60");
+		return globalPrefs.getString("before_threshold_temperature", "360");
 	}
 
 	/**
@@ -179,7 +180,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getHumidityTimePeriod() {
-		return globalPrefs.getString("before_threshold_humidity", "60");
+		return globalPrefs.getString("before_threshold_humidity", "360");
 	}
 
 	/**
@@ -218,7 +219,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getVibrationAfterThreshold() {
-		return globalPrefs.getString("after_threshold_vibration", "360");
+		return globalPrefs.getString("after_threshold_vibration", "60");
 	}
 
 	/**
@@ -234,8 +235,38 @@ public class SensorCart extends Application {
 		return globalPrefs.getString("sensor_list", "None");
 	}
 
-	public static boolean checkForTypeOfSettings() {
+	public static boolean isSetForSingleSensor() {
 		return globalPrefs.getBoolean("set_by_sensor_id", false);
+	}
+	
+	private void updateSensorConfig(int index){
+		
+			sensorList.get(index).setMaxTemperatureThreshold( Double
+					.parseDouble(getTemperatureThreshold()));
+			sensorList.get(index).setMaxHumidtyThreshold( Double
+					.parseDouble(getHumidityThreshold()));
+			sensorList.get(index).setMaxVibrationThreshold (Double
+					.parseDouble(getVibrationThreshold()));
+			sensorList.get(index).setMaxShockThreshold ( Double
+					.parseDouble(getShockThreshold()));
+			sensorList.get(index).setTemperatureTimePeriod( Integer
+					.parseInt(getTemperatureTimePeriod()));
+			sensorList.get(index).setTemperatureAfterThresholdTimePeriod(Integer
+					.parseInt(getTemperatureAfterThreshold()));
+			sensorList.get(index).setHumididtyTimePeriod( Integer
+					.parseInt(getHumidityTimePeriod()));
+			sensorList.get(index).setHumididtyAfterThresholdTimePeriod(Integer
+					.parseInt(getHumidityAfterThreshold()));
+			sensorList.get(index).setVibrationTimePeriod(Integer
+					.parseInt(getVibrationTimePeriod()));
+			sensorList.get(index).setVibrationAfterThresholdTimePeriod(Integer
+					.parseInt(getVibrationAfterThreshold()));
+	}
+	
+	public void updateSensorListConfigs(){
+		for (int index = 0; index < sensorList.size(); index++) {
+			updateSensorConfig(index);
+		}
 	}
 
 	/**
@@ -243,31 +274,11 @@ public class SensorCart extends Application {
 	 * 
 	 */
 	public void updateSettings() {
-		getGlobalSettings();
-		if (!(checkForTypeOfSettings())) {
-			for (int index = 0; index < sensorList.size(); index++) {
-				sensorList.get(index).temperatureThreshold = Double
-						.parseDouble(getTemperatureThreshold());
-				sensorList.get(index).humidityThreshold = Double
-						.parseDouble(getHumidityThreshold());
-				sensorList.get(index).vibrationThreshold = Double
-						.parseDouble(getVibrationThreshold());
-				sensorList.get(index).shockThreshold = Double
-						.parseDouble(getShockThreshold());
-				sensorList.get(index).beforeTemperatureThreshold = Integer
-						.parseInt(getTemperatureTimePeriod());
-				sensorList.get(index).afterTemperatureThreshold = Integer
-						.parseInt(getTemperatureAfterThreshold());
-				sensorList.get(index).beforeHumidityThreshold = Integer
-						.parseInt(getHumidityTimePeriod());
-				sensorList.get(index).afterHumidityThreshold = Integer
-						.parseInt(getHumidityAfterThreshold());
-				sensorList.get(index).beforeVibrationThreshold = Integer
-						.parseInt(getVibrationTimePeriod());
-				sensorList.get(index).afterVibrationThreshold = Integer
-						.parseInt(getVibrationAfterThreshold());
-			}
-
+		
+		if (!(isSetForSingleSensor())) {
+			populateGlobalSettings();
+			/*
+			updateSensorListConfigs();
 			for (Package pack : PackageList.getPackages()) {
 				if (!(pack.getPackageId().equals("NO_ID"))) {
 					pack.setTruckId(getTruckId());
@@ -295,8 +306,8 @@ public class SensorCart extends Application {
 					pack.setVibrationAfterThresholdTimePeriod(Integer
 							.parseInt(getVibrationAfterThreshold()));
 				}
-			}
-		} else if (checkForTypeOfSettings()) {
+			}*/
+		} else if (isSetForSingleSensor()) {
 			for (Package pack : PackageList.getPackages()) {
 				if (!(pack.getPackageId().equals("NO_ID"))
 						&& pack.getSensorId().equals(
@@ -329,70 +340,35 @@ public class SensorCart extends Application {
 				}
 			}
 			for (int index = 0; index < sensorList.size(); index++) {
-				if ((sensorList.get(index).sensorId
+				if ((sensorList.get(index).getSensorId()
 						.equals(getSensorIdForIndividualSettings()))) {
-					sensorList.get(index).temperatureThreshold = Double
-							.parseDouble(getTemperatureThreshold());
-					sensorList.get(index).humidityThreshold = Double
-							.parseDouble(getHumidityThreshold());
-					sensorList.get(index).vibrationThreshold = Double
-							.parseDouble(getVibrationThreshold());
-					sensorList.get(index).shockThreshold = Double
-							.parseDouble(getShockThreshold());
-					sensorList.get(index).beforeTemperatureThreshold = Integer
-							.parseInt(getTemperatureTimePeriod());
-					sensorList.get(index).afterTemperatureThreshold = Integer
-							.parseInt(getTemperatureAfterThreshold());
-					sensorList.get(index).beforeHumidityThreshold = Integer
-							.parseInt(getHumidityTimePeriod());
-					sensorList.get(index).afterHumidityThreshold = Integer
-							.parseInt(getHumidityAfterThreshold());
-					sensorList.get(index).beforeVibrationThreshold = Integer
-							.parseInt(getVibrationTimePeriod());
-					sensorList.get(index).afterVibrationThreshold = Integer
-							.parseInt(getVibrationAfterThreshold());
+						updateSensorConfig(index);
 					break;
 				}
 			}
 		}
 	}
 
-	public void updateIndividualSettings() {
-		int index = sensorList.size() - 1;
-		sensorList.get(index).temperatureThreshold = globalTemperatureThreshold;
-		sensorList.get(index).humidityThreshold = globalHumidityThreshold;
-		sensorList.get(index).vibrationThreshold = globalVibrationThreshold;
-		sensorList.get(index).shockThreshold = globalShockThreshold;
-		sensorList.get(index).beforeTemperatureThreshold = globalBeforeTemperatureThreshold;
-		sensorList.get(index).afterTemperatureThreshold = globalAfterTemperatureThreshold;
-		sensorList.get(index).beforeHumidityThreshold = globalBeforeHumidityThreshold;
-		sensorList.get(index).afterHumidityThreshold = globalAfterHumidityThreshold;
-		sensorList.get(index).beforeVibrationThreshold = globalBeforeVibrationThreshold;
-		sensorList.get(index).afterVibrationThreshold = globalAfterVibrationThreshold;
+	public void updatePackageSettings(Package pack) {
+		
+			pack.setTruckId(getTruckId());
 
-		for (Package pack : PackageList.getPackages()) {
-			if (!(pack.getPackageId().equals("NO_ID"))
-					&& pack.getSensorId().equals(sensorIdList.get(index))) {
-				pack.setTruckId(getTruckId());
+			pack.setMaxTemperatureThreshold(globalTemperatureThreshold);
+			pack.setMaxHumidtyThreshold(globalHumidityThreshold);
+			pack.setMaxVibrationThreshold(globalVibrationThreshold);
+			pack.setMaxShockThreshold(globalShockThreshold);
 
-				pack.setMaxTemperatureThreshold(globalTemperatureThreshold);
-				pack.setMaxHumidtyThreshold(globalHumidityThreshold);
-				pack.setMaxVibrationThreshold(globalVibrationThreshold);
-				pack.setMaxShockThreshold(globalShockThreshold);
+			pack.setTemperatureTimePeriod(globalBeforeTemperatureThreshold);
+			pack.setHumididtyTimePeriod(globalBeforeHumidityThreshold);
+			pack.setVibrationTimePeriod(globalBeforeVibrationThreshold);
 
-				pack.setTemperatureTimePeriod(globalBeforeTemperatureThreshold);
-				pack.setHumididtyTimePeriod(globalBeforeHumidityThreshold);
-				pack.setVibrationTimePeriod(globalBeforeVibrationThreshold);
-
-				pack.setTemperatureAfterThresholdTimePeriod(globalAfterTemperatureThreshold);
-				pack.setHumididtyAfterThresholdTimePeriod(globalAfterHumidityThreshold);
-				pack.setVibrationAfterThresholdTimePeriod(globalAfterVibrationThreshold);
-			}
-		}
+			pack.setTemperatureAfterThresholdTimePeriod(globalAfterTemperatureThreshold);
+			pack.setHumididtyAfterThresholdTimePeriod(globalAfterHumidityThreshold);
+			pack.setVibrationAfterThresholdTimePeriod(globalAfterVibrationThreshold);
 	}
 
-	public void getGlobalSettings() {
-		if (!(checkForTypeOfSettings())) {
+	private void populateGlobalSettings() {
+
 			globalTemperatureThreshold = Double
 					.parseDouble(getTemperatureThreshold());
 			globalHumidityThreshold = Double
@@ -413,28 +389,36 @@ public class SensorCart extends Application {
 					.parseInt(getVibrationTimePeriod());
 			globalAfterVibrationThreshold = Integer
 					.parseInt(getVibrationAfterThreshold());
-		}
 	}
 
 	public static void getValuesSetForSensor(int position) {
-		temperatureThreshold = sensorList.get(position)
-				.getTemperatureThreshold();
-		humidityThreshold = sensorList.get(position).getHumidityThreshold();
-		vibrationThreshold = sensorList.get(position).getVibrationThreshold();
-		shockThreshold = sensorList.get(position).getShockThreshold();
+		
+		 HashMap<Sensor, Config> configList = sensorList.get(position).getConfigs();
+         Config config = configList.get(Sensor.TEMPERATURE);
+		temperatureThreshold = config.getMaxThreshold();
+		beforeTemperatureThreshold = config.getTimePeriod();
+		afterTemperatureThreshold = config.getAfterThresholdTimePeriod();
+		
+		config = configList.get(Sensor.HUMIDITY);
+		humidityThreshold = config.getMaxThreshold();
+		beforeHumidityThreshold = config.getTimePeriod();
+		afterHumidityThreshold =  config.getAfterThresholdTimePeriod();
+		
+		config = configList.get(Sensor.VIBRATION);
+		vibrationThreshold = config.getMaxThreshold();
+		beforeVibrationThreshold = config.getTimePeriod();
+		afterVibrationThreshold = config.getAfterThresholdTimePeriod();
+		
+		config = configList.get(Sensor.SHOCK);
+		shockThreshold = config.getMaxThreshold();
 
-		beforeTemperatureThreshold = sensorList.get(position)
-				.getBeforeTemperatureThreshold();
-		afterTemperatureThreshold = sensorList.get(position)
-				.getAfterTemperatureThreshold();
-		beforeHumidityThreshold = sensorList.get(position)
-				.getBeforeHumidityThreshold();
-		afterHumidityThreshold = sensorList.get(position)
-				.getAfterHumidityThreshold();
-		beforeVibrationThreshold = sensorList.get(position)
-				.getBeforeVibrationThreshold();
-		afterVibrationThreshold = sensorList.get(position)
-				.getAfterVibrationThreshold();
+	}
 
+	public void updatePackageId(int sensorPosition,String packageId) {
+		if(sensorPosition < sensorList.size()){	
+			Package pack = sensorList.get(sensorPosition);
+			pack.setPackageId(packageId);
+		}
+		
 	}
 }

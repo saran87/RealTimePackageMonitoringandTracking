@@ -2,6 +2,9 @@ package com.rtpmt.packtrack;
 
 import java.util.List;
 
+import rtpmt.packages.Package;
+import rtpmt.packages.PackageList;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -121,9 +124,9 @@ public class StartActivity extends ListActivity {
 	}
 	
 	class SensorAdapter extends BaseAdapter {
-        private List<Sensors> mItems;
+        private List<Package> mItems;
 
-        public SensorAdapter(List<Sensors> items) {
+        public SensorAdapter(List<Package> items) {
             mItems = items;
         }
 
@@ -157,12 +160,12 @@ public class StartActivity extends ListActivity {
             tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             // Set the text starting position
             tv.setPaddingRelative(36, 0, 0, 0);
-            if (mItems.get(position).packageId == null || mItems.get(position).packageId.equals(""))
+            if (mItems.get(position).getPackageId() == null || mItems.get(position).getPackageId().equals(""))
             {
-            	tv.setText(mItems.get(position).sensorId + "  ( Click here to update Package Id )");
+            	tv.setText(mItems.get(position).getSensorId() + "  ( Click here to update Package Id )");
             }
             else{
-            	tv.setText(mItems.get(position).sensorId + "  ( " + mItems.get(position).packageId + " )");
+            	tv.setText(mItems.get(position).getSensorId() + "  ( " + mItems.get(position).getPackageId() + " )");
             }
             return convertView;
         }
@@ -178,10 +181,17 @@ public class StartActivity extends ListActivity {
         		break;
         	case PACKAGE_ID_UPDATED:
         		if (resultCode == Activity.RESULT_OK) {
-        			populateSensorList(data);
+        			int shortId = data.getIntExtra(EditSensorDetails.SHORT_ID,-1);
+        			if(shortId != -1){
+	        			Package pack = PackageList.getPackage(shortId);
+	        			if(pack!=null){
+	        				sService.configure(pack);
+	        			}
+	        			populateSensorList(data);
+        			}
         		}
             case SETTINGS_UPDATED:
-            		updateSettingsForAll(data);
+            		updateSettings(data);
             	break;
     	}
     }
@@ -190,16 +200,28 @@ public class StartActivity extends ListActivity {
     	final SensorCart listOfSensors = (SensorCart) getApplicationContext();
     	final int listSize = listOfSensors.getListSize();
     	if (listSize > 0)
-		{
-			setListAdapter(new SensorAdapter(listOfSensors.sensorList));
+    	{
+			setListAdapter(new SensorAdapter(SensorCart.sensorList));
 		}
     }
     
-    protected void updateSettingsForAll(Intent data){
+    protected void updateSettings(Intent data){
     	final SensorCart listOfSensors = (SensorCart) getApplicationContext();
-    	listOfSensors.updateSettings();
-        sService.configure();
     	
+    	String sensorId = SensorCart.getSensorIdForIndividualSettings();
+    	if(SensorCart.isSetForSingleSensor()){
+    		if(sensorId != null && !sensorId.isEmpty()){
+    			Package pack = PackageList.getPackage(sensorId);
+    			if(pack !=null){
+    				listOfSensors.updatePackageSettings(pack);
+    				sService.configure(pack);
+    			}
+    		}
+    		
+    	}else{
+    		listOfSensors.updateSettings();
+    		sService.configure();
+    	}
     }
 
 	public String getFolderName(){
