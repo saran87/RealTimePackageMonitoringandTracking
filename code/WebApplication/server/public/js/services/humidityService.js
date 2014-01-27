@@ -82,9 +82,10 @@ angular.module('myServices')
 						    //console.log("debug d");
 			      			//console.dir(d);
 
-			      			if(d.value>=0 && d.value<=100){
-
-						        _humidityData.push(d);
+			      			if(d.value>=0 && d.value<=100){			      				
+			      				
+			      				_humidityData.push(d);			      							      				
+						        
 						        _humidityGraphData.push([d.timestamp,d.value]);
 					    	}
 					        
@@ -156,7 +157,9 @@ angular.module('myServices')
 						d=data[i];
 
 						if(d.value>=0 && d.value<=100){
+							
 							_newhumidityData.push(d);
+			      			
 							_newhumidityGraphData.push([d.timestamp,d.value]);
 						}
 

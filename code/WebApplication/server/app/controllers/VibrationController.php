@@ -13,7 +13,21 @@ class VibrationController extends BaseController{
 
 		$vibrationOfPackageInTruckArr = Vibration::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
-		return $vibrationOfPackageInTruckArr;		
+		$vibrationArr=[];		
+
+		foreach ($vibrationOfPackageInTruckArr as $key => $value) {
+
+			$xArr['_id']=$value->_id;
+			$xArr['value']=$value->value;
+			$xArr['timestamp']=$value->timestamp;
+			$xArr['is_above_threshold']=$value->is_above_threshold;
+
+			$vibrationArr[]=$xArr;
+		}		
+
+		return $vibrationArr;
+
+				
 	}
 
 	public function vibrationgraphdata($id){
@@ -39,7 +53,19 @@ class VibrationController extends BaseController{
 
 		$vibrationAfterTimestampArr = Vibration::where('truck_id',$truck_id)->where('package_id', $package_id)->where('timestamp','>',$ts)->orderBy('timestamp', 'asc')->get();
 
-		return $vibrationAfterTimestampArr;
+		$vibrationArr=[];		
+
+		foreach ($vibrationAfterTimestampArr as $key => $value) {
+
+			$xArr['_id']=$value->_id;
+			$xArr['value']=$value->value;
+			$xArr['timestamp']=$value->timestamp;
+			$xArr['is_above_threshold']=$value->is_above_threshold;
+
+			$vibrationArr[]=$xArr;
+		}		
+
+		return $vibrationArr;
 
 	}
 

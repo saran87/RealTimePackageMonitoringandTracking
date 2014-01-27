@@ -16,7 +16,19 @@ class TemperatureController extends BaseController{
 
 		$temperatureOfPackageInTruckArr = Temperature::where('package_id', $package_id)->where('truck_id',$truck_id)->orderBy('timestamp', 'asc')->get();
 
-		return $temperatureOfPackageInTruckArr;		
+		$temperatureArr=[];
+		
+
+		foreach ($temperatureOfPackageInTruckArr as $key => $value) {
+
+			$xArr['value']=$value->value;
+			$xArr['timestamp']=$value->timestamp;
+			$xArr['is_above_threshold']=$value->is_above_threshold;
+			
+			$temperatureArr[]=$xArr;
+		}		
+
+		return $temperatureArr;		
 	}
 
 	public function temperatureOfPackage($package_id){
@@ -41,7 +53,19 @@ class TemperatureController extends BaseController{
 
 		$temperatureAfterTimestampArr = Temperature::where('truck_id',$truck_id)->where('package_id', $package_id)->where('timestamp','>',$ts)->orderBy('timestamp', 'asc')->get();
 
-		return $temperatureAfterTimestampArr;
+		$temperatureArr=[];
+		
+
+		foreach ($temperatureAfterTimestampArr as $key => $value) {
+
+			$xArr['value']=$value->value;
+			$xArr['timestamp']=$value->timestamp;
+			$xArr['is_above_threshold']=$value->is_above_threshold;
+			
+			$temperatureArr[]=$xArr;
+		}		
+
+		return $temperatureArr;
 
 	}
 

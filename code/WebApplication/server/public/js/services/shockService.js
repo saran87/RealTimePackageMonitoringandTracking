@@ -10,11 +10,31 @@ angular.module('myServices')
 
 		var getHighVal = function (inArr){
 
-			var highv=(Math.max.apply(Math, inArr)).toString();			
+			var highv=maxVibrationGValue(inArr);			
 			
-			return [parseFloat(Math.max.apply(Math, inArr)),inArr.indexOf(highv)];
+			return [highv,inArr.split(' ').indexOf(highv)];
 
 		}
+
+		function maxVibrationGValue(value){
+
+             var valueArr = value.split(" ");
+
+             var total = 0;
+
+             var max = Number.MIN_VALUE;
+             for(var index in valueArr){
+
+                         if(Math.abs(valueArr[index]) > Math.abs(max)){
+
+                                 max = valueArr[index];
+                         }
+             }
+
+             return (max);
+     	}
+
+
 
 		var _getShockData = function(truck_id,package_id){
 
@@ -53,15 +73,15 @@ angular.module('myServices')
 
 						    	var highestVals=data[i];
 
-						    	var tmpx=getHighVal(highestVals.value.x.split(" "));
-						    	var tmpy=getHighVal(highestVals.value.y.split(" "));
-						    	var tmpz=getHighVal(highestVals.value.z.split(" "));
-
-						    	var maxVal=Math.max(tmpx[0],tmpy[0],tmpz[0]);
-						    	var maxIndex=Math.max(tmpx[1],tmpy[1],tmpz[1]);
+						    	var tmpx=getHighVal(highestVals.value.x);
+						    	var tmpy=getHighVal(highestVals.value.y);
+						    	var tmpz=getHighVal(highestVals.value.z);
 						    	
-						    	//var t = ((maxIndex * 0.000625) + 70 * (0.000625))/1000;
-
+						    	var maxVal=Math.max(tmpx[0],tmpy[0],tmpz[0]);
+						    	
+						    	var maxIndex=Math.max(tmpx[1],tmpy[1],tmpz[1]);	
+						    	
+						    	
 						    	var t = (maxIndex * 0.000625) + (70 * 0.000625);
 
 						    	var height = 4.9 * Math.pow(t,2);
@@ -185,9 +205,9 @@ angular.module('myServices')
 
 							var newhighestVals=data[i];
 
-							var tmpx=getHighVal(newhighestVals.value.x.split(" "));
-					    	var tmpy=getHighVal(newhighestVals.value.y.split(" "));
-					    	var tmpz=getHighVal(newhighestVals.value.z.split(" "));
+							var tmpx=getHighVal(newhighestVals.value.x);
+					    	var tmpy=getHighVal(newhighestVals.value.y);
+					    	var tmpz=getHighVal(newhighestVals.value.z);
 
 					    	var maxVal=Math.max(tmpx[0],tmpy[0],tmpz[0]);
 					    	var maxIndex=Math.max(tmpx[1],tmpy[1],tmpz[1]);

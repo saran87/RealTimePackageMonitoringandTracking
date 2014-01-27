@@ -131,12 +131,63 @@ angular.module('myServices')
 
 		}
 
+		var _getLatestLocation = function(truck_id,package_id, actionBy){
+			var deferred=$q.defer();
+
+			var path=datapath+'latestMapsEntry/'+truck_id+'/'+package_id;
+
+			if(actionBy==0){
+				var action='bg';
+				path=path+'?action='+action
+				console.log(path);
+			} else {
+				var action='usr';
+				path=path+'?action='+action
+				console.log(path);
+			}
+
+			var errors ={
+				"isError": false,
+				"errorMsg": ""
+			};
+
+
+			$http.get(path)
+			.success(function(data){
+
+				if(data.length>0){
+
+					deferred.resolve([data[0], errors]);					
+
+				} else {
+
+					errors.isError = true;
+					errors.errorMsg = "No location data(GPS) available for package " + package_id + " in truck " + truck_id;
+
+					deferred.resolve(['', errors]);					
+				}
+
+			})
+			.error(function(data){
+
+				errors.isError = true;
+				errors.errorMsg = "No location data(GPS) available for package " + package_id + " in truck " + truck_id;
+
+				deferred.resolve(['', errors]);	
+
+			});
+
+
+			return deferred.promise;
+		}
+
 
 		return{
 
 			getCordinatesOf: _getCordinatesOf,
 			getLatestCoordinatesof: _getLatestCoordinatesof,
-			getAddress: _getAddress	
+			getAddress: _getAddress,
+			getLatestLocation: _getLatestLocation
 			
 		};
 

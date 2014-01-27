@@ -96,6 +96,8 @@ Route::get('/maps/{truck_id}/{package_id}', 'MapController@coords');
 
 Route::get('/mapsEntry/{truck_id}/{package_id}/{timestamp}', 'MapController@coordsAfterTimestamp');
 
+Route::get('/latestMapsEntry/{truck_id}/{package_id}', 'MapController@latestCoords');
+
 
 
 /*Routes to get Dashboards Data*/

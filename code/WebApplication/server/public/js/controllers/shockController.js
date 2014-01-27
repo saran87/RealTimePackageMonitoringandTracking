@@ -173,9 +173,9 @@ angular.module('myModule')
 
 	    	for(var i=0; i<$scope.shockData.length; i++){
 
-	    		XArr.push([ $scope.shockData[i].timestamp, $scope.shockData[i].value.x]);
-	    		YArr.push([ $scope.shockData[i].timestamp, $scope.shockData[i].value.y]);
-	    		ZArr.push([ $scope.shockData[i].timestamp, $scope.shockData[i].value.z]);
+	    		XArr.push([ $scope.shockData[i].timestamp, parseFloat($scope.shockData[i].value.x)]);
+	    		YArr.push([ $scope.shockData[i].timestamp, parseFloat($scope.shockData[i].value.y)]);
+	    		ZArr.push([ $scope.shockData[i].timestamp, parseFloat($scope.shockData[i].value.z)]);
 	    	}
 
 

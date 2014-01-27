@@ -94,22 +94,25 @@ angular.module('myModule')
 		  		if(!data[3].isError){
 
 		  			$scope.noData = false;
-		  			var tArr = [];	  			
+		  			var tArr = [];
+
+		  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
+		  			
+		  			$scope.ts=latestTimestamp;
+
+		  			$scope.loaded=true;			
+
 		  			for(var i=0; i<data[0].length;i++){
 
-		  				$scope.temperatureData.push(data[0][i]);
+		  				if(data[0][i].is_above_threshold){
+
+		  					$scope.temperatureData.push(data[0][i]);
+		  				}
 
 		  				tArr.push(data[1][i]);
 		  				thArr.push([data[1][i][0], $scope.maxThreshold]);
 
-		  			}	  			
-
-		  			latestTimestamp=data[2]; //assign the latest timestamp i.e. for first time
-		  			$scope.ts=latestTimestamp;
-
-		  			$scope.loaded=true;
-
-			  		 //assign the temperature data to be displayed in table
+		  			}
 
 			  		//data to be shown in the graph formatted in the second element of data array
 			  		$scope.data=[
@@ -209,7 +212,10 @@ angular.module('myModule')
 
 	    					for(var i=0; i<data[0].length; i++){
 
-	    						$scope.temperatureData.push(data[0][i]);    						
+	    						if(data[0][i].is_above_threshold){
+
+	    							$scope.temperatureData.push(data[0][i]);    						
+	    						}
 
 	    					}
 

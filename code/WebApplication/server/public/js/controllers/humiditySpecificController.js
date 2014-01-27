@@ -103,7 +103,12 @@ angular.module('myModule')
           
           for(var i=0;i<data[0].length;i++){
 
-            $scope.humidityData.push(data[0][i]);
+            if(data[0][i].is_above_threshold){
+
+              $scope.humidityData.push(data[0][i]);
+
+            }
+            
 
             tArr.push(data[1][i]);
 
@@ -197,15 +202,14 @@ angular.module('myModule')
 
       					for(var i=0; i<data[0].length; i++){
 
-      						$scope.humidityData.push(data[0][i]);
+                  if(data[0][i].is_above_threshold){
+
+      						  $scope.humidityData.push(data[0][i]);
+                  }
 
       					}
 
-      					console.log("new humidity update: " + $scope.humidityData);
-
-      					//console.log("data[1] check");
-
-      					//console.dir(data[1]);
+      					console.log("new humidity update: " + $scope.humidityData);      					
 
       					for(var j=0; j<data[1].length; j++){
 

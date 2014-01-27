@@ -1,11 +1,11 @@
 angular.module('myModule')
-	.controller('mapController', ['$scope','mapService','dashBoardService','$rootScope','$routeParams','$http','$timeout','$q',function($scope,mapService,dashBoardService,$rootScope,$routeParams,$http, $timeout,$q){
+  .controller('mapController', ['$scope','mapService','dashBoardService','$rootScope','$routeParams','$http','$timeout','$q',function($scope,mapService,dashBoardService,$rootScope,$routeParams,$http, $timeout,$q){
 
     var latestTimestamp='';
 
     $scope.noData=false;
 
-		if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
+    if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
         var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
         var pack=$rootScope.pid; //package_id selected in the Dropdown menu

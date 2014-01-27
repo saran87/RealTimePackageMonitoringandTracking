@@ -13,6 +13,25 @@ angular.module('myServices')
 			return Math.max.apply(Math, inArr);
 		}
 
+		function maxVibrationGValue(value){
+
+             var valueArr = value.split(" ");
+
+             var total = 0;
+
+             var max = Number.MIN_VALUE;
+             for(var index in valueArr){
+
+                         if(Math.abs(valueArr[index]) > Math.abs(max)){
+
+                                 max = valueArr[index];
+                         }
+             }
+
+             return (max);
+
+     	}
+
 
 		var _getVibrationData = function(truck_id,package_id){
 
@@ -51,9 +70,9 @@ angular.module('myServices')
 
 						    	var	highestVals=data[i];						    	
 
-						        highestVals.value.x = getHighVal(highestVals.value.x.split(" "));
-						        highestVals.value.y = getHighVal(highestVals.value.y.split(" "));
-						        highestVals.value.z = getHighVal(highestVals.value.z.split(" "));
+						        highestVals.value.x = maxVibrationGValue(highestVals.value.x);
+						        highestVals.value.y = maxVibrationGValue(highestVals.value.y);
+						        highestVals.value.z = maxVibrationGValue(highestVals.value.z);
 
 						        _vibrationData.push(highestVals);
 
@@ -122,9 +141,9 @@ angular.module('myServices')
 
 							var newhighestVals=data[i];
 
-							newhighestVals.value.x = getHighVal(newhighestVals.value.x.split(" "));
-						    newhighestVals.value.y = getHighVal(newhighestVals.value.y.split(" "));
-						    newhighestVals.value.z = getHighVal(newhighestVals.value.z.split(" "));
+							newhighestVals.value.x = maxVibrationGValue(highestVals.value.x);
+						    newhighestVals.value.y = maxVibrationGValue(highestVals.value.y);
+						    newhighestVals.value.z = maxVibrationGValue(highestVals.value.z);
 
 						    _newvibrationData.push(newhighestVals);
 						}

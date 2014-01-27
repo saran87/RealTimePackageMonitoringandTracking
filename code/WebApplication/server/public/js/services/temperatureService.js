@@ -83,7 +83,9 @@ angular.module('myServices')
 						    d=data[i];
 						    
 			      			if(d.value>=0){
+			      				
 						        _temperatureData.push(d);
+						    	
 						        _temperatureGraphData.push([d.timestamp,parseFloat(d.value).toFixed(2)]);		         
 					    	}
 					        
@@ -148,8 +150,10 @@ angular.module('myServices')
 
 						d=data[i];
 
-						if(d.value>=0){
-							_newtemperatureData.push(d);
+						if(d.value>=0){							
+
+							_newtemperatureData.push(d);								
+							
 							_newtemperatureGraphData.push([d.timestamp,d.value]);
 						}
 
