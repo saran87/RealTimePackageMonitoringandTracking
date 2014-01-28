@@ -116,6 +116,12 @@ public class BlackBoxReader extends AbstractSource {
         Thread.sleep(10000);
         getSensorInformation();
     }
+    
+    @Override
+    public void calibrateSensor() throws InterruptedException,IOException{
+        writeFramedPacket(Constants.RUN_ACCELEROMETER_CALIBRATION, dummyPacket);
+        getSensorInformation();
+    }
 
     /**
      *
@@ -748,6 +754,8 @@ public class BlackBoxReader extends AbstractSource {
         reader.dataFile.delete();
         //Dump.dump(System.out,"Data from SD :",data);
     }
+    
+    
 
     public byte[] readFramedPacket(boolean readSDCard, FileInputStream input) throws IOException, InterruptedException {
 

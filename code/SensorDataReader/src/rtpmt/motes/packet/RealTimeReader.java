@@ -544,4 +544,9 @@ public class RealTimeReader extends AbstractSource implements Runnable {
     public void clearData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void calibrateSensor() throws InterruptedException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

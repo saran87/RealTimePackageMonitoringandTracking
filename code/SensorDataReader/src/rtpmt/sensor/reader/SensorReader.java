@@ -116,4 +116,8 @@ public class SensorReader {
     public void clearData() throws InterruptedException,IOException{
         packetReader.clearData();
     }
+    
+    public void calibrateSensor() throws InterruptedException, IOException{
+        packetReader.calibrateSensor();
+    }
 }

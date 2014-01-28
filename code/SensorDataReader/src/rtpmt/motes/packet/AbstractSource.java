@@ -106,6 +106,8 @@ abstract public class AbstractSource implements PacketSource
         return add;
     }
     
+    
+    
     // Implementation interfaces
     abstract protected void openSource() throws IOException,InterruptedException;
     abstract protected void closeSource() throws IOException;

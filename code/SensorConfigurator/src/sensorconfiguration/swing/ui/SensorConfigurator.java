@@ -153,6 +153,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblBatteryLevel = new javax.swing.JLabel();
         jlblBatteryLevelValue = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jProgressBar2 = new javax.swing.JProgressBar();
         JbtnSaveToServer1 = new javax.swing.JButton();
@@ -407,7 +408,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .add(temPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(shockThreshold, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel19, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .add(83, 83, 83))
+                .add(81, 81, 81))
         );
 
         jbConfigure.setText("Configure");
@@ -539,6 +540,13 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jLabel18.setForeground(new java.awt.Color(255, 0, 51));
         jLabel18.setText("%");
 
+        jButton6.setText("Calibrate Sensor");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -584,7 +592,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
                                         .add(jlblBatteryLevelValue)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                         .add(jLabel18)
-                                        .add(0, 0, Short.MAX_VALUE))
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .add(jButton6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 205, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                     .add(temPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .add(humidtyPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .add(jPanel1Layout.createSequentialGroup()
@@ -631,7 +640,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
                     .add(jButton5)
                     .add(jlblBatteryLevel)
                     .add(jLabel18)
-                    .add(jlblBatteryLevelValue))
+                    .add(jlblBatteryLevelValue)
+                    .add(jButton6))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -900,8 +910,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 751, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1079,6 +1089,11 @@ public class SensorConfigurator extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_portTextFieldActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        
+        eventHandler.calibrateSensor();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     public void clearLocalDataTable() {
         DefaultTableModel model = (DefaultTableModel) jtblLocalData.getModel();
         int rowCount = model.getRowCount();
@@ -1135,6 +1150,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
