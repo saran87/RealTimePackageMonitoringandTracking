@@ -18,7 +18,7 @@
     <string name="pref_header_Shock">Shock</string>
     <string name="pref_title_set_shock_threshold">Threshold in Acceleration (G)</string>
     <string name="pref_default_shock_threshold">1.0</string>
-    <string name="pref_description_turn_on_off_shock">Allows to switch Shock On/Off for all sensors</string>
+    <string name="pref_description_turn_on_off_shock">Allows to switch Shock On/Off for selected/all sensors</string>
     <string name="pref_title_turn_on_off_shock">Switch ON/OFF Shock</string>
 
     <!-- Example settings for Humidity -->
@@ -26,7 +26,7 @@
     <string name="pref_title_set_humidity_threshold">Threshold in Percent (%)</string>
     <string name="pref_default_humidity_threshold">55</string>
     <string name="pref_title_notify_before_humidity">Notification before threshold</string>
-    <string name="pref_description_turn_on_off_humidity">Allows to switch Humidity On/Off for all sensors</string>
+    <string name="pref_description_turn_on_off_humidity">Allows to switch Humidity On/Off for selected/all sensors</string>
     <string name="pref_title_turn_on_off_humidity">Switch ON/OFF Humidity</string>
         
     <string-array name="pref_notify_before_humidity_list">
@@ -138,7 +138,7 @@
     <string name="pref_title_set_vibration_threshold">Threshold in Acceleration (G)</string>
     <string name="pref_default_vibration_threshold">1.0</string>
     <string name="pref_title_notify_before_vibration">Notification before threshold</string>
-    <string name="pref_description_turn_on_off_vibration">Allows to switch Vibration On/Off for all sensors</string>
+    <string name="pref_description_turn_on_off_vibration">Allows to switch Vibration On/Off for selected/all sensors</string>
     <string name="pref_title_turn_on_off_vibration">Switch ON/OFF Vibration</string>
         
     <string-array name="pref_notify_before_vibration_list">
