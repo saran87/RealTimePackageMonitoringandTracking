@@ -3,15 +3,24 @@
     <div class="widget">
       <div class="widget-head">
         <div class="pull-left">
-          <span ng-show="displayLocation">Location Tracking</span>
-          
+          <span ng-show="displayLocation">Current Location</span>
+          <span ng-show="!displayLocation">Complete Route</span>          
         </div>                        
-        <div class="pull-right">            
+        <div class="pull-right"> 
+
           
-          <button ng-click="refresh()" class="btn btn-success">Refresh</button>  
+          <button ng-show="displayLocation && !routeLoaded" ng-click="showRoute()" class="btn btn-info">Show Route</button>  
+
+          <button ng-show="displayLocation && routeLoaded" ng-click="noLocationBtn()" class="btn btn-info">Show Route</button>  
+
+          <button ng-show="!displayLocation" ng-click="locationBtn()" class="btn btn-primary">Location
+          </button>  
+          
+          <button ng-show="displayLocation" ng-click="locationRefresh()" class="btn btn-success">Refresh</button>
+          <button ng-show="!displayLocation" ng-click="refresh()" class="btn btn-success">Refresh</button>
 
           <small ng-show="rt">
-            <i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
+            <i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated <span ng-show="!displayLocation">{{ts | timeago}}</span> <span ng-show="displayLocation">{{tsLoc | timeago}}</span></span>
           </small>
           <small class="text-mute" ng-show="!rt">
             No real-time updates
@@ -19,10 +28,16 @@
         </div>
         <div class="clearfix"></div>
       </div>
-      <div class="widget-content">
+      <div ng-show="!displayLocation" class="widget-content">
         <div class="padd">     
 
         <div ng-show="!noData" id="map-canvas"></div>
+        </div>
+      </div>
+      <div ng-show="displayLocation" class="widget-content">
+        <div class="padd">     
+
+        <div ng-show="!noData" id="map-canvas-location"></div>
         </div>
       </div>
       <div class="widget-foot">
@@ -31,10 +46,18 @@
           <img src="../img/temperature-pin.png" alt="Temperature Marker"> Temperature
           <img src="../img/humidity-pin.png" alt="Humidity Marker"> Humidity
           <img src="../img/vibration-pin.png" alt="Vibration Marker"> Vibration
-          <img src="../img/shock-pin.png" alt="Shock Marker"> Shock          
+          <img src="../img/shock-pin.png" alt="Shock Marker"> Shock
+
+          <br />
+          <div class="text-center">
+            <hr>
+            <strong>Disclaimer: </strong> The direction in the map is given my google maps service, it might be the route actually driven by the driver. For exact location follow the marker.
+            <hr>
+          </div>          
           
-        </div>
-        <div class="pull-right">
+        </div>        
+
+        <div ng-show="!displayLocation" class="pull-right">
           <img src="../img/waypoint-pin.png" alt="Waypoint Marker"> Waypoints <img src="../img/waypoint-end-pin.png" alt="Waypoint-End Marker">          
         </div>
         
@@ -43,6 +66,7 @@
       </div>
     </div> 
   </div>
+  
 </div>  
   <div class="well" ng-show="noData">
 

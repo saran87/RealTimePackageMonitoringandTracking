@@ -3,7 +3,15 @@ angular.module('myModule')
 
     var latestTimestamp='';
 
-    $scope.noData=false;
+    var latestLocTimestamp=''
+
+    $scope.noData=false;    
+
+    $scope.displayLocation = true;
+
+    $scope.routeLoaded = false;
+
+    var timer, timer2;
 
     if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
@@ -57,10 +65,12 @@ angular.module('myModule')
       return deferred.promise;
 
     }
+    
 
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
     var map;
+    var mapLocation;
     var geocoder;
 
     directionsDisplay = new google.maps.DirectionsRenderer();
@@ -71,19 +81,21 @@ angular.module('myModule')
      * Add the latitude and longitude to polyline and a marker and info window
      * @param {google.maps.LatLng(} latitude , longitude
      */
-    function addLatLng(latLng,message,type) {
+    function addLatLng(latLng,message,type,addTo) {
 
       var iconType = 'default';
 
       if(type){
         iconType = type;
       }
+
+      var toMap=addTo;
        
         // Add a new marker at the new plotted point on the polyline.
         var marker = new google.maps.Marker({
           position:latLng,
           title: 'Click for location information',
-          map: map,
+          map: toMap,
           animation: google.maps.Animation.DROP,
           icon: "../img/"+iconType+"-pin.png"
         });
@@ -92,7 +104,7 @@ angular.module('myModule')
         var infowindow = new google.maps.InfoWindow({});
 
         google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
+            infowindow.open(toMap,marker);
             
             getAddress(latLng,function(addr){
 
@@ -103,6 +115,8 @@ angular.module('myModule')
             });
                         
         });
+
+        return marker;
      
       }
 
@@ -139,10 +153,22 @@ angular.module('myModule')
           zoom: 8,
           center: initLoc
         }
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);        
         directionsDisplay.setMap(map);
+        
       }
 
+      function initializeLocation(initLoc) {
+        //directionsDisplay = new google.maps.DirectionsRenderer();
+        var initLocation = initLoc;
+        //geocoder = new google.maps.Geocoder();
+        var mapOptions = {
+          zoom: 8,
+          center: initLoc
+        }
+        mapLocation = new google.maps.Map(document.getElementById('map-canvas-location'), mapOptions);        
+      }
+      
       function markerContent(inObj){
         var contentStr = '<strong>Truck ID</strong>: ' + inObj.truck_id + ' <strong>Package ID</strong>: ' + inObj.package_id;
 
@@ -235,17 +261,127 @@ angular.module('myModule')
         }
 
 
+      }      
+      var curr;
+      initData().then(function(){        
+        
+        $scope.displayLocation = true;        
+
+        mapService.getLatestLocation(truck, pack)
+        .then(function(data){
+
+          if(!data[1].isError){
+
+            $scope.noData=false;
+            
+            latestLocTimestamp=data[0].timestamp;
+
+            $scope.tsLoc=latestLocTimestamp;
+
+            $scope.loaded=true; 
+
+            initializeLocation(new google.maps.LatLng(data[0].loc.lat, data[0].loc.lng));
+
+            var latLng=new google.maps.LatLng(data[0].loc.lat, data[0].loc.lng);
+
+            var msg = markerContent(data[0]);
+
+            var type=getType(data[0]);
+
+            curr=addLatLng(latLng, msg, type, mapLocation);
+
+          } else {
+
+            $scope.noData = true;
+
+            $scope.errorMsg = data[1].errorMsg;
+
+            console.log("no data " + data[1].errorMsg);
+
+          }          
+
+          latestLocation();
+          
+        });
+      });        
+ 
+
+     var latestLocation = function(action){
+
+        if(action==undefined){
+
+          var actionBy=0;
+        } else {
+          var actionBy=action;
+        }        
+
+        mapService.getLatestLocation(truck, pack, actionBy)
+        .then(function(data){
+
+          if(!data[1].isError){
+
+            $scope.noData=false;
+
+            if(data[0].timestamp>latestLocTimestamp){
+            
+              latestLocTimestamp=data[0].timestamp;
+
+              $scope.tsLoc=latestLocTimestamp;
+
+              $scope.loaded=true; 
+
+              //initializeLocation(new google.maps.LatLng(data[0].loc.lat, data[0].loc.lng));
+              curr.setMap(null);
+              
+              var latLng=new google.maps.LatLng(data[0].loc.lat, data[0].loc.lng);
+
+              var msg = markerContent(data[0]);
+
+              var type=getType(data[0]);
+
+              curr=addLatLng(latLng, msg, type, mapLocation);
+            }
+
+          } else {
+
+            $scope.noData = true;
+
+            $scope.errorMsg = data[1].errorMsg;
+
+            console.log("no data " + data[1].errorMsg);
+
+          }
+
+        }); 
+
+        timer2 = $timeout(latestLocation, $scope.refreshRate * 1000);    
+       
+        $scope.$on('$locationChangeStart', function() {
+              $timeout.cancel(timer2);             
+        });
+
       }
 
-      initData().then(function(){
+      $scope.locationRefresh = function(){
+
+        latestLocation(1);
+
+      }
+      
+
+      $scope.showRoute = function(){
+
+        $scope.displayLocation = false;
+
+        $scope.routeLoaded = true;
 
         mapService.getCordinatesOf(truck,pack)
         .then(function(data){ 
 
           if(!data[2].isError){            
 
-            $scope.noData=false;
-            
+            $scope.noData=false;            
+
             latestTimestamp=data[1];
 
             $scope.ts=latestTimestamp;
@@ -304,7 +440,7 @@ angular.module('myModule')
 
               var type=getType(data[0][i]);
 
-              addLatLng(latLng, msg,type);
+              addLatLng(latLng, msg,type, map);
 
               if(i==data.length-1){
 
@@ -324,11 +460,12 @@ angular.module('myModule')
 
         });
 
-      });
+
+      }
       
 
-
   var mapUpdater = function(action){
+    
 
     if(action==undefined){
 
@@ -343,7 +480,7 @@ angular.module('myModule')
       .then(function(data){
 
         if(!data[2].isError){
-
+          
           latestTimestamp=data[1];
           $scope.ts=latestTimestamp;          
 
@@ -355,7 +492,7 @@ angular.module('myModule')
 
               var type=getType(data[0][i]);
 
-              addLatLng(latLng, msg, type);
+              addLatLng(latLng, msg, type, map);
 
             }          
         
@@ -369,17 +506,25 @@ angular.module('myModule')
 
     }
 
-    var timer = $timeout(mapUpdater, $scope.refreshRate * 1000);
+    timer = $timeout(mapUpdater, $scope.refreshRate * 1000);
 
     $scope.$on('$locationChangeStart', function() {
-        $timeout.cancel(timer);             
+      $timeout.cancel(timer);             
     });
 
   }
 
   $scope.refresh=function(){
 
-    mapUpdater(1);
+    mapUpdater(1);  
+  }
+
+  $scope.locationBtn = function(){
+    $scope.displayLocation=true;
+  }
+
+  $scope.noLocationBtn = function(){
+    $scope.displayLocation=false;
   }
 
 

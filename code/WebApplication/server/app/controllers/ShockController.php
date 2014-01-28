@@ -28,6 +28,7 @@ class ShockController extends BaseController{
 			$xArr['value']=$value->value;
 			$xArr['timestamp']=$value->timestamp;
 			$xArr['is_above_threshold']=$value->is_above_threshold;
+			$xArr['is_instantaneous']=$value->is_instantaneous;
 
 			$shockArr[]=$xArr;
 		}		
@@ -58,6 +59,7 @@ class ShockController extends BaseController{
 			$xArr['value']=$value->value;
 			$xArr['timestamp']=$value->timestamp;
 			$xArr['is_above_threshold']=$value->is_above_threshold;
+			$xArr['is_instantaneous']=$value->is_instantaneous;
 
 			$shockArr[]=$xArr;
 		}		
