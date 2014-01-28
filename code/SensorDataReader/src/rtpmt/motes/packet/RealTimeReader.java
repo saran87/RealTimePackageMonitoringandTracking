@@ -591,6 +591,7 @@ public class RealTimeReader extends AbstractSource implements Runnable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+
     private void sleep(long millisec) {
         try {
             Thread.sleep(millisec);
@@ -598,5 +599,10 @@ public class RealTimeReader extends AbstractSource implements Runnable {
             Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    
+    @Override
+    public void calibrateSensor() throws InterruptedException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

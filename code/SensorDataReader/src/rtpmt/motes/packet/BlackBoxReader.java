@@ -116,6 +116,12 @@ public class BlackBoxReader extends AbstractSource {
         Thread.sleep(10000);
         getSensorInformation();
     }
+    
+    @Override
+    public void calibrateSensor() throws InterruptedException,IOException{
+        writeFramedPacket(Constants.RUN_ACCELEROMETER_CALIBRATION, dummyPacket);
+        getSensorInformation();
+    }
 
     /**
      *
