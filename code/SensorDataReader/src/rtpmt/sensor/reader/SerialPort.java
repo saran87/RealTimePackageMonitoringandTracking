@@ -94,4 +94,15 @@ public class SerialPort implements SerialPortInterface {
 
     }
 
+    @Override
+    public byte[] readAll() throws IOException {
+        int available = input.available();
+        
+        byte[]  byteArray = new byte[available];
+        input.read(byteArray);
+        
+        return byteArray;
+        
+    }
+
 }

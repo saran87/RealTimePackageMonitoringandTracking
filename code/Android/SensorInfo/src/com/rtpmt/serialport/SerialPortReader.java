@@ -59,6 +59,26 @@ public class SerialPortReader implements SerialPortInterface {
 		}
 		return data[0];
 	}
+	
+	@Override
+	public byte[] readAll() throws IOException, NullPointerException{
+		byte[] data = new byte[0];
+		synchronized(ftDev)
+		{
+			if(ftDev != null){
+				int available = ftDev.getQueueStatus();
+				if( available > 0){
+					data = new byte[available];
+					ftDev.read(data, available,wait_ms);
+					System.err.println(available);
+				}
+			}
+			else{
+				Log.i(SERIAL_PORT, "FTDEV is NULL");
+			}
+		}
+		return data;
+	}
 
 	@Override
 	public boolean write(byte arg0) throws IOException {

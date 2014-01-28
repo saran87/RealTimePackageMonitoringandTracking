@@ -108,7 +108,7 @@ class Dump {
             System.out.println("Service :" + packet.Service);
             System.out.println("ServiceId :" + packet.ServiceId);
             System.out.println("data :");
-            printPacket(System.err,packet.getData());
+            //printPacket(System.out,packet.getData());
             System.out.println("TimeStamp :" + packet.getTimeStamp());
             System.out.println();
         }else{

@@ -24,11 +24,17 @@ public interface SerialPortInterface {
      */
     public void close() throws IOException;
     /**
-     * 
+     * Returns one byte from the stream
      * @return 
      * @throws java.io.IOException 
      */
     public byte read() throws IOException;
+    /**
+     * Returns all available byte from the stream
+     * @return 
+     * @throws java.io.IOException 
+     */
+    public byte[] readAll() throws IOException;
     /**
      * 
      * @param data

@@ -41,6 +41,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.rtpmt.android.network.tcp2.TCPClient;
 import com.rtpmt.serialport.SerialPortReader;
 
+@SuppressLint("HandlerLeak")
 public class SensorService implements SensorEventHandler {
 
 	static Context DeviceUARTContext;
@@ -179,22 +180,21 @@ public class SensorService implements SensorEventHandler {
 		}
 	}
 
-	@SuppressLint("HandlerLeak")
+	@SuppressLint("Handler")
 	final Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			Log.i(SERVICE_TAG, readDataToText);
-			if (LogStack.LogList.size() >= 150)
-			{
-				for (int index = 0; index < 50; index++)
-				{
+			if (LogStack.LogList.size() >= 150) {
+				for (int index = 0; index < 50; index++) {
 					LogStack.LogList.remove(index);
 				}
 			}
 			LogStack.LogList.add(readDataToText + " - Network available: "
 					+ isNetworkAvailable);
 			try {
-				Thread.currentThread().sleep(100);
+				Thread.currentThread();
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -203,7 +203,6 @@ public class SensorService implements SensorEventHandler {
 
 	private class readThread extends Thread {
 		Handler mHandler;
-		SensorReader sensorPacketizer;
 		boolean connectionAvailable = true;
 		boolean serverAvailable;
 		File bufferFile;
@@ -212,7 +211,6 @@ public class SensorService implements SensorEventHandler {
 
 		readThread(final Handler h, final SensorReader sensorPacketizer) {
 			mHandler = h;
-			this.sensorPacketizer = sensorPacketizer;
 			this.setPriority(Thread.MIN_PRIORITY);
 		}
 
@@ -351,15 +349,16 @@ public class SensorService implements SensorEventHandler {
 				Looper.prepare();
 				Log.i(SERVICE_TAG, "looper prepared");
 			}
-
+			boolean isDataValid = false;
 			for (;;) {
 
 				Packet packet;
 				try {
 					packet = sensorReader.readPacket();
-					Calendar calendar = Calendar.getInstance();
-					long currentDateAndTime = calendar.getTimeInMillis();
+					isDataValid = false;
 					if (packet != null) {
+						Calendar calendar = Calendar.getInstance();
+						long currentDateAndTime = calendar.getTimeInMillis();
 
 						// TODO make getLocation function returns the location
 						// info object
@@ -376,82 +375,73 @@ public class SensorService implements SensorEventHandler {
 
 						NetworkMessage.PackageInformation sensorInfo = packet
 								.getRealTimeMessage(locationInfo);
+						if ((currentDateAndTime - 600000) <= sensorInfo
+								.getTimeStamp()
+								&& (currentDateAndTime + 600000) >= sensorInfo
+										.getTimeStamp()) {
+							if (!(sensorInfo.getPackageId().equals("NO_ID"))) {
+								isDataValid = true;
+							}
+						}
+
 						if (sensorInfo != null) {
 							for (PackageInformation.Sensor sensor : sensorInfo
 									.getSensorsList()) {
 
 								String SensorName = ""
 										+ sensor.getSensorType().name();
-								if ((currentDateAndTime - 600000) <= sensorInfo
-										.getTimeStamp()
-										&& (currentDateAndTime + 600000) >= sensorInfo
-												.getTimeStamp()) {
-									if (!(sensorInfo.getPackageId()
-											.equals("NO_ID"))) {
-										if (SensorName.contains("VIBRATION")
-												|| SensorName.contains("SHOCK")) {
+								if (isDataValid) {
+									if (SensorName.contains("VIBRATION")
+											|| SensorName.contains("SHOCK")) {
 
-											readDataToText = SensorName
-													+ ": "
-													+ timeStamp(sensorInfo
-															.getTimeStamp())
-													+ "    "
-													+ sensorInfo.getSensorId();
-										} else {
-											readDataToText = sensor
-													.getSensorType().name()
-													+ " : "
-													+ sensor.getSensorValue()
-													+ " "
-													+ sensor.getSensorUnit()
-													+ "   "
-													+ timeStamp(sensorInfo
-															.getTimeStamp())
-													+ "    "
-													+ sensorInfo.getSensorId();
-										}
-										Log.i("SensorValue:", readDataToText);
-										Message msg = mHandler.obtainMessage();
-										mHandler.sendMessage(msg);
+										readDataToText = SensorName
+												+ ": "
+												+ timeStamp(sensorInfo
+														.getTimeStamp())
+												+ "    "
+												+ sensorInfo.getSensorId();
+									} else {
+										readDataToText = sensor.getSensorType()
+												.name()
+												+ " : "
+												+ sensor.getSensorValue()
+												+ " "
+												+ sensor.getSensorUnit()
+												+ "   "
+												+ timeStamp(sensorInfo
+														.getTimeStamp())
+												+ "    "
+												+ sensorInfo.getSensorId();
 									}
+									Log.i("SensorValue:", readDataToText);
+									Message msg = mHandler.obtainMessage();
+									mHandler.sendMessage(msg);
 								}
 							}
-							// Sending data to server
-							if (isNetworkAvailable) {
-								try {
-									// If network exists send the data to the
-									// server
-									if ((currentDateAndTime - 600000) <= sensorInfo
-											.getTimeStamp()
-											&& (currentDateAndTime + 600000) >= sensorInfo
-													.getTimeStamp()) {
-										if (!(sensorInfo.getPackageId()
-												.equals("NO_ID"))) {
-											Log.i(SERVICE_TAG,
-													"Before sending server data");
-											tCPClient.sendData(sensorInfo);
-											Log.i(SERVICE_TAG,
-													"Sending Data to server");
-										}
-									}
-
-								} catch (Exception ex) {
-									isNetworkAvailable = false;
-									connectionAvailable = false;
+						}
+						// Sending data to server
+						if (isNetworkAvailable) {
+							try {
+								// If network exists send the data to the
+								// server
+								if (isDataValid) {
+									Log.i(SERVICE_TAG,
+											"Before sending server data");
+									tCPClient.sendData(sensorInfo);
+									Log.i(SERVICE_TAG, "Sending Data to server");
 								}
-							} else {
+
+							} catch (Exception ex) {
+								isNetworkAvailable = false;
+								connectionAvailable = false;
+							}
+						} else {
+
+							if (isDataValid) {
 								// If network does not exist, store to a file
 								isNetworkAvailable = tryServerConnection();
 								if (!connectionAvailable) {
-									if ((currentDateAndTime - 600000) <= sensorInfo
-											.getTimeStamp()
-											&& (currentDateAndTime + 600000) >= sensorInfo
-													.getTimeStamp()) {
-										if (!(sensorInfo.getPackageId()
-												.equals("NO_ID"))) {
-											writeToBuffer(sensorInfo);
-										}
-									}
+									writeToBuffer(sensorInfo);
 								}
 							}
 						}
@@ -681,10 +671,12 @@ public class SensorService implements SensorEventHandler {
 	public void newSensorAdded(Package pack) {
 		// TODO Auto-generated method stub
 		final SensorCart listOfSensors = new SensorCart();
-		Log.i(SERVICE_TAG,"NewSensorAdded:" + pack.getShortId() + ":"+ pack.getSensorId());
+		Log.i(SERVICE_TAG,
+				"NewSensorAdded:" + pack.getShortId() + ":"
+						+ pack.getSensorId());
 
 		if (pack.getShortId() != 0) {
-			
+
 			listOfSensors.addSensor(pack);
 			try {
 				sensorReader.configure(pack);
@@ -703,7 +695,7 @@ public class SensorService implements SensorEventHandler {
 		mainHandler.obtainMessage(StartActivity.SENSOR_ADDED).sendToTarget();
 	}
 
-	public void configure(Package pack){
+	public void configure(Package pack) {
 		try {
 			sensorReader.configure(pack);
 			tCPClient.sendData(pack.getConfigMessage(true));
@@ -718,6 +710,7 @@ public class SensorService implements SensorEventHandler {
 			e.printStackTrace();
 		}
 	}
+
 	public void configure() {
 
 		for (Package pack : PackageList.getPackages()) {
