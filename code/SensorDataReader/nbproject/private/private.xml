@@ -8,14 +8,6 @@
             <file>file:/home/prit/rfid_RA_project/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/motes/packet/Crc.java</file>
             <file>file:/home/prit/rfid_RA_project/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/sensor/reader/SensorReader.java</file>
         </group>
-        <group>
-            <file>file:/C:/Users/thirumalaisamy/Documents/Branch-HP/code/SensorDataReader/src/rtpmt/sensor/reader/SensorReader.java</file>
-            <file>file:/C:/Users/thirumalaisamy/Documents/Branch-HP/code/SensorDataReader/src/rtpmt/motes/packet/PacketSource.java</file>
-            <file>file:/C:/Users/thirumalaisamy/Documents/Branch-HP/code/SensorDataReader/src/rtpmt/motes/packet/RealTimeReader.java</file>
-            <file>file:/C:/Users/thirumalaisamy/Documents/Branch-HP/code/SensorDataReader/src/rtpmt/sensor/util/Packet.java</file>
-            <file>file:/C:/Users/thirumalaisamy/Documents/Branch-HP/code/SensorDataReader/src/rtpmt/motes/packet/AbstractSource.java</file>
-            <file>file:/C:/Users/thirumalaisamy/Documents/Branch-HP/code/SensorDataReader/src/rtpmt/motes/packet/BlackBoxReader.java</file>
-            <file>file:/C:/Users/thirumalaisamy/Documents/Branch-HP/code/SensorDataReader/src/rtpmt/sensor/util/Constants.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
