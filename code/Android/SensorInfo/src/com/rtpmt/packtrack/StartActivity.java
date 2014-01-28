@@ -3,8 +3,6 @@ package com.rtpmt.packtrack;
 import java.util.List;
 
 import rtpmt.packages.Package;
-import rtpmt.packages.PackageList;
-
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -48,7 +46,7 @@ public class StartActivity extends ListActivity {
     	final int listSize = listOfSensors.getListSize();
 		if (listSize > 0)
 		{
-			setListAdapter(new SensorAdapter(listOfSensors.sensorList));
+			setListAdapter(new SensorAdapter(SensorCart.sensorList));
 		}
 	}
 
@@ -181,15 +179,16 @@ public class StartActivity extends ListActivity {
         		break;
         	case PACKAGE_ID_UPDATED:
         		if (resultCode == Activity.RESULT_OK) {
-        			int shortId = data.getIntExtra(EditSensorDetails.SHORT_ID,-1);
-        			if(shortId != -1){
-	        			Package pack = PackageList.getPackage(shortId);
-	        			if(pack!=null){
-	        				sService.configure(pack);
-	        			}
+        			String sensorId = data.getStringExtra(EditSensorDetails.SENSOR_ID);
+        			if(sensorId != null && !sensorId.isEmpty()){
+	        			/*Package pack = PackageList.getPackage(shortId);
+	        			if(pack!=null){*/
+	        				sService.configure(sensorId);
+	        			//}
 	        			populateSensorList(data);
         			}
         		}
+        		break;
             case SETTINGS_UPDATED:
             		updateSettings(data);
             	break;
@@ -211,15 +210,15 @@ public class StartActivity extends ListActivity {
     	String sensorId = SensorCart.getSensorIdForIndividualSettings();
     	if(SensorCart.isSetForSingleSensor()){
     		if(sensorId != null && !sensorId.isEmpty()){
-    			Package pack = PackageList.getPackage(sensorId);
-    			if(pack !=null){
-    				listOfSensors.updatePackageSettings(pack);
-    				sService.configure(pack);
-    			}
+    			/*Package pack = PackageList.getPackage(sensorId);
+    			if(pack !=null){*/
+    				listOfSensors.updateIndividualPackageSettings();
+    				sService.configure(sensorId);
+    			//}
     		}
     		
     	}else{
-    		listOfSensors.updateSettings();
+    		listOfSensors.updateAllPackageSettings();
     		sService.configure();
     	}
     }

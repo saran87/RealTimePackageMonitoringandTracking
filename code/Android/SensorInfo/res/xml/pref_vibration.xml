@@ -1,23 +1,27 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <SwitchPreference
+        android:defaultValue="true"
+        android:switchTextOn="ON"
+        android:switchTextOff="OFF"
+        android:summary="@string/pref_description_turn_on_off_vibration"
+        android:title="@string/pref_title_turn_on_off_vibration"
+        android:key="turn_on_off_vibration" />
+    
    	<EditTextPreference
         android:capitalize="words"
+        android:dependency="turn_on_off_vibration"
         android:defaultValue="@string/pref_default_vibration_threshold"
         android:inputType="numberDecimal"
         android:key="set_vibration_threshold"
         android:maxLength="10"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_title_set_vibration_threshold" />
-    
-    <!--  <SeekBarPreference
-        android:defaultValue="3"
-        android:key="set_vibration_threshold"
-        android:title="@string/pref_title_set_vibration_threshold" /> --> 
-        
+        android:title="@string/pref_title_set_vibration_threshold" />  
         
     <ListPreference
-        android:defaultValue="360"
+        android:defaultValue="300"
+        android:dependency="turn_on_off_vibration"
         android:entries="@array/pref_notify_before_vibration_list"
         android:entryValues="@array/pref_notify_before_vibration_values"
         android:key="before_threshold_vibration"
@@ -27,6 +31,7 @@
     
     <ListPreference
         android:defaultValue="60"
+        android:dependency="turn_on_off_vibration"
         android:entries="@array/pref_notify_after_vibration_list"
         android:entryValues="@array/pref_notify_after_vibration_values"
         android:key="after_threshold_vibration"

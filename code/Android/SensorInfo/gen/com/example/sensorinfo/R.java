@@ -120,41 +120,49 @@ public final class R {
         public static final int edit_packageidupdate=0x7f090011;
         public static final int edit_sensorid=0x7f09000f;
         public static final int edit_truckid=0x7f09000e;
-        public static final int pref_default_humidity_threshold=0x7f09002c;
+        public static final int pref_default_humidity_threshold=0x7f09002e;
         public static final int pref_default_set_truck_id=0x7f090023;
         public static final int pref_default_shock_threshold=0x7f090029;
-        public static final int pref_default_temperature_threshold=0x7f090031;
-        public static final int pref_default_vibration_threshold=0x7f090036;
+        public static final int pref_default_temperature_threshold=0x7f090035;
+        public static final int pref_default_vibration_threshold=0x7f09003c;
         public static final int pref_description_set_by_sensor_id=0x7f090025;
+        public static final int pref_description_turn_on_off_humidity=0x7f090030;
+        public static final int pref_description_turn_on_off_shock=0x7f09002a;
+        public static final int pref_description_turn_on_off_temperature=0x7f090037;
+        public static final int pref_description_turn_on_off_vibration=0x7f09003e;
         /**  Example settings for Humidity 
          */
-        public static final int pref_header_Humidity=0x7f09002a;
+        public static final int pref_header_Humidity=0x7f09002c;
         /**  Example settings for Shock 
          */
         public static final int pref_header_Shock=0x7f090027;
         /**  Example settings for Temperature 
          */
-        public static final int pref_header_Temperature=0x7f09002f;
+        public static final int pref_header_Temperature=0x7f090033;
         /**  Example settings for Vibration 
          */
-        public static final int pref_header_Vibration=0x7f090034;
+        public static final int pref_header_Vibration=0x7f09003a;
         /**  Strings related to Settings 
  Example General settings 
          */
         public static final int pref_header_general=0x7f090021;
-        public static final int pref_title_notify_after_humidity=0x7f09002e;
-        public static final int pref_title_notify_after_temperature=0x7f090033;
-        public static final int pref_title_notify_after_vibration=0x7f090038;
-        public static final int pref_title_notify_before_humidity=0x7f09002d;
-        public static final int pref_title_notify_before_temperature=0x7f090032;
-        public static final int pref_title_notify_before_vibration=0x7f090037;
+        public static final int pref_title_notify_after_humidity=0x7f090032;
+        public static final int pref_title_notify_after_temperature=0x7f090039;
+        public static final int pref_title_notify_after_vibration=0x7f090040;
+        public static final int pref_title_notify_before_humidity=0x7f09002f;
+        public static final int pref_title_notify_before_temperature=0x7f090036;
+        public static final int pref_title_notify_before_vibration=0x7f09003d;
         public static final int pref_title_select_sensor_id=0x7f090026;
         public static final int pref_title_set_by_sensor_id=0x7f090024;
-        public static final int pref_title_set_humidity_threshold=0x7f09002b;
+        public static final int pref_title_set_humidity_threshold=0x7f09002d;
         public static final int pref_title_set_shock_threshold=0x7f090028;
-        public static final int pref_title_set_temperature_threshold=0x7f090030;
+        public static final int pref_title_set_temperature_threshold=0x7f090034;
         public static final int pref_title_set_truck_id=0x7f090022;
-        public static final int pref_title_set_vibration_threshold=0x7f090035;
+        public static final int pref_title_set_vibration_threshold=0x7f09003b;
+        public static final int pref_title_turn_on_off_humidity=0x7f090031;
+        public static final int pref_title_turn_on_off_shock=0x7f09002b;
+        public static final int pref_title_turn_on_off_temperature=0x7f090038;
+        public static final int pref_title_turn_on_off_vibration=0x7f09003f;
         public static final int temperatureIntervalText=0x7f09001f;
         public static final int text_humidityThreshold=0x7f09001a;
         public static final int text_humidityThresholdTime=0x7f09001b;

@@ -15,8 +15,8 @@ import com.example.sensorinfo.R;
 public class EditSensorDetails extends Activity {
 
 	public final static String EXTRA_MESSAGE1 = "com.example.sensordata.MESSAGE";
-	public final static String SHORT_ID = "short_id";
-	private int selectedShortId;
+	public final static String SENSOR_ID = "short_id";
+	private String selectedSensorId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,8 +27,8 @@ public class EditSensorDetails extends Activity {
 		int sensorPosition = intent.getIntExtra(StartActivity.POSITION, 0);
 		String packageId = listOfSensors.getSensors(sensorPosition)
 				.getPackageId();
-		selectedShortId = listOfSensors.getSensors(sensorPosition)
-				.getShortId();
+		selectedSensorId = listOfSensors.getSensors(sensorPosition).getSensorId();
+				
 		EditText editText1 = (EditText) findViewById(R.id.edit_packageidupdate);
 		editText1.setText(packageId);
 
@@ -87,7 +87,7 @@ public class EditSensorDetails extends Activity {
 			String data = "updated";
 			Intent intent1 = new Intent();
 			intent1.putExtra(EXTRA_MESSAGE1, data);
-			intent1.putExtra(SHORT_ID, selectedShortId);
+			intent1.putExtra(SENSOR_ID, selectedSensorId);
 			setResult(Activity.RESULT_OK, intent1);
 			finish();
 		}
