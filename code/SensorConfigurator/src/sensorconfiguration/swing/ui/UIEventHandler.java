@@ -705,5 +705,39 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
         }
         return true;
     }
+    
+    void calibrateSensor() {
+
+        String logText = "Starting to calibrate the sensor's accelerometer";
+        log(logText);
+
+        if (isSensorConnected) {
+            UIObject.handleError("Place the Sensor in a flat surface with pakmac symbol facing you.");
+            bar = new ProgressBar(100, logText, UIObject);
+            try {
+                bar.setProgress(10, "Calibrating the sensor");
+                packetReader.calibrateSensor();
+                logText = "Successfully calibrated the sensor.";
+                log(logText);
+                UIObject.handleError(logText);
+            } catch (InterruptedException ex) {
+                logText = "Failed to Calibrate the Sensor. Try again";
+                log(logText, ex);
+                UIObject.handleError(logText);
+
+            } catch (IOException ex) {
+                logText = "Failed to Calibrate the Sensor. Try again";
+                log(logText, ex);
+                UIObject.handleError(logText);
+            } finally {
+                bar.done();
+            }
+        } else {
+            logText = "Connect the sensor and try again";
+            log(logText);
+            UIObject.handleError(logText);
+        }
+        bar.done();
+    }
 
 }

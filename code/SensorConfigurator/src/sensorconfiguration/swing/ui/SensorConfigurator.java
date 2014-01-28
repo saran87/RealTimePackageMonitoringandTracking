@@ -151,6 +151,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblBatteryLevel = new javax.swing.JLabel();
         jlblBatteryLevelValue = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jProgressBar2 = new javax.swing.JProgressBar();
         JbtnSaveToServer1 = new javax.swing.JButton();
@@ -482,13 +483,13 @@ public class SensorConfigurator extends javax.swing.JFrame {
                         .add(12, 12, 12))
                     .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(humidtyPanelLayout.createSequentialGroup()
-                            .add(humTimeThreshold)
+                            .add(humTimeThreshold, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                             .add(10, 10, 10)
                             .add(jLabel34)
                             .add(171, 171, 171))
                         .add(humidtyPanelLayout.createSequentialGroup()
                             .add(jLabel33)
-                            .add(102, 102, 102)))))
+                            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         humidtyPanelLayout.setVerticalGroup(
             humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -505,7 +506,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                             .add(jLabel11, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(humThreshold)
                             .add(humTime))))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 22, Short.MAX_VALUE)
                 .add(jLabel33)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(humidtyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -532,6 +533,13 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 0, 51));
         jLabel18.setText("%");
+
+        jButton6.setText("Calibrate Sensor");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -578,7 +586,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
                                         .add(jlblBatteryLevelValue)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                         .add(jLabel18)
-                                        .add(0, 0, Short.MAX_VALUE))
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .add(jButton6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 205, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                     .add(temPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .add(humidtyPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .add(jPanel1Layout.createSequentialGroup()
@@ -625,7 +634,8 @@ public class SensorConfigurator extends javax.swing.JFrame {
                     .add(jButton5)
                     .add(jlblBatteryLevel)
                     .add(jLabel18)
-                    .add(jlblBatteryLevelValue))
+                    .add(jlblBatteryLevelValue)
+                    .add(jButton6))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(temPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -1034,6 +1044,11 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblBatteryLevelValue.setText("0");
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+
+        eventHandler.calibrateSensor();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     public void clearLocalDataTable() {
         DefaultTableModel model = (DefaultTableModel) jtblLocalData.getModel();
         int rowCount = model.getRowCount();
@@ -1089,6 +1104,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

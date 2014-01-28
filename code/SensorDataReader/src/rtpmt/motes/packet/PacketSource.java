@@ -144,5 +144,7 @@ public interface PacketSource
      */
     public void clearData() throws InterruptedException,IOException;
     
+    public void calibrateSensor()throws InterruptedException,IOException;
+    
     
 }

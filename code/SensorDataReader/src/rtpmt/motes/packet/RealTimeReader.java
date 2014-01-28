@@ -46,10 +46,13 @@ import rtpmt.sensor.util.Packet;
 import rtpmt.sensor.util.Utils;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rtpmt.sensor.reader.SerialPortInterface;
@@ -72,10 +75,15 @@ public class RealTimeReader extends AbstractSource implements Runnable {
     private final SerialPortInterface port;
     private boolean inSync;
     private final byte[] receiveBuffer = new byte[Constants.MTU];
+    private int bufferCount;
     private final Thread reader;
+    private final Thread streamReader;
     private boolean isThreadRunning = false;
-    private final LinkedList[] received;
+    private final LinkedList<Packet> received;
     private final ConcurrentHashMap<String, Packet> partialData;
+    private final BlockingQueue<byte[]> streamBuffer;
+    private byte[] dataBuffer = new byte[Constants.MTU];
+    private int readCount =0;
 
     /**
      * Packetizers are built using the makeXXX methods in BuildSource
@@ -85,20 +93,25 @@ public class RealTimeReader extends AbstractSource implements Runnable {
      */
     public RealTimeReader(String name, SerialPortInterface _inputPort) {
         super(name);
+        this.bufferCount = -1;
         this.port = _inputPort;
         inSync = false;
         reader = new Thread(this);
-        received = new LinkedList[256];
-        received[Constants.P_ACK] = new LinkedList<Packet>();
-        received[Constants.P_UPDATE] = new LinkedList<Packet>();
+        received = new LinkedList<Packet>();
         partialData = new ConcurrentHashMap<String, Packet>();
+        streamBuffer = new LinkedBlockingQueue<byte[]>();
+        streamReader = new Thread(new DataStream(_inputPort, streamBuffer));
     }
 
     @Override
     protected void openSource() throws IOException {
         port.open();
+
         if (!reader.isAlive()) {
             isThreadRunning = true;
+            System.out.println("Stream Reader Started");
+            streamReader.start();
+            System.out.println("Reader Started");
             reader.start();
         }
     }
@@ -118,8 +131,8 @@ public class RealTimeReader extends AbstractSource implements Runnable {
      */
     protected Packet readProtocolPacket(int packetType, long deadline)
             throws IOException {
-        LinkedList inPackets;
-        inPackets = received[packetType];
+        LinkedList<Packet> inPackets;
+        inPackets = received;
 
         // Wait for a packet on inPackets
         synchronized (inPackets) {
@@ -134,7 +147,7 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     throw new IOException("interrupted");
                 }
             }
-            return (Packet) inPackets.removeFirst();
+            return inPackets.removeFirst();
         }
     }
 
@@ -148,7 +161,7 @@ public class RealTimeReader extends AbstractSource implements Runnable {
     @SuppressWarnings("unchecked")
     protected void pushProtocolPacket(int packetType, Packet packet) {
         LinkedList<Packet> inPackets;
-        inPackets = received[packetType];
+        inPackets = received;
 
         if (inPackets != null) {
 
@@ -221,9 +234,9 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
     @Override
     public void run() {
-        
-            while (isThreadRunning) {
-                try {
+
+        while (isThreadRunning) {
+            try {
                 byte[] packet = readFramedPacket();
                 int packetType = packet[0] & 0xff;
                 int nodeId = (packet[1] & 0xff) << 8 | (packet[2] & 0xff);
@@ -236,7 +249,7 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
                     Integer shortId = nodeId;
                     PackageList.addPackage(shortId, macId.toString());
-                    
+
                     //sendServiceRequest(nodeId); // Sending the Service Request
                     sendTimeSyncPacket(nodeId);
                     sendGetBoardId(nodeId);
@@ -254,19 +267,18 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     } else {
                         pushProtocolPacket(packetType, packetHelper);
                     }
-                }else if(packetType ==  Constants.P_BLACKBOX_RESPONSE){
-                      Packet packetHelper = new Packet(packet);
-                      String sensorId = packetHelper.sensorId();
-                      publishNewSensor(PackageList.updateSensorId(nodeId, sensorId));
+                } else if (packetType == Constants.P_BLACKBOX_RESPONSE) {
+                    Packet packetHelper = new Packet(packet);
+                    String sensorId = packetHelper.sensorId();
+                    publishNewSensor(PackageList.updateSensorId(nodeId, sensorId));
                 }
-            }   catch (IOException ex) {
-                    Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                catch (Exception e){
-                    Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, e);
-                }
+            } catch (IOException ex) {
+                Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, e);
             }
- 
+        }
+
     }
 
     /*
@@ -285,19 +297,19 @@ public class RealTimeReader extends AbstractSource implements Runnable {
         for (;;) {
             if (!inSync) {
                 message(name + ": resynchronising");
-                // re-synchronise 
+                System.out.println("Entering Read");
 
-                int b = port.read() & 0xff;
+                int b = read() & 0xff;
 
                 while (b != 170) {
 
-                    b = port.read() & 0xff;
+                    b = read() & 0xff;
                 }
-    
+
                 syncFrame[count++] = (byte) (b & 0xff);
 
                 while (count < Constants.FRAME_SYNC.length) {
-                    b = port.read();
+                    b = read();
                     syncFrame[count++] = (byte) (b & 0xff);
                 }
 
@@ -320,33 +332,34 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     continue;
                 }
                 if (!isLength) {
-                    byte command = port.read();
+                    byte command = read();
                     receiveBuffer[count++] = command;
 
-                    receiveBuffer[count++] = port.read();
-                    receiveBuffer[count++] = port.read();
-                   
-                    receiveBuffer[count++] = port.read();
-                    receiveBuffer[count++] = port.read();
+                    receiveBuffer[count++] = read();
+                    receiveBuffer[count++] = read();
+
+                    receiveBuffer[count++] = read();
+                    receiveBuffer[count++] = read();
 
                     int length = (receiveBuffer[count - 1] & 0xff) | (receiveBuffer[count - 2] & 0xff) << 8;
                     payLoad = count + length;
                     System.out.println("PayLoad Length: " + payLoad);
-                    if(payLoad < 15 || payLoad > 526 ){
-                       inSync = false;
-                       count = 0;
-                       continue;
+                    if (payLoad < 15 || payLoad > 526) {
+                        inSync = false;
+                        count = 0;
+                        continue;
                     }
                     isLength = true;
                     continue;
                 } else if (count < payLoad) {
-                    int value = port.read();
-                    if(value != -1){
-                        b = (byte) ( value & 0xff);
-                    }else{
+                    int value = read() & 0xff;
+                  
+                    b = (byte) (value);
+                    if (value == -1)  {
+                        System.out.println("Skipped:" + value);
                         continue;
                     }
-                    //System.out.println("I read frame:" + b);
+                    
                 } else {
                     byte[] packet = new byte[count - 2];
                     System.arraycopy(receiveBuffer, 0, packet, 0, count - 2);
@@ -358,26 +371,61 @@ public class RealTimeReader extends AbstractSource implements Runnable {
                     if (DEBUG) {
                         System.err.println("received: ");
                         Dump.printPacket(System.err, packet);
-                        System.err.println(" rcrc: "+ Integer.toHexString(readCrc)
+                        System.err.println(" rcrc: " + Integer.toHexString(readCrc)
                                 + " ccrc: " + Integer.toHexString(computedCrc));
                     }
                     return packet;
                     /*
-                    if (readCrc != computedCrc) {
-                        return packet;
-                    } else {
-                        message(name + ": bad packet");
-                        System.err.println("Bad Packet");
-                        /*
-                        * We don't lose sync here. If we did, garbage on the line at startup
-                        * will cause loss of the first packet.
+                     if (readCrc != computedCrc) {
+                     return packet;
+                     } else {
+                     message(name + ": bad packet");
+                     System.err.println("Bad Packet");
+                     /*
+                     * We don't lose sync here. If we did, garbage on the line at startup
+                     * will cause loss of the first packet.
                         
-                        count = 0;
-                        inSync = false;
-                        continue;
+                     count = 0;
+                     inSync = false;
+                     continue;
                      }*/
                 }
                 receiveBuffer[count++] = b;
+            }
+        }
+    }
+
+    private byte read() {
+        byte data = -1;
+    
+        if (bufferCount >= 0) {
+            data = dataBuffer[readCount++];
+            bufferCount--;
+        } else {
+            System.out.println("Refilling");
+            refillBuffer();
+            readCount = 0;
+            data = dataBuffer[readCount++];
+            bufferCount--;
+        }
+        return data;
+    }
+
+    private void refillBuffer() {
+        while (bufferCount < 0) {
+            try {
+                byte[] streamData = streamBuffer.take();
+                dataBuffer = streamData;
+                Dump.dump("Buffer Data:", dataBuffer);
+                bufferCount = streamData.length - 1;
+                System.out.println("Buffer Count while refilling:" + bufferCount);
+                if(bufferCount<0){
+                    System.out.println("Sleeping");
+                     sleep(50);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, ex);
+                sleep(50);
             }
         }
     }
@@ -467,18 +515,18 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
         writeFramedPacket(Constants.P_SERVICE_UPDATE_THRESHOLD, nodeId, payload);
     }
-    
+
     /**
      *
      * @return @throws IOException
      * @throws InterruptedException
      */
     private void sendGetBoardId(int nodeId) throws IOException, InterruptedException {
-         
+
         byte[] data = new byte[4];
         data[0] = Constants.GET_BOARD_ID[0];
         data[1] = Constants.GET_BOARD_ID[1];
-        writeFramedPacket(Constants.P_BLACKBOX_REQUEST,nodeId, data);
+        writeFramedPacket(Constants.P_BLACKBOX_REQUEST, nodeId, data);
 
     }
     // Write a packet of type 'packetType', first byte 'firstByte'
@@ -503,7 +551,6 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
         for (int i = 0; i < length - 2; i++) {
             buffer.nextByte(packet[i]);
-            System.out.println(i);
         }
 
         buffer.terminate();
@@ -541,6 +588,21 @@ public class RealTimeReader extends AbstractSource implements Runnable {
 
     @Override
     public void clearData() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    private void sleep(long millisec) {
+        try {
+            Thread.sleep(millisec);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(RealTimeReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    @Override
+    public void calibrateSensor() throws InterruptedException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
