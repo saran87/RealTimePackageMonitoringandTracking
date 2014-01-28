@@ -75,7 +75,7 @@ public class FileWriter {
                     writer.write(line);
                     writer.newLine();
                 }else{
-                    writer.close();
+                    //writer.close();
                     break;
                 }
             }
@@ -83,6 +83,7 @@ public class FileWriter {
         }else{
             throw new Exception("Couldn't able to create the file");
         }
+        writer.close();
     }
 
 }

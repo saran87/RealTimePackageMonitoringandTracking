@@ -666,6 +666,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     FileWriter fw = new FileWriter();
                     FileInputStream inputStream = new FileInputStream(file);
                     fw.writeCSV(inputStream, new File(csvFile));
+                    inputStream.close();
                 } catch (Exception ex) {
                     Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
                     throw ex;
