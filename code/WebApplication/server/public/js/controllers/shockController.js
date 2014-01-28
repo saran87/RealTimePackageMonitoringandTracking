@@ -213,9 +213,8 @@ angular.module('myModule')
 
 
 		$scope.shockGraph = function(indexOf,id){
-
+			
 			$scope.openGraph = true;
-
 	      var xVals=[], 
 	          yVals = [],
 	          zVals=[];
@@ -239,9 +238,9 @@ angular.module('myModule')
 	            	ts = ts + (0.125*1000); //incrementing timestamp values
 	          	} 	           
 
-	          xVals.push([ts,parseFloat(currX[i])]);
-	          yVals.push([ts,parseFloat(currY[i])]);
-	          zVals.push([ts,parseFloat(currZ[i])]);
+	          xVals.push([ts,parseFloat(parseFloat(currX[i]).toFixed(2))]);
+	          yVals.push([ts,parseFloat(parseFloat(currY[i]).toFixed(2))]);
+	          zVals.push([ts,parseFloat(parseFloat(currZ[i]).toFixed(2))]);
 
 	        }	        
 
@@ -269,7 +268,7 @@ angular.module('myModule')
 
 	      }); //end then
 
-	      $("html, body").animate({ scrollTop: 0 }, 200);
+	      $("html, body").animate({ scrollTop: $('#shockGraphWidget').position().top }, 200);
 
 	    } //end shockGraph
 
@@ -282,14 +281,21 @@ angular.module('myModule')
           return function(d){
               return d3.time.format('%H:%M')(new Date(d));
             }
-	    }
-	   
+	    }	   
 
 	    $scope.yAxisTickFormatFunction = function(){
 	          return function(d){
 	              return d3.format('.02f')(d);
 	            }
-	    }	    
+	    }
+
+	    /*$scope.toolTipData = function(){
+	      return function(key, x, y, e, graph) {
+	          return  '<h3> '+ key + '</h3>' +
+	                '<p>' +  y + ' at ' + d3.time.format('%x')(new Date(d)) + '</p>'
+	      }
+	    }*/
+	  
 	    
 	    var colors = ['#1f77b4', '#ff7f0e', '#2ca02c'];
 
