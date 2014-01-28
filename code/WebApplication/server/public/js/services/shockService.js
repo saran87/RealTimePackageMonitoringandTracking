@@ -137,7 +137,7 @@ angular.module('myServices')
 			var deferred = $q.defer();
 
 			$http.get(datapath+'shockgraph/'+id)
-				.success(function(data){					
+				.success(function(data){
 
 					var graphDataObj = {
 						"id": data._id,

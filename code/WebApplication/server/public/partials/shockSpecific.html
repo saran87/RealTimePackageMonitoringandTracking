@@ -16,24 +16,7 @@
       <div class="clearfix"></div>
     </div>      
     
-		<div class="widget-content" id="shockGraphSection">	
-
-      <!--<nvd3-cumulative-line-chart        
-          data="sgData"
-          id="sGraph"                
-          height="500"          
-          tooltips="true"
-          interactive="true"       
-          showLegend="true"
-          showXAxis="true"
-          showYAxis="true"
-          xAxisLabel="Hz"
-          yAxisLabel="G^2/Hz"
-          margin="{left:150,top:200,bottom:100,right:50}"
-          color="colorDefault()"
-          legendcolor="colorDefault()">
-            <svg></svg>
-      </nvd3-cumulative-line-chart> -->
+		<div class="widget-content" id="shockGraphSection">      
 
         <nvd3-multi-bar-chart
         data="discdata"
@@ -55,10 +38,42 @@
         stacked="true"        
         >
           <svg></svg>
-    </nvd3-multi-bar-chart>
+    </nvd3-multi-bar-chart>          
 			
 		</div>
 	</div>
+
+  <div id="shockGraphWidget" ng-show="openGraph" class="widget">
+
+    <div class="widget-head">      
+      <div class="pull-left">Shock Graph</div>
+      <div class="pull-right"><button ng-click="closeGraph()" class="btn btn-sm btn-danger">x Close</button></div>
+      
+      <div class="clearfix"></div>
+    </div> 
+    <div class="widget-content">
+      <nvd3-line-chart        
+      data="sgData"
+      id="sGraph"                
+      height="400"          
+      tooltips="true"
+      interactive="true"       
+      showLegend="true"
+      showXAxis="true"
+      showYAxis="true"
+      xAxisTickFormat="xAxisTickFormatFunction()"
+      yAxisTickFormat="yAxisTickFormatFunction()" 
+      xAxisLabel="Time"
+      yAxisLabel="G-value"
+      margin="{left:100,top:100,bottom:100,right:50}"
+      color="colorDefault()"
+      legendcolor="colorDefault()"
+      noData="Plotting Graph" >
+            <svg></svg>
+      </nvd3-line-chart>  
+    </div>
+    
+  </div>
 
 </div>
 
@@ -88,11 +103,12 @@
             <th ng-show="rt">Location</th>
             <th>Shock (Max-G)</th>
             <th>Drop-Height (m)</th>
+            <th>Analysis</th>
           </tr>
         </thead>
         <tbody>
 
-          <tr ng-repeat="sdata in shockData | orderBy:'-timestamp' ">
+          <tr ng-class="{selected: $index == indexSelected}" ng-repeat="sdata in shockData | orderBy:'-timestamp' ">
             <td>{{sdata.timestamp | date: 'medium'}}</td>
             <td ng-show="rt">
               <a ng-href="http://maps.google.com/maps?q={{sdata.loc[1]}},{{sdata.loc[0]}}&ll={{sdata.loc[1]}},{{sdata.loc[0]}}&z=12" target="_blank">
@@ -107,6 +123,9 @@
             <td>
             	<span ng-show="!sdata.is_instantaneous">{{sdata.value.dropheight}} m</span>
               <span class="text-danger" ng-show="sdata.is_instantaneous">Instantaneous Shock</span>
+            </td>
+            <td>
+              <button ng-click="setSelected($index);shockGraph($index,sdata._id)" class="btn btn-info btn-sm">View Graph </button>
             </td>
           </tr>
 

@@ -354,7 +354,7 @@ angular.module('myModule')
 
       }); //end then
 
-      $("html, body").animate({ scrollTop: 0 }, 200);
+      $("html, body").animate({ scrollTop: $('#shockGraphWidget').position().top }, 200);
 
     } //end vibrationGraph    
     

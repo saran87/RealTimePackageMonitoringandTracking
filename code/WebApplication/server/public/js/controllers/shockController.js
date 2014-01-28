@@ -5,6 +5,8 @@ angular.module('myModule')
 
 		$scope.noData=false;
 
+		$scope.openGraph = false;
+
     	if( ($rootScope.tid!=undefined || $rootScope.tid) && ($rootScope.pid!=undefined || $rootScope.pid) ){
 
 			var truck=$rootScope.tid; //truck_id selected in the Dropdown menu
@@ -212,6 +214,8 @@ angular.module('myModule')
 
 		$scope.shockGraph = function(indexOf,id){
 
+			$scope.openGraph = true;
+
 	      var xVals=[], 
 	          yVals = [],
 	          zVals=[];
@@ -225,13 +229,19 @@ angular.module('myModule')
 
 	        var currX = data.x.split(" ");
 	        var currY = data.y.split(" ");
-	        var currZ = data.z.split(" ");	 
+	        var currZ = data.z.split(" ");
 
-	        for(var i=0; i<512; i++){	           
+	        var len= currX.length;	 
 
-	          xVals.push([Math.ceil((800/512)*i+1),parseFloat(currX[i])]);
-	          yVals.push([Math.ceil((800/512)*i+1),parseFloat(currY[i])]);
-	          zVals.push([Math.ceil((800/512)*i+1),parseFloat(currZ[i])]);
+	        for(var i=1; i<=len; i++){
+
+		        if(i>0){
+	            	ts = ts + (0.125*1000); //incrementing timestamp values
+	          	} 	           
+
+	          xVals.push([ts,parseFloat(currX[i])]);
+	          yVals.push([ts,parseFloat(currY[i])]);
+	          zVals.push([ts,parseFloat(currZ[i])]);
 
 	        }	        
 
@@ -263,12 +273,35 @@ angular.module('myModule')
 
 	    } //end shockGraph
 
-	    var colors = ['#0000FF', '#C79F25', '#FF0000'];
+	    $scope.setSelected = function(indexSelected){
+
+	    	$scope.indexSelected = indexSelected;
+	    }
+
+	    $scope.xAxisTickFormatFunction = function(){
+          return function(d){
+              return d3.time.format('%H:%M')(new Date(d));
+            }
+	    }
+	   
+
+	    $scope.yAxisTickFormatFunction = function(){
+	          return function(d){
+	              return d3.format('.02f')(d);
+	            }
+	    }	    
+	    
+	    var colors = ['#1f77b4', '#ff7f0e', '#2ca02c'];
 
 	    $scope.colorDefault = function() {
 	      return function(d, i) {
 	          return colors[i];
 	        };
+	    }
+
+	    $scope.closeGraph = function(){
+	    	$scope.openGraph = false;
+	    	$scope.indexSelected = null;
 	    }
 
 	}]);
