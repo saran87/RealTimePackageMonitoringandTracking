@@ -26,9 +26,16 @@ class ShockController extends BaseController{
 
 			$xArr['_id']=$value->_id;
 			$xArr['value']=$value->value;
-			$xArr['timestamp']=$value->timestamp;
+			$xArr['timestamp']=$value->timestamp;			
 			$xArr['is_above_threshold']=$value->is_above_threshold;
 			$xArr['is_instantaneous']=$value->is_instantaneous;
+			if($value->loc[0]!=null || $value->loc[1]!=null){
+				if($value->loc[0]!=0 && $value->loc[1]!=0){
+
+					$xArr['loc'][0]=$value->loc[0];
+					$xArr['loc'][1]=$value->loc[1];
+				}
+			}		
 
 			$shockArr[]=$xArr;
 		}		
@@ -60,6 +67,13 @@ class ShockController extends BaseController{
 			$xArr['timestamp']=$value->timestamp;
 			$xArr['is_above_threshold']=$value->is_above_threshold;
 			$xArr['is_instantaneous']=$value->is_instantaneous;
+			if($value->loc[0]!=null || $value->loc[1]!=null){
+				if($value->loc[0]!=0 && $value->loc[1]!=0){
+
+					$xArr['loc'][0]=$value->loc[0];
+					$xArr['loc'][1]=$value->loc[1];
+				}
+			}
 
 			$shockArr[]=$xArr;
 		}		

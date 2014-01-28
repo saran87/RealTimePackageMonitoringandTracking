@@ -312,7 +312,7 @@ angular.module('myModule')
         for(var i=0; i<currX.length; i++){
 
           if(i>0){
-            ts = ts + (0.125*1000); //incrementing timestamp values
+            ts = ts + (0.000625*1000); //incrementing timestamp values
           } 
 
           xVals.push([

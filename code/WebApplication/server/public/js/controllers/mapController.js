@@ -106,11 +106,9 @@ angular.module('myModule')
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(toMap,marker);
             
-            getAddress(latLng,function(addr){
+            getAddress(latLng,function(addr){              
 
-              message+="</h6><strong>Address</strong>: " + addr + "</h6>";
-
-              infowindow.setContent(message);
+              infowindow.setContent(message+addr);
             
             });
                         
@@ -139,7 +137,7 @@ angular.module('myModule')
             }
           } else {
             
-            callback('Geocoder failed due to: ' + status);
+            callback('Geocoder failed due to: ' + status + " Click marker once again.");
           }
         });          
 

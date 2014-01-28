@@ -235,12 +235,12 @@ angular.module('myModule')
 	        for(var i=1; i<=len; i++){
 
 		        if(i>0){
-	            	ts = ts + (0.125*1000); //incrementing timestamp values
+	            	ts = ts + (0.000625*1000); //incrementing timestamp values
 	          	} 	           
 
-	          xVals.push([ts,parseFloat(parseFloat(currX[i]).toFixed(2))]);
-	          yVals.push([ts,parseFloat(parseFloat(currY[i]).toFixed(2))]);
-	          zVals.push([ts,parseFloat(parseFloat(currZ[i]).toFixed(2))]);
+	          xVals.push([ts,parseFloat(currX[i])]);
+	          yVals.push([ts,parseFloat(currY[i])]);
+	          zVals.push([ts,parseFloat(currZ[i])]);
 
 	        }	        
 
