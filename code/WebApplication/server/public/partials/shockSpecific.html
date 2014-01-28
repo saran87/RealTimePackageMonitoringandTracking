@@ -110,9 +110,11 @@
           <tr ng-class="{selected: $index == indexSelected}" ng-repeat="sdata in shockData | orderBy:'-timestamp' ">
             <td>{{sdata.timestamp | date: 'medium'}}</td>
             <td ng-show="rt">
-              <a ng-href="http://maps.google.com/maps?q={{sdata.loc[1]}},{{sdata.loc[0]}}&ll={{sdata.loc[1]}},{{sdata.loc[0]}}&z=12" target="_blank">
-                  <button class='btn btn-primary'>Show on map</button>
-              </a>
+              <span ng-show="rt">                 
+                <button ng-hide="sdata.loc[0]==undefined || sdata.loc[1]==undefined" ng-click="openAddrs(sdata.loc[0],sdata.loc[1])" class='btn btn-primary'>Show on map</button>
+              </span>
+              <span ng-show="sdata.loc[0]==undefined || sdata.loc[1]==undefined">Location not available</span>               
+              <span class="text-mute" ng-show="!rt">No Location available for blackbox</span>
              </td>
             <td>
             	<span class="label label-danger">X</span> <strong> {{sdata.value.x}}</strong> g<br/>

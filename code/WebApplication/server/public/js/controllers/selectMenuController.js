@@ -1,5 +1,5 @@
 angular.module('myModule')
-	.controller('selectMenuCtrl',['selectService','$scope','$rootScope','$location','$routeParams','$timeout',function(selectService,$scope,$rootScope,$location,$routeParams,$timeout){
+	.controller('selectMenuCtrl',['selectService','$scope','$rootScope','$location','$routeParams','$timeout','$window',function(selectService,$scope,$rootScope,$location,$routeParams,$timeout, $window){
 
 		$rootScope.typeOfService = 'dashboard';
 
@@ -7,6 +7,9 @@ angular.module('myModule')
 
 		$scope.selected = {};
 
+		$rootScope.geocoder;
+
+		$rootScope.geocoder = new google.maps.Geocoder();
 
 		$scope.render = function(){
 			
@@ -263,6 +266,35 @@ angular.module('myModule')
 		$scope.refresh = function(){
 
 			updater(1);
+		}
+
+		$rootScope.openAddrs = function(lat,lng){
+
+			var addrs = '';
+
+			console.log(lat +" "+ lng);
+
+			var latlng=new google.maps.LatLng(lat, lng); 
+
+	        $rootScope.geocoder.geocode({'latLng': latlng}, function(results, status) {
+	          
+	          if (status == google.maps.GeocoderStatus.OK) {
+	            if (results[1]) {
+
+		            addrs=results[1].formatted_address;
+
+	            	//$window.open("//maps.google.com/?q="+encodeURIComponent(addrs));
+	            	$window.open("//maps.google.com/?q="+encodeURIComponent(addrs)+"@"+lat+lng);
+	              
+	            } else {
+
+	            	console.log('No results found');
+	            }
+	          } else {
+	            console.log('Geocoder failed due to: ' + status + " Click marker once again.");	            
+	          }
+	        }); 
+
 		}
 
 }]);

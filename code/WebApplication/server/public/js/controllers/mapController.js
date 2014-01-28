@@ -108,7 +108,7 @@ angular.module('myModule')
             
             getAddress(latLng,function(addr){              
 
-              infowindow.setContent(message+addr);
+              infowindow.setContent(message+"<strong> Address:</strong> "+addr);
             
             });
                         

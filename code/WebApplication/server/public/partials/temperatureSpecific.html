@@ -91,10 +91,10 @@
 	          <tr ng-class="{danger: tdata.is_above_threshold}" ng-repeat="tdata in temperatureData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold' | orderBy:'-timestamp' ">
 	            <td>{{tdata.timestamp | date: 'medium'}}</td>
 	            <td ng-show="rt">	            	
-	            	<span ng-show="rt"><a ng-href="http://maps.google.com/maps?q={{tdata.loc[1]}},{{tdata.loc[0]}}&ll={{tdata.loc[1]}},{{tdata.loc[0]}}&z=12" target="_blank">
-	            		<button class='btn btn-primary'>Show on map</button>
-	            	</a>
+	            	<span ng-show="rt">	            		
+	            		<button ng-hide="tdata.loc[0]==undefined || tdata.loc[1]==undefined" ng-click="openAddrs(tdata.loc[0],tdata.loc[1])" class='btn btn-primary'>Show on map</button>
 	            	</span>
+	            	<span ng-show="tdata.loc[0]==undefined || tdata.loc[1]==undefined">Location not available</span>	            	
 	            	<span class="text-mute" ng-show="!rt">No Location available for blackbox</span>	            	
 	            </td>
 	            <td>{{tdata.value}} {{tdata.length}}</td>
