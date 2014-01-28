@@ -60,6 +60,9 @@ public class Constants {
     
    public final static byte[] GET_BATTERY_LEVEL = {96,00};
    
+   public final static byte[] RUN_ACCELEROMETER_CALIBRATION = {65,00};
+   
+   
    
    /**
     *  Black Box Config Packet index
