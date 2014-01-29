@@ -140,7 +140,7 @@ public class Package {
     }
 
     public void setPackageId(String packageId) {
-        this.packageId = packageId;
+        this.packageId = packageId.toUpperCase();
     }
 
     public String getTruckId() {
@@ -148,7 +148,7 @@ public class Package {
     }
 
     public void setTruckId(String truckId) {
-        this.truckId = truckId;
+        this.truckId = truckId.toUpperCase();
     }
 
     public String getComments() {
@@ -222,8 +222,8 @@ public class Package {
     public Package(String macId,String packageId,String truckId){
         sensorConfigs = new HashMap<Sensor, Config>();
         this.sensorId = macId;
-        this.packageId = packageId;
-        this.truckId = truckId;
+        this.packageId = packageId.toUpperCase();
+        this.truckId = truckId.toUpperCase();
     }
    
     //Time Period Configuration
