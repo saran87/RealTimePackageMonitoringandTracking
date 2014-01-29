@@ -189,7 +189,7 @@ public final class Packet extends Header {
 
         for (int i = 1; i < PayLoad.size(); i++) {
             short value = PayLoad.get(i);
-            g = (value * 15.6) / 1000;
+            g = (value * 15.625*2) / 1000;
             vibration.append(String.valueOf(truncate(g,4))).append(" ");
         }
         vibration.deleteCharAt(vibration.length() - 1);
