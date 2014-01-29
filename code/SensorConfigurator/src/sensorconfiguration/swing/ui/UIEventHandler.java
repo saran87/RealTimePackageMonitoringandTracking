@@ -624,6 +624,24 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     count++;
                     String fileName = file.toString().substring(file.toString().indexOf("\\") + 1);
                     File configFile = new File(CONFIG_FOLDER + fileName);
+                    
+                    FileInputStream configFis = new FileInputStream(configFile);
+                    DataInputStream configDis = new DataInputStream(configFis);
+
+                    for (;;) {
+                        PackageInformation sensorInfo;
+
+                        sensorInfo = PackageInformation.parseDelimitedFrom(configDis);
+                        if (sensorInfo == null) {
+                            break;
+                        }
+
+                        sensorClient.send(sensorInfo);
+
+                    }
+                    configDis.close();
+                    configFis.close();
+                    
 
                     FileInputStream fis = new FileInputStream(file);
                     DataInputStream dis = new DataInputStream(fis);
@@ -642,31 +660,13 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     length = dis.available();
                     fis.close();
                     dis.close();
-                    boolean localFileDeleted = false;
+                   
                     if (length == 0) {
                         file.delete();
-                        localFileDeleted = true;
-                    }
-
-                    FileInputStream configFis = new FileInputStream(configFile);
-                    DataInputStream configDis = new DataInputStream(configFis);
-
-                    for (;;) {
-                        PackageInformation sensorInfo;
-
-                        sensorInfo = PackageInformation.parseDelimitedFrom(configDis);
-                        if (sensorInfo == null) {
-                            break;
-                        }
-
-                        sensorClient.send(sensorInfo);
-
-                    }
-                    configDis.close();
-                    configFis.close();
-                    if (length == 0 && localFileDeleted) {
                         configFile.delete();
                     }
+
+                    
                     UIObject.clearLocalDataTable();
                     populateLocalData();
                     UIObject.jtblLocalData.repaint(UIObject.jtblLocalData.getBounds());
@@ -695,6 +695,8 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
                     FileWriter fw = new FileWriter();
                     FileInputStream inputStream = new FileInputStream(file);
                     fw.writeCSV(inputStream, new File(csvFile));
+                    inputStream.close();
+                    
                 } catch (Exception ex) {
                     Logger.getLogger(UIEventHandler.class.getName()).log(Level.SEVERE, null, ex);
                     throw ex;
