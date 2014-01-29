@@ -1,0 +1,153 @@
+<div ng-controller="dashboardCtrl">
+  
+  <div class="row"> 
+
+  <div class="col-md-10 col-md-offset-1"> 
+              <!-- List starts -->
+
+              <ul class="today-datas">
+                <!-- List #1 -->
+                <li>
+                  <!-- Graph -->
+                  <div class="datas-text"><span class="text-coolblue">Truck ID</span></div>
+                  <div><h4 class="text-yesgreen">{{tid}}</h4></div>                  
+                  
+                </li>
+                <li>
+                  <div class="datas-text"><span class="text-coolblue">Package ID</span></div>
+                  <div><h4 class="text-yesgreen">{{pid}}</h4></div>                  
+                </li>
+                <li>
+                  <div class="datas-text"><span class="text-coolblue">Sensor ID:</span></div>
+                  <div><h4 class="text-yesgreen">{{configObj.sensor_id}}</h4></div>
+                  
+                </li>
+                <li>
+                  <div>
+                    <div class="datas-text"><span class="text-coolblue">Realtime Tracking</span></div>
+                    <h4 class="text-yesgreen" ng-show="configObj.is_realtime">Yes</h4>
+                    <h4 class="text-nored" ng-show="!configObj.is_realtime">No</h4>
+                  </div>
+                  
+                </li> 
+                <li>
+
+                  <div class="datas-text"><span class="text-coolblue">Configured At</span></div>
+                  <div><h4 class="text-yesgreen">{{configObj.timestamp | date: 'medium'}}</h4></div>
+                  
+                </li>                                                                                                              
+              </ul>              
+    </div>  
+
+  </div>
+
+
+
+  <div class="row">
+
+    <div class="col-md-12">
+
+      <div class="widget">
+        <div class="widget-head">
+          <div class="pull-left">Threshold Values</div>                  
+          <div class="clearfix"></div>
+        </div>
+        <div class="widget-content">
+          <div class="padd statement text-center">
+            
+            <div class="row">
+
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Temperature</h4>
+                  <p><h3>{{configObj.config.temperature.maxthreshold}} <sup>F</sup></h3></p>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Humidity</h4>
+                  <p><h3>{{configObj.config.humidity.maxthreshold}} %RH</h3></p>                        
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Vibration</h4>
+                  <p><h3>{{configObj.config.vibrationx.maxthreshold}} G</h3></p>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="well cool-color">
+                  <h4>Shock</h4>
+                  <p><h3>{{configObj.config.shockx.maxthreshold}} G</h3></p>
+                </div>
+              </div>
+
+            </div>                   
+
+          </div>
+          <div class="widget-foot">
+          </div>
+        </div>
+      </div>  
+              
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="widget">
+      <!-- Widget title -->
+      <div class="widget-head">
+        <div class="pull-left">Additional Information </i></div>          
+        <div class="clearfix"></div>
+      </div>
+      <div class="widget-content">
+        <!-- Widget content -->
+        <!-- activity starts -->
+        <ul class="activity">
+
+          <li><strong><span class="text-primary">Configured on <span class="text-success">{{configObj.timestamp | date : 'medium'}}</strong></span></li>
+          
+
+        </ul>
+
+        <div class="widget-foot">          
+          <div class="clearfix"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="widget">
+      <!-- Widget title -->
+      <div class="widget-head">
+        <div class="pull-left">Notifications Feed <i class="icon-warning-sign"></i></div>
+        <div class="widget-icons pull-right">          
+        </div>  
+        <div class="clearfix"></div>
+      </div>
+      <div class="widget-content">
+        <!-- Widget content -->
+        <!-- activity starts -->
+        <ul class="activity">
+        </ul>
+
+        <div class="widget-foot">
+          
+          <div class="clearfix"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+

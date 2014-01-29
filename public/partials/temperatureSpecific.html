@@ -1,0 +1,131 @@
+<div  id="temperatureSection" ng-controller="temperatureSpecificCtrl">
+<div ng-show="!noData">
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="widget"> 
+				<div class="widget-head">
+
+					<div class="pull-left">Temperature Graph</div>
+					<div class="pull-right">
+						<small ng-show="rt">
+						<i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
+						</small>
+						<small class="text-mute" ng-show="!rt">
+							No real-time updates
+						</small>
+
+					</div>
+
+					<div class="clearfix"></div>
+					
+				</div>     
+		      <!-- Widget content -->
+			      <div class="widget-content">
+
+			      	<div class="padd">
+			          	<nvd3-line-with-focus-chart
+			            data="data"
+			            id="exampleId"            
+			            height="500"
+			            height2="50"			            
+			            showXAxis="true"
+			            showYAxis="true"
+			            showLegend="true"
+			            interactive="true"
+			            tooltips="true"
+			            xAxisTickFormat="xAxisTickFormatFunction()"			            
+			            x2AxisTickFormat="xAxisTickFormatFunction2()"
+			            yAxisTickFormat="yAxisTickFormatFunction()"			            
+			            yAxisLabel="Temperature (F)"
+			            xAxisLabel="Time"
+			            margin="{left:100,top:100,bottom:100,right:50}"
+			            color="colorDefault()"
+        				legendcolor="colorDefault()"
+			            >
+    					</nvd3-line-with-focus-chart>
+					</div>
+
+			        
+			        <!-- Widget ends -->
+
+			      </div>
+
+			    </div> 
+		    </div>
+		</div>	
+	</div>
+
+	<div class="col-md-12">
+
+	  <div class="widget" id="temperatureTable">
+
+	    <div class="widget-head">
+	      <div class="pull-left"><i class="icon-table"></i> Temperature Table
+
+	      <span class="text-darkblue">
+	      	<small>(Showing {{temperatureData.length}} results)</small>
+	      </span>        
+	      </div>
+	      <div class="widget-icons pull-right">
+	      	
+			<button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
+			<button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button>        
+	        
+	      </div>
+	      <div class="clearfix"></div>
+	    </div>
+
+	    <div class="widget-content">
+
+	      <table class="table table-striped table-bordered table-hover">
+	        <thead>
+	          <tr>
+	            <th>Time</th>
+	            <th ng-show="rt">Location</th>
+	            <th>Temperature (F)</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+
+	          <tr ng-class="{danger: tdata.is_above_threshold}" ng-repeat="tdata in temperatureData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold' | orderBy:'-timestamp' ">
+	            <td>{{tdata.timestamp | date: 'medium'}}</td>
+	            <td ng-show="rt">	            	
+	            	<span ng-show="rt">	            		
+	            		<button ng-hide="tdata.loc[0]==undefined || tdata.loc[1]==undefined" ng-click="openAddrs(tdata.loc[0],tdata.loc[1])" class='btn btn-primary'>Show on map</button>
+	            	</span>
+	            	<span ng-show="tdata.loc[0]==undefined || tdata.loc[1]==undefined">Location not available</span>	            	
+	            	<span class="text-mute" ng-show="!rt">No Location available for blackbox</span>	            	
+	            </td>
+	            <td>{{tdata.value}} {{tdata.length}}</td>
+	          </tr>
+
+	        </tbody>
+
+	      </table>     	           
+
+	      <div class="widget-foot">				
+
+	        <div class="clearfix"></div>
+
+
+
+	      </div>
+	    </div>
+
+	  </div>    
+
+	  
+	</div>
+</div>	
+<div class="well" ng-show="noData">
+
+	<h3 class="text-danger"><i class="icon-warning-sign"></i> Warning !</h3>
+	<div class="alert alert-danger">
+		<i class="icon-info-sign"></i> {{errorMsg}}
+	</div>
+	
+</div>
+
+</div>
+  <!--/end temperatureSection-->

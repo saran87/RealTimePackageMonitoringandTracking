@@ -1,0 +1,155 @@
+<div class="sections" id="vibrationSection" ng-controller="vibrationController">
+<div ng-show="!noData">
+<div class="col-md-12 sections">
+
+  <div class="widget" ng-show="isVib">    
+    <div class="widget-head">
+      <div class="pull-left">Vibration Graph - Time vs G-Value</div>
+          <div class="clearfix"></div>
+    </div>  
+    <div class="widget-content">
+
+      <nvd3-line-chart
+        data="exampleData"
+        id="exampleId"      
+        height="400"        
+        showXAxis="true"
+        showYAxis="true"
+        tooltips="true"
+        interactive="true"       
+        showLegend="true"            
+        color="colorDefault()"
+        legendcolor="colorDefault()"      
+        margin="{left:100,top:100,bottom:100,right:50}"
+        xAxisTickFormat="xAxisTickFormatFunction()"
+        yAxisTickFormat="yAxisTickFormatFunction()"      
+        yAxisLabel="G-Value"
+        xAxisLabel="Time"
+        noData="Plotting Graph"          
+        >
+            <svg></svg>
+        </nvd3-line-chart>
+      
+    </div>
+  </div>
+
+  <div class="widget" ng-show="isPsd">
+    <div class="widget-head">
+      <div class="pull-left">PSD Graph</div>
+            <div class="clearfix"></div>
+    </div>
+    <div class="widget-content" id="psdholder">
+
+      <nvd3-line-chart        
+          data="psdData"
+          id="psdGraph"                
+          height="400"          
+          tooltips="true"
+          interactive="true"       
+          showLegend="true"
+          showXAxis="true"
+          showYAxis="true"          
+          xAxisLabel="Hz"
+          yAxisLabel="G^2/Hz"
+          margin="{left:100,top:100,bottom:100,right:50}"
+          color="psdColorsFunc()"
+          legendcolor="psdColorsFunc()"
+          noData="Plotting Graph"                    
+          >
+            <svg></svg>
+      </nvd3-line-chart> 
+      
+    </div>
+  </div>  	
+
+</div>
+
+<div class="col-md-12">
+  <div class="widget" id="vibrationTable">
+
+    <div class="widget-head">
+      <div class="pull-left"><i class="icon-table"></i> Vibration Table 
+        <span class="text-darkblue"><small>(Showing {{vibrationData.length}} results)</small></span>
+      </div>
+      <div class="widget-icons pull-right">
+
+        <input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="all"> All values |                  
+        <input ng-model="itemfilter.is_above_threshold" type="radio" name="opts" id="opt1" value="shown"> Above threshold           
+
+        <button ng-show="rt" ng-click="refresh()" class="btn btn-success"><i class="icon-refresh"></i> Refresh</button> 
+        <small ng-show="rt">
+          <i class="icon-time"></i> <span ng-show="loaded">Refresh rate: {{refreshRate}} s | Last Updated {{ts | timeago}}</span>
+        </small>           
+
+        <button ng-show="!rt" class="btn btn-success disabled"><i class="icon-refresh"></i> Refresh</button> 
+        <small class="text-mute" ng-show="!rt">
+          No real-time updates
+        </small>
+        
+
+
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+
+      <table class="table table-bordered table-hover">
+        
+          <tr>
+            <th>Time</th>
+            <th ng-show="rt">Location</th>
+            <th>Vibration</th>
+            <th>Analysis</th>
+          </tr>
+
+          <tr ng-class="{danger: vdata.is_above_threshold, selected: $index == indexSelected}" ng-repeat="vdata in vibrationData | hiddenFilter:itemfilter.is_above_threshold:'is_above_threshold' | orderBy:'-timestamp' ">
+            <td>{{vdata.timestamp | date: 'medium'}}</td>
+            <td ng-show="rt">
+              <span ng-show="rt">                 
+                <button ng-hide="vdata.loc[0]==undefined || vdata.loc[1]==undefined" ng-click="openAddrs(vdata.loc[0],vdata.loc[1])" class='btn btn-primary'>Show on map</button>
+              </span>
+              <span ng-show="vdata.loc[0]==undefined || vdata.loc[1]==undefined">Location not available</span>               
+              <span class="text-mute" ng-show="!rt">No Location available for blackbox</span>
+            </td>
+            <td>
+            	<span class="label label-danger">X</span> <strong>{{vdata.value.x}} g</strong><br/>
+            	<span class="label label-danger">Y</span> <strong>{{vdata.value.y}} g</strong><br />
+            	<span class="label label-danger">Z</span> <strong>{{vdata.value.z}} g</strong><br />
+            </td>
+            <td >              
+            	<button ng-click="setSelected($index);vibrationGraph($index,vdata._id)" class="btn btn-info btn-sm">View Graph</button>            	            
+              <button ng-click="setSelected($index);psdGraph($index,vdata._id)" class="btn btn-primary btn-sm">PSD</button>
+
+            </td>
+          </tr>
+
+        
+      </table>    
+      
+      <div class="widget-foot">           
+
+        <div class="clearfix"></div>
+
+      </div>
+    </div>
+
+  </div> 
+ </div>  
+</div>
+<div class="well" ng-show="noData">
+
+  <h3 class="text-danger"><i class="icon-warning-sign"></i> Warning !</h3>
+  <div class="alert alert-danger">
+    <i class="icon-info-sign"></i> {{errorMsg}}
+  </div>
+  
+</div>
+</div>
+
+  <!--/end temperatureSection-->
+
+
+
+
+
