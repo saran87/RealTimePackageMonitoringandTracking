@@ -25,6 +25,97 @@ public class Package {
     private boolean isFlashDataAvailable;
     private int batteryLevel;
     private int batteryHealth;
+    private int maxVibXaxis;
+    private int maxVibYaxis;
+    private int maxVibZaxis;
+    private int minVibXaxis;
+    private int minVibYaxis;
+    private int minVibZaxis;
+    private int offsetVibXaxis;
+    private int offsetVibYaxis;
+    private int offsetVibZaxis;
+
+    public boolean isIsFlashDataAvailable() {
+        return isFlashDataAvailable;
+    }
+
+    public void setIsFlashDataAvailable(boolean isFlashDataAvailable) {
+        this.isFlashDataAvailable = isFlashDataAvailable;
+    }
+
+    public int getMaxVibXaxis() {
+        return maxVibXaxis;
+    }
+
+    public void setMaxVibXaxis(int maxVibXaxis) {
+        this.maxVibXaxis = maxVibXaxis;
+    }
+
+    public int getMaxVibYaxis() {
+        return maxVibYaxis;
+    }
+
+    public void setMaxVibYaxis(int maxVibYaxis) {
+        this.maxVibYaxis = maxVibYaxis;
+    }
+
+    public int getMaxVibZaxis() {
+        return maxVibZaxis;
+    }
+
+    public void setMaxVibZaxis(int maxVibZaxis) {
+        this.maxVibZaxis = maxVibZaxis;
+    }
+
+    public int getMinVibXaxis() {
+        return minVibXaxis;
+    }
+
+    public void setMinVibXaxis(int minVibXaxis) {
+        this.minVibXaxis = minVibXaxis;
+    }
+
+    public int getMinVibYaxis() {
+        return minVibYaxis;
+    }
+
+    public void setMinVibYaxis(int minVibYaxis) {
+        this.minVibYaxis = minVibYaxis;
+    }
+
+    public int getMinVibZaxis() {
+        return minVibZaxis;
+    }
+
+    public void setMinVibZaxis(int minVibZaxis) {
+        this.minVibZaxis = minVibZaxis;
+    }
+
+    public int getOffsetVibXaxis() {
+        return offsetVibXaxis;
+    }
+
+    public void setOffsetVibXaxis(int offsetVibXaxis) {
+        this.offsetVibXaxis = offsetVibXaxis;
+    }
+
+    public int getOffsetVibYaxis() {
+        return offsetVibYaxis;
+    }
+
+    public void setOffsetVibYaxis(int offsetVibYaxis) {
+        this.offsetVibYaxis = offsetVibYaxis;
+    }
+
+    public int getOffsetVibZaxis() {
+        return offsetVibZaxis;
+    }
+
+    public void setOffsetVibZaxis(int offsetVibZaxis) {
+        this.offsetVibZaxis = offsetVibZaxis;
+    }
+    
+    
 
     public void setIsFlashDataAvailable(int data) {
         this.isFlashDataAvailable = data != 0;

@@ -336,6 +336,7 @@ public class BlackBoxReader extends AbstractSource {
             Thread.sleep(1000);
         }
         FileInputStream input = new FileInputStream(reader.dataFile);
+        int timeOut = 0;
 
         while (length > 2) {
             byte[] rawPacket = readFramedPacket(false, input);
@@ -343,6 +344,7 @@ public class BlackBoxReader extends AbstractSource {
             if (rawPacket != null) {
                 //Add plus 5 to normal packet, 5 is for adding Frame packet(3) and CRC(2)
                 counter++;
+                timeOut = 0;
                 length = length - (rawPacket.length + 5);
                 Packet pack = new Packet(rawPacket);
                 if (DEBUG) {
@@ -359,6 +361,11 @@ public class BlackBoxReader extends AbstractSource {
                     publishNewPacket(pack);
                 }
             }
+            else{
+                timeOut++;
+            }
+            if(timeOut > Constants.MTU)
+                break;
         }
         input.close();
         reader.dataFile.delete();
@@ -734,6 +741,21 @@ public class BlackBoxReader extends AbstractSource {
         pack.setVibrationAfterThresholdTimePeriod(overtime);
         pack.setMaxVibrationThreshold(rawThreshold);
         pack.setIsFlashDataAvailable((packet.getData(Constants.DATA_IN_FLASH_INDEX) & 0xff));
+        int value = (packet.getData(Constants.VIB_X_MAXIMUM_INDEX) & 0xff) | (packet.getData(Constants.VIB_X_MAXIMUM_INDEX+1) & 0xff) << 8;
+        pack.setMaxVibXaxis(value);
+        value = (packet.getData(Constants.VIB_Y_MAXIMUM_INDEX) & 0xff) | (packet.getData(Constants.VIB_Y_MAXIMUM_INDEX+1) & 0xff) << 8;
+        pack.setMaxVibYaxis(value);
+        value = (packet.getData(Constants.VIB_Z_MAXIMUM_INDEX) & 0xff) | (packet.getData(Constants.VIB_Z_MAXIMUM_INDEX+1) & 0xff) << 8;
+        pack.setMaxVibZaxis(value);
+        value = (packet.getData(Constants.VIB_X_MINIMUM_INDEX) & 0xff) | (packet.getData(Constants.VIB_X_MINIMUM_INDEX+1) & 0xff) << 8;
+        pack.setMinVibXaxis(value);
+        value = (packet.getData(Constants.VIB_Y_MINIMUM_INDEX) & 0xff) | (packet.getData(Constants.VIB_Y_MINIMUM_INDEX+1) & 0xff) << 8;
+        pack.setMinVibYaxis(value);
+        value = (packet.getData(Constants.VIB_Z_MINIMUM_INDEX) & 0xff) | (packet.getData(Constants.VIB_Z_MINIMUM_INDEX+1) & 0xff) << 8;
+        pack.setMinVibZaxis(value);
+        pack.setOffsetVibXaxis((packet.getData(Constants.VIB_X_OFFSET_INDEX) & 0xff));
+        pack.setOffsetVibYaxis((packet.getData(Constants.VIB_Y_OFFSET_INDEX) & 0xff));
+        pack.setOffsetVibZaxis((packet.getData(Constants.VIB_Z_OFFSET_INDEX) & 0xff));
         pack.setBatteryLevel(batteryLevel);
         return pack;
     }
