@@ -8,6 +8,10 @@
             <file>file:/home/prit/rfid_RA_project/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/motes/packet/Crc.java</file>
             <file>file:/home/prit/rfid_RA_project/RealTimePackageMonitoringandTracking/code/SensorDataReader/src/rtpmt/sensor/reader/SensorReader.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/thirumalaisamy/Documents/Packaging/trunk/code/SensorDataReader/src/rtpmt/packages/Package.java</file>
+            <file>file:/C:/Users/thirumalaisamy/Documents/Packaging/trunk/code/SensorDataReader/src/rtpmt/sensor/util/Constants.java</file>
+            <file>file:/C:/Users/thirumalaisamy/Documents/Packaging/trunk/code/SensorDataReader/src/rtpmt/motes/packet/BlackBoxReader.java</file>
+        </group>
     </open-files>
 </project-private>
