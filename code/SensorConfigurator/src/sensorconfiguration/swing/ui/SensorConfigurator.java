@@ -179,13 +179,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         portTextField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        maxPanel = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
-        jLabel37 = new javax.swing.JLabel();
-        maxVibXaxis = new javax.swing.JLabel();
-        maxVibYaxis = new javax.swing.JLabel();
-        maxVibZaxis = new javax.swing.JLabel();
         maxPanel1 = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
@@ -193,13 +186,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
         offsetVibXaxis = new javax.swing.JLabel();
         offsetVibYaxis = new javax.swing.JLabel();
         offsetVibZaxis = new javax.swing.JLabel();
-        maxPanel2 = new javax.swing.JPanel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
-        jLabel43 = new javax.swing.JLabel();
-        minVibXaxis = new javax.swing.JLabel();
-        minVibYaxis = new javax.swing.JLabel();
-        minVibZaxis = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -886,49 +872,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Local Data", jPanel3);
 
-        maxPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Maximum Vibration Values"));
-
-        jLabel22.setText("Vibration X-axis  :");
-
-        jLabel36.setText("Vibration Y-axis  :");
-
-        jLabel37.setText("Vibration Z-axis  :");
-
-        org.jdesktop.layout.GroupLayout maxPanelLayout = new org.jdesktop.layout.GroupLayout(maxPanel);
-        maxPanel.setLayout(maxPanelLayout);
-        maxPanelLayout.setHorizontalGroup(
-            maxPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(maxPanelLayout.createSequentialGroup()
-                .add(84, 84, 84)
-                .add(maxPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel22, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .add(jLabel36, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jLabel37, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(maxPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(maxVibXaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(maxVibYaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(maxVibZaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        maxPanelLayout.setVerticalGroup(
-            maxPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(maxPanelLayout.createSequentialGroup()
-                .add(21, 21, 21)
-                .add(maxPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(maxVibXaxis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
-                .add(maxPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel36, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(maxVibYaxis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
-                .add(maxPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel37, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(maxVibZaxis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
         maxPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Offset Vibration Values"));
 
         jLabel38.setText("Vibration X-axis  :");
@@ -952,7 +895,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
                     .add(offsetVibXaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(offsetVibYaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(offsetVibZaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(503, Short.MAX_VALUE))
         );
         maxPanel1Layout.setVerticalGroup(
             maxPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -972,49 +915,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        maxPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Vibration Values"));
-
-        jLabel41.setText("Vibration X-axis  :");
-
-        jLabel42.setText("Vibration Y-axis  :");
-
-        jLabel43.setText("Vibration Z-axis  :");
-
-        org.jdesktop.layout.GroupLayout maxPanel2Layout = new org.jdesktop.layout.GroupLayout(maxPanel2);
-        maxPanel2.setLayout(maxPanel2Layout);
-        maxPanel2Layout.setHorizontalGroup(
-            maxPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(maxPanel2Layout.createSequentialGroup()
-                .add(84, 84, 84)
-                .add(maxPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel41, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .add(jLabel42, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jLabel43, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(maxPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(minVibXaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(minVibYaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(minVibZaxis, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
-                .addContainerGap(503, Short.MAX_VALUE))
-        );
-        maxPanel2Layout.setVerticalGroup(
-            maxPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(maxPanel2Layout.createSequentialGroup()
-                .add(21, 21, 21)
-                .add(maxPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(minVibXaxis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
-                .add(maxPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(minVibYaxis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
-                .add(maxPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(minVibZaxis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-
         jButton7.setText("Calibrate Sensor");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1029,28 +929,21 @@ public class SensorConfigurator extends javax.swing.JFrame {
             .add(jPanel2Layout.createSequentialGroup()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel2Layout.createSequentialGroup()
-                        .add(41, 41, 41)
-                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, maxPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, maxPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(maxPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .add(jPanel2Layout.createSequentialGroup()
                         .add(271, 271, 271)
-                        .add(jButton7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 363, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .add(jButton7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 363, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel2Layout.createSequentialGroup()
+                        .add(45, 45, 45)
+                        .add(maxPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
-                .add(23, 23, 23)
-                .add(maxPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(maxPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
+                .add(22, 22, 22)
                 .add(maxPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
+                .add(22, 22, 22)
                 .add(jButton7)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(505, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Calibrate Sensor", jPanel2);
@@ -1260,15 +1153,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblSensorId1.setText("xxxxxx");
         jlblComments.setText("xxxxxx");
         jlblBatteryLevelValue.setText("0");
-        maxVibXaxis.setText("");
-            maxVibYaxis.setText("");
-            maxVibZaxis.setText("");
-            
-            minVibXaxis.setText("");
-            minVibYaxis.setText("");
-            minVibZaxis.setText("");
-            
-            offsetVibXaxis.setText("");
+        offsetVibXaxis.setText("");
             offsetVibYaxis.setText("");
             offsetVibZaxis.setText("");
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -1357,7 +1242,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -1372,15 +1256,10 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1411,15 +1290,7 @@ public class SensorConfigurator extends javax.swing.JFrame {
     private javax.swing.JTextArea jtxtComments;
     private javax.swing.JTextField jtxtPackageId;
     private javax.swing.JTextField jtxtTuckId;
-    private javax.swing.JPanel maxPanel;
     private javax.swing.JPanel maxPanel1;
-    private javax.swing.JPanel maxPanel2;
-    private javax.swing.JLabel maxVibXaxis;
-    private javax.swing.JLabel maxVibYaxis;
-    private javax.swing.JLabel maxVibZaxis;
-    private javax.swing.JLabel minVibXaxis;
-    private javax.swing.JLabel minVibYaxis;
-    private javax.swing.JLabel minVibZaxis;
     private javax.swing.JLabel offsetVibXaxis;
     private javax.swing.JLabel offsetVibYaxis;
     private javax.swing.JLabel offsetVibZaxis;
@@ -1477,14 +1348,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
             shockThreshold.setValue(0);
             
-            maxVibXaxis.setText("");
-            maxVibYaxis.setText("");
-            maxVibZaxis.setText("");
-            
-            minVibXaxis.setText("");
-            minVibYaxis.setText("");
-            minVibZaxis.setText("");
-            
             offsetVibXaxis.setText("");
             offsetVibYaxis.setText("");
             offsetVibZaxis.setText("");
@@ -1513,13 +1376,6 @@ public class SensorConfigurator extends javax.swing.JFrame {
 
             tempConfig = configList.get(Sensor.SHOCK);
             shockThreshold.setValue(tempConfig.getMaxThreshold());
-            maxVibXaxis.setText(Integer.toString(pack.getMaxVibXaxis()));
-            maxVibYaxis.setText(Integer.toString(pack.getMaxVibYaxis()));
-            maxVibZaxis.setText(Integer.toString(pack.getMaxVibZaxis()));
-            
-            minVibXaxis.setText(Integer.toString(pack.getMinVibXaxis()));
-            minVibYaxis.setText(Integer.toString(pack.getMinVibYaxis()));
-            minVibZaxis.setText(Integer.toString(pack.getMinVibZaxis()));
             
             offsetVibXaxis.setText(Integer.toString(pack.getOffsetVibXaxis()));
             offsetVibYaxis.setText(Integer.toString(pack.getOffsetVibYaxis()));
