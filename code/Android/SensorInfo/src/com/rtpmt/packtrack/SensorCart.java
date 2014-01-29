@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 import rtpmt.packages.Config;
 import rtpmt.packages.Package;
-import rtpmt.packages.PackageList;
 import rtpmt.packages.Sensor;
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -92,9 +91,10 @@ public class SensorCart extends Application {
 		boolean alreadyPresent = false;
 		alreadyPresent = checkSensorInList(pack);
 		if (!alreadyPresent) {
-			
-			populateGlobalSettings();
-			updatePackageSettings(pack);
+			if (getListSize() == 0) {
+				populateGlobalSettings();
+			}
+			updateGlobalSettingsForPackageWhenAdded(pack);
 			sensorList.add(pack);
 			sensorIdList.add(pack.getSensorId());
 		}
@@ -151,7 +151,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getTemperatureTimePeriod() {
-		return globalPrefs.getString("before_threshold_temperature", "360");
+		return globalPrefs.getString("before_threshold_temperature", "300");
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getHumidityTimePeriod() {
-		return globalPrefs.getString("before_threshold_humidity", "360");
+		return globalPrefs.getString("before_threshold_humidity", "300");
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class SensorCart extends Application {
 	 * @return String
 	 */
 	public static String getVibrationTimePeriod() {
-		return globalPrefs.getString("before_threshold_vibration", "360");
+		return globalPrefs.getString("before_threshold_vibration", "300");
 	}
 
 	/**
@@ -238,32 +238,69 @@ public class SensorCart extends Application {
 	public static boolean isSetForSingleSensor() {
 		return globalPrefs.getBoolean("set_by_sensor_id", false);
 	}
-	
-	private void updateSensorConfig(int index){
-		
-			sensorList.get(index).setMaxTemperatureThreshold( Double
-					.parseDouble(getTemperatureThreshold()));
-			sensorList.get(index).setMaxHumidtyThreshold( Double
-					.parseDouble(getHumidityThreshold()));
-			sensorList.get(index).setMaxVibrationThreshold (Double
-					.parseDouble(getVibrationThreshold()));
-			sensorList.get(index).setMaxShockThreshold ( Double
-					.parseDouble(getShockThreshold()));
-			sensorList.get(index).setTemperatureTimePeriod( Integer
-					.parseInt(getTemperatureTimePeriod()));
-			sensorList.get(index).setTemperatureAfterThresholdTimePeriod(Integer
-					.parseInt(getTemperatureAfterThreshold()));
-			sensorList.get(index).setHumididtyTimePeriod( Integer
-					.parseInt(getHumidityTimePeriod()));
-			sensorList.get(index).setHumididtyAfterThresholdTimePeriod(Integer
-					.parseInt(getHumidityAfterThreshold()));
-			sensorList.get(index).setVibrationTimePeriod(Integer
-					.parseInt(getVibrationTimePeriod()));
-			sensorList.get(index).setVibrationAfterThresholdTimePeriod(Integer
-					.parseInt(getVibrationAfterThreshold()));
+
+	public static boolean isSwitchOnForTemperature() {
+		return globalPrefs.getBoolean("turn_on_off_temperature", true);
 	}
-	
-	public void updateSensorListConfigs(){
+
+	public static boolean isSwitchOnForHumidity() {
+		return globalPrefs.getBoolean("turn_on_off_humidity", true);
+	}
+
+	public static boolean isSwitchOnForVibration() {
+		return globalPrefs.getBoolean("turn_on_off_vibration", true);
+	}
+
+	public static boolean isSwitchOnForShock() {
+		return globalPrefs.getBoolean("turn_on_off_shock", true);
+	}
+
+	private void updateSensorConfig(int index) {
+		if (isSwitchOnForTemperature()) {
+			sensorList.get(index).setMaxTemperatureThreshold(
+					Double.parseDouble(getTemperatureThreshold()));
+			sensorList.get(index).setTemperatureTimePeriod(
+					Integer.parseInt(getTemperatureTimePeriod()));
+			sensorList.get(index).setTemperatureAfterThresholdTimePeriod(
+					Integer.parseInt(getTemperatureAfterThreshold()));
+		} else {
+			sensorList.get(index).setMaxTemperatureThreshold(Integer.MAX_VALUE);
+			sensorList.get(index).setTemperatureTimePeriod(0);
+			sensorList.get(index).setTemperatureAfterThresholdTimePeriod(0);
+		}
+		if (isSwitchOnForHumidity()) {
+			sensorList.get(index).setMaxHumidtyThreshold(
+					Double.parseDouble(getHumidityThreshold()));
+			sensorList.get(index).setHumididtyTimePeriod(
+					Integer.parseInt(getHumidityTimePeriod()));
+			sensorList.get(index).setHumididtyAfterThresholdTimePeriod(
+					Integer.parseInt(getHumidityAfterThreshold()));
+		} else {
+			sensorList.get(index).setMaxHumidtyThreshold(Integer.MAX_VALUE);
+			sensorList.get(index).setHumididtyTimePeriod(0);
+			sensorList.get(index).setHumididtyAfterThresholdTimePeriod(0);
+		}
+		if (isSwitchOnForVibration()) {
+			sensorList.get(index).setMaxVibrationThreshold(
+					Double.parseDouble(getVibrationThreshold()));
+			sensorList.get(index).setVibrationTimePeriod(
+					Integer.parseInt(getVibrationTimePeriod()));
+			sensorList.get(index).setVibrationAfterThresholdTimePeriod(
+					Integer.parseInt(getVibrationAfterThreshold()));
+		} else {
+			sensorList.get(index).setMaxVibrationThreshold(Integer.MAX_VALUE);
+			sensorList.get(index).setVibrationTimePeriod(0);
+			sensorList.get(index).setVibrationAfterThresholdTimePeriod(0);
+		}
+		if (isSwitchOnForShock()) {
+			sensorList.get(index).setMaxShockThreshold(
+					Double.parseDouble(getShockThreshold()));
+		} else {
+			sensorList.get(index).setMaxShockThreshold(Integer.MAX_VALUE);
+		}
+	}
+
+	public void updateSensorListConfigs() {
 		for (int index = 0; index < sensorList.size(); index++) {
 			updateSensorConfig(index);
 		}
@@ -273,152 +310,110 @@ public class SensorCart extends Application {
 	 * Method to push the Settings set to the Server.
 	 * 
 	 */
-	public void updateSettings() {
-		
+	public void updateAllPackageSettings() {
+
 		if (!(isSetForSingleSensor())) {
 			populateGlobalSettings();
-			/*
 			updateSensorListConfigs();
-			for (Package pack : PackageList.getPackages()) {
-				if (!(pack.getPackageId().equals("NO_ID"))) {
-					pack.setTruckId(getTruckId());
+		}
+	}
 
-					pack.setMaxTemperatureThreshold(Double
-							.parseDouble(getTemperatureThreshold()));
-					pack.setMaxHumidtyThreshold(Double
-							.parseDouble(getHumidityThreshold()));
-					pack.setMaxVibrationThreshold(Double
-							.parseDouble(getHumidityThreshold()));
-					pack.setMaxShockThreshold(Double
-							.parseDouble(getShockThreshold()));
-
-					pack.setTemperatureTimePeriod(Integer
-							.parseInt(getTemperatureTimePeriod()));
-					pack.setHumididtyTimePeriod(Integer
-							.parseInt(getHumidityTimePeriod()));
-					pack.setVibrationTimePeriod(Integer
-							.parseInt(getVibrationTimePeriod()));
-
-					pack.setTemperatureAfterThresholdTimePeriod(Integer
-							.parseInt(getTemperatureAfterThreshold()));
-					pack.setHumididtyAfterThresholdTimePeriod(Integer
-							.parseInt(getHumidityAfterThreshold()));
-					pack.setVibrationAfterThresholdTimePeriod(Integer
-							.parseInt(getVibrationAfterThreshold()));
-				}
-			}*/
-		} else if (isSetForSingleSensor()) {
-			for (Package pack : PackageList.getPackages()) {
-				if (!(pack.getPackageId().equals("NO_ID"))
-						&& pack.getSensorId().equals(
-								getSensorIdForIndividualSettings())) {
-					pack.setTruckId(getTruckId());
-
-					pack.setMaxTemperatureThreshold(Double
-							.parseDouble(getTemperatureThreshold()));
-					pack.setMaxHumidtyThreshold(Double
-							.parseDouble(getHumidityThreshold()));
-					pack.setMaxVibrationThreshold(Double
-							.parseDouble(getVibrationThreshold()));
-					pack.setMaxShockThreshold(Double
-							.parseDouble(getShockThreshold()));
-
-					pack.setTemperatureTimePeriod(Integer
-							.parseInt(getTemperatureTimePeriod()));
-					pack.setHumididtyTimePeriod(Integer
-							.parseInt(getHumidityTimePeriod()));
-					pack.setVibrationTimePeriod(Integer
-							.parseInt(getVibrationTimePeriod()));
-
-					pack.setTemperatureAfterThresholdTimePeriod(Integer
-							.parseInt(getTemperatureAfterThreshold()));
-					pack.setHumididtyAfterThresholdTimePeriod(Integer
-							.parseInt(getHumidityAfterThreshold()));
-					pack.setVibrationAfterThresholdTimePeriod(Integer
-							.parseInt(getVibrationAfterThreshold()));
-					break;
-				}
-			}
-			for (int index = 0; index < sensorList.size(); index++) {
-				if ((sensorList.get(index).getSensorId()
-						.equals(getSensorIdForIndividualSettings()))) {
-						updateSensorConfig(index);
-					break;
-				}
+	public void updateIndividualPackageSettings() {
+		for (int index = 0; index < sensorList.size(); index++) {
+			if ((sensorList.get(index).getSensorId()
+					.equals(getSensorIdForIndividualSettings()))) {
+				updateSensorConfig(index);
+				break;
 			}
 		}
 	}
 
-	public void updatePackageSettings(Package pack) {
-		
-			pack.setTruckId(getTruckId());
-
+	public void updateGlobalSettingsForPackageWhenAdded(Package pack) {
+		pack.setTruckId(getTruckId());
+		if (isSwitchOnForTemperature()) {
 			pack.setMaxTemperatureThreshold(globalTemperatureThreshold);
-			pack.setMaxHumidtyThreshold(globalHumidityThreshold);
-			pack.setMaxVibrationThreshold(globalVibrationThreshold);
-			pack.setMaxShockThreshold(globalShockThreshold);
-
 			pack.setTemperatureTimePeriod(globalBeforeTemperatureThreshold);
-			pack.setHumididtyTimePeriod(globalBeforeHumidityThreshold);
-			pack.setVibrationTimePeriod(globalBeforeVibrationThreshold);
-
 			pack.setTemperatureAfterThresholdTimePeriod(globalAfterTemperatureThreshold);
+		} else {
+			pack.setMaxTemperatureThreshold(Integer.MAX_VALUE);
+			pack.setTemperatureTimePeriod(0);
+			pack.setTemperatureAfterThresholdTimePeriod(0);
+		}
+		if (isSwitchOnForHumidity()) {
+			pack.setMaxHumidtyThreshold(globalHumidityThreshold);
+			pack.setHumididtyTimePeriod(globalBeforeHumidityThreshold);
 			pack.setHumididtyAfterThresholdTimePeriod(globalAfterHumidityThreshold);
+		} else {
+			pack.setMaxHumidtyThreshold(Integer.MAX_VALUE);
+			pack.setHumididtyTimePeriod(0);
+			pack.setHumididtyAfterThresholdTimePeriod(0);
+		}
+		if (isSwitchOnForVibration()) {
+			pack.setMaxVibrationThreshold(globalVibrationThreshold);
+			pack.setVibrationTimePeriod(globalBeforeVibrationThreshold);
 			pack.setVibrationAfterThresholdTimePeriod(globalAfterVibrationThreshold);
+		} else {
+			pack.setMaxVibrationThreshold(Integer.MAX_VALUE);
+			pack.setVibrationTimePeriod(0);
+			pack.setVibrationAfterThresholdTimePeriod(0);
+		}
+		if (isSwitchOnForShock()) {
+			pack.setMaxShockThreshold(globalShockThreshold);
+		} else {
+			pack.setMaxShockThreshold(Integer.MAX_VALUE);
+		}
 	}
 
 	private void populateGlobalSettings() {
 
-			globalTemperatureThreshold = Double
-					.parseDouble(getTemperatureThreshold());
-			globalHumidityThreshold = Double
-					.parseDouble(getHumidityThreshold());
-			globalVibrationThreshold = Double
-					.parseDouble(getVibrationThreshold());
-			globalShockThreshold = Double.parseDouble(getShockThreshold());
+		globalTemperatureThreshold = Double
+				.parseDouble(getTemperatureThreshold());
+		globalHumidityThreshold = Double.parseDouble(getHumidityThreshold());
+		globalVibrationThreshold = Double.parseDouble(getVibrationThreshold());
+		globalShockThreshold = Double.parseDouble(getShockThreshold());
 
-			globalBeforeTemperatureThreshold = Integer
-					.parseInt(getTemperatureTimePeriod());
-			globalAfterTemperatureThreshold = Integer
-					.parseInt(getTemperatureAfterThreshold());
-			globalBeforeHumidityThreshold = Integer
-					.parseInt(getHumidityTimePeriod());
-			globalAfterHumidityThreshold = Integer
-					.parseInt(getHumidityAfterThreshold());
-			globalBeforeVibrationThreshold = Integer
-					.parseInt(getVibrationTimePeriod());
-			globalAfterVibrationThreshold = Integer
-					.parseInt(getVibrationAfterThreshold());
+		globalBeforeTemperatureThreshold = Integer
+				.parseInt(getTemperatureTimePeriod());
+		globalAfterTemperatureThreshold = Integer
+				.parseInt(getTemperatureAfterThreshold());
+		globalBeforeHumidityThreshold = Integer
+				.parseInt(getHumidityTimePeriod());
+		globalAfterHumidityThreshold = Integer
+				.parseInt(getHumidityAfterThreshold());
+		globalBeforeVibrationThreshold = Integer
+				.parseInt(getVibrationTimePeriod());
+		globalAfterVibrationThreshold = Integer
+				.parseInt(getVibrationAfterThreshold());
 	}
 
 	public static void getValuesSetForSensor(int position) {
-		
-		 HashMap<Sensor, Config> configList = sensorList.get(position).getConfigs();
-         Config config = configList.get(Sensor.TEMPERATURE);
+
+		HashMap<Sensor, Config> configList = sensorList.get(position)
+				.getConfigs();
+		Config config = configList.get(Sensor.TEMPERATURE);
 		temperatureThreshold = config.getMaxThreshold();
 		beforeTemperatureThreshold = config.getTimePeriod();
 		afterTemperatureThreshold = config.getAfterThresholdTimePeriod();
-		
+
 		config = configList.get(Sensor.HUMIDITY);
 		humidityThreshold = config.getMaxThreshold();
 		beforeHumidityThreshold = config.getTimePeriod();
-		afterHumidityThreshold =  config.getAfterThresholdTimePeriod();
-		
+		afterHumidityThreshold = config.getAfterThresholdTimePeriod();
+
 		config = configList.get(Sensor.VIBRATION);
 		vibrationThreshold = config.getMaxThreshold();
 		beforeVibrationThreshold = config.getTimePeriod();
 		afterVibrationThreshold = config.getAfterThresholdTimePeriod();
-		
+
 		config = configList.get(Sensor.SHOCK);
 		shockThreshold = config.getMaxThreshold();
 
 	}
 
-	public void updatePackageId(int sensorPosition,String packageId) {
-		if(sensorPosition < sensorList.size()){	
+	public void updatePackageId(int sensorPosition, String packageId) {
+		if (sensorPosition < sensorList.size()) {
 			Package pack = sensorList.get(sensorPosition);
 			pack.setPackageId(packageId);
 		}
-		
 	}
 }

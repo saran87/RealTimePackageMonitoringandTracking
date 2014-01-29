@@ -695,19 +695,24 @@ public class SensorService implements SensorEventHandler {
 		mainHandler.obtainMessage(StartActivity.SENSOR_ADDED).sendToTarget();
 	}
 
-	public void configure(Package pack) {
-		try {
-			sensorReader.configure(pack);
-			tCPClient.sendData(pack.getConfigMessage(true));
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void configure(String _sensorId) {
+		for (Package pack : PackageList.getPackages()) {
+			if (pack.getSensorId().equals(_sensorId)) {
+				try {
+					sensorReader.configure(pack);
+					tCPClient.sendData(pack.getConfigMessage(true));
+				} catch (NullPointerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			}
 		}
 	}
 

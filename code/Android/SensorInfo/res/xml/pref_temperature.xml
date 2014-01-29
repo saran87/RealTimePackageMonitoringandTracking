@@ -1,7 +1,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:summary="@string/pref_description_turn_on_off_temperature"
+        android:title="@string/pref_title_turn_on_off_temperature"
+        android:key="turn_on_off_temperature" />
+    
+    
     <EditTextPreference
         android:capitalize="words"
+        android:dependency="turn_on_off_temperature"
         android:defaultValue="@string/pref_default_temperature_threshold"
         android:inputType="numberDecimal"
         android:key="set_temperature_threshold"
@@ -9,15 +17,10 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_set_temperature_threshold" />
-   
-    <!-- <SeekBarPreference
-        android:defaultValue="3"
-        android:key="set_temperature_threshold"
-        android:id="@+id/pref_title_set_temperature_threshold" /> -->
-        
-        
+     
     <ListPreference
-        android:defaultValue="360"
+        android:defaultValue="300"
+        android:dependency="turn_on_off_temperature"
         android:entries="@array/pref_notify_before_temperature_list"
         android:entryValues="@array/pref_notify_before_temperature_values"
         android:key="before_threshold_temperature"
@@ -27,11 +30,12 @@
     
     <ListPreference
         android:defaultValue="60"
+        android:dependency="turn_on_off_temperature"
         android:entries="@array/pref_notify_after_temperature_list"
         android:entryValues="@array/pref_notify_after_temperature_values"
         android:key="after_threshold_temperature"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_notify_after_temperature" />
-
+   
 </PreferenceScreen>

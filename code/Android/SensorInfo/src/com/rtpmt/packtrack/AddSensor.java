@@ -2,14 +2,14 @@ package com.rtpmt.packtrack;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.app.Activity;
-import android.content.Intent;
+
 import com.example.sensorinfo.R;
-import rtpmt.packages.Package;
 
 @SuppressLint("DefaultLocale")
 public class AddSensor extends Activity {
