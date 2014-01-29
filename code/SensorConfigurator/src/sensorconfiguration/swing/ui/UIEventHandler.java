@@ -768,7 +768,7 @@ public class UIEventHandler extends ValidateUI implements Runnable, SensorEventH
             log(logText);
             UIObject.handleError(logText);
         }
-        bar.done();
+        
     }
 
 }
