@@ -1260,6 +1260,17 @@ public class SensorConfigurator extends javax.swing.JFrame {
         jlblSensorId1.setText("xxxxxx");
         jlblComments.setText("xxxxxx");
         jlblBatteryLevelValue.setText("0");
+        maxVibXaxis.setText("");
+            maxVibYaxis.setText("");
+            maxVibZaxis.setText("");
+            
+            minVibXaxis.setText("");
+            minVibYaxis.setText("");
+            minVibZaxis.setText("");
+            
+            offsetVibXaxis.setText("");
+            offsetVibYaxis.setText("");
+            offsetVibZaxis.setText("");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void ipTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipTextFieldActionPerformed
